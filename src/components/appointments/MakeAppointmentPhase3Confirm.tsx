@@ -12,6 +12,9 @@ const Container = styled.div`
     ${p => p.theme.font.h5};
     margin-bottom: 0;
   }
+  .make_appointment__cancel_info {
+    font-style: italic;
+  }
 `;
 
 interface Props {
@@ -53,12 +56,17 @@ export const MakeAppointmentPhase3Confirm: React.FC<Props> = observer(
         />
         <Input
           label={t('label.email')}
-          id="email-input"
+          id="make_appointment__email-input"
           name="email"
+          type="email"
           value={email}
           onChange={handleChange(setEmail)}
           size="large"
         />
+
+        <p className="make_appointment__cancel_info">
+          {t('view.appointments.make_new.cancel_info')}
+        </p>
       </Container>
     );
   }

@@ -54,6 +54,7 @@
         "confirm": "Vahvista varaus",
         "contact_data_title": "Varaajan tiedot",
         "contact_data_info": "Tietoja tarvitaan, jotta asiantuntija voi valmistautua tapaamiseen ja ilmoittaa mahdollisesta peruutuksesta. Tietoja ei tallenneta, vaan ne jäävät ainoastaan asiantuntijan tietoon.",
+        "cancel_info": "Peruutusehto: Varauksen voi perua 24 h ennen varauksen alkua Varaukset-sivulta.",
         "summary_title": "Kiitos varauksesta",
         "summary_info": "Varauksesi tiedot sekä videokokouslinkki on lähetetty sähköpostiisi. Jos sinun täytyy peruuttaa aika, voit tehdä sen 24 h ennen varauksen alkua Varaukset-sivulta.",
         "no_available_appointments": "Ei vapaita aikoja",
