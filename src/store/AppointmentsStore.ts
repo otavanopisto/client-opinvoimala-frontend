@@ -57,7 +57,10 @@ export const AppointmentsStore = types
   .views(self => ({
     get allAppointments() {
       const appointments = getSnapshot(self.appointments);
-      return [...appointments].sort(byStartTime);
+      // Consider only appointments that have specialist and role set
+      return [...appointments]
+        .filter(({ appointmentSpecialist }) => !!appointmentSpecialist?.roleId)
+        .sort(byStartTime);
     },
 
     get allUserAppointments() {
