@@ -47,6 +47,7 @@ export const MakeAppointmentPhase3Confirm: React.FC<Props> = observer(
         <p>{t('view.appointments.make_new.contact_data_info')}</p>
 
         <Input
+          required
           label={t('label.name')}
           id="make_appointment__name-input"
           name="name"
@@ -55,6 +56,7 @@ export const MakeAppointmentPhase3Confirm: React.FC<Props> = observer(
           size="large"
         />
         <Input
+          required
           label={t('label.email')}
           id="make_appointment__email-input"
           name="email"

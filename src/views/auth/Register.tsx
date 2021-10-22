@@ -117,6 +117,7 @@ export const Register: React.FC<Props> = observer(() => {
         <p>{t('view.register.email_info')}</p>
 
         <Input
+          required
           autoFocus
           id="register-view__email-input"
           label={t('label.email')}
@@ -133,6 +134,7 @@ export const Register: React.FC<Props> = observer(() => {
         <p>{t('view.register.password_info')}</p>
 
         <Input
+          required
           id="register-view__password-input"
           label={t('label.password')}
           name="password"
@@ -141,6 +143,7 @@ export const Register: React.FC<Props> = observer(() => {
           onChange={handleChange(setPassword1)}
         />
         <Input
+          required
           id="register-view__confirm-password-input"
           label={t('label.password_confirm')}
           name="confirm-password"

@@ -66,6 +66,7 @@ export const ForgotPassword: React.FC = () => {
         </Transition.Group>
         <p>{t('view.forgot_password.info_text')}</p>
         <Input
+          required
           autoFocus
           id="forgot-password-view__email-input"
           label={t('label.email')}

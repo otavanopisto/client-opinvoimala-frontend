@@ -87,6 +87,7 @@ export const ResetPassword: React.FC<Props> = observer(() => {
         <h3>{t('view.reset_password.info_text')}</h3>
 
         <Input
+          required
           autoFocus
           id="reset-password-view__password-input"
           label={t('label.password')}
@@ -96,6 +97,7 @@ export const ResetPassword: React.FC<Props> = observer(() => {
           onChange={handleChange(setPassword1)}
         />
         <Input
+          required
           id="reset-password-view__confirm-password-input"
           label={t('label.password_confirm')}
           name="confirm-password"

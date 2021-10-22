@@ -6,6 +6,11 @@ const Container = styled.div<{ labelHidden?: boolean }>`
   margin: ${p => p.theme.spacing.lg} 0;
   label {
     display: ${p => (p.labelHidden ? 'none' : 'initial')};
+    .input__label--required {
+      display: inline-block;
+      margin-left: 2px;
+      color: ${p => p.theme.color.accent};
+    }
   }
 `;
 
@@ -22,9 +27,19 @@ export const Input: React.FC<Props> = ({
 }) => {
   return (
     <Container labelHidden={labelHidden}>
-      {label && <label htmlFor={id}>{label}</label>}
+      {label && (
+        <label htmlFor={id}>
+          {label}
+          {props.required && <span className="input__label--required">*</span>}
+        </label>
+      )}
 
-      <SemanticInput {...props} size={size} fluid />
+      <SemanticInput
+        aria-required={props.required}
+        {...props}
+        size={size}
+        fluid
+      />
     </Container>
   );
 };

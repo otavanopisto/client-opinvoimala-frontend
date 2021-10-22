@@ -88,6 +88,7 @@ export const ChangePassword: React.FC<Props> = observer(() => {
         </Transition.Group>
         <h3>{t('view.change_password.current_password_title')}</h3>
         <Input
+          required
           autoFocus
           id="change-password-view__current-password-input"
           label={t('label.password')}
@@ -100,6 +101,7 @@ export const ChangePassword: React.FC<Props> = observer(() => {
         <h3>{t('view.change_password.new_password_title')}</h3>
         <p>{t('view.change_password.new_password_info')}</p>
         <Input
+          required
           id="change-password-view__password-input"
           label={t('label.password')}
           name="password"
@@ -108,6 +110,7 @@ export const ChangePassword: React.FC<Props> = observer(() => {
           onChange={handleChange(setPassword1)}
         />
         <Input
+          required
           id="change-password-view__confirm-password-input"
           label={t('label.password_confirm')}
           name="confirm-password"
