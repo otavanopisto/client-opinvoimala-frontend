@@ -92,6 +92,12 @@ export const GlobalStyle = createGlobalStyle`
     margin-right: auto;
   }
 
+  figcaption {
+    text-align: center;
+    font-style: italic;
+    ${p => p.theme.font.size.md};
+  }
+
   iframe {
     max-width: 100%;
     object-fit: contain;
