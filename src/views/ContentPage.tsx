@@ -1,11 +1,27 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { observer } from 'mobx-react-lite';
+import styled from 'styled-components';
 import Layout from '../components/Layout';
 import { useParams } from '../routes/hooks';
 import { useStore } from '../store/storeContext';
 import Watermark from '../components/Layout/Watermark';
 import LinkList from '../components/LinkList';
+
+const InnerHtmlContent = styled.div`
+  h1 {
+    ${p => p.theme.font.h2};
+  }
+  h2 {
+    ${p => p.theme.font.h3};
+  }
+  h3 {
+    ${p => p.theme.font.h4};
+  }
+  h4 {
+    ${p => p.theme.font.h5};
+  }
+`;
 
 export const ContentPage = observer(() => {
   const { t } = useTranslation();
@@ -72,7 +88,9 @@ export const ContentPage = observer(() => {
       <Watermark right={-80} top={-40} />
 
       {page?.content && (
-        <div dangerouslySetInnerHTML={{ __html: page.content }}></div>
+        <InnerHtmlContent
+          dangerouslySetInnerHTML={{ __html: page.content }}
+        ></InnerHtmlContent>
       )}
 
       {page?.linkList && <LinkList list={page.linkList} />}

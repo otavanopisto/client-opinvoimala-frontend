@@ -15,18 +15,18 @@ const Container = styled.section`
     padding: 0;
 
     li {
-      margin: ${p => p.theme.spacing.md} 0;
-      border: 1px solid ${p => p.theme.color.secondary};
-      border-radius: ${p => p.theme.borderRadius.md};
-      background-color: ${p => p.theme.color.grey3};
-
       a {
-        font-family: ${p => p.theme.font.secondary};
-        ${p => p.theme.font.size.md};
-        padding: ${p => p.theme.spacing.md} ${p => p.theme.spacing.lg};
         display: flex;
         justify-content: space-between;
         width: 100%;
+        border: 1px solid ${p => p.theme.color.secondary};
+        border-radius: ${p => p.theme.borderRadius.md};
+        background-color: ${p => p.theme.color.grey3};
+        margin: ${p => p.theme.spacing.md} 0;
+        padding: ${p => p.theme.spacing.md} ${p => p.theme.spacing.lg};
+
+        font-family: ${p => p.theme.font.secondary};
+        ${p => p.theme.font.size.md};
         color: ${p => p.theme.color.secondary};
         text-decoration: none;
         :hover {
