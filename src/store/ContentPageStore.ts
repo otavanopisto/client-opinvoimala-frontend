@@ -10,6 +10,7 @@ import {
 } from 'mobx-state-tree';
 import i18n from '../i18n';
 import api from '../services/api/Api';
+import { LinkListModel } from './models';
 
 const States = [
   'IDLE' as const,
@@ -18,12 +19,25 @@ const States = [
   'UNAUTHORIZED' as const,
 ];
 
+const make404page = (params: API.GetContentPages, title: string) => ({
+  id: params.id ?? -1,
+  title,
+  slug: params.slug ?? '',
+  lead: null,
+  content: null,
+  linkList: {
+    title: null,
+    links: [],
+  },
+});
+
 const PageModel = types.model({
   id: types.number,
   title: types.maybeNull(types.string),
   slug: types.maybeNull(types.string),
   lead: types.maybeNull(types.string),
   content: types.maybeNull(types.string),
+  linkList: types.maybeNull(LinkListModel),
 });
 export interface Page extends SnapshotOut<typeof PageModel> {}
 
@@ -76,14 +90,8 @@ export const ContentPageStore = types
         self.state = 'UNAUTHORIZED';
         throw response.data;
       } else {
-        const page: Page = {
-          id: params.id ?? -1,
-          title: i18n.t('error.page_not_found'),
-          slug: params.slug ?? '',
-          lead: null,
-          content: null,
-        };
-        const pages = updatePages(page);
+        const page404 = make404page(params, i18n.t('error.page_not_found'));
+        const pages = updatePages(page404);
         self.data = { ...self.data, pages: cast(pages) };
         self.state = 'ERROR';
       }

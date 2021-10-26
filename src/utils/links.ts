@@ -19,3 +19,12 @@ export const linkTargetUrl = (link: LinkIn) => {
       return '/';
   }
 };
+
+export const linkIsPublic = (link: LinkIn) => {
+  switch (link.type) {
+    case 'page':
+      return !!link.page?.isPublic;
+    default:
+      return true;
+  }
+};

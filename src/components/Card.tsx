@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link as LinkType } from '../store/models';
-import Icon from './Icon';
 import Link from './Link';
 
 const Container = styled.article`
@@ -63,15 +62,7 @@ const Card: React.FC<Props> = ({ title, text, link }) => {
 
       {link && (
         <footer>
-          <Link link={link}>
-            {link.label}
-            <Icon
-              type="ArrowRight"
-              strokeColor="secondary"
-              color="none"
-              width={22}
-            />
-          </Link>
+          <Link link={link} label={link.label} showArrow />
         </footer>
       )}
     </Container>

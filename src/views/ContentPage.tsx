@@ -5,6 +5,7 @@ import Layout from '../components/Layout';
 import { useParams } from '../routes/hooks';
 import { useStore } from '../store/storeContext';
 import Watermark from '../components/Layout/Watermark';
+import LinkList from '../components/LinkList';
 
 export const ContentPage = observer(() => {
   const { t } = useTranslation();
@@ -69,9 +70,12 @@ export const ContentPage = observer(() => {
   return (
     <Layout wrapperSize="sm" hero={hero} isLoading={isLoading}>
       <Watermark right={-80} top={-40} />
+
       {page?.content && (
         <div dangerouslySetInnerHTML={{ __html: page.content }}></div>
       )}
+
+      {page?.linkList && <LinkList list={page.linkList} />}
     </Layout>
   );
 });

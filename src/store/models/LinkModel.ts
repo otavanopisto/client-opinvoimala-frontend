@@ -4,6 +4,7 @@ const InternalLinkTargetModel = types.model({
   id: types.number,
   title: types.maybeNull(types.string),
   slug: types.maybeNull(types.string),
+  isPublic: types.maybeNull(types.boolean),
 });
 
 export const LinkModel = types.model({

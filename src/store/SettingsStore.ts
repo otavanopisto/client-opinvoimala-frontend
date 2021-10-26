@@ -21,7 +21,7 @@ const SettingsModel = types.model({
   appName: types.string,
   organisation: types.maybeNull(types.string),
   description: types.maybeNull(types.string),
-  logo: ImageModel,
+  logo: types.maybeNull(ImageModel),
   phone: types.maybeNull(types.string),
   email: types.maybeNull(types.string),
   socialMedia: types.array(

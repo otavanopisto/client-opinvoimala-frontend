@@ -16,7 +16,6 @@ const StyledDropdownMenu = styled.div<{
     &__trigger,
     &__menu {
       a,
-      span,
       button {
         color: ${p => p.theme.color[p.color]};
         font-family: ${p => p.theme.font.secondary};
