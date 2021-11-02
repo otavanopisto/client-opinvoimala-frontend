@@ -10,6 +10,7 @@ import {
   UserAppointments,
 } from '../views';
 import { slug } from '../utils/string';
+import Tests from '../views/Tests';
 
 interface ComponentProps {
   unauthorized?: boolean;
@@ -80,6 +81,12 @@ const appRoutes: (Route | NavLinkRoute)[] = [
   {
     path: `/${path('content_page')}/:slug`,
     component: () => <ContentPage />,
+    exact: true,
+    isPublic: true,
+  },
+  {
+    path: `/${path('tests')}`,
+    component: () => <Tests />,
     exact: true,
     isPublic: true,
   },

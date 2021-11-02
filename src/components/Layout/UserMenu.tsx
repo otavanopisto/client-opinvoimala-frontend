@@ -84,13 +84,12 @@ const UserMenu: React.FC = observer(() => {
       //   type: 'internal',
       //   internal: `/${path('my_profile')}`,
       // },
-      // TODO:
-      // {
-      //   id: 'tests',
-      //   label: rt('tests'),
-      //   type: 'internal',
-      //   internal: `/${path('tests')}`,
-      // },
+      {
+        id: 'tests',
+        label: rt('tests'),
+        type: 'internal',
+        internal: `/${path('tests')}`,
+      },
       {
         id: 'appointments',
         label: rt('appointments'),
