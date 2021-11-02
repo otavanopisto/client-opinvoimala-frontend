@@ -5,7 +5,7 @@ import Layout from '../components/Layout';
 import TestsList from '../components/tests/TestsList';
 import { useStore } from '../store/storeContext';
 
-const Tests: React.FC = observer(() => {
+export const Tests: React.FC = observer(() => {
   const { t } = useTranslation();
 
   const {
@@ -45,5 +45,3 @@ const Tests: React.FC = observer(() => {
     </Layout>
   );
 });
-
-export default Tests;

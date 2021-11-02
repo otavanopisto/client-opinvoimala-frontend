@@ -117,7 +117,7 @@ export class Api extends BaseApi {
   }
 
   /**
-   * Fetch data for the front page
+   * Fetch content pages by slug or id
    */
   async getContentPages({
     ...params
@@ -191,6 +191,16 @@ export class Api extends BaseApi {
   ): Promise<Response<API.RES.GetExercises>> {
     const url = `tests?type=exercise`;
     const response = await this.api.get(url, params, this.auth());
+    return this.handleResponse(response);
+  }
+
+  /**
+   * Fetch tests by slug or id
+   */
+  async getTests({
+    ...params
+  }: API.GetTests): Promise<Response<API.RES.GetTests>> {
+    const response = await this.api.get(`tests`, params, this.auth());
     return this.handleResponse(response);
   }
 }
