@@ -83,6 +83,9 @@ declare namespace API {
     id: number;
   };
 
+  type GetTestCategories = {};
+  type GetExercises = {};
+
   /**
    * API RESPONSES
    */
@@ -111,5 +114,7 @@ declare namespace API {
     type MakeAppointment = {
       data: import('../../store/AppointmentsStore').Appointment;
     };
+    type GetTestCategories = import('../../store/TestsStore').Category[];
+    type GetExercises = import('../../store/TestsStore').SimpleTest[];
   }
 }
