@@ -1,6 +1,8 @@
+import { observer } from 'mobx-react-lite';
 import React from 'react';
 import styled from 'styled-components';
 import { Link as LinkType } from '../store/models';
+import { useStore } from '../store/storeContext';
 import { linkIsPublic } from '../utils/links';
 import Link from './Link';
 
@@ -18,7 +20,7 @@ const Container = styled.article<{ isLocked?: boolean }>`
     border-top-left-radius: ${p => p.theme.borderRadius.sm};
     border-top-right-radius: ${p => p.theme.borderRadius.sm};
     flex: 1;
-    padding: ${p => p.theme.spacing.md} ${p => p.theme.spacing.lg};
+    padding: ${p => p.theme.spacing.lg} ${p => p.theme.spacing.lg};
 
     h1 {
       ${p => p.theme.font.h4};
@@ -69,11 +71,15 @@ interface Props {
   isLocked?: boolean;
 }
 
-const Card: React.FC<Props> = ({ title, text, link, isLocked }) => {
+const Card: React.FC<Props> = observer(({ title, text, link, isLocked }) => {
+  const {
+    auth: { isLoggedIn },
+  } = useStore();
+
   const isLinkPublic = link ? linkIsPublic(link) : undefined;
 
   return (
-    <Container isLocked={isLocked || !isLinkPublic}>
+    <Container isLocked={isLocked || (!isLinkPublic && !isLoggedIn)}>
       <main>
         {title && <h1>{title}</h1>}
         {text && <p>{text}</p>}
@@ -86,6 +92,6 @@ const Card: React.FC<Props> = ({ title, text, link, isLocked }) => {
       )}
     </Container>
   );
-};
+});
 
 export default Card;

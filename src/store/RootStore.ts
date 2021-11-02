@@ -29,6 +29,7 @@ const RootStoreModel = types.model({
   }),
   tests: types.optional(TestsStore, {
     categoriesState: 'NOT_FETCHED',
+    exercisesState: 'NOT_FETCHED',
   }),
 });
 

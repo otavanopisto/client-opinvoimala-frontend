@@ -182,6 +182,17 @@ export class Api extends BaseApi {
     const response = await this.api.get(url, params, this.auth());
     return this.handleResponse(response);
   }
+
+  /**
+   * Fetch exercises
+   */
+  async getExercises(
+    params: API.GetExercises = {}
+  ): Promise<Response<API.RES.GetExercises>> {
+    const url = `tests?type=exercise`;
+    const response = await this.api.get(url, params, this.auth());
+    return this.handleResponse(response);
+  }
 }
 
 export const api = new Api();

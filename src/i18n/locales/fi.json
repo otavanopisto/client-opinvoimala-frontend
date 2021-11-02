@@ -48,6 +48,7 @@
       "unauthorized_info": "Kirjaudu sisään nähdäksesi tämän sivun sisällön"
     },
     "tests": {
+      "exercises": "Harjoitukset",
       "action": {
         "start_test": "Tee testi",
         "show_all_from_category": "Näytä kaikki aiheen testit"
