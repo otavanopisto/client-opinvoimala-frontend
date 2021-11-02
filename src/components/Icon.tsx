@@ -3,6 +3,8 @@ import { ThemeContext } from 'styled-components';
 import { Colors } from '../theme/styled';
 
 import { ReactComponent as ArrowRight } from '../assets/icons/arrow-right.svg';
+import { ReactComponent as ChevronDown } from '../assets/icons/chevron-down.svg';
+import { ReactComponent as ChevronUp } from '../assets/icons/chevron-up.svg';
 import { ReactComponent as Close } from '../assets/icons/close.svg';
 import { ReactComponent as Lock } from '../assets/icons/lock.svg';
 import { ReactComponent as Menu } from '../assets/icons/menu.svg';
@@ -13,6 +15,8 @@ import { ReactComponent as Video } from '../assets/icons/video.svg';
 
 const Icons = {
   ArrowRight,
+  ChevronDown,
+  ChevronUp,
   Close,
   Lock,
   Menu,

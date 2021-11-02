@@ -9,7 +9,8 @@
     "change_password": "Vaihda salasana",
     "send_link": "Lähetä linkki",
     "cancel": "Peruuta",
-    "close": "Sulje"
+    "close": "Sulje",
+    "minimize": "Pienennä"
   },
   "label": {
     "name": "Nimi",
@@ -45,6 +46,12 @@
     "content_pages": {
       "error": "Virhe",
       "unauthorized_info": "Kirjaudu sisään nähdäksesi tämän sivun sisällön"
+    },
+    "tests": {
+      "action": {
+        "start_test": "Tee testi",
+        "show_all_from_category": "Näytä kaikki aiheen testit"
+      }
     },
     "appointments": {
       "no_appointments": "Ei vielä varauksia.",

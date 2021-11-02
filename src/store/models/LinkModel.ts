@@ -7,6 +7,9 @@ const InternalLinkTargetModel = types.model({
   isPublic: types.maybeNull(types.boolean),
 });
 
+export interface InternalLinkTarget
+  extends SnapshotOut<typeof InternalLinkTargetModel> {}
+
 export const LinkModel = types.model({
   id: types.union(types.number, types.string),
   label: types.maybeNull(types.string),

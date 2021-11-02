@@ -21,9 +21,12 @@ const SimpleTestModel = types.model({
   id: types.number,
   name: types.string,
   slug: types.maybeNull(types.string),
+  description: types.maybeNull(types.string),
   type: types.enumeration(['test', 'exercise']),
   isPublic: types.boolean,
 });
+
+export interface SimpleTest extends SnapshotOut<typeof SimpleTestModel> {}
 
 const CategoryModel = types.model({
   id: types.number,

@@ -1,9 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link as LinkType } from '../store/models';
+import { linkIsPublic } from '../utils/links';
 import Link from './Link';
 
-const Container = styled.article`
+const Container = styled.article<{ isLocked?: boolean }>`
   background-color: ${p => p.theme.color.background};
   border-radius: ${p => p.theme.borderRadius.sm};
   display: flex;
@@ -12,16 +13,31 @@ const Container = styled.article`
   ${p => p.theme.shadows[0]};
 
   main {
+    background-color: ${p => (p.isLocked ? p.theme.color.grey3 : 'none')};
+    border-bottom: 2px solid ${p => p.theme.color.background};
     border-top-left-radius: ${p => p.theme.borderRadius.sm};
     border-top-right-radius: ${p => p.theme.borderRadius.sm};
     flex: 1;
     padding: ${p => p.theme.spacing.md} ${p => p.theme.spacing.lg};
+
     h1 {
       ${p => p.theme.font.h4};
       line-height: 28px;
     }
+
     p {
       ${p => p.theme.font.size.md};
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 4;
+      -webkit-box-orient: vertical;
+      min-height: 90px;
+    }
+
+    h1,
+    p {
+      color: ${p => (p.isLocked ? p.theme.color.grey : undefined)};
     }
   }
 
@@ -50,11 +66,14 @@ interface Props {
   title?: string | null;
   text?: string | null;
   link?: LinkType | null;
+  isLocked?: boolean;
 }
 
-const Card: React.FC<Props> = ({ title, text, link }) => {
+const Card: React.FC<Props> = ({ title, text, link, isLocked }) => {
+  const isLinkPublic = link ? linkIsPublic(link) : undefined;
+
   return (
-    <Container>
+    <Container isLocked={isLocked || !isLinkPublic}>
       <main>
         {title && <h1>{title}</h1>}
         {text && <p>{text}</p>}
