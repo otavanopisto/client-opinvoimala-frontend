@@ -21,11 +21,13 @@ export const useResetStores = () => {
 
   const {
     contentPages: { reset: resetContentPages },
+    tests: { reset: resetTests },
     appointments: { reset: resetAppointments },
   } = store;
 
   return () => {
     resetContentPages();
     resetAppointments();
+    resetTests();
   };
 };

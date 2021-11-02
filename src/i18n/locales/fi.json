@@ -48,6 +48,8 @@
       "unauthorized_info": "Kirjaudu sisään nähdäksesi tämän sivun sisällön"
     },
     "tests": {
+      "error": "Virhe",
+      "unauthorized_info": "Kirjaudu sisään suorittaaksesi tämän testin",
       "exercises": "Harjoitukset",
       "action": {
         "start_test": "Tee testi",
@@ -129,6 +131,7 @@
   "error": {
     "unknown_error": "Jotain meni pieleen",
     "page_not_found": "Virhe! Sivua ei löytynyt.",
+    "test_not_found": "Virhe! Testiä ei löytynyt.",
     "Forbidden": "Ei käyttöoikeutta",
     "Auth": {
       "form": {
