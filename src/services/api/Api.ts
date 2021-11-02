@@ -171,6 +171,17 @@ export class Api extends BaseApi {
     const response = await this.api.post(url, params, this.auth());
     return this.handleResponse(response);
   }
+
+  /**
+   * Fetch test categories (and tests within)
+   */
+  async getTestCategories(
+    params: API.GetTestCategories = {}
+  ): Promise<Response<API.RES.GetTestCategories>> {
+    const url = `test-categories`;
+    const response = await this.api.get(url, params, this.auth());
+    return this.handleResponse(response);
+  }
 }
 
 export const api = new Api();

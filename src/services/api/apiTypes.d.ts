@@ -83,6 +83,8 @@ declare namespace API {
     id: number;
   };
 
+  type GetTestCategories = {};
+
   /**
    * API RESPONSES
    */
@@ -111,5 +113,6 @@ declare namespace API {
     type MakeAppointment = {
       data: import('../../store/AppointmentsStore').Appointment;
     };
+    type GetTestCategories = import('../../store/TestsStore').Category[];
   }
 }
