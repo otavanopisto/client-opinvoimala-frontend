@@ -1,8 +1,12 @@
 import { SnapshotOut, types } from 'mobx-state-tree';
 import { TestCategoryModel } from './TestCategoryModel';
-import { OutcomeTypeModel } from './OutcomeTypeModel';
 import { QuestionModel } from './QuestionModel';
-import { TestTemplateModel } from './TestTemplateModel';
+
+const OutcomeTypes = [
+  'total_points' as const,
+  'suitablitity_of_answers' as const,
+];
+export type OutcomeType = typeof OutcomeTypes[number];
 
 export const TestModel = types.model({
   id: types.identifierNumber,
@@ -12,8 +16,7 @@ export const TestModel = types.model({
   type: types.enumeration(['test', 'exercise']),
   affectsUserProfile: types.boolean,
   categories: types.array(TestCategoryModel),
-  outcomeType: OutcomeTypeModel,
-  template: types.maybeNull(TestTemplateModel),
+  outcomeType: types.enumeration(OutcomeTypes),
   questions: types.maybeNull(types.array(QuestionModel)),
   // TODO:
   // outcomes: types.maybeNull(OutcomesModel)

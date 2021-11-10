@@ -18,8 +18,7 @@ const make404Test = (params: API.GetContentPages, name: string): Test => ({
   type: 'test',
   affectsUserProfile: false,
   categories: [],
-  outcomeType: 'from_template',
-  template: null,
+  outcomeType: 'total_points',
   questions: null,
 });
 

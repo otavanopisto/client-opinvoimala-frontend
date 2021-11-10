@@ -1,4 +1,5 @@
-export * from './TestCategoryModel';
+export * from './QuestionModel';
+export * from './QuestionOptionModel';
 export * from './SimpleTestModel';
-export * from './TestTemplateModel';
+export * from './TestCategoryModel';
 export * from './TestModel';
