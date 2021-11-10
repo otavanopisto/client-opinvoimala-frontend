@@ -10,7 +10,8 @@
     "send_link": "Lähetä linkki",
     "cancel": "Peruuta",
     "close": "Sulje",
-    "minimize": "Pienennä"
+    "minimize": "Pienennä",
+    "go_back": "Takaisin"
   },
   "label": {
     "name": "Nimi",

@@ -4,9 +4,12 @@ import { useTranslation } from 'react-i18next';
 import Layout from '../components/Layout';
 import { useParams } from '../routes/hooks';
 import { useStore } from '../store/storeContext';
+import { useHistory } from 'react-router';
+import { path } from '../routes/routes';
 
 export const Test: React.FC = observer(() => {
   const { t } = useTranslation();
+  const history = useHistory();
   const { slug } = useParams();
   const slugRef = useRef<string>();
 
@@ -63,6 +66,8 @@ export const Test: React.FC = observer(() => {
   const hero = {
     title: test?.name ?? defaultTitle,
     lead: test?.description ?? errorMsg,
+    goBackText: t('route.tests'),
+    onGoBackClick: () => history.push(`/${path('tests')}`),
   };
 
   return (
