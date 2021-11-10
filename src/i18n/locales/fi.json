@@ -3,6 +3,11 @@
   "phone_abbrv": "Puh.",
   "copyright_text": "\u00A9 {{year}} Mikkelin kaupungin liikelaitos Otavia",
   "student": "Opiskelija",
+  "annotation": {
+    "nb": "Huom!",
+    "test": "Tämän testin tulokset eivät perustu tieteellisiin menetelmiin, eikä niitä tule ottaa tosissaan.",
+    "user_profile": "Tämän testin tulokset eivät perustu tieteellisiin menetelmiin, eikä niitä tule ottaa tosissaan."
+  },
   "action": {
     "register": "Rekisteröidy",
     "login": "Kirjaudu",
