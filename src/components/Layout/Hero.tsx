@@ -1,6 +1,10 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
+import { useHistory } from 'react-router';
 import styled from 'styled-components';
 import { Image } from '../../store/models';
+import Icon from '../Icon';
+import { Button } from '../inputs';
 import Watermark from './Watermark';
 
 const Container = styled.div`
@@ -26,6 +30,16 @@ const Container = styled.div`
 
     &__side-column-placeholder {
       width: 35%;
+    }
+
+    &__back-button-label {
+      display: flex;
+      align-items: center;
+
+      svg {
+        margin-left: -10px;
+        margin-right: 5px;
+      }
     }
   }
 
@@ -63,14 +77,51 @@ export interface HeroProps {
   lead?: string | JSX.Element | null;
   image?: Image | null;
   align?: string;
+  goBackText?: string;
+  showGoBack?: boolean;
+  onGoBackClick?: () => void;
 }
 
-const Hero: React.FC<HeroProps> = ({ title, lead, image, align = 'left' }) => {
+const Hero: React.FC<HeroProps> = ({
+  title,
+  lead,
+  image,
+  align = 'left',
+  goBackText,
+  showGoBack,
+  onGoBackClick,
+}) => {
+  const { t } = useTranslation();
+  const history = useHistory();
+
+  const handleGoBack = () => {
+    if (onGoBackClick) {
+      onGoBackClick();
+    } else {
+      history.goBack();
+    }
+  };
+
+  const goBackButton = (
+    <Button
+      id="hero__back-button"
+      onClick={handleGoBack}
+      isSmall
+      text={
+        <div className="hero__back-button-label">
+          <Icon type="ChevronLeft" />
+          {goBackText ?? t('action.go_back')}
+        </div>
+      }
+    />
+  );
+
   return (
     <Container>
       <Watermark isNegative left={-220} top={40} />
 
       <div className={`hero__main-column align-${align}`}>
+        {(showGoBack || goBackText || onGoBackClick) && goBackButton}
         <h1>{title}</h1>
         <div>{lead}</div>
       </div>
