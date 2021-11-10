@@ -19,6 +19,7 @@ const make404Test = (params: API.GetContentPages, name: string): FullTest => ({
   description: null,
   type: 'test',
   affectsUserProfile: false,
+  categories: [],
 });
 
 const States = [
@@ -34,23 +35,6 @@ const TestStates = [
   'ERROR' as const,
   'UNAUTHORIZED' as const,
 ];
-
-const FullTestModel = types.model({
-  id: types.number,
-  name: types.string,
-  slug: types.maybeNull(types.string),
-  description: types.maybeNull(types.string),
-  type: types.enumeration(['test', 'exercise']),
-  affectsUserProfile: types.boolean,
-  // TODO:
-  // outcome_type: types.enumeration([])
-  // template: types.maybeNull(TemplateModel)
-  // questions: types.maybeNull(types.array(QuestionModel))
-  // outcomes: types.maybeNull(OutcomesModel)
-  // categories: types.maybeNull(CategoriesModel)
-});
-
-export interface FullTest extends SnapshotOut<typeof FullTestModel> {}
 
 const SimpleTestModel = types.model({
   id: types.number,
@@ -73,6 +57,23 @@ const CategoryModel = types.model({
 export interface ICategoryModel extends Instance<typeof CategoryModel> {}
 export interface Category extends SnapshotOut<typeof CategoryModel> {}
 export interface CategoryIn extends SnapshotIn<typeof CategoryModel> {}
+
+const FullTestModel = types.model({
+  id: types.number,
+  name: types.string,
+  slug: types.maybeNull(types.string),
+  description: types.maybeNull(types.string),
+  type: types.enumeration(['test', 'exercise']),
+  affectsUserProfile: types.boolean,
+  categories: types.array(CategoryModel),
+  // TODO:
+  // outcome_type: types.enumeration([])
+  // template: types.maybeNull(TemplateModel)
+  // questions: types.maybeNull(types.array(QuestionModel))
+  // outcomes: types.maybeNull(OutcomesModel)
+});
+
+export interface FullTest extends SnapshotOut<typeof FullTestModel> {}
 
 export const TestsStore = types
   .model({

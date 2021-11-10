@@ -68,6 +68,8 @@ export const Test: React.FC = observer(() => {
     lead: test?.description ?? errorMsg,
     goBackText: t('route.tests'),
     onGoBackClick: () => history.push(`/${path('tests')}`),
+    image: test?.categories[0]?.image,
+    smallImage: true,
   };
 
   return (

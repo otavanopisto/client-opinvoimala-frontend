@@ -26,6 +26,15 @@ const Container = styled.div`
       right: 0;
       top: 0;
       width: 30%;
+
+      > img {
+        :not(.is-small) {
+          width: 300px;
+        }
+        &.is-small {
+          width: 150px;
+        }
+      }
     }
 
     &__side-column-placeholder {
@@ -53,6 +62,8 @@ const Container = styled.div`
         width: 100%;
       }
       &__main-column {
+        position: relative;
+        z-index: 1;
         h1 {
           line-height: 43px;
         }
@@ -63,9 +74,18 @@ const Container = styled.div`
       &__side-column {
         text-align: center;
         & > img {
-          margin-top: ${p => p.theme.spacing.xl};
-          margin-bottom: -50px;
-          width: 75%;
+          :not(.is-small) {
+            margin-top: ${p => p.theme.spacing.xl};
+            margin-bottom: -50px;
+            width: 75%;
+          }
+          &.is-small {
+            width: 100px;
+            position: absolute;
+            right: ${p => p.theme.spacing.md};
+            top: ${p => p.theme.spacing.lg};
+            z-index: 0;
+          }
         }
       }
     }
@@ -76,6 +96,7 @@ export interface HeroProps {
   title?: string | null;
   lead?: string | JSX.Element | null;
   image?: Image | null;
+  smallImage?: boolean;
   align?: string;
   goBackText?: string;
   showGoBack?: boolean;
@@ -86,6 +107,7 @@ const Hero: React.FC<HeroProps> = ({
   title,
   lead,
   image,
+  smallImage,
   align = 'left',
   goBackText,
   showGoBack,
@@ -129,7 +151,11 @@ const Hero: React.FC<HeroProps> = ({
       {image && (
         <>
           <div className="hero__side-column">
-            <img src={image?.url} alt="" />
+            <img
+              src={image?.url}
+              alt=""
+              className={smallImage ? 'is-small' : ''}
+            />
           </div>
           <div className="hero__side-column-placeholder"></div>
         </>
