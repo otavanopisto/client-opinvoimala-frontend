@@ -6,6 +6,7 @@ import { useParams } from '../routes/hooks';
 import { useStore } from '../store/storeContext';
 import { useHistory } from 'react-router';
 import { path } from '../routes/routes';
+import Annotation from '../components/Annotation';
 
 export const Test: React.FC = observer(() => {
   const { t } = useTranslation();
@@ -74,7 +75,8 @@ export const Test: React.FC = observer(() => {
 
   return (
     <Layout wrapperSize="sm" hero={hero} isLoading={isBusy}>
-      <div>TODO</div>
+      <h2>TODO</h2>
+      <Annotation text={t('annotation.test')} />
     </Layout>
   );
 });
