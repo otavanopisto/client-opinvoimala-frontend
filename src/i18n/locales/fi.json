@@ -16,7 +16,10 @@
     "cancel": "Peruuta",
     "close": "Sulje",
     "minimize": "Pienennä",
-    "go_back": "Takaisin"
+    "go_back": "Takaisin",
+    "previous": "Edellinen",
+    "continue": "Jatka",
+    "show_result": "Näytä tulos"
   },
   "label": {
     "name": "Nimi",
@@ -61,6 +64,9 @@
         "start_test": "Tee testi",
         "show_all_from_category": "Näytä kaikki aiheen testit"
       }
+    },
+    "test": {
+      "progressText": "Kysymys {{current}}/{{total}}"
     },
     "appointments": {
       "no_appointments": "Ei vielä varauksia.",

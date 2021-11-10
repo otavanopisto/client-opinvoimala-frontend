@@ -136,6 +136,7 @@ export const AuthStore = types
       self.jwt = null;
       self.user = null;
       Storage.write({ key: 'AUTH_TOKEN', value: null });
+      Storage.write({ key: 'TESTS_IN_PROGRESS', value: null });
       yield api.logout();
       self.state = 'IDLE';
     });

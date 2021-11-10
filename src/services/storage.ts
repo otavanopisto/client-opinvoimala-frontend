@@ -1,7 +1,7 @@
 type TargetStorage = 'local' | 'session';
 
 interface StorageProps {
-  key: 'AUTH_TOKEN';
+  key: 'AUTH_TOKEN' | 'TESTS_IN_PROGRESS';
   target?: TargetStorage;
 }
 
