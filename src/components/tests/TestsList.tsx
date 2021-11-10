@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Divider, Grid } from 'semantic-ui-react';
 import styled from 'styled-components';
-import { SimpleTest } from '../../store/TestsStore';
+import { SimpleTest } from '../../store/models';
 import { makeLink } from '../../utils/links';
 import Card from '../Card';
 import Icon from '../Icon';

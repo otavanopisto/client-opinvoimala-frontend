@@ -4,15 +4,13 @@ import {
   flow,
   cast,
   getSnapshot,
-  SnapshotOut,
-  SnapshotIn,
   applySnapshot,
 } from 'mobx-state-tree';
 import i18n from '../i18n';
 import api from '../services/api/Api';
-import { ImageModel } from './models';
+import { TestCategoryModel, SimpleTestModel, Test, TestModel } from './models';
 
-const make404Test = (params: API.GetContentPages, name: string): FullTest => ({
+const make404Test = (params: API.GetContentPages, name: string): Test => ({
   id: params.id ?? -1,
   name,
   slug: params.slug ?? '',
@@ -20,6 +18,9 @@ const make404Test = (params: API.GetContentPages, name: string): FullTest => ({
   type: 'test',
   affectsUserProfile: false,
   categories: [],
+  outcomeType: 'from_template',
+  template: null,
+  questions: null,
 });
 
 const States = [
@@ -36,55 +37,16 @@ const TestStates = [
   'UNAUTHORIZED' as const,
 ];
 
-const SimpleTestModel = types.model({
-  id: types.number,
-  name: types.string,
-  slug: types.maybeNull(types.string),
-  description: types.maybeNull(types.string),
-  type: types.enumeration(['test', 'exercise']),
-  isPublic: types.boolean,
-});
-
-export interface SimpleTest extends SnapshotOut<typeof SimpleTestModel> {}
-
-const CategoryModel = types.model({
-  id: types.number,
-  label: types.string,
-  image: types.maybeNull(ImageModel),
-  tests: types.array(SimpleTestModel),
-});
-
-export interface ICategoryModel extends Instance<typeof CategoryModel> {}
-export interface Category extends SnapshotOut<typeof CategoryModel> {}
-export interface CategoryIn extends SnapshotIn<typeof CategoryModel> {}
-
-const FullTestModel = types.model({
-  id: types.number,
-  name: types.string,
-  slug: types.maybeNull(types.string),
-  description: types.maybeNull(types.string),
-  type: types.enumeration(['test', 'exercise']),
-  affectsUserProfile: types.boolean,
-  categories: types.array(CategoryModel),
-  // TODO:
-  // outcome_type: types.enumeration([])
-  // template: types.maybeNull(TemplateModel)
-  // questions: types.maybeNull(types.array(QuestionModel))
-  // outcomes: types.maybeNull(OutcomesModel)
-});
-
-export interface FullTest extends SnapshotOut<typeof FullTestModel> {}
-
 export const TestsStore = types
   .model({
     categoriesState: types.enumeration('State', States),
-    categoriesData: types.maybe(types.array(CategoryModel)),
+    categoriesData: types.maybe(types.array(TestCategoryModel)),
 
     exercisesState: types.enumeration('State', States),
     exercisesData: types.maybe(types.array(SimpleTestModel)),
 
     testState: types.enumeration('State', TestStates),
-    testData: types.maybe(types.array(FullTestModel)),
+    testData: types.maybe(types.array(TestModel)),
   })
   .views(self => ({
     get categories() {
@@ -142,7 +104,7 @@ export const TestsStore = types
       const response: API.GeneralResponse<API.RES.GetTests> =
         yield api.getTests(params);
 
-      const updateTests = (test: FullTest) => {
+      const updateTests = (test: Test) => {
         const oldTests = self.testData?.filter(({ id }) => id !== test.id);
         return [...(oldTests ?? []), test];
       };

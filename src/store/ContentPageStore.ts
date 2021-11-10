@@ -10,7 +10,7 @@ import {
 } from 'mobx-state-tree';
 import i18n from '../i18n';
 import api from '../services/api/Api';
-import { LinkListModel } from './models';
+import { Page, PageModel } from './models';
 
 const States = [
   'IDLE' as const,
@@ -30,16 +30,6 @@ const make404page = (params: API.GetContentPages, title: string) => ({
     links: [],
   },
 });
-
-const PageModel = types.model({
-  id: types.number,
-  title: types.maybeNull(types.string),
-  slug: types.maybeNull(types.string),
-  lead: types.maybeNull(types.string),
-  content: types.maybeNull(types.string),
-  linkList: types.maybeNull(LinkListModel),
-});
-export interface Page extends SnapshotOut<typeof PageModel> {}
 
 const ContentPageModel = types.model({
   pages: types.array(PageModel),
