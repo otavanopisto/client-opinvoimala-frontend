@@ -1,14 +1,18 @@
 import React from 'react';
-import { QuestionOption } from '../../store/models';
 import OptionToggleButton from './OptionToggleButton';
 
-interface Props {
-  options: QuestionOption[];
-  selectedOption?: QuestionOption | null;
-  onSelect: (answer: QuestionOption) => void;
+interface Option {
+  id: number;
+  label: string;
 }
 
-const MultiSelect: React.FC<Props> = ({
+interface Props {
+  options: Option[];
+  selectedOption?: Option | null;
+  onSelect: (answer: Option) => void;
+}
+
+export const MultiSelect: React.FC<Props> = ({
   options,
   selectedOption,
   onSelect,

@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { QuestionOption } from '../../store/models';
 import { TestAnswer } from '../../views';
-import MultiSelect from '../inputs/MultiSelect';
+import { MultiSelect, TextArea } from '../inputs';
 
 const OptionsContainer = styled.div`
   margin: ${p => p.theme.spacing.xl} 0;
@@ -33,7 +33,15 @@ const TestQuestion: React.FC<Props> = ({ testAnswer, setAnswer }) => {
       case 'slider':
         return 'TODO: Slider';
       case 'text':
-        return 'TODO: Text';
+        return (
+          <TextArea
+            autoFocus
+            text={testAnswer.answer?.label ?? ''}
+            onChange={(text: string) =>
+              setAnswer({ id: -1, label: text ?? '' })
+            }
+          />
+        );
       case 'none':
         return null;
       default:
