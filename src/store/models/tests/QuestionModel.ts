@@ -1,8 +1,5 @@
 import { SnapshotOut, types } from 'mobx-state-tree';
-import {
-  PointOptionModel,
-  SuitabilityOptionModel,
-} from './QuestionOptionModel';
+import { QuestionOptionModel } from './QuestionOptionModel';
 
 const AnswerTypes = [
   'multiple_choice' as const,
@@ -18,8 +15,7 @@ export const QuestionModel = types.model({
   title: types.string,
   content: types.maybeNull(types.string),
   answerType: types.maybeNull(types.enumeration(AnswerTypes)),
-  pointOptions: types.array(PointOptionModel),
-  suitabilityOptions: types.array(SuitabilityOptionModel),
+  options: types.array(QuestionOptionModel),
 });
 
 export interface Question extends SnapshotOut<typeof QuestionModel> {}

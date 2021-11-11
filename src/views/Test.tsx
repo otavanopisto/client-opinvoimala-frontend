@@ -226,6 +226,7 @@ export const Test: React.FC = observer(() => {
             id="test-controls__submit-button"
             text={t('action.show_result')}
             onClick={handleTestCompleted}
+            type="submit"
           />
         ) : (
           <Button

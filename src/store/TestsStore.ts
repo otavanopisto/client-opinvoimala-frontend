@@ -16,9 +16,7 @@ const make404Test = (params: API.GetContentPages, name: string): Test => ({
   slug: params.slug ?? '',
   description: null,
   type: 'test',
-  affectsUserProfile: false,
   categories: [],
-  outcomeType: 'total_points',
   questions: null,
 });
 

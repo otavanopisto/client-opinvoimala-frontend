@@ -14,12 +14,8 @@ export const TestModel = types.model({
   slug: types.maybeNull(types.string),
   description: types.maybeNull(types.string),
   type: types.enumeration(['test', 'exercise']),
-  affectsUserProfile: types.boolean,
   categories: types.array(TestCategoryModel),
-  outcomeType: types.enumeration(OutcomeTypes),
   questions: types.maybeNull(types.array(QuestionModel)),
-  // TODO:
-  // outcomes: types.maybeNull(OutcomesModel)
 });
 
 export interface Test extends SnapshotOut<typeof TestModel> {}
