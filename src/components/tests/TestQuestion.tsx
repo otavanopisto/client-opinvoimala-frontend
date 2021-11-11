@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import { QuestionOption } from '../../store/models';
-import { TestAnswer } from '../../views';
 import { MultiSelect, TextArea, Select, Slider } from '../inputs';
 
 const OptionsContainer = styled.div`

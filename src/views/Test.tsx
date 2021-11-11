@@ -11,8 +11,12 @@ import Annotation from '../components/Annotation';
 import { Question, QuestionOption } from '../store/models';
 import TestQuestion from '../components/tests/TestQuestion';
 import { Button } from '../components/inputs';
-import Storage from '../services/storage';
 import useWindowDimensions from '../utils/hooks';
+import {
+  clearTestFromStorage,
+  getTestFromStorage,
+  saveTestToStorage,
+} from '../utils/storage';
 
 const SAVE_PROGRESS_TO_STORAGE = true;
 
@@ -30,38 +34,7 @@ const TestControls = styled.div`
   }
 `;
 
-export interface TestAnswer {
-  question: Question;
-  answer?: QuestionOption | null;
-}
-
-interface TestProgress {
-  slug: string;
-  currentQuestion?: number;
-  testAnswers: TestAnswer[];
-}
-
-const getStorageTests = () => Storage.read({ key: 'TESTS_IN_PROGRESS' });
-
-const getTestFromStorage = (slug?: string | null): TestProgress | undefined => {
-  const storageTests = getStorageTests();
-  return storageTests && slug ? storageTests[slug] : undefined;
-};
-
-const saveTestToStorage = (newTest: TestProgress) => {
-  const storageTests = getStorageTests();
-  Storage.write({
-    key: 'TESTS_IN_PROGRESS',
-    value: { ...storageTests, [newTest.slug]: newTest },
-  });
-};
-
-const clearTestFromStorage = (slug: string) => {
-  const storageTests = getStorageTests();
-  delete storageTests[slug];
-  Storage.write({ key: 'TESTS_IN_PROGRESS', value: storageTests });
-};
-
+// Initial answers array, where all answers are null
 const getInitialAnswersArray = (questions?: Question[] | null) => {
   return questions?.map(question => ({ question, answer: null })) ?? [];
 };
@@ -101,7 +74,7 @@ export const Test: React.FC = observer(() => {
   useEffect(() => {
     if (test) {
       const testFromStorage = SAVE_PROGRESS_TO_STORAGE
-        ? getTestFromStorage(test.slug)
+        ? getTestFromStorage(test.slug, test.questions)
         : undefined;
 
       if (testFromStorage) {
