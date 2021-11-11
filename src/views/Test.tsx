@@ -214,32 +214,33 @@ export const Test: React.FC = observer(() => {
     testProgress.currentQuestion >= testProgress.testAnswers.length - 1;
 
   const toggleAnswer = (
-    newAnswer: QuestionOption,
+    newAnswer?: QuestionOption | null,
     currentAnswer?: QuestionOption | null
   ) => {
-    if (currentAnswer?.id === newAnswer.id) return undefined;
+    if (currentAnswer?.id === newAnswer?.id) return null;
     return newAnswer;
   };
 
   const updateAnswer = (
     questionId: number,
     testAnswer: TestAnswer,
-    newAnswer: QuestionOption
+    newAnswer?: QuestionOption | null
   ) => {
     return testAnswer.question.id === questionId
       ? toggleAnswer(newAnswer, testAnswer.answer)
       : testAnswer.answer;
   };
 
-  const setAnswer = (questionId: number) => (answer: QuestionOption) => {
-    setTestProgress(currentProgress => ({
-      ...currentProgress,
-      testAnswers: currentProgress.testAnswers.map(testAnswer => ({
-        ...testAnswer,
-        answer: updateAnswer(questionId, testAnswer, answer),
-      })),
-    }));
-  };
+  const setAnswer =
+    (questionId: number) => (answer?: QuestionOption | null) => {
+      setTestProgress(currentProgress => ({
+        ...currentProgress,
+        testAnswers: currentProgress.testAnswers.map(testAnswer => ({
+          ...testAnswer,
+          answer: updateAnswer(questionId, testAnswer, answer),
+        })),
+      }));
+    };
 
   return (
     <Layout wrapperSize="sm" hero={hero} isLoading={isBusy}>

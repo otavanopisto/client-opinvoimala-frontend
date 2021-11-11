@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { QuestionOption } from '../../store/models';
 import { TestAnswer } from '../../views';
-import { MultiSelect, TextArea } from '../inputs';
+import { MultiSelect, TextArea, Select } from '../inputs';
 
 const OptionsContainer = styled.div`
   margin: ${p => p.theme.spacing.xl} 0;
@@ -10,7 +10,7 @@ const OptionsContainer = styled.div`
 
 interface Props {
   testAnswer: TestAnswer;
-  setAnswer: (answer: QuestionOption) => void;
+  setAnswer: (answer?: QuestionOption | null) => void;
 }
 
 const TestQuestion: React.FC<Props> = ({ testAnswer, setAnswer }) => {
@@ -29,7 +29,13 @@ const TestQuestion: React.FC<Props> = ({ testAnswer, setAnswer }) => {
           />
         );
       case 'dropdown':
-        return 'TODO: Dropdown';
+        return (
+          <Select
+            options={question.options}
+            selectedOption={answer}
+            onSelect={setAnswer}
+          />
+        );
       case 'slider':
         return 'TODO: Slider';
       case 'text':
