@@ -1,15 +1,10 @@
 import React from 'react';
 import OptionToggleButton from './OptionToggleButton';
 
-interface Option {
-  id: number;
-  label: string;
-}
-
 interface Props {
-  options: Option[];
-  selectedOption?: Option | null;
-  onSelect: (answer: Option) => void;
+  options: SelectOption[];
+  selectedOption?: SelectOption | null;
+  onSelect: (answer: SelectOption) => void;
   autoFocus?: boolean;
 }
 

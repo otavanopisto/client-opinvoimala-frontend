@@ -51,15 +51,10 @@ const Mark = styled.div<{ isSelected: boolean }>`
   }
 `;
 
-interface Option {
-  id: number;
-  label: string;
-}
-
 interface Props {
-  options: Option[];
-  selectedOption?: Option | null;
-  onSelect: (answer?: Option | null) => void;
+  options: SelectOption[];
+  selectedOption?: SelectOption | null;
+  onSelect: (answer?: SelectOption | null) => void;
   step?: number;
 }
 
