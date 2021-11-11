@@ -8,11 +8,13 @@ import { useStore } from '../store/storeContext';
 import { useHistory } from 'react-router';
 import { path } from '../routes/routes';
 import Annotation from '../components/Annotation';
-import { PointOption, Question, SuitabilityOption } from '../store/models';
+import { Question, QuestionOption } from '../store/models';
 import TestQuestion from '../components/tests/TestQuestion';
 import { Button } from '../components/inputs';
 import Storage from '../services/storage';
 import useWindowDimensions from '../utils/hooks';
+
+const SAVE_PROGRESS_TO_STORAGE = true;
 
 const TestControls = styled.div`
   display: flex;
@@ -28,15 +30,15 @@ const TestControls = styled.div`
   }
 `;
 
-interface TestAnswer {
+export interface TestAnswer {
   question: Question;
-  answer?: PointOption | SuitabilityOption | null;
+  answer?: QuestionOption | null;
 }
 
 interface TestProgress {
   slug: string;
   currentQuestion?: number;
-  answers: TestAnswer[];
+  testAnswers: TestAnswer[];
 }
 
 const getStorageTests = () => Storage.read({ key: 'TESTS_IN_PROGRESS' });
@@ -88,7 +90,7 @@ export const Test: React.FC = observer(() => {
   const [testProgress, setTestProgress] = useState<TestProgress>({
     slug,
     currentQuestion: undefined,
-    answers: [],
+    testAnswers: [],
   });
 
   /**
@@ -98,14 +100,17 @@ export const Test: React.FC = observer(() => {
    */
   useEffect(() => {
     if (test) {
-      const testFromStorage = getTestFromStorage(test.slug);
+      const testFromStorage = SAVE_PROGRESS_TO_STORAGE
+        ? getTestFromStorage(test.slug)
+        : undefined;
+
       if (testFromStorage) {
         setTestProgress(testFromStorage);
       } else {
         setTestProgress(currentProgress => ({
           ...currentProgress,
           currentQuestion: 0,
-          answers: getInitialAnswersArray(test.questions),
+          testAnswers: getInitialAnswersArray(test.questions),
         }));
       }
     }
@@ -152,13 +157,13 @@ export const Test: React.FC = observer(() => {
 
   const handleTestCompleted = () => {
     console.log('TODO: Test is now completed, show results!');
-    clearTestFromStorage(testProgress.slug);
+    if (SAVE_PROGRESS_TO_STORAGE) clearTestFromStorage(testProgress.slug);
   };
 
   const setCurrentQuestion = (currentQuestion: number) => {
     const updatedTestProgress = { ...testProgress, currentQuestion };
     setTestProgress(updatedTestProgress);
-    saveTestToStorage(updatedTestProgress);
+    if (SAVE_PROGRESS_TO_STORAGE) saveTestToStorage(updatedTestProgress);
   };
 
   const changeQuestion = (direction: 'previous' | 'next') => {
@@ -171,7 +176,7 @@ export const Test: React.FC = observer(() => {
         if (currentQuestion > 0) setCurrentQuestion(currentQuestion - 1);
         return;
       case 'next':
-        if (currentQuestion + 1 < testProgress.answers.length)
+        if (currentQuestion + 1 < testProgress.testAnswers.length)
           setCurrentQuestion(currentQuestion + 1);
         return;
       default:
@@ -190,26 +195,60 @@ export const Test: React.FC = observer(() => {
     smallImage: true,
   };
 
-  const getCurrentQuestion = (index?: number) => {
-    if (index !== undefined && index < testProgress.answers.length)
-      return testProgress.answers[index].question;
+  const getCurrentTestAnswer = (index?: number) => {
+    if (index !== undefined && index < testProgress.testAnswers.length) {
+      return testProgress.testAnswers[index];
+    }
   };
 
   const getProgressText = () => {
     const current = (testProgress.currentQuestion ?? 0) + 1;
-    const total = testProgress.answers.length;
+    const total = testProgress.testAnswers.length;
     return t('view.test.progressText', { current, total });
   };
 
-  const currentQuestion = getCurrentQuestion(testProgress.currentQuestion);
+  const currentTestAnswer = getCurrentTestAnswer(testProgress.currentQuestion);
 
   const isFinalQuestion =
     testProgress.currentQuestion !== undefined &&
-    testProgress.currentQuestion >= testProgress.answers.length - 1;
+    testProgress.currentQuestion >= testProgress.testAnswers.length - 1;
+
+  const toggleAnswer = (
+    newAnswer: QuestionOption,
+    currentAnswer?: QuestionOption | null
+  ) => {
+    if (currentAnswer?.id === newAnswer.id) return undefined;
+    return newAnswer;
+  };
+
+  const updateAnswer = (
+    questionId: number,
+    testAnswer: TestAnswer,
+    newAnswer: QuestionOption
+  ) => {
+    return testAnswer.question.id === questionId
+      ? toggleAnswer(newAnswer, testAnswer.answer)
+      : testAnswer.answer;
+  };
+
+  const setAnswer = (questionId: number) => (answer: QuestionOption) => {
+    setTestProgress(currentProgress => ({
+      ...currentProgress,
+      testAnswers: currentProgress.testAnswers.map(testAnswer => ({
+        ...testAnswer,
+        answer: updateAnswer(questionId, testAnswer, answer),
+      })),
+    }));
+  };
 
   return (
     <Layout wrapperSize="sm" hero={hero} isLoading={isBusy}>
-      {currentQuestion && <TestQuestion question={currentQuestion} />}
+      {currentTestAnswer && (
+        <TestQuestion
+          testAnswer={currentTestAnswer}
+          setAnswer={setAnswer(currentTestAnswer.question.id)}
+        />
+      )}
 
       <TestControls>
         <Button
