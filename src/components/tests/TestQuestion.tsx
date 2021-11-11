@@ -2,18 +2,23 @@ import React from 'react';
 import styled from 'styled-components';
 import { QuestionOption } from '../../store/models';
 import { TestAnswer } from '../../views';
-import { MultiSelect, TextArea, Select } from '../inputs';
+import { MultiSelect, TextArea, Select, Slider } from '../inputs';
 
 const OptionsContainer = styled.div`
   margin: ${p => p.theme.spacing.xl} 0;
 `;
 
 interface Props {
+  questionNo?: number;
   testAnswer: TestAnswer;
   setAnswer: (answer?: QuestionOption | null) => void;
 }
 
-const TestQuestion: React.FC<Props> = ({ testAnswer, setAnswer }) => {
+const TestQuestion: React.FC<Props> = ({
+  questionNo,
+  testAnswer,
+  setAnswer,
+}) => {
   const { question, answer } = testAnswer;
 
   const renderOptions = () => {
@@ -37,7 +42,13 @@ const TestQuestion: React.FC<Props> = ({ testAnswer, setAnswer }) => {
           />
         );
       case 'slider':
-        return 'TODO: Slider';
+        return (
+          <Slider
+            options={question.options}
+            selectedOption={answer}
+            onSelect={setAnswer}
+          />
+        );
       case 'text':
         return (
           <TextArea
@@ -55,9 +66,11 @@ const TestQuestion: React.FC<Props> = ({ testAnswer, setAnswer }) => {
     }
   };
 
+  const questionNumber = questionNo !== undefined ? `${questionNo + 1}) ` : '';
+
   return (
     <div>
-      <h2>{question.title}</h2>
+      <h2>{`${questionNumber}${question.title}`}</h2>
 
       {question.content && (
         <div dangerouslySetInnerHTML={{ __html: question.content }}></div>

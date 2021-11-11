@@ -246,6 +246,7 @@ export const Test: React.FC = observer(() => {
     <Layout wrapperSize="sm" hero={hero} isLoading={isBusy}>
       {currentTestAnswer && (
         <TestQuestion
+          questionNo={testProgress.currentQuestion}
           testAnswer={currentTestAnswer}
           setAnswer={setAnswer(currentTestAnswer.question.id)}
         />
