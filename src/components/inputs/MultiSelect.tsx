@@ -10,19 +10,21 @@ interface Props {
   options: Option[];
   selectedOption?: Option | null;
   onSelect: (answer: Option) => void;
+  autoFocus?: boolean;
 }
 
 export const MultiSelect: React.FC<Props> = ({
   options,
   selectedOption,
   onSelect,
+  autoFocus,
 }) => (
   <div>
     {options.map((option, i) => (
       <OptionToggleButton
         key={option.id}
         isSelected={selectedOption?.id === option.id}
-        autoFocus={i === 0}
+        autoFocus={!!autoFocus && i === 0}
         onClick={() => onSelect(option)}
       >
         {option.label}

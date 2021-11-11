@@ -31,6 +31,7 @@ const TestQuestion: React.FC<Props> = ({
             options={question.options}
             selectedOption={answer}
             onSelect={setAnswer}
+            autoFocus={questionNo === 1}
           />
         );
       case 'dropdown':
@@ -39,6 +40,7 @@ const TestQuestion: React.FC<Props> = ({
             options={question.options}
             selectedOption={answer}
             onSelect={setAnswer}
+            autoFocus={questionNo === 1}
           />
         );
       case 'slider':
@@ -52,11 +54,11 @@ const TestQuestion: React.FC<Props> = ({
       case 'text':
         return (
           <TextArea
-            autoFocus
             text={testAnswer.answer?.label ?? ''}
             onChange={(text: string) =>
               setAnswer({ id: -1, label: text ?? '' })
             }
+            autoFocus={questionNo === 1}
           />
         );
       case 'none':
@@ -66,7 +68,7 @@ const TestQuestion: React.FC<Props> = ({
     }
   };
 
-  const questionNumber = questionNo !== undefined ? `${questionNo + 1}) ` : '';
+  const questionNumber = questionNo !== undefined ? `${questionNo}) ` : '';
 
   return (
     <div>

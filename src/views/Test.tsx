@@ -201,8 +201,10 @@ export const Test: React.FC = observer(() => {
     }
   };
 
+  const getQuestionNo = () => Number(testProgress.currentQuestion) + 1;
+
   const getProgressText = () => {
-    const current = (testProgress.currentQuestion ?? 0) + 1;
+    const current = getQuestionNo();
     const total = testProgress.testAnswers.length;
     return t('view.test.progressText', { current, total });
   };
@@ -246,7 +248,7 @@ export const Test: React.FC = observer(() => {
     <Layout wrapperSize="sm" hero={hero} isLoading={isBusy}>
       {currentTestAnswer && (
         <TestQuestion
-          questionNo={testProgress.currentQuestion}
+          questionNo={getQuestionNo()}
           testAnswer={currentTestAnswer}
           setAnswer={setAnswer(currentTestAnswer.question.id)}
         />

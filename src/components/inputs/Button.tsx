@@ -112,6 +112,7 @@ interface Props {
   hidden?: boolean;
   isSmall?: boolean;
   noMargin?: boolean;
+  autoFocus?: boolean;
   ariaLabel?: string;
 }
 
@@ -128,6 +129,7 @@ export const Button: FC<Props> = ({
   hidden = false,
   isSmall = false,
   noMargin = false,
+  autoFocus = false,
   ariaLabel,
 }) => {
   const isIconButton = !!icon && !text;
@@ -153,6 +155,7 @@ export const Button: FC<Props> = ({
       negativeText={negativeText}
       isSmall={isSmall || isIconButton}
       noMargin={noMargin}
+      autoFocus={autoFocus}
     >
       {text}
       {icon}
