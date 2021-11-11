@@ -4,7 +4,7 @@ import { QuestionModel } from './QuestionModel';
 
 const OutcomeTypes = [
   'total_points' as const,
-  'suitablitity_of_answers' as const,
+  'suitability_of_answers' as const,
 ];
 export type OutcomeType = typeof OutcomeTypes[number];
 
