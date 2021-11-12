@@ -203,6 +203,18 @@ export class Api extends BaseApi {
     const response = await this.api.get(`tests`, params, this.auth());
     return this.handleResponse(response);
   }
+
+  /**
+   * Fetch test outcome based on given answers
+   */
+  async getTestOutcome({
+    slug,
+    ...params
+  }: API.GetTestOutcome): Promise<Response<API.RES.GetTestOutcome>> {
+    const url = `tests/${slug}/outcome`;
+    const response = await this.api.post(url, params, this.auth());
+    return this.handleResponse(response);
+  }
 }
 
 export const api = new Api();

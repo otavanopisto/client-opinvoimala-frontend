@@ -89,6 +89,13 @@ declare namespace API {
     id?: number;
     slug?: string;
   };
+  type GetTestOutcome = {
+    slug: string;
+    answers: {
+      answerId?: number;
+      questionId: number;
+    }[];
+  };
 
   /**
    * API RESPONSES
@@ -108,8 +115,8 @@ declare namespace API {
     type GetSettings = import('../../store/SettingsStore').Settings;
     type GetNavigation = import('../../store/NavigationStore').Navigation;
     type GetFrontPage = import('../../store/FrontPageStore').FrontPage;
-    type GetContentPage = import('../../store/ContentPageStore').Page;
-    type GetContentPages = import('../../store/ContentPageStore').Page[];
+    type GetContentPage = import('../../store/models').Page;
+    type GetContentPages = import('../../store/models').Page[];
     type GetAppointments =
       import('../../store/AppointmentsStore').Appointment[];
     type GetUserAppointments =
@@ -118,8 +125,9 @@ declare namespace API {
     type MakeAppointment = {
       data: import('../../store/AppointmentsStore').Appointment;
     };
-    type GetTestCategories = import('../../store/TestsStore').Category[];
-    type GetExercises = import('../../store/TestsStore').SimpleTest[];
-    type GetTests = import('../../store/TestsStore').FullTest[];
+    type GetTestCategories = import('../../store/models/tests').TestCategory[];
+    type GetExercises = import('../../store/models/tests').SimpleTest[];
+    type GetTests = import('../../store/models/tests').Test[];
+    type GetTestOutcome = import('../../store/models/tests').TestOutcomes;
   }
 }

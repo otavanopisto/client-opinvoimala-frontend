@@ -9,6 +9,10 @@ import {
 import i18n from '../i18n';
 import api from '../services/api/Api';
 import { TestCategoryModel, SimpleTestModel, Test, TestModel } from './models';
+import {
+  TestOutcomes,
+  TestOutcomesModel,
+} from './models/tests/TestOutcomeModel';
 
 const make404Test = (params: API.GetContentPages, name: string): Test => ({
   id: params.id ?? -1,
@@ -44,6 +48,9 @@ export const TestsStore = types
 
     testState: types.enumeration('State', TestStates),
     testData: types.maybe(types.array(TestModel)),
+
+    testOutcomeState: types.enumeration('State', TestStates),
+    testOutcomeData: types.maybe(types.array(TestOutcomesModel)),
   })
   .views(self => ({
     get categories() {
@@ -123,6 +130,34 @@ export const TestsStore = types
       }
     });
 
+    const fetchTestOutcome = flow(function* (params: API.GetTestOutcome) {
+      self.testOutcomeState = 'FETCHING';
+
+      const response: API.GeneralResponse<API.RES.GetTestOutcome> =
+        yield api.getTestOutcome(params);
+
+      const updateTestOutcomes = (outcome: TestOutcomes) => {
+        const oldOutcomes = self.testOutcomeData?.filter(
+          ({ id }) => id !== outcome.id
+        );
+        return [...(oldOutcomes ?? []), outcome];
+      };
+
+      if (response.kind === 'ok') {
+        const outcome = response.data;
+        const outcomes = updateTestOutcomes(outcome);
+
+        self.testOutcomeData = cast(outcomes);
+        self.testOutcomeState = 'IDLE';
+      } else if (response.data.statusCode === 403) {
+        self.testOutcomeState = 'UNAUTHORIZED';
+        throw response.data;
+      } else {
+        console.log(response.data);
+        self.testOutcomeState = 'ERROR';
+      }
+    });
+
     return {
       afterCreate: () => {
         initialState = getSnapshot(self);
@@ -133,6 +168,7 @@ export const TestsStore = types
       fetchCategories,
       fetchExercises,
       fetchTest,
+      fetchTestOutcome,
     };
   });
 
