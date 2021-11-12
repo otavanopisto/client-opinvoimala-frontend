@@ -19,7 +19,8 @@
     "go_back": "Takaisin",
     "previous": "Edellinen",
     "continue": "Jatka",
-    "show_result": "Näytä tulos"
+    "show_result": "Näytä tulos",
+    "select": "Valitse"
   },
   "label": {
     "name": "Nimi",
