@@ -7,8 +7,6 @@ export const TestOutcomeModel = types.model({
   content: types.maybeNull(types.string),
   image: types.maybeNull(ImageModel),
   stars: types.maybeNull(types.number),
-  points: types.maybeNull(types.number),
-  maximumPoints: types.maybeNull(types.number),
   // TODO: Link list
 });
 
