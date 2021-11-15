@@ -130,6 +130,25 @@ export const TestsStore = types
       }
     });
 
+    const setCompletedByUserForTest = function (slug: string) {
+      self.categoriesData = cast(
+        self.categoriesData?.map(category => ({
+          ...category,
+          tests: category.tests.map(test => ({
+            ...test,
+            completedByUser: test.slug === slug ? true : test.completedByUser,
+          })),
+        }))
+      );
+
+      self.exercisesData = cast(
+        self.exercisesData?.map(test => ({
+          ...test,
+          completedByUser: test.slug === slug ? true : test.completedByUser,
+        }))
+      );
+    };
+
     const fetchTestOutcome = flow(function* (params: API.GetTestOutcome) {
       self.testOutcomeState = 'FETCHING';
 
@@ -149,6 +168,9 @@ export const TestsStore = types
 
         self.testOutcomeData = cast(outcomes);
         self.testOutcomeState = 'IDLE';
+
+        // Update categories/exercises data after completed test
+        setCompletedByUserForTest(outcome.slug);
       } else if (response.data.statusCode === 403) {
         self.testOutcomeState = 'UNAUTHORIZED';
         throw response.data;

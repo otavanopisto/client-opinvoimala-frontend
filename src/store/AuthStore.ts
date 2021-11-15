@@ -5,6 +5,7 @@ import {
   cast,
   SnapshotOut,
   SnapshotIn,
+  getParent,
 } from 'mobx-state-tree';
 import api from '../services/api/Api';
 import Storage from '../services/storage';
@@ -75,6 +76,10 @@ export const AuthStore = types
       );
 
       if (response.kind === 'ok') {
+        // Reset tests store after successful login:
+        const { tests } = getParent(self);
+        tests.reset();
+
         self.user = cast(response.data.user);
         self.jwt = cast(response.data.jwt);
         self.state = 'IDLE';

@@ -17,6 +17,7 @@ export const TestOutcomesModel = types.model({
   slug: types.string, // Test slug
   points: types.maybeNull(types.number),
   maximumPoints: types.maybeNull(types.number),
+  stars: types.maybeNull(types.number),
   matchingOutcomes: types.array(TestOutcomeModel),
   triggerOutcomes: types.array(TestOutcomeModel),
   allOutcomes: types.maybeNull(types.array(TestOutcomeModel)),

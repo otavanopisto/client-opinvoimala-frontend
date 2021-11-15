@@ -15,12 +15,19 @@ const Container = styled.article<{ isLocked?: boolean }>`
   ${p => p.theme.shadows[0]};
 
   main {
+    position: relative;
     background-color: ${p => (p.isLocked ? p.theme.color.grey3 : 'none')};
     border-bottom: 2px solid ${p => p.theme.color.background};
     border-top-left-radius: ${p => p.theme.borderRadius.sm};
     border-top-right-radius: ${p => p.theme.borderRadius.sm};
     flex: 1;
     padding: ${p => p.theme.spacing.lg} ${p => p.theme.spacing.lg};
+
+    .card__badge {
+      position: absolute;
+      top: ${p => p.theme.spacing.lg};
+      right: ${p => p.theme.spacing.lg};
+    }
 
     h1 {
       ${p => p.theme.font.h4};
@@ -69,29 +76,33 @@ interface Props {
   text?: string | null;
   link?: LinkType | null;
   isLocked?: boolean;
+  badge?: JSX.Element | false | null;
 }
 
-const Card: React.FC<Props> = observer(({ title, text, link, isLocked }) => {
-  const {
-    auth: { isLoggedIn },
-  } = useStore();
+const Card: React.FC<Props> = observer(
+  ({ title, text, link, isLocked, badge }) => {
+    const {
+      auth: { isLoggedIn },
+    } = useStore();
 
-  const isLinkPublic = link ? linkIsPublic(link) : undefined;
+    const isLinkPublic = link ? linkIsPublic(link) : undefined;
 
-  return (
-    <Container isLocked={isLocked || (!isLinkPublic && !isLoggedIn)}>
-      <main>
-        {title && <h1>{title}</h1>}
-        {text && <p>{text}</p>}
-      </main>
+    return (
+      <Container isLocked={isLocked || (!isLinkPublic && !isLoggedIn)}>
+        <main>
+          {title && <h1>{title}</h1>}
+          {text && <p>{text}</p>}
+          {badge && <div className="card__badge">{badge}</div>}
+        </main>
 
-      {link && (
-        <footer>
-          <Link link={link} label={link.label} showArrow center />
-        </footer>
-      )}
-    </Container>
-  );
-});
+        {link && (
+          <footer>
+            <Link link={link} label={link.label} showArrow center />
+          </footer>
+        )}
+      </Container>
+    );
+  }
+);
 
 export default Card;
