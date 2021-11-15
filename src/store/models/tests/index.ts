@@ -3,3 +3,4 @@ export * from './QuestionOptionModel';
 export * from './SimpleTestModel';
 export * from './TestCategoryModel';
 export * from './TestModel';
+export * from './TestOutcomeModel';

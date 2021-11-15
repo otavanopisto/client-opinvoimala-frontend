@@ -48,7 +48,7 @@ export const Test: React.FC = observer(() => {
 
   const {
     auth: { openLoginModal, isLoggedIn },
-    tests: { testState, getTest, fetchTest },
+    tests: { testState, getTest, fetchTest, fetchTestOutcome },
   } = useStore();
 
   const test = getTest(slug);
@@ -129,7 +129,18 @@ export const Test: React.FC = observer(() => {
   }, [fetchFailCount, fetchTestFromApi, isLoggedIn, test, slug, testState]);
 
   const handleTestCompleted = () => {
-    console.log('TODO: Test is now completed, show results!');
+    const completedTest = {
+      slug: testProgress.slug,
+      answers: testProgress.testAnswers.map(({ answer, question }) => ({
+        questionId: question.id,
+        answerId: answer?.id,
+      })),
+    };
+
+    fetchTestOutcome(completedTest);
+
+    // TODO: hitory.push(`/${path('tests)}/${slug}/${path('outcome)}`)
+
     if (SAVE_PROGRESS_TO_STORAGE) clearTestFromStorage(testProgress.slug);
   };
 
