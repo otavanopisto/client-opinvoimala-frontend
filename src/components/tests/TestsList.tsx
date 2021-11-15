@@ -75,6 +75,9 @@ const TestsList: React.FC<Props> = ({ title, items, initialItemCount = 3 }) => {
               title={test.name}
               text={test.description}
               link={getLink(test)}
+              badge={
+                test.completedByUser && <Icon type="Completed" width={28} />
+              }
             />
           </Grid.Column>
         ))}

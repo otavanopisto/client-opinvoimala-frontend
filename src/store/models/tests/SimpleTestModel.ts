@@ -7,6 +7,7 @@ export const SimpleTestModel = types.model({
   description: types.maybeNull(types.string),
   type: types.enumeration(['test', 'exercise']),
   isPublic: types.boolean,
+  completedByUser: types.maybeNull(types.boolean),
 });
 
 export interface SimpleTest extends SnapshotOut<typeof SimpleTestModel> {}

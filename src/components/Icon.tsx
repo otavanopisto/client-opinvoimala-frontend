@@ -8,6 +8,7 @@ import { ReactComponent as ChevronDown } from '../assets/icons/chevron-down.svg'
 import { ReactComponent as ChevronLeft } from '../assets/icons/chevron-left.svg';
 import { ReactComponent as ChevronUp } from '../assets/icons/chevron-up.svg';
 import { ReactComponent as Close } from '../assets/icons/close.svg';
+import { ReactComponent as Completed } from '../assets/icons/completed-check.svg';
 import { ReactComponent as Lock } from '../assets/icons/lock.svg';
 import { ReactComponent as Menu } from '../assets/icons/menu.svg';
 import { ReactComponent as Plus } from '../assets/icons/plus.svg';
@@ -22,6 +23,7 @@ const Icons = {
   ChevronLeft,
   ChevronUp,
   Close,
+  Completed,
   Lock,
   Menu,
   Plus,
