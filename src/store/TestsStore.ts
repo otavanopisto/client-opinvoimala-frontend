@@ -68,6 +68,14 @@ export const TestsStore = types
       );
       return test ? getSnapshot(test) : undefined;
     },
+
+    getTestOutcome(slug: string | number) {
+      const testId = Number(slug);
+      const outcome = self.testOutcomeData?.find(outcome =>
+        testId ? outcome.id === testId : outcome.slug === slug
+      );
+      return outcome ? getSnapshot(outcome) : undefined;
+    },
   }))
   .actions(self => {
     let initialState = {};

@@ -36,6 +36,7 @@
     "content_page": "Sivu",
     "my_profile": "Oma profiili",
     "tests": "Testit ja harjoitukset",
+    "outcome": "Lopputulema",
     "appointments": "Varaukset",
     "change_password": "Vaihda salasana",
     "forgot_password": "Salasana unohtunut",
@@ -68,6 +69,9 @@
     },
     "test": {
       "progressText": "Kysymys {{current}}/{{total}}"
+    },
+    "test_outcome": {
+      "points": "Pisteet"
     },
     "appointments": {
       "no_appointments": "Ei vielä varauksia.",

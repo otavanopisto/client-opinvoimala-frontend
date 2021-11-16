@@ -139,7 +139,7 @@ export const Test: React.FC = observer(() => {
 
     fetchTestOutcome(completedTest);
 
-    // TODO: hitory.push(`/${path('tests)}/${slug}/${path('outcome)}`)
+    history.push(`/${path('tests')}/${slug}/${path('outcome')}`);
 
     if (SAVE_PROGRESS_TO_STORAGE) clearTestFromStorage(testProgress.slug);
   };
