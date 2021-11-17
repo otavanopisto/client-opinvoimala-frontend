@@ -71,7 +71,8 @@
       "progressText": "Kysymys {{current}}/{{total}}"
     },
     "test_outcome": {
-      "points": "Pisteet"
+      "points": "Pisteet",
+      "no_matching_outcomes": "Yhtään vastauksiisi sopivaa lopputulemaa ei löytynyt."
     },
     "appointments": {
       "no_appointments": "Ei vielä varauksia.",

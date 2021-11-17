@@ -157,18 +157,18 @@ export const TestsStore = types
       );
     };
 
-    const fetchTestOutcome = flow(function* (params: API.GetTestOutcome) {
+    const updateTestOutcomes = (outcome: TestOutcomes) => {
+      const oldOutcomes = self.testOutcomeData?.filter(
+        ({ id }) => id !== outcome.id
+      );
+      return [...(oldOutcomes ?? []), outcome];
+    };
+
+    const createTestOutcome = flow(function* (params: API.CreateTestOutcome) {
       self.testOutcomeState = 'FETCHING';
 
-      const response: API.GeneralResponse<API.RES.GetTestOutcome> =
-        yield api.getTestOutcome(params);
-
-      const updateTestOutcomes = (outcome: TestOutcomes) => {
-        const oldOutcomes = self.testOutcomeData?.filter(
-          ({ id }) => id !== outcome.id
-        );
-        return [...(oldOutcomes ?? []), outcome];
-      };
+      const response: API.GeneralResponse<API.RES.CreateTestOutcome> =
+        yield api.createTestOutcome(params);
 
       if (response.kind === 'ok') {
         const outcome = response.data;
@@ -188,6 +188,27 @@ export const TestsStore = types
       }
     });
 
+    const fetchTestOutcome = flow(function* (params: API.GetTestOutcome) {
+      self.testOutcomeState = 'FETCHING';
+
+      const response: API.GeneralResponse<API.RES.GetTestOutcome> =
+        yield api.getTestOutcome(params);
+
+      if (response.kind === 'ok') {
+        const outcome = response.data;
+        const outcomes = updateTestOutcomes(outcome);
+
+        self.testOutcomeData = cast(outcomes);
+        self.testOutcomeState = 'IDLE';
+      } else if (response.data.statusCode === 403) {
+        self.testOutcomeState = 'UNAUTHORIZED';
+        throw response.data;
+      } else {
+        console.log(response.data);
+        self.testOutcomeState = 'ERROR';
+      }
+    });
+
     return {
       afterCreate: () => {
         initialState = getSnapshot(self);
@@ -198,6 +219,7 @@ export const TestsStore = types
       fetchCategories,
       fetchExercises,
       fetchTest,
+      createTestOutcome,
       fetchTestOutcome,
     };
   });

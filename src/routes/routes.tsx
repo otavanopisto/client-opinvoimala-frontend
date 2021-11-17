@@ -10,7 +10,7 @@ import {
   Test,
   Tests,
   UserAppointments,
-  TestOutcome,
+  TestOutcomes,
 } from '../views';
 import { slug } from '../utils/string';
 
@@ -98,7 +98,7 @@ const appRoutes: (Route | NavLinkRoute)[] = [
   },
   {
     path: `/${path('tests')}/:slug/${path('outcome')}`,
-    component: () => <TestOutcome />,
+    component: () => <TestOutcomes />,
     exact: true,
     isPublic: true,
   },

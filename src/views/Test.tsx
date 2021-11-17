@@ -48,7 +48,7 @@ export const Test: React.FC = observer(() => {
 
   const {
     auth: { openLoginModal, isLoggedIn },
-    tests: { testState, getTest, fetchTest, fetchTestOutcome },
+    tests: { testState, getTest, fetchTest, createTestOutcome },
   } = useStore();
 
   const test = getTest(slug);
@@ -137,7 +137,7 @@ export const Test: React.FC = observer(() => {
       })),
     };
 
-    fetchTestOutcome(completedTest);
+    createTestOutcome(completedTest);
 
     history.push(`/${path('tests')}/${slug}/${path('outcome')}`);
 

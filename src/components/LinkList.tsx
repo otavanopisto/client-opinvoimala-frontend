@@ -48,7 +48,7 @@ const LinkList: React.FC<Props> = ({ list }) => {
 
   return (
     <Container>
-      <h1>{title}</h1>
+      {title && <h1>{title}</h1>}
 
       <ul>
         {links.map(link => (

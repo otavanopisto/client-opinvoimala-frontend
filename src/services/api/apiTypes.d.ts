@@ -89,12 +89,15 @@ declare namespace API {
     id?: number;
     slug?: string;
   };
-  type GetTestOutcome = {
+  type CreateTestOutcome = {
     slug: string;
     answers: {
       answerId?: number;
       questionId: number;
     }[];
+  };
+  type GetTestOutcome = {
+    slug: string;
   };
 
   /**
@@ -128,6 +131,7 @@ declare namespace API {
     type GetTestCategories = import('../../store/models/tests').TestCategory[];
     type GetExercises = import('../../store/models/tests').SimpleTest[];
     type GetTests = import('../../store/models/tests').Test[];
+    type CreateTestOutcome = import('../../store/models/tests').TestOutcomes;
     type GetTestOutcome = import('../../store/models/tests').TestOutcomes;
   }
 }
