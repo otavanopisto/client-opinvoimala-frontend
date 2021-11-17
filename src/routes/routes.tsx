@@ -11,7 +11,9 @@ import {
   Tests,
   UserAppointments,
   TestOutcomes,
+  WellBeingProfile,
 } from '../views';
+import Unauthorized from '../views/Unauthorized';
 import { slug } from '../utils/string';
 
 interface ComponentProps {
@@ -36,6 +38,11 @@ export const rt = (routeKey: string) => i18n.t(`route.${routeKey}`);
 // E.g. "Front Page" becomes "front-page" (these are used in url)
 export const path = (routeKey: string) => slug(rt(routeKey));
 
+const checkAuth = (component: JSX.Element, isUnauthorized?: boolean) => {
+  if (isUnauthorized === undefined || isUnauthorized) return <Unauthorized />;
+  return component;
+};
+
 const appRoutes: (Route | NavLinkRoute)[] = [
   { path: '/', component: () => <FrontPage />, exact: true, isPublic: true },
   {
@@ -58,17 +65,13 @@ const appRoutes: (Route | NavLinkRoute)[] = [
   },
   {
     path: `/${path('appointments')}`,
-    component: props => (
-      <UserAppointments unauthorized={props?.unauthorized ?? true} />
-    ),
+    component: props => checkAuth(<UserAppointments />, props?.unauthorized),
     exact: true,
     isPublic: false,
   },
   {
     path: `/${path('change_password')}`,
-    component: props => (
-      <ChangePassword unauthorized={props?.unauthorized ?? true} />
-    ),
+    component: props => checkAuth(<ChangePassword />, props?.unauthorized),
     exact: true,
     isPublic: false,
   },
@@ -101,6 +104,12 @@ const appRoutes: (Route | NavLinkRoute)[] = [
     component: () => <TestOutcomes />,
     exact: true,
     isPublic: true,
+  },
+  {
+    path: `/${path('well_being_profile')}`,
+    component: props => checkAuth(<WellBeingProfile />, props?.unauthorized),
+    exact: true,
+    isPublic: false,
   },
 ];
 

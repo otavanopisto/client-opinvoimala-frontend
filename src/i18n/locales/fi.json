@@ -6,7 +6,7 @@
   "annotation": {
     "nb": "Huom!",
     "test": "Tämän testin tulokset eivät perustu tieteellisiin menetelmiin, eikä niitä tule ottaa tosissaan.",
-    "user_profile": "Tämän testin tulokset eivät perustu tieteellisiin menetelmiin, eikä niitä tule ottaa tosissaan."
+    "well_being_profile": "Tämän profiilin tulokset eivät perustu tieteellisiin menetelmiin, eikä niitä tule ottaa tosissaan."
   },
   "action": {
     "register": "Rekisteröidy",
@@ -20,7 +20,8 @@
     "previous": "Edellinen",
     "continue": "Jatka",
     "show_result": "Näytä tulos",
-    "select": "Valitse"
+    "select": "Valitse",
+    "download": "Lataa"
   },
   "label": {
     "name": "Nimi",
@@ -34,7 +35,7 @@
     "register": "Rekisteröidy",
     "front_page": "Etusivu",
     "content_page": "Sivu",
-    "my_profile": "Oma profiili",
+    "well_being_profile": "Oma profiili",
     "tests": "Testit ja harjoitukset",
     "outcome": "Lopputulema",
     "appointments": "Varaukset",
@@ -53,6 +54,18 @@
     "unauthorized": {
       "title": "Kirjaudu sisään",
       "lead": "Kirjaudu sisään nähdäksesi tämän sivun sisällön"
+    },
+    "well_being_profile": {
+      "title": "Oma profiilisi",
+      "welcome": "Tervetuloa",
+      "instructions": "Aloita suorittamalla testejä ja tee niihin liittyviä harjoituksia!",
+      "tests_by_category": "Tutustu aiheen testeihin",
+      "no_tests_completed": "Ei suoritettuja testejä",
+      "completed_tests": "Suoritetut testit ja harjoitukset",
+      "tests": "Testit",
+      "all_tests": "Kaikki testit",
+      "exercises": "Harjoitukset",
+      "all_exercises": "Lisää harjoituksia"
     },
     "content_pages": {
       "error": "Virhe",
