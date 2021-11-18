@@ -8,6 +8,15 @@ export const SimpleTestModel = types.model({
   type: types.enumeration(['test', 'exercise']),
   isPublic: types.boolean,
   completedByUser: types.maybeNull(types.boolean),
+
+  categories: types.maybe(
+    types.array(
+      types.model({
+        id: types.number,
+        label: types.string,
+      })
+    )
+  ),
 });
 
 export interface SimpleTest extends SnapshotOut<typeof SimpleTestModel> {}

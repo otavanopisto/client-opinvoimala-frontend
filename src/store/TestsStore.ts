@@ -16,6 +16,7 @@ import {
   TestOutcomes,
   TestOutcomesModel,
   TestsSummaryModel,
+  SimpleTest,
 } from './models';
 
 const make404Test = (params: API.GetContentPages, name: string): Test => ({
@@ -66,6 +67,37 @@ export const TestsStore = types
 
     get exercises() {
       return self.exercisesData ? getSnapshot(self.exercisesData) : undefined;
+    },
+
+    // Concatenates all tests from categories
+    get allTests() {
+      const allTests = this.categories?.reduce(
+        (arr: SimpleTest[], { id, label, tests }) => {
+          const testsWithCategories = tests.map(test => ({
+            ...test,
+            categories: [{ id, label }],
+          }));
+          return [...arr, ...testsWithCategories];
+        },
+        []
+      );
+
+      const uniqueTests: { [key: string]: SimpleTest } = {};
+      allTests?.forEach(test => {
+        const existingCategories = uniqueTests[test.id]?.categories ?? [];
+        const currentCategories = test.categories ?? [];
+        uniqueTests[test.id] = {
+          ...test,
+          // Group all categories where test belongs
+          categories: [...existingCategories, ...currentCategories],
+        };
+      });
+
+      const tests = Object.keys(uniqueTests).map(
+        (key: string) => uniqueTests[key]
+      );
+
+      return tests ?? [];
     },
 
     get testsSummary() {
