@@ -9,9 +9,9 @@ const Container = styled.div`
   gap: ${p => p.theme.spacing.sm};
 `;
 
-const Star = styled.div<{ fullStarWidth: number; width?: number }>`
+const Star = styled.div<{ fullStarWidth: number; width: number }>`
   height: ${p => p.fullStarWidth}px;
-  width: ${p => (p.width ? p.width : p.fullStarWidth)}px;
+  width: ${p => p.width}px;
   background-size: ${p => p.fullStarWidth}px;
   background-image: url(${StarSvg});
   background-position: left;
@@ -19,10 +19,7 @@ const Star = styled.div<{ fullStarWidth: number; width?: number }>`
 
   @media ${p => p.theme.breakpoint.mobile} {
     height: ${p => p.fullStarWidth}px;
-    width: ${p =>
-      p.width
-        ? p.width * MOBILE_STAR_SIZE
-        : p.fullStarWidth * MOBILE_STAR_SIZE}px;
+    width: ${p => p.width * MOBILE_STAR_SIZE}px;
     background-size: ${p => p.fullStarWidth * MOBILE_STAR_SIZE}px;
   }
 `;
@@ -43,6 +40,10 @@ const Stars: React.FC<Props> = ({ stars, starWidth = 40 }) => {
 
   if (lastStarWidth) {
     starObjects.push({ id: starObjects.length, width: lastStarWidth });
+  }
+
+  if (!starObjects.length) {
+    starObjects.push({ id: -1, width: 0 });
   }
 
   return (

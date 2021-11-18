@@ -231,7 +231,6 @@ export const TestsStore = types
         yield api.getTestsSummary(params);
 
       if (response.kind === 'ok') {
-        console.log(response.data);
         self.testsSummaryData = response.data ? cast(response.data) : undefined;
         self.testsSummaryState = 'IDLE';
       } else if (response.data.statusCode === 403) {

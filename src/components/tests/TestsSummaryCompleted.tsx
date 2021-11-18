@@ -5,7 +5,7 @@ import { TestsSummaryCategory } from '../../store/models';
 
 const Container = styled.div`
   h1 {
-    ${p => p.theme.font.h3};
+    ${p => p.theme.font.h4};
   }
 
   ul {
@@ -63,8 +63,8 @@ const TestsSummaryCompleted: React.FC<Props> = ({ categories }) => {
     <Container>
       <h1>{t('view.well_being_profile.completed_tests')}</h1>
       <ul>
-        {categories?.map(({ label, completedTests, totalTests }) => (
-          <li>
+        {categories?.map(({ id, label, completedTests, totalTests }) => (
+          <li key={id}>
             <Label>
               <div>{label}</div>
               <div>{`${completedTests ?? 0}/${totalTests ?? 0}`}</div>

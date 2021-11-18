@@ -18,12 +18,18 @@ const StyledGrid = styled(Grid)`
 `;
 
 interface Props {
+  id: string;
   title: string;
   items: SimpleTest[];
   initialItemCount?: number;
 }
 
-const TestsList: React.FC<Props> = ({ title, items, initialItemCount = 3 }) => {
+const TestsList: React.FC<Props> = ({
+  id,
+  title,
+  items,
+  initialItemCount = 3,
+}) => {
   const { t } = useTranslation();
 
   const [itemCount, setItemCount] = useState(initialItemCount);
@@ -67,7 +73,7 @@ const TestsList: React.FC<Props> = ({ title, items, initialItemCount = 3 }) => {
 
   return (
     <>
-      <h2>{title}</h2>
+      <h2 id={id}>{title}</h2>
       <StyledGrid columns={3} stackable doubling stretched>
         {visibleItems.map(test => (
           <Grid.Column key={test.id}>

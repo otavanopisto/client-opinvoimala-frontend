@@ -13,6 +13,7 @@ export const WellBeingProfile: React.FC = observer(() => {
   } = useStore();
 
   const isBusy = testsSummaryState === 'FETCHING';
+  const initialLoading = !testsSummary && isBusy;
 
   useEffect(() => {
     fetchTestsSummary();
@@ -23,7 +24,7 @@ export const WellBeingProfile: React.FC = observer(() => {
   };
 
   return (
-    <Layout hero={hero} isLoading={isBusy}>
+    <Layout hero={hero} isLoading={initialLoading}>
       {testsSummary && <TestsSummary {...testsSummary} />}
     </Layout>
   );

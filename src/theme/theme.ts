@@ -14,6 +14,7 @@ export const COLORS = Object.freeze({
   grey: '#555555',
   grey2: '#4F4F4F',
   grey3: '#F4F5F7',
+  grey4: '#e0e0e0',
 
   foreground: '#000000',
   background: '#ffffff',

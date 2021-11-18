@@ -36,11 +36,15 @@ export const Tests: React.FC = observer(() => {
   return (
     <Layout hero={hero} isLoading={isBusy}>
       {categories?.map(({ id, label, tests }) => (
-        <TestsList key={id} title={label} items={tests} />
+        <TestsList id={`category-${id}`} key={id} title={label} items={tests} />
       ))}
 
       {exercises && (
-        <TestsList title={t('view.tests.exercises')} items={exercises} />
+        <TestsList
+          id={'exercises'}
+          title={t('view.tests.exercises')}
+          items={exercises}
+        />
       )}
     </Layout>
   );

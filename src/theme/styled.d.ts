@@ -12,6 +12,7 @@ interface Colors {
   grey: string;
   grey2: string;
   grey3: string;
+  grey4: string;
 
   foreground: string;
   background: string;
