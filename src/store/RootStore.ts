@@ -32,6 +32,7 @@ const RootStoreModel = types.model({
     exercisesState: 'NOT_FETCHED',
     testState: 'IDLE',
     testOutcomeState: 'IDLE',
+    testsSummaryState: 'IDLE',
   }),
 });
 

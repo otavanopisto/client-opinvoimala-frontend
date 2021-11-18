@@ -227,6 +227,17 @@ export class Api extends BaseApi {
     const response = await this.api.get(url, params, this.auth());
     return this.handleResponse(response);
   }
+
+  /**
+   * Fetch summary data of tests user has completed
+   */
+  async getTestsSummary(
+    params: API.GetTestsSummary
+  ): Promise<Response<API.RES.GetTestsSummary>> {
+    const url = `users/me/tests/summary`;
+    const response = await this.api.get(url, params, this.auth());
+    return this.handleResponse(response);
+  }
 }
 
 export const api = new Api();
