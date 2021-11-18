@@ -29,6 +29,21 @@ const make404Test = (params: API.GetContentPages, name: string): Test => ({
   questions: null,
 });
 
+const isNil = (item: any) => item === undefined || item === null;
+
+const sortTests = (a: SimpleTest, b: SimpleTest) => {
+  const getPrioritySort = () => {
+    if (isNil(a.priority) && isNil(b.priority)) return 0;
+    else if (isNil(a.priority)) return 1;
+    else if (isNil(b.priority)) return -1;
+    else return Number(a.priority) - Number(b.priority);
+  };
+
+  const priority = getPrioritySort();
+  const published = b.publishedAt.localeCompare(a.publishedAt);
+  return priority || published;
+};
+
 const States = [
   'NOT_FETCHED' as const,
   'FETCHING' as const,
@@ -93,11 +108,11 @@ export const TestsStore = types
         };
       });
 
-      const tests = Object.keys(uniqueTests).map(
-        (key: string) => uniqueTests[key]
-      );
+      const tests = Object.keys(uniqueTests)
+        .map((key: string) => uniqueTests[key])
+        .sort(sortTests);
 
-      return tests ?? [];
+      return tests;
     },
 
     get testsSummary() {
