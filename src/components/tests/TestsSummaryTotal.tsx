@@ -1,6 +1,8 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import Stars from '../Stars';
+import NoCompletedTests from './NoCompletedTests';
 
 const Container = styled.div`
   display: flex;
@@ -26,17 +28,40 @@ interface Props {
   stars?: number | null;
   text?: string | null;
   details?: string | null;
+  completedTests?: number | null;
 }
 
-const TestsSummaryTotal: React.FC<Props> = ({ stars, text, details }) => (
-  <Container>
-    {text && <h1>{text}</h1>}
-    {details && <div className="tests-summary-total__details">{details}</div>}
-    {stars && <Stars stars={stars} starWidth={60} />}
-    {stars && (
-      <div className="tests-summary-total__details">{`${stars ?? 0} / 5`}</div>
-    )}
-  </Container>
-);
+const TestsSummaryTotal: React.FC<Props> = ({
+  stars,
+  text,
+  details,
+  completedTests,
+}) => {
+  const { t } = useTranslation();
+
+  const defaultText = t('view.well_being_profile.welcome');
+  const instructionsText = t('view.well_being_profile.instructions');
+  const starsText = `${stars ?? 0} / 5`;
+
+  return (
+    <Container>
+      <h1>{text?.length ? text : defaultText}</h1>
+
+      <div className="tests-summary-total__details">
+        {details?.length ? details : instructionsText}
+      </div>
+
+      {!!completedTests ? (
+        <Stars stars={stars ?? 0} starWidth={60} />
+      ) : (
+        <NoCompletedTests />
+      )}
+
+      {stars !== null && stars !== undefined && (
+        <div className="tests-summary-total__details">{starsText}</div>
+      )}
+    </Container>
+  );
+};
 
 export default TestsSummaryTotal;

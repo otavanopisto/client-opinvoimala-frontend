@@ -5,6 +5,7 @@ export const TestsSummaryModel = types.model({
   stars: types.maybeNull(types.number),
   summaryText: types.maybeNull(types.string),
   detailsText: types.maybeNull(types.string),
+  completedTests: types.maybeNull(types.number),
   categories: types.maybeNull(types.array(TestsSummaryCategoryModel)),
 });
 

@@ -6,6 +6,7 @@ import { TestsSummaryCategory } from '../../store/models';
 import Stars from '../Stars';
 import { path } from '../../routes/routes';
 import { Icon } from 'semantic-ui-react';
+import NoCompletedTests from './NoCompletedTests';
 
 const Container = styled.div`
   height: 100%;
@@ -72,7 +73,7 @@ const TestsSummaryCategories: React.FC<Props> = ({ categories }) => {
   return (
     <Container>
       <ul>
-        {categories?.map(({ id, label, image, stars }) => (
+        {categories?.map(({ id, label, image, stars, completedTests }) => (
           <li key={id}>
             <div className="test-summary-categories__image">
               {image?.url && (
@@ -82,16 +83,24 @@ const TestsSummaryCategories: React.FC<Props> = ({ categories }) => {
 
             <div className="test-summary-categories__main">
               <h1>{label}</h1>
-              <Stars stars={stars ?? 0} />
+
+              {!!completedTests ? (
+                <Stars stars={stars ?? 0} />
+              ) : (
+                <NoCompletedTests />
+              )}
+
               <HashLink to={`/${path('tests')}#category-${id}`}>
                 {t('view.well_being_profile.tests_by_category')}
                 <Icon name="arrow right" />
               </HashLink>
             </div>
 
-            <div className="test-summary-categories__side">{`${
-              stars ?? 0
-            } / 5`}</div>
+            {stars !== null && stars !== undefined && (
+              <div className="test-summary-categories__side">
+                {`${stars ?? 0} / 5`}
+              </div>
+            )}
           </li>
         ))}
       </ul>

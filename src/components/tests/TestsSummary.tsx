@@ -27,6 +27,7 @@ const TestsSummary: React.FC<TestsSummaryType> = ({
   stars,
   summaryText,
   detailsText,
+  completedTests,
   categories,
 }) => {
   return (
@@ -43,8 +44,10 @@ const TestsSummary: React.FC<TestsSummaryType> = ({
             stars={stars}
             text={summaryText}
             details={detailsText}
+            completedTests={completedTests}
           />
         </SummaryBlock>
+
         <SummaryBlock>
           <TestsSummaryCompleted categories={categories} />
         </SummaryBlock>

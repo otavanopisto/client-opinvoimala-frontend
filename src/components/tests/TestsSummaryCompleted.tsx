@@ -40,7 +40,14 @@ const ProgressBar = styled.div<{ progress: number }>`
     height: 6px;
     width: ${p => p.progress}%;
     background-color: ${p => p.theme.color.progress};
-    border-radius: ${p => p.theme.borderRadius.sm};
+
+    border-top-left-radius: ${p => p.theme.borderRadius.sm};
+    border-bottom-left-radius: ${p => p.theme.borderRadius.sm};
+    border-top-right-radius: ${p =>
+      p.progress === 100 && p.theme.borderRadius.sm};
+    border-bottom-right-radius: ${p =>
+      p.progress === 100 && p.theme.borderRadius.sm};
+
     border-right-style: solid;
     border-right-color: ${p => p.theme.color.secondary};
     border-right-width: ${p => (p.progress < 100 ? 1 : 0)}px;
