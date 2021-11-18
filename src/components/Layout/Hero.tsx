@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router';
 import styled from 'styled-components';
 import { Image } from '../../store/models';
+import useWindowDimensions from '../../utils/hooks';
 import Icon from '../Icon';
 import { Button } from '../inputs';
 import Watermark from './Watermark';
@@ -26,15 +27,6 @@ const Container = styled.div`
       right: 0;
       top: 0;
       width: 30%;
-
-      > img {
-        :not(.is-small) {
-          width: 300px;
-        }
-        &.is-small {
-          width: 150px;
-        }
-      }
     }
 
     &__side-column-placeholder {
@@ -62,30 +54,16 @@ const Container = styled.div`
         width: 100%;
       }
       &__main-column {
-        position: relative;
-        z-index: 1;
         h1 {
           line-height: 43px;
         }
         &.align-center {
           text-align: center;
         }
-      }
-      &__side-column {
-        text-align: center;
-        & > img {
-          :not(.is-small) {
-            margin-top: ${p => p.theme.spacing.xl};
-            margin-bottom: -50px;
-            width: 75%;
-          }
-          &.is-small {
-            width: 100px;
-            position: absolute;
-            right: ${p => p.theme.spacing.md};
-            top: ${p => p.theme.spacing.lg};
-            z-index: 0;
-          }
+        > img {
+          width: 80px;
+          float: left;
+          margin-right: ${p => p.theme.spacing.lg};
         }
       }
     }
@@ -115,6 +93,7 @@ const Hero: React.FC<HeroProps> = ({
 }) => {
   const { t } = useTranslation();
   const history = useHistory();
+  const { isMobile } = useWindowDimensions();
 
   const handleGoBack = () => {
     if (onGoBackClick) {
@@ -138,6 +117,10 @@ const Hero: React.FC<HeroProps> = ({
     />
   );
 
+  const imageEl = !image?.url ? undefined : (
+    <img src={image?.url} alt="" width={smallImage ? '150px' : '300px'} />
+  );
+
   return (
     <Container>
       <Watermark isNegative left={-220} top={40} />
@@ -145,18 +128,13 @@ const Hero: React.FC<HeroProps> = ({
       <div className={`hero__main-column align-${align}`}>
         {(showGoBack || goBackText || onGoBackClick) && goBackButton}
         <h1>{title}</h1>
+        {isMobile && imageEl}
         <div>{lead}</div>
       </div>
 
-      {image && (
+      {imageEl && !isMobile && (
         <>
-          <div className="hero__side-column">
-            <img
-              src={image?.url}
-              alt=""
-              className={smallImage ? 'is-small' : ''}
-            />
-          </div>
+          <div className="hero__side-column">{imageEl}</div>
           <div className="hero__side-column-placeholder"></div>
         </>
       )}
