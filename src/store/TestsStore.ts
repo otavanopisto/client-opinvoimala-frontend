@@ -8,11 +8,15 @@ import {
 } from 'mobx-state-tree';
 import i18n from '../i18n';
 import api from '../services/api/Api';
-import { TestCategoryModel, SimpleTestModel, Test, TestModel } from './models';
 import {
+  TestCategoryModel,
+  SimpleTestModel,
+  Test,
+  TestModel,
   TestOutcomes,
   TestOutcomesModel,
-} from './models/tests/TestOutcomeModel';
+  TestsSummaryModel,
+} from './models';
 
 const make404Test = (params: API.GetContentPages, name: string): Test => ({
   id: params.id ?? -1,
@@ -51,6 +55,9 @@ export const TestsStore = types
 
     testOutcomeState: types.enumeration('State', TestStates),
     testOutcomeData: types.maybe(types.array(TestOutcomesModel)),
+
+    testsSummaryState: types.enumeration('State', TestStates),
+    testsSummaryData: types.maybe(TestsSummaryModel),
   })
   .views(self => ({
     get categories() {
@@ -59,6 +66,12 @@ export const TestsStore = types
 
     get exercises() {
       return self.exercisesData ? getSnapshot(self.exercisesData) : undefined;
+    },
+
+    get testsSummary() {
+      return self.testsSummaryData
+        ? getSnapshot(self.testsSummaryData)
+        : undefined;
     },
 
     getTest(slug: string | number) {
@@ -209,6 +222,27 @@ export const TestsStore = types
       }
     });
 
+    const fetchTestsSummary = flow(function* (
+      params: API.GetTestsSummary = {}
+    ) {
+      self.testsSummaryState = 'FETCHING';
+
+      const response: API.GeneralResponse<API.RES.GetTestsSummary> =
+        yield api.getTestsSummary(params);
+
+      if (response.kind === 'ok') {
+        console.log(response.data);
+        self.testsSummaryData = response.data ? cast(response.data) : undefined;
+        self.testsSummaryState = 'IDLE';
+      } else if (response.data.statusCode === 403) {
+        self.testsSummaryState = 'UNAUTHORIZED';
+        throw response.data;
+      } else {
+        console.log(response.data);
+        self.testsSummaryState = 'ERROR';
+      }
+    });
+
     return {
       afterCreate: () => {
         initialState = getSnapshot(self);
@@ -221,6 +255,7 @@ export const TestsStore = types
       fetchTest,
       createTestOutcome,
       fetchTestOutcome,
+      fetchTestsSummary,
     };
   });
 

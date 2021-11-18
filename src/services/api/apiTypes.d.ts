@@ -99,6 +99,7 @@ declare namespace API {
   type GetTestOutcome = {
     slug: string;
   };
+  type GetTestsSummary = {};
 
   /**
    * API RESPONSES
@@ -128,10 +129,11 @@ declare namespace API {
     type MakeAppointment = {
       data: import('../../store/AppointmentsStore').Appointment;
     };
-    type GetTestCategories = import('../../store/models/tests').TestCategory[];
-    type GetExercises = import('../../store/models/tests').SimpleTest[];
-    type GetTests = import('../../store/models/tests').Test[];
-    type CreateTestOutcome = import('../../store/models/tests').TestOutcomes;
-    type GetTestOutcome = import('../../store/models/tests').TestOutcomes;
+    type GetTestCategories = import('../../store/models').TestCategory[];
+    type GetExercises = import('../../store/models').SimpleTest[];
+    type GetTests = import('../../store/models').Test[];
+    type CreateTestOutcome = import('../../store/models').TestOutcomes;
+    type GetTestOutcome = import('../../store/models').TestOutcomes;
+    type GetTestsSummary = import('../../store/models').TestsSummary;
   }
 }
