@@ -20,16 +20,21 @@ const Container = styled.div`
     height: 100%;
     list-style-type: none;
     padding: 0;
+    margin: 0;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
 
     li {
+      position: relative;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      border-bottom: 1px solid ${p => p.theme.color.grey4};
       padding: ${p => p.theme.spacing.md};
+
+      :not(:last-child) {
+        border-bottom: 1px solid ${p => p.theme.color.grey4};
+      }
 
       a {
         display: inline-block;
@@ -46,7 +51,6 @@ const Container = styled.div`
       .test-summary-categories {
         &__image {
           width: 140px;
-          min-height: 120px;
           padding-right: ${p => p.theme.spacing.xl};
           img {
             width: 100%;
@@ -57,6 +61,27 @@ const Container = styled.div`
         }
         &__side {
           ${p => p.theme.font.size.sm};
+          position: absolute;
+          right: 0;
+        }
+      }
+    }
+  }
+
+  @media ${p => p.theme.breakpoint.mobile} {
+    ul {
+      li {
+        .test-summary-categories {
+          &__image {
+            width: 52px;
+            img {
+              position: absolute;
+              top: 10px;
+              left: 0;
+              width: 48px;
+              min-width: 48px;
+            }
+          }
         }
       }
     }
