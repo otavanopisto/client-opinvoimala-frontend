@@ -2,6 +2,7 @@ import { observer } from 'mobx-react-lite';
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import Layout from '../components/Layout';
+import TestsSummary from '../components/tests/TestsSummary';
 import { useStore } from '../store/storeContext';
 
 export const WellBeingProfile: React.FC = observer(() => {
@@ -23,7 +24,7 @@ export const WellBeingProfile: React.FC = observer(() => {
 
   return (
     <Layout hero={hero} isLoading={isBusy}>
-      TODO
+      {testsSummary && <TestsSummary {...testsSummary} />}
     </Layout>
   );
 });
