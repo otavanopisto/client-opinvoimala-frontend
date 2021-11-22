@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import StarSvg from '../assets/icons/star.svg';
 
@@ -35,6 +36,8 @@ interface Props {
 }
 
 const Stars: React.FC<Props> = ({ stars, starWidth = 40 }) => {
+  const { t } = useTranslation();
+
   const fullStars = Math.floor(stars);
   const lastStarWidth = (stars - fullStars) * starWidth;
 
@@ -52,7 +55,7 @@ const Stars: React.FC<Props> = ({ stars, starWidth = 40 }) => {
   }
 
   return (
-    <Container>
+    <Container aria-label={t('aria.stars', { stars })}>
       {starObjects.map(({ id, width }) => (
         <Star key={id} fullStarWidth={starWidth} width={width} />
       ))}

@@ -54,7 +54,7 @@ const Container = styled.article<{ isLocked?: boolean }>`
   footer {
     border-bottom-left-radius: ${p => p.theme.borderRadius.sm};
     border-bottom-right-radius: ${p => p.theme.borderRadius.sm};
-    padding: ${p => p.theme.spacing.sm} ${p => p.theme.spacing.lg};
+    padding: ${p => p.theme.spacing.md} ${p => p.theme.spacing.lg};
     background-color: ${p => p.theme.color.grey3};
     text-align: center;
 

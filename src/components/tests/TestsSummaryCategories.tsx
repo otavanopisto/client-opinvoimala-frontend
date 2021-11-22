@@ -12,7 +12,7 @@ const Container = styled.div`
   height: 100%;
   font-family: ${p => p.theme.font.secondary};
 
-  h1 {
+  h2 {
     ${p => p.theme.font.h4};
   }
 
@@ -108,7 +108,7 @@ const TestsSummaryCategories: React.FC<Props> = ({ categories }) => {
             </div>
 
             <div className="test-summary-categories__main">
-              <h1>{label}</h1>
+              <h2>{label}</h2>
 
               {!!completedTests ? (
                 <Stars stars={stars ?? 0} />

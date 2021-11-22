@@ -235,8 +235,9 @@
     "main_navigation": "Päävalikko",
     "menu": "Valikko",
     "appointment_option": "Vapaa aika",
-    "user_menu": "Käyttäjävalikko",
+    "user_menu": "Opiskelijan käyttäjävalikko",
     "login": "Kirjaudu sisään",
-    "close": "Sulje"
+    "close": "Sulje",
+    "stars": "Tähdet {{stars}}/5"
   }
 }

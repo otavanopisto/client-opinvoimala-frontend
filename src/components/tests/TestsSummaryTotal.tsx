@@ -18,7 +18,7 @@ const Container = styled.div`
     }
   }
 
-  h1 {
+  h2 {
     ${p => p.theme.font.h2};
     margin-bottom: 0;
   }
@@ -51,7 +51,7 @@ const TestsSummaryTotal: React.FC<Props> = ({
   return (
     <Container>
       <div>
-        <h1>{text?.length ? text : defaultText}</h1>
+        <h2>{text?.length ? text : defaultText}</h2>
       </div>
 
       <div className="tests-summary-total__details">

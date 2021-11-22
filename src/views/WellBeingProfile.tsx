@@ -85,6 +85,8 @@ export const WellBeingProfile: React.FC = observer(() => {
 
       <Annotation text={t('annotation.well_being_profile')} />
 
+      <Divider section hidden />
+
       <TestsList
         id="tests"
         title={t('view.well_being_profile.tests')}

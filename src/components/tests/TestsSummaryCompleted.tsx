@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { TestsSummaryCategory } from '../../store/models';
 
 const Container = styled.div`
-  h1 {
+  h2 {
     ${p => p.theme.font.h4};
   }
 
@@ -68,7 +68,7 @@ const TestsSummaryCompleted: React.FC<Props> = ({ categories }) => {
 
   return (
     <Container>
-      <h1>{t('view.well_being_profile.completed_tests')}</h1>
+      <h2>{t('view.well_being_profile.completed_tests')}</h2>
       <ul>
         {categories?.map(({ id, label, completedTests, totalTests }) => (
           <li key={id}>
