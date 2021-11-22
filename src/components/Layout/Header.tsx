@@ -24,7 +24,11 @@ const StyledHeader = styled.header`
 
     & > div {
       display: flex;
-      gap: ${p => p.theme.spacing.lg};
+      > div {
+        :not(:last-child) {
+          margin-right: ${p => p.theme.spacing.lg};
+        }
+      }
     }
   }
 
@@ -57,8 +61,12 @@ const Header: React.FC = observer(() => {
 
         {isTablet ? (
           <div className="mobile-header__menus">
-            <UserMenu />
-            <NavBar />
+            <div>
+              <UserMenu />
+            </div>
+            <div>
+              <NavBar />
+            </div>
           </div>
         ) : (
           <>

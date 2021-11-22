@@ -7,20 +7,36 @@ import TestsSummaryTotal from './TestsSummaryTotal';
 
 const Container = styled.div`
   display: flex;
-  gap: ${p => p.theme.spacing.lg};
 
   > div {
     flex: 1;
     display: flex;
     flex-direction: column;
-    gap: ${p => p.theme.spacing.lg};
+
+    :not(:last-child) {
+      margin-right: ${p => p.theme.spacing.lg};
+    }
+
+    > div {
+      :not(:last-child) {
+        margin-bottom: ${p => p.theme.spacing.lg};
+      }
+    }
   }
 
   @media ${p => p.theme.breakpoint.tablet} {
     flex-direction: column;
-    gap: ${p => p.theme.spacing.xl};
     > div {
-      gap: ${p => p.theme.spacing.xl};
+      :not(:last-child) {
+        margin-right: 0;
+        margin-bottom: ${p => p.theme.spacing.xl};
+      }
+
+      > div {
+        :not(:last-child) {
+          margin-bottom: ${p => p.theme.spacing.xl};
+        }
+      }
     }
   }
 `;

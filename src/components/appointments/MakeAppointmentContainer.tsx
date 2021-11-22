@@ -35,7 +35,11 @@ const Container = styled.div`
     &--right,
     &--left {
       display: flex;
-      gap: ${p => p.theme.spacing.lg};
+      > button {
+        :not(:last-child) {
+          margin-right: ${p => p.theme.spacing.lg};
+        }
+      }
     }
 
     &--right {
@@ -48,7 +52,9 @@ const Container = styled.div`
       &--right,
       &--left {
         flex-direction: column-reverse;
-        gap: ${p => p.theme.spacing.sm};
+        > button {
+          margin-right: 0 !important;
+        }
       }
     }
   }

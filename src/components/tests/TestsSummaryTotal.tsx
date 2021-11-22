@@ -9,9 +9,14 @@ const Container = styled.div`
   justify-content: center;
   flex-direction: column;
   align-items: center;
-  gap: ${p => p.theme.spacing.md};
   text-align: center;
   height: 100%;
+
+  > div {
+    :not(:last-child) {
+      margin-bottom: ${p => p.theme.spacing.md};
+    }
+  }
 
   h1 {
     ${p => p.theme.font.h2};
@@ -45,17 +50,21 @@ const TestsSummaryTotal: React.FC<Props> = ({
 
   return (
     <Container>
-      <h1>{text?.length ? text : defaultText}</h1>
+      <div>
+        <h1>{text?.length ? text : defaultText}</h1>
+      </div>
 
       <div className="tests-summary-total__details">
         {details?.length ? details : instructionsText}
       </div>
 
-      {!!completedTests ? (
-        <Stars stars={stars ?? 0} starWidth={60} />
-      ) : (
-        <NoCompletedTests />
-      )}
+      <div>
+        {!!completedTests ? (
+          <Stars stars={stars ?? 0} starWidth={60} />
+        ) : (
+          <NoCompletedTests />
+        )}
+      </div>
 
       {stars !== null && stars !== undefined && (
         <div className="tests-summary-total__details">{starsText}</div>

@@ -7,11 +7,20 @@ const Container = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  gap: ${p => p.theme.spacing.lg};
   flex-wrap: wrap-reverse;
 
+  > div {
+    :not(:last-child) {
+      margin-right: ${p => p.theme.spacing.lg};
+    }
+  }
+
   @media ${p => p.theme.breakpoint.mobile} {
-    gap: ${p => p.theme.spacing.md};
+    > div {
+      :not(:last-child) {
+        margin-right: ${p => p.theme.spacing.md};
+      }
+    }
   }
 `;
 

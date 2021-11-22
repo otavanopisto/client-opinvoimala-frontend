@@ -9,15 +9,25 @@ import OptionToggleButton from '../inputs/OptionToggleButton';
 
 const Container = styled.div`
   display: flex;
-  gap: ${p => p.theme.spacing.lg};
   & > div {
     border: 1px solid ${p => p.theme.color.grey3};
     padding: ${p => p.theme.spacing.md};
     text-align: center;
+
+    :not(:last-child) {
+      margin-right: ${p => p.theme.spacing.lg};
+    }
   }
 
   @media ${p => p.theme.breakpoint.mobile} {
     flex-direction: column;
+
+    & > div {
+      :not(:last-child) {
+        margin-right: 0 !important;
+        margin-bottom: ${p => p.theme.spacing.lg};
+      }
+    }
   }
 `;
 

@@ -3,6 +3,7 @@ import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { HashLink } from 'react-router-hash-link';
 import { Divider } from 'semantic-ui-react';
+import Annotation from '../components/Annotation';
 import Icon from '../components/Icon';
 import Layout from '../components/Layout';
 import TestsList from '../components/tests/TestsList';
@@ -81,6 +82,8 @@ export const WellBeingProfile: React.FC = observer(() => {
       {testsSummary && <TestsSummary {...testsSummary} />}
 
       <Divider section hidden />
+
+      <Annotation text={t('annotation.well_being_profile')} />
 
       <TestsList
         id="tests"

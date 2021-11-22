@@ -42,10 +42,13 @@ const StyledFooter = styled.footer`
     @media ${p => p.theme.breakpoint.tablet} {
       display: flex;
       flex-wrap: wrap;
-      gap: ${p => p.theme.spacing.lg};
 
       li {
         margin: 0;
+        margin-bottom: ${p => p.theme.spacing.md};
+        &:not(:last-child) {
+          margin-right: ${p => p.theme.spacing.lg};
+        }
         a {
           flex-direction: row-reverse;
           i.inverted.circular.icon {
@@ -65,10 +68,15 @@ const StyledFooter = styled.footer`
   ul.footer__links-list {
     list-style-type: none;
     display: flex;
-    gap: ${p => p.theme.spacing.lg};
     flex-wrap: wrap;
     margin: 0;
     padding: 0;
+
+    li {
+      &:not(:last-child) {
+        margin-right: ${p => p.theme.spacing.lg};
+      }
+    }
   }
 `;
 

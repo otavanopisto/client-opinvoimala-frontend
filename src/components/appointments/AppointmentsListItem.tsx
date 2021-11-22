@@ -40,7 +40,11 @@ const ListItem = styled.li`
 
     &__action-buttons {
       display: flex;
-      gap: ${p => p.theme.spacing.lg};
+      > button {
+        :not(:last-child) {
+          margin-right: ${p => p.theme.spacing.lg};
+        }
+      }
     }
   }
 
@@ -59,7 +63,11 @@ const ListItem = styled.li`
       &__action-buttons {
         margin-top: ${p => p.theme.spacing.lg};
         flex-direction: column-reverse;
-        gap: ${p => p.theme.spacing.md};
+
+        > button {
+          margin: 0;
+          margin-top: ${p => p.theme.spacing.md};
+        }
       }
     }
   }

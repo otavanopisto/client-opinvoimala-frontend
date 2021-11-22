@@ -6,7 +6,12 @@ const MOBILE_STAR_SIZE = 0.75;
 
 const Container = styled.div`
   display: flex;
-  gap: ${p => p.theme.spacing.sm};
+
+  > div {
+    &:not(:last-child) {
+      margin-right: ${p => p.theme.spacing.sm};
+    }
+  }
 `;
 
 const Star = styled.div<{ fullStarWidth: number; width: number }>`
