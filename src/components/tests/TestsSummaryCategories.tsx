@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { TestsSummaryCategory } from '../../store/models';
 import Stars from '../Stars';
 import { path } from '../../routes/routes';
-import { Icon } from 'semantic-ui-react';
+import Icon from '../Icon';
 import NoCompletedTests from './NoCompletedTests';
 
 const Container = styled.div`
@@ -37,12 +37,13 @@ const Container = styled.div`
       }
 
       a {
-        display: inline-block;
+        display: flex;
+        align-items: center;
         margin-top: ${p => p.theme.spacing.md};
         color: ${p => p.theme.color.secondary};
         ${p => p.theme.font.size.sm};
 
-        i {
+        svg {
           margin-left: ${p => p.theme.spacing.lg};
           text-decoration: none;
         }
@@ -117,7 +118,7 @@ const TestsSummaryCategories: React.FC<Props> = ({ categories }) => {
 
               <HashLink to={`/${path('tests')}#category-${id}`}>
                 {t('view.well_being_profile.tests_by_category')}
-                <Icon name="arrow right" />
+                <Icon type="ArrowRight" strokeColor="secondary" color="none" />
               </HashLink>
             </div>
 

@@ -22,6 +22,7 @@ const Container = styled.article<{ isLocked?: boolean }>`
     border-top-right-radius: ${p => p.theme.borderRadius.sm};
     flex: 1;
     padding: ${p => p.theme.spacing.lg} ${p => p.theme.spacing.lg};
+    min-height: 200px;
 
     .card__badge {
       position: absolute;
@@ -42,7 +43,6 @@ const Container = styled.article<{ isLocked?: boolean }>`
       display: -webkit-box;
       -webkit-line-clamp: 4;
       -webkit-box-orient: vertical;
-      min-height: 90px;
     }
 
     h1,
@@ -72,16 +72,38 @@ const Container = styled.article<{ isLocked?: boolean }>`
   }
 `;
 
+const TagList = styled.ul`
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+
+  li {
+    display: inline-block;
+    padding: 0 ${p => p.theme.spacing.md};
+    background-color: ${p => p.theme.color.accentLight};
+    border-radius: ${p => p.theme.borderRadius.sm};
+
+    color: ${p => p.theme.color.secondary};
+    font-family: ${p => p.theme.font.secondary};
+    ${p => p.theme.font.size.sm};
+
+    :not(:last-child) {
+      margin-right: ${p => p.theme.spacing.sm};
+    }
+  }
+`;
+
 interface Props {
   title?: string | null;
   text?: string | null;
+  tags?: string[];
   link?: LinkType | null;
   isLocked?: boolean;
   badge?: JSX.Element | false | null;
 }
 
 const Card: React.FC<Props> = observer(
-  ({ title, text, link, isLocked, badge }) => {
+  ({ title, text, tags, link, isLocked, badge }) => {
     const {
       auth: { isLoggedIn },
     } = useStore();
@@ -93,6 +115,13 @@ const Card: React.FC<Props> = observer(
         <main>
           {title && <h1>{title}</h1>}
           {text && <p>{text}</p>}
+          {!!tags?.length && (
+            <TagList>
+              {tags.map((tag, i) => (
+                <li key={`${tag}-${i}`}>{tag}</li>
+              ))}
+            </TagList>
+          )}
           {badge && <div className="card__badge">{badge}</div>}
         </main>
 

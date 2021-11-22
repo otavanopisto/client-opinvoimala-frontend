@@ -16,6 +16,7 @@ import {
   TestOutcomes,
   TestOutcomesModel,
   TestsSummaryModel,
+  SimpleTest,
 } from './models';
 
 const make404Test = (params: API.GetContentPages, name: string): Test => ({
@@ -27,6 +28,21 @@ const make404Test = (params: API.GetContentPages, name: string): Test => ({
   categories: [],
   questions: null,
 });
+
+const isNil = (item: any) => item === undefined || item === null;
+
+const sortTests = (a: SimpleTest, b: SimpleTest) => {
+  const getPrioritySort = () => {
+    if (isNil(a.priority) && isNil(b.priority)) return 0;
+    else if (isNil(a.priority)) return 1;
+    else if (isNil(b.priority)) return -1;
+    else return Number(a.priority) - Number(b.priority);
+  };
+
+  const priority = getPrioritySort();
+  const published = b.publishedAt.localeCompare(a.publishedAt);
+  return priority || published;
+};
 
 const States = [
   'NOT_FETCHED' as const,
@@ -66,6 +82,37 @@ export const TestsStore = types
 
     get exercises() {
       return self.exercisesData ? getSnapshot(self.exercisesData) : undefined;
+    },
+
+    // Concatenates all tests from categories
+    get allTests() {
+      const allTests = this.categories?.reduce(
+        (arr: SimpleTest[], { id, label, tests }) => {
+          const testsWithCategories = tests.map(test => ({
+            ...test,
+            categories: [{ id, label }],
+          }));
+          return [...arr, ...testsWithCategories];
+        },
+        []
+      );
+
+      const uniqueTests: { [key: string]: SimpleTest } = {};
+      allTests?.forEach(test => {
+        const existingCategories = uniqueTests[test.id]?.categories ?? [];
+        const currentCategories = test.categories ?? [];
+        uniqueTests[test.id] = {
+          ...test,
+          // Group all categories where test belongs
+          categories: [...existingCategories, ...currentCategories],
+        };
+      });
+
+      const tests = Object.keys(uniqueTests)
+        .map((key: string) => uniqueTests[key])
+        .sort(sortTests);
+
+      return tests;
     },
 
     get testsSummary() {
