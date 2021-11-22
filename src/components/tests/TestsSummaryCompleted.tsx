@@ -41,6 +41,10 @@ const ProgressBar = styled.div<{ progress: number }>`
     width: ${p => p.progress}%;
     background-color: ${p => p.theme.color.progress};
 
+    /* Show progress bar's background color for prints as well: */
+    -webkit-print-color-adjust: exact !important; /* Chrome, Safari, Edge */
+    color-adjust: exact !important; /*Firefox*/
+
     border-top-left-radius: ${p => p.theme.borderRadius.sm};
     border-bottom-left-radius: ${p => p.theme.borderRadius.sm};
     border-top-right-radius: ${p =>

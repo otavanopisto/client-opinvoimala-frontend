@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { useStore } from '../../store/storeContext';
 import useWindowDimensions from '../../utils/hooks';
+import NoPrint from '../NoPrint';
 import NavBar from './NavBar';
 import UserMenu from './UserMenu';
 import Wrapper from './Wrapper';
@@ -62,19 +63,27 @@ const Header: React.FC = observer(() => {
         {isTablet ? (
           <div className="mobile-header__menus">
             <div>
-              <UserMenu />
+              <NoPrint>
+                <UserMenu />
+              </NoPrint>
             </div>
             <div>
-              <NavBar />
+              <NoPrint>
+                <NavBar />
+              </NoPrint>
             </div>
           </div>
         ) : (
           <>
             <div>
-              <NavBar />
+              <NoPrint>
+                <NavBar />
+              </NoPrint>
             </div>
             <div>
-              <UserMenu />
+              <NoPrint>
+                <UserMenu />
+              </NoPrint>
             </div>
           </>
         )}

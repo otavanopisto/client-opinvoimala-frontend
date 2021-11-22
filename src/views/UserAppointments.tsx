@@ -9,6 +9,7 @@ import {
 } from '../components/appointments';
 import Layout from '../components/Layout';
 import Message from '../components/Message';
+import NoPrint from '../components/NoPrint';
 import { useStore } from '../store/storeContext';
 import { getApiErrorMessages } from '../utils/api';
 import useWindowDimensions from '../utils/hooks';
@@ -64,7 +65,15 @@ export const UserAppointments: React.FC = observer(() => {
 
   const hero = {
     title: t('route.appointments'),
-    lead: isTablet ? <MakeAppointmentDrawer /> : <MakeAppointmentModal />,
+    lead: isTablet ? (
+      <NoPrint>
+        <MakeAppointmentDrawer />
+      </NoPrint>
+    ) : (
+      <NoPrint>
+        <MakeAppointmentModal />
+      </NoPrint>
+    ),
   };
 
   return (

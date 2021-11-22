@@ -65,7 +65,8 @@
       "tests": "Testit",
       "all_tests": "Kaikki testit",
       "exercises": "Harjoitukset",
-      "all_exercises": "Lisää harjoituksia"
+      "all_exercises": "Lisää harjoituksia",
+      "make_appointment": "Varaa aika"
     },
     "content_pages": {
       "error": "Virhe",

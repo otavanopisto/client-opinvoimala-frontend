@@ -7,6 +7,7 @@ import { useStore } from '../../store/storeContext';
 import Link from '../Link';
 import { Divider, Grid, Icon } from 'semantic-ui-react';
 import useWindowDimensions from '../../utils/hooks';
+import NoPrint from '../NoPrint';
 
 const StyledFooter = styled.footer`
   background-color: ${p => p.theme.color.grey3};
@@ -167,31 +168,33 @@ const Footer: React.FC = observer(() => {
   };
 
   return (
-    <StyledFooter>
-      <Wrapper>
-        <Grid columns={2} doubling>
-          <Grid.Column>{renderInfo()}</Grid.Column>
-          <Grid.Column textAlign="right">
-            {renderSocialMediaLinks()}
-          </Grid.Column>
-        </Grid>
+    <NoPrint>
+      <StyledFooter>
+        <Wrapper>
+          <Grid columns={2} doubling>
+            <Grid.Column>{renderInfo()}</Grid.Column>
+            <Grid.Column textAlign="right">
+              {renderSocialMediaLinks()}
+            </Grid.Column>
+          </Grid>
 
-        <Divider section />
+          <Divider section />
 
-        <Grid columns={2} doubling>
-          <Grid.Column verticalAlign="middle">{renderLinks()}</Grid.Column>
-          <Grid.Column
-            verticalAlign="middle"
-            textAlign={isTablet ? 'left' : 'right'}
-            className="footer__copyright-text"
-          >
-            {copyright}
-          </Grid.Column>
-        </Grid>
-      </Wrapper>
+          <Grid columns={2} doubling>
+            <Grid.Column verticalAlign="middle">{renderLinks()}</Grid.Column>
+            <Grid.Column
+              verticalAlign="middle"
+              textAlign={isTablet ? 'left' : 'right'}
+              className="footer__copyright-text"
+            >
+              {copyright}
+            </Grid.Column>
+          </Grid>
+        </Wrapper>
 
-      {renderLogos()}
-    </StyledFooter>
+        {renderLogos()}
+      </StyledFooter>
+    </NoPrint>
   );
 });
 

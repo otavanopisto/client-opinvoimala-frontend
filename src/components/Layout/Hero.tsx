@@ -6,6 +6,7 @@ import { Image } from '../../store/models';
 import useWindowDimensions from '../../utils/hooks';
 import Icon from '../Icon';
 import { Button } from '../inputs';
+import NoPrint from '../NoPrint';
 import Watermark from './Watermark';
 
 const Container = styled.div`
@@ -19,6 +20,9 @@ const Container = styled.div`
       flex: 1;
       h1 {
         line-height: 77px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
       }
     }
 
@@ -42,6 +46,30 @@ const Container = styled.div`
         margin-right: 5px;
       }
     }
+
+    &__action-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      > button {
+        :not(:last-child) {
+          margin-right: ${p => p.theme.spacing.md};
+        }
+      }
+    }
+  }
+
+  @media ${p => p.theme.breakpoint.tablet} {
+    .hero {
+      &__main-column {
+        h1 {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+      }
+      &__action-buttons {
+        margin-top: ${p => p.theme.spacing.lg};
+      }
+    }
   }
 
   @media ${p => p.theme.breakpoint.mobile} {
@@ -53,6 +81,12 @@ const Container = styled.div`
         position: initial;
         width: 100%;
       }
+      &__side-column {
+        > div > img {
+          margin-top: ${p => p.theme.spacing.xl};
+          margin-bottom: -${p => p.theme.spacing.xl};
+        }
+      }
       &__main-column {
         h1 {
           line-height: 43px;
@@ -60,7 +94,7 @@ const Container = styled.div`
         &.align-center {
           text-align: center;
         }
-        > img {
+        > div > img {
           width: 80px;
           float: left;
           margin-right: ${p => p.theme.spacing.lg};
@@ -71,7 +105,7 @@ const Container = styled.div`
 `;
 
 export interface HeroProps {
-  title?: string | null;
+  title?: string | null | JSX.Element;
   lead?: string | JSX.Element | null;
   image?: Image | null;
   smallImage?: boolean;
@@ -79,6 +113,12 @@ export interface HeroProps {
   goBackText?: string;
   showGoBack?: boolean;
   onGoBackClick?: () => void;
+  actions?: {
+    id: string;
+    text?: string | JSX.Element;
+    icon?: JSX.Element;
+    onClick: () => void;
+  }[];
 }
 
 const Hero: React.FC<HeroProps> = ({
@@ -90,6 +130,7 @@ const Hero: React.FC<HeroProps> = ({
   goBackText,
   showGoBack,
   onGoBackClick,
+  actions,
 }) => {
   const { t } = useTranslation();
   const history = useHistory();
@@ -121,20 +162,44 @@ const Hero: React.FC<HeroProps> = ({
     <img src={image?.url} alt="" width={smallImage ? '150px' : '300px'} />
   );
 
+  const actionButtons = actions?.map(({ id, text, icon, onClick }) => (
+    <Button
+      key={id}
+      id={id}
+      text={text}
+      color="primary"
+      icon={icon}
+      onClick={onClick}
+    />
+  ));
+
   return (
     <Container>
       <Watermark isNegative left={-220} top={40} />
 
       <div className={`hero__main-column align-${align}`}>
-        {(showGoBack || goBackText || onGoBackClick) && goBackButton}
-        <h1>{title}</h1>
-        {isMobile && imageEl}
+        {(showGoBack || goBackText || onGoBackClick) && (
+          <NoPrint>{goBackButton}</NoPrint>
+        )}
+
+        <h1>
+          {title}
+          {!!actionButtons?.length && (
+            <NoPrint>
+              <div className="hero__action-buttons">{actionButtons}</div>
+            </NoPrint>
+          )}
+        </h1>
+
+        {isMobile && smallImage && <NoPrint>{imageEl}</NoPrint>}
         <div>{lead}</div>
       </div>
 
-      {imageEl && !isMobile && (
+      {imageEl && (!isMobile || !smallImage) && (
         <>
-          <div className="hero__side-column">{imageEl}</div>
+          <div className="hero__side-column">
+            <NoPrint>{imageEl}</NoPrint>
+          </div>
           <div className="hero__side-column-placeholder"></div>
         </>
       )}

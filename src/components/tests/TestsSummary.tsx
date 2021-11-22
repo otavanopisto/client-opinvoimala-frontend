@@ -55,6 +55,15 @@ const SummaryBlock = styled.div<{ highlighted?: boolean }>`
         border: 1px solid ${p.theme.color.accentDark};
       `;
   }}
+
+  @media print {
+    border: 1px solid ${p => p.theme.color.grey3};
+    box-shadow: none;
+
+    break-inside: avoid;
+    page-break-inside: avoid;
+    page-break-before: avoid;
+  }
 `;
 
 const TestsSummary: React.FC<TestsSummaryType> = ({

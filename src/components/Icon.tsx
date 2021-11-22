@@ -4,11 +4,13 @@ import { Colors } from '../theme/styled';
 
 import { ReactComponent as Annotation } from '../assets/icons/comment-exclamation.svg';
 import { ReactComponent as ArrowRight } from '../assets/icons/arrow-right.svg';
+import { ReactComponent as Chat } from '../assets/icons/bx-chat.svg';
 import { ReactComponent as ChevronDown } from '../assets/icons/chevron-down.svg';
 import { ReactComponent as ChevronLeft } from '../assets/icons/chevron-left.svg';
 import { ReactComponent as ChevronUp } from '../assets/icons/chevron-up.svg';
 import { ReactComponent as Close } from '../assets/icons/close.svg';
 import { ReactComponent as Completed } from '../assets/icons/completed-check.svg';
+import { ReactComponent as Download } from '../assets/icons/download.svg';
 import { ReactComponent as Lock } from '../assets/icons/lock.svg';
 import { ReactComponent as Menu } from '../assets/icons/menu.svg';
 import { ReactComponent as Plus } from '../assets/icons/plus.svg';
@@ -19,11 +21,13 @@ import { ReactComponent as Video } from '../assets/icons/video.svg';
 const Icons = {
   Annotation,
   ArrowRight,
+  Chat,
   ChevronDown,
   ChevronLeft,
   ChevronUp,
   Close,
   Completed,
+  Download,
   Lock,
   Menu,
   Plus,

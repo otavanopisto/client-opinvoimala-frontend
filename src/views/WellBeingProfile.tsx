@@ -1,11 +1,13 @@
 import { observer } from 'mobx-react-lite';
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useHistory } from 'react-router';
 import { HashLink } from 'react-router-hash-link';
 import { Divider } from 'semantic-ui-react';
 import Annotation from '../components/Annotation';
 import Icon from '../components/Icon';
 import Layout from '../components/Layout';
+import NoPrint from '../components/NoPrint';
 import TestsList from '../components/tests/TestsList';
 import TestsSummary from '../components/tests/TestsSummary';
 import { path } from '../routes/routes';
@@ -16,6 +18,7 @@ const VISIBLE_EXERCISES = 3;
 
 export const WellBeingProfile: React.FC = observer(() => {
   const { t } = useTranslation();
+  const history = useHistory();
 
   const {
     tests: {
@@ -46,8 +49,24 @@ export const WellBeingProfile: React.FC = observer(() => {
     if (exercisesState === 'NOT_FETCHED') fetchExercises();
   }, [exercisesState, fetchExercises]);
 
+  const heroActions = [
+    {
+      id: 'well-being-profile__appointment-button',
+      text: t('view.well_being_profile.make_appointment'),
+      icon: <Icon type="Chat" />,
+      onClick: () => history.push(`/${path('appointments')}`),
+    },
+    {
+      id: 'well-being-profile__download-button',
+      text: t('action.download'),
+      icon: <Icon type="Download" color="none" />,
+      onClick: () => window.print(),
+    },
+  ];
+
   const hero = {
     title: t('view.well_being_profile.title'),
+    actions: heroActions,
   };
 
   const getTestsLink = (type: 'tests' | 'exercises') => {
@@ -85,29 +104,31 @@ export const WellBeingProfile: React.FC = observer(() => {
 
       <Annotation text={t('annotation.well_being_profile')} />
 
-      <Divider section hidden />
+      <NoPrint>
+        <Divider section hidden />
 
-      <TestsList
-        id="tests"
-        title={t('view.well_being_profile.tests')}
-        items={allTests}
-        initialItemCount={VISIBLE_TESTS}
-        disableExpand
-      >
-        {getTestsLink('tests')}
-      </TestsList>
-
-      {exercises && (
         <TestsList
-          id="exercises"
-          title={t('view.well_being_profile.exercises')}
-          items={exercises}
-          initialItemCount={VISIBLE_EXERCISES}
+          id="tests"
+          title={t('view.well_being_profile.tests')}
+          items={allTests}
+          initialItemCount={VISIBLE_TESTS}
           disableExpand
         >
-          {getTestsLink('exercises')}
+          {getTestsLink('tests')}
         </TestsList>
-      )}
+
+        {exercises && (
+          <TestsList
+            id="exercises"
+            title={t('view.well_being_profile.exercises')}
+            items={exercises}
+            initialItemCount={VISIBLE_EXERCISES}
+            disableExpand
+          >
+            {getTestsLink('exercises')}
+          </TestsList>
+        )}
+      </NoPrint>
     </Layout>
   );
 });
