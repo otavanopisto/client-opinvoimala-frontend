@@ -1,18 +1,49 @@
 {
   "id": 1,
-  "main_title": "This is the main title for the front page!",
-  "subtitle": "This is the subtitle of the front page",
-  "description": "Description text for the front page",
+  "title": "Mock title for the front page!",
+  "lead": "Mock lead text for the front page!",
+  "image": {
+    "id": 4,
+    "name": "Opinvoimala.png",
+    "alternativeText": "",
+    "caption": "",
+    "hash": "Opinvoimala_011661dec6",
+    "url": "https://storage.googleapis.com/client-opinvoimala-dev/Opinvoimala_011661dec6/Opinvoimala_011661dec6.png"
+  },
   "cards": [
     {
-      "id": 1,
-      "title": "Card 1 title",
-      "text": "Card 1 text"
+      "id": 4,
+      "title": "Mock card 1",
+      "text": "Jukolan talo, eteläisessä Hämeessä, seisoo erään mäen pohjaisella rinteellä, liki Toukolan kylää.",
+      "link": {
+        "id": 11,
+        "label": "Lue lisää",
+        "page": {
+          "id": 1,
+          "title": "Sivu 1",
+          "slug": "sivu-1",
+          "is_public": false
+        },
+        "type": "external",
+        "external": "https://www.google.fi",
+        "internal": null,
+        "title": null,
+        "test": null
+      }
     },
     {
-      "id": 2,
-      "title": "Card 2 title",
-      "text": "Card 2 text"
+      "id": 5,
+      "title": "Mock card 2",
+      "text": null,
+      "link": null
     }
-  ]
+  ],
+  "details": "<h1>Tukea opiskeluun mm.</h1><h3>Henkilökohtainen hyvinvointiprofiili</h3><p>Ja tekstit asemoituvat etusivulle.</p><h3>Asiantuntijat apunasi</h3><p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt.&nbsp;</p><h3>Avoinna 24/7</h3><p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.</p>",
+  "details_image": {
+    "id": 5,
+    "name": "description-image.png",
+    "alternativeText": "",
+    "caption": "",
+    "url": "https://storage.googleapis.com/client-opinvoimala-dev/description_image_ffa080c038/description_image_ffa080c038.png"
+  }
 }

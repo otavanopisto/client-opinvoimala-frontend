@@ -182,7 +182,7 @@ const Hero: React.FC<HeroProps> = ({
           <NoPrint>{goBackButton}</NoPrint>
         )}
 
-        <h1>
+        <h1 data-testid="hero__title">
           {title}
           {!!actionButtons?.length && (
             <NoPrint>

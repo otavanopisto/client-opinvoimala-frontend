@@ -1,27 +1,35 @@
 import React from 'react';
-import { render, screen } from '../../utils/test-utils';
-import FrontPage from '../FrontPage';
+import { render, waitForApi } from '../../utils/test-utils';
+import { FrontPage } from '../FrontPage';
+import { MemoryRouter } from 'react-router';
 
-describe('VIEWS: <FrontPage />', () => {
+const Component = (
+  <MemoryRouter initialEntries={['/']}>
+    <FrontPage />
+  </MemoryRouter>
+);
+
+describe('VIEW: <FrontPage />', () => {
   it('renders main title', async () => {
-    render(<FrontPage />);
-    expect(
-      await screen.findByText(/This is the main title for the front page!/i)
-    ).toBeInTheDocument();
+    const { getByTestId } = render(Component);
+    await waitForApi();
+
+    const element = getByTestId('hero__title');
+    expect(element).toBeInTheDocument();
+    expect(element.textContent).toBe('Mock title for the front page!');
   });
 
-  it('renders subtitle', async () => {
-    render(<FrontPage />);
-    expect(
-      await screen.findByText(/This is the subtitle of the front page/i)
-    ).toBeInTheDocument();
+  it('renders lead text', async () => {
+    const { findByText } = render(Component);
+    await waitForApi();
+
+    const element = await findByText(/Mock lead text for the front page!/i);
+    expect(element).toBeInTheDocument();
   });
 
   it('renders some cards', async () => {
-    render(<FrontPage />);
-    expect(await screen.findByText(/Card 1 title/i)).toBeInTheDocument();
-    expect(await screen.findByText(/Card 1 text/i)).toBeInTheDocument();
-    expect(await screen.findByText(/Card 2 title/i)).toBeInTheDocument();
-    expect(await screen.findByText(/Card 2 text/i)).toBeInTheDocument();
+    const screen = render(Component);
+    expect(await screen.findByText(/Mock card 1/i)).toBeInTheDocument();
+    expect(await screen.findByText(/Mock card 2/i)).toBeInTheDocument();
   });
 });

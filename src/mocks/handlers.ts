@@ -10,4 +10,10 @@ export const handlers = [
       ctx.json(require('./mock-data/front-page.json'))
     );
   }),
+  rest.get(`${BASE_URL}/navigation`, (req, res, ctx) => {
+    return res(
+      ctx.status(200),
+      ctx.json(require('./mock-data/navigation.json'))
+    );
+  }),
 ];
