@@ -39,6 +39,7 @@ export const Input: React.FC<Props> = ({
         aria-required={props.required}
         {...props}
         size={size}
+        input={<input data-testid={id} />}
         fluid
       />
     </Container>

@@ -25,6 +25,10 @@
     "web-vitals": "^1.0.1"
   },
   "devDependencies": {
+    "@guinie/common": "^0.2.0",
+    "@guinie/react": "^0.2.0",
+    "@guinie/react-testid": "^0.2.1",
+    "@guinie/selenium": "^0.2.0",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
@@ -37,6 +41,7 @@
     "@types/react-router-dom": "^5.1.9",
     "@types/react-router-hash-link": "^2.4.4",
     "@types/styled-components": "^5.1.14",
+    "chromedriver": "95.0.4638.69",
     "husky": "^7.0.2",
     "lint-staged": ">=10",
     "prettier": "^2.4.1"
@@ -45,6 +50,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "test:unit": "react-scripts test --testMatch ./**/*.test.ts ./**/*.test.tsx",
+    "test:gui": "react-scripts test --watchAll=false --testMatch ./**/e2e.test.gui.ts",
     "eject": "react-scripts eject",
     "prepare": "husky install"
   },
