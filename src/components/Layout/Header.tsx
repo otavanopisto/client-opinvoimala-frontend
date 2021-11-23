@@ -52,7 +52,7 @@ const Header: React.FC = observer(() => {
   return (
     <StyledHeader>
       <Wrapper className="header__wrapper">
-        <div data-testid="header__logo--container">
+        <div>
           {logo && (
             <Link to="/">
               <img src={logo.url} height={`${logoHeight}px`} alt="logo" />

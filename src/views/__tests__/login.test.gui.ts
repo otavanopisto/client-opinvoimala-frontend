@@ -29,11 +29,17 @@ export const runTests = ({ getDriver, context, wrapDriver }: Props) => {
 
     waitForApi(1000);
 
-    const element = await findElement('header__logo--container', {
-      timeout: 500,
+    const element = await findElement('user-menu', {
+      timeout: 1000,
     })(driverState);
 
-    expect(element).toBeInTheDocument();
+    console.log(await element.isDisplayed());
+
+    expect(await element.isDisplayed()).toBe(true);
+
+    // const element2 = await $('#header__logo--container');
+
+    // expect(element2.getValue()).toBeInTheDocument();
 
     // Verify that the desired UI state is reached
     // try {

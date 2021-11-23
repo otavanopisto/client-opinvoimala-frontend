@@ -40,6 +40,7 @@ const MobileMenu: React.FC<{ items: LinkIn[] }> = ({ items }) => {
   const { t } = useTranslation();
   return (
     <Drawer
+      data-testid="user-menu"
       triggerEl={(isOpen, onClick) => (
         <Button
           ariaLabel={t('aria.user_menu')}
