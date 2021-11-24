@@ -91,6 +91,7 @@ const DropdownMenu: React.FC<Props> = ({
   items,
   align = 'left',
   verticalPosition = 0,
+  ...rest
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const ref: React.RefObject<HTMLDivElement> = React.createRef();
@@ -136,6 +137,7 @@ const DropdownMenu: React.FC<Props> = ({
       onClick={toggleMenu}
       ref={ref}
       verticalPosition={verticalPosition}
+      {...rest}
     >
       <div className="dropdown__trigger">{renderTrigger()}</div>
       <div aria-hidden={!isOpen} className={getMenuClassName()}>
