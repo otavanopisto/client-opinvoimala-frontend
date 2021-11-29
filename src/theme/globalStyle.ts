@@ -126,4 +126,8 @@ export const GlobalStyle = createGlobalStyle`
   input[type="checkbox"]:focus + label::before {
     outline: ${p => p.theme.color.accent} auto 1px;
   }
+
+  #CybotCookiebotDialogPoweredbyCybot {
+    display: none !important;
+  }
 `;

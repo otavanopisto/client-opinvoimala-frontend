@@ -55,3 +55,30 @@ export default function useWindowDimensions() {
 
   return windowDimensions;
 }
+
+interface CookiebotConsent {
+  necessary?: boolean;
+  marketing?: boolean;
+  preferences?: boolean;
+  statistics?: boolean;
+}
+
+export const useCookiebotConsent = () => {
+  const [consent, setConsent] = useState<CookiebotConsent>({
+    necessary: undefined,
+    marketing: undefined,
+    preferences: undefined,
+    statistics: undefined,
+  });
+
+  useEffect(() => {
+    if (window) {
+      setTimeout(() => {
+        // @ts-ignore
+        setConsent(window.Cookiebot?.consent);
+      }, 100);
+    }
+  }, []);
+
+  return consent;
+};

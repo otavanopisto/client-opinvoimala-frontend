@@ -1,4 +1,5 @@
 import React from 'react';
+import { useCookiebotConsent } from '../utils/hooks';
 
 const noConcentContainerStyle = `
   min-height: 100px;
@@ -22,15 +23,14 @@ interface Props {
 }
 
 const InnerHtmlDiv: React.FC<Props> = ({ html }) => {
-  const marketingConcent = true;
-
-  const regex = /<iframe.*<\/iframe>/gi;
+  const cookieConsent = useCookiebotConsent();
 
   let __html = html;
 
-  if (!marketingConcent) {
+  if (!cookieConsent.marketing) {
+    // Marketing cookies not accepted. Show placeholder div instead of iframe elements (youtube embeds etc)
     __html = __html.replaceAll(
-      regex,
+      /<iframe.*<\/iframe>/gi,
       `<div style="${noConcentContainerStyle}">Markkinointievästeet tulee olla hyväksyttynä, jotta tämä sisältö voidaan näyttää.</div>`
     );
   }
