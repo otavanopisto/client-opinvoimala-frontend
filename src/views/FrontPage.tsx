@@ -6,8 +6,9 @@ import Layout from '../components/Layout';
 import Card from '../components/Card';
 import { Divider, Grid } from 'semantic-ui-react';
 import Watermark from '../components/Layout/Watermark';
+import InnerHtmlDiv from '../components/InnerHtmlDiv';
 
-const Details = styled.div`
+const Details = styled(InnerHtmlDiv)`
   p {
     ${p => p.theme.font.size.md}
   }
@@ -72,7 +73,7 @@ export const FrontPage: React.FC = observer(() => {
         <Grid.Row columns={2}>
           {details && (
             <Grid.Column>
-              <Details dangerouslySetInnerHTML={{ __html: details }} />
+              <Details html={details} />
             </Grid.Column>
           )}
           {detailsImage && (

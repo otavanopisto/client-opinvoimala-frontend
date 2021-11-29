@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { QuestionOption } from '../../store/models';
+import InnerHtmlDiv from '../InnerHtmlDiv';
 import { MultiSelect, TextArea, Select, Slider } from '../inputs';
 
 const OptionsContainer = styled.div`
@@ -74,9 +75,7 @@ const TestQuestion: React.FC<Props> = ({
     <div>
       <h2>{`${questionNumber}${question.title}`}</h2>
 
-      {question.content && (
-        <div dangerouslySetInnerHTML={{ __html: question.content }}></div>
-      )}
+      {question.content && <InnerHtmlDiv html={question.content} />}
 
       <OptionsContainer>{renderOptions()}</OptionsContainer>
     </div>

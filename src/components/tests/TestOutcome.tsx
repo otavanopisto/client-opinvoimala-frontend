@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { TestOutcome as TestOutcomeType } from '../../store/models';
+import InnerHtmlDiv from '../InnerHtmlDiv';
 
 const Container = styled.div`
   margin: ${p => p.theme.spacing.xl} 0;
@@ -12,7 +13,7 @@ const Container = styled.div`
   }
 `;
 
-const InnerHtmlContent = styled.div`
+const StyledInnerHtmlDiv = styled(InnerHtmlDiv)`
   h1 {
     ${p => p.theme.font.h3};
   }
@@ -31,11 +32,7 @@ const TestOutcome: React.FC<TestOutcomeType> = ({ title, content, image }) => (
   <Container>
     {title && <h1>{title}</h1>}
 
-    {content && (
-      <InnerHtmlContent
-        dangerouslySetInnerHTML={{ __html: content }}
-      ></InnerHtmlContent>
-    )}
+    {content && <StyledInnerHtmlDiv html={content} />}
 
     {image?.url && <img src={image.url} alt={image.alternativeText ?? ''} />}
   </Container>

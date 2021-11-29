@@ -7,8 +7,9 @@ import { useParams } from '../routes/hooks';
 import { useStore } from '../store/storeContext';
 import Watermark from '../components/Layout/Watermark';
 import LinkList from '../components/LinkList';
+import InnerHtmlDiv from '../components/InnerHtmlDiv';
 
-const InnerHtmlContent = styled.div`
+const StyledInnerHtmlDiv = styled(InnerHtmlDiv)`
   h1 {
     ${p => p.theme.font.h2};
   }
@@ -87,11 +88,7 @@ export const ContentPage = observer(() => {
     <Layout wrapperSize="sm" hero={hero} isLoading={isLoading}>
       <Watermark right={-80} top={-40} />
 
-      {page?.content && (
-        <InnerHtmlContent
-          dangerouslySetInnerHTML={{ __html: page.content }}
-        ></InnerHtmlContent>
-      )}
+      {page?.content && <StyledInnerHtmlDiv html={page.content} />}
 
       {page?.linkList && <LinkList list={page.linkList} />}
     </Layout>
