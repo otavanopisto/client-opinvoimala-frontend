@@ -22,7 +22,7 @@ interface Props {
 }
 
 const InnerHtmlDiv: React.FC<Props> = ({ html }) => {
-  const marketingConcent = false;
+  const marketingConcent = true;
 
   const regex = /<iframe.*<\/iframe>/gi;
 
