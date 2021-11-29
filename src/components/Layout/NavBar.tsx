@@ -62,6 +62,7 @@ const NavBar: React.FC = observer(() => {
     <nav>
       {navItems.map(navItem => (
         <DropdownMenu
+          id={`header__nav-item-menu--${navItem.id}`}
           key={navItem.id}
           triggerButton={{
             label: navItem.label,

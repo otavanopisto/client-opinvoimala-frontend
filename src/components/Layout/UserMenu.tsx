@@ -15,7 +15,7 @@ const DesktopMenu: React.FC<{ items: LinkIn[] }> = ({ items }) => {
   const { t } = useTranslation();
   return (
     <DropdownMenu
-      data-testid="user-menu"
+      id="user-menu"
       items={items}
       align="right"
       verticalPosition={20}

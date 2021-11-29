@@ -27,33 +27,14 @@ export const runTests = ({ getDriver, context, wrapDriver }: Props) => {
       })
     )(driverState);
 
+    // Verify that the desired UI state is reached:
+
     waitForApi(1000);
 
     const element = await findElement('user-menu', {
-      timeout: 1000,
+      timeout: 500,
     })(driverState);
 
-    console.log(await element.isDisplayed());
-
     expect(await element.isDisplayed()).toBe(true);
-
-    // const element2 = await $('#header__logo--container');
-
-    // expect(element2.getValue()).toBeInTheDocument();
-
-    // Verify that the desired UI state is reached
-    // try {
-    //   const element = await findElement('header__logo--containerrr', {
-    //     timeout: 500,
-    //   })(driverState);
-
-    //   expect(element).toBeInTheDocument();
-
-    //   console.log(element);
-    //   throw new Error('User menu not found');
-    // } catch (err) {
-    //   console.log('ERROR', err);
-    //   return;
-    // }
   });
 };

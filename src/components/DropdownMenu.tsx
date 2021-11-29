@@ -71,6 +71,7 @@ const StyledDropdownMenu = styled.div<{
 type OnClick = (event: React.MouseEvent<HTMLElement, MouseEvent>) => void;
 
 interface Props {
+  id: string;
   color?: keyof Colors;
   triggerButton?: {
     label: string;
@@ -85,6 +86,7 @@ interface Props {
 }
 
 const DropdownMenu: React.FC<Props> = ({
+  id,
   color = 'secondary',
   triggerButton,
   triggerEl,
@@ -132,6 +134,8 @@ const DropdownMenu: React.FC<Props> = ({
 
   return (
     <StyledDropdownMenu
+      id={id}
+      data-testid={id}
       color={color}
       onClick={toggleMenu}
       ref={ref}
