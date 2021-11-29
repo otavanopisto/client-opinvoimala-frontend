@@ -34,6 +34,11 @@ const SettingsModel = types.model({
   ),
   links: types.array(LinkModel),
   logos: types.array(ImageModel),
+  scripts: types.maybeNull(
+    types.model({
+      cookiebotDomainGroupId: types.string,
+    })
+  ),
 });
 
 export interface ISettingsModel extends Instance<typeof SettingsModel> {}

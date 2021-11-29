@@ -5,11 +5,12 @@ import { observer } from 'mobx-react-lite';
 import { Dimmer, Loader } from 'semantic-ui-react';
 import { GlobalStyle, theme, ThemeProvider } from './theme';
 import AppRouter from './routes/AppRouter';
+import Cookiebot from './components/Cookiebot';
 
 const App: React.FC = observer(() => {
   const {
     auth: { state: authState },
-    settings: { state: settingsState, fetchSettings },
+    settings: { state: settingsState, fetchSettings, settings },
     navigation: { state: navigationState },
     appointments: { appointmentState },
   } = useStore();
@@ -40,6 +41,7 @@ const App: React.FC = observer(() => {
 
   return (
     <ThemeProvider theme={theme}>
+      <Cookiebot cbid={settings?.scripts?.cookiebotDomainGroupId} />
       <Dimmer inverted active={appIsLoading} style={{ position: 'fixed' }}>
         <Loader size="massive" />
       </Dimmer>
