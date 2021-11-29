@@ -27,7 +27,7 @@ const InnerHtmlDiv: React.FC<Props> = ({ html }) => {
 
   let __html = html;
 
-  if (!cookieConsent.marketing) {
+  if (!cookieConsent?.marketing) {
     // Marketing cookies not accepted. Show placeholder div instead of iframe elements (youtube embeds etc)
     __html = __html.replaceAll(
       /<iframe.*<\/iframe>/gi,

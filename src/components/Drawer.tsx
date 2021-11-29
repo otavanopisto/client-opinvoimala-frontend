@@ -116,25 +116,23 @@ const Drawer: React.FC<Props> = ({
     <div>
       <div>{triggerEl(isOpen, toggleDrawer)}</div>
       <DrawerContainer ref={ref} isOpen={isOpen} fullWidth={fullWidth}>
-        {isOpen && (
-          <section aria-label="aside content" aria-hidden={!isOpen}>
-            <header className="drawer__header">
-              <div>
-                <Button
-                  ariaLabel={t('aria.close')}
-                  id="drawer__close-button"
-                  variant="filled"
-                  icon={<Icon type="Close" color="background" />}
-                  onClick={toggleDrawer}
-                  noMargin
-                />
-              </div>
-            </header>
-            <main className="drawer__main-content">
-              {content ? content(ref, toggleDrawer) : children}
-            </main>
-          </section>
-        )}
+        <section aria-label="aside content" aria-hidden={!isOpen}>
+          <header className="drawer__header">
+            <div>
+              <Button
+                ariaLabel={t('aria.close')}
+                id="drawer__close-button"
+                variant="filled"
+                icon={<Icon type="Close" color="background" />}
+                onClick={toggleDrawer}
+                noMargin
+              />
+            </div>
+          </header>
+          <main className="drawer__main-content">
+            {content ? content(ref, toggleDrawer) : children}
+          </main>
+        </section>
       </DrawerContainer>
     </div>
   );

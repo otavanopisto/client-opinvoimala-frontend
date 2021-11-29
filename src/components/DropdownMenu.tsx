@@ -35,6 +35,9 @@ const StyledDropdownMenu = styled.div<{
     }
 
     &__menu {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
       position: absolute;
       top: ${p => 35 + p.verticalPosition}px;
       &.align-right {
@@ -56,6 +59,10 @@ const StyledDropdownMenu = styled.div<{
       &.is-open {
         max-height: 1000px;
         opacity: 1;
+      }
+
+      &.is-hidden {
+        display: none;
       }
 
       a {
@@ -123,6 +130,7 @@ const DropdownMenu: React.FC<Props> = ({
     let className = 'dropdown__menu';
     className += ` align-${align}`;
     if (isOpen) className += ' is-open';
+    else className += ' is-hidden';
     return className;
   };
 
@@ -138,14 +146,13 @@ const DropdownMenu: React.FC<Props> = ({
       verticalPosition={verticalPosition}
     >
       <div className="dropdown__trigger">{renderTrigger()}</div>
-      <div aria-hidden={!isOpen} className={getMenuClassName()}>
-        {isOpen &&
-          items.map(link => (
-            <Link key={link.id} link={link}>
-              {link.label}
-            </Link>
-          ))}
-      </div>
+      <ul aria-hidden={!isOpen} className={getMenuClassName()}>
+        {items.map(link => (
+          <li key={link.id}>
+            <Link link={link}>{link.label}</Link>
+          </li>
+        ))}
+      </ul>
     </StyledDropdownMenu>
   );
 };

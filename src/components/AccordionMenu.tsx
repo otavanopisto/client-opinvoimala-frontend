@@ -27,6 +27,11 @@ const Container = styled.div`
       max-height: 1000px;
       opacity: 1;
     }
+
+    &.is-hidden {
+      display: none;
+    }
+
     transition: all 0.2s ease-in-out;
 
     li.accordion__item {
@@ -76,14 +81,13 @@ const AccordionMenu: React.FC<Props> = ({ id, label, items }) => {
       <ul
         aria-labelledby={t('aria.menu')}
         aria-hidden={!isOpen}
-        className={`accordion__menu${isOpen ? ' is-open' : ''}`}
+        className={`accordion__menu${isOpen ? ' is-open' : ' is-hidden'}`}
       >
-        {isOpen &&
-          items.map(link => (
-            <li key={`accordion-item-${link.id}`} className="accordion__item">
-              <Link link={link}>{link.label}</Link>
-            </li>
-          ))}
+        {items.map(link => (
+          <li key={`accordion-item-${link.id}`} className="accordion__item">
+            <Link link={link}>{link.label}</Link>
+          </li>
+        ))}
       </ul>
     </Container>
   );
