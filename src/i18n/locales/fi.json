@@ -79,7 +79,8 @@
       "action": {
         "start_test": "Tee testi",
         "show_all_from_category": "Näytä kaikki aiheen testit"
-      }
+      },
+      "show_outcome": "Suoritettu! Klikkaa nähdäksesi lopputuleman."
     },
     "test": {
       "progressText": "Kysymys {{current}}/{{total}}"
@@ -239,6 +240,7 @@
     "user_menu": "Opiskelijan käyttäjävalikko",
     "login": "Kirjaudu sisään",
     "close": "Sulje",
-    "stars": "Tähdet {{stars}}/5"
+    "stars": "Tähdet {{stars}}/5",
+    "show_outcome": "Avaa lopputulema"
   }
 }

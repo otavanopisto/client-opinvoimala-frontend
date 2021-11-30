@@ -1,7 +1,7 @@
 // Question data & corresponding answer
 interface TestAnswer {
-  question: Question;
-  answer?: QuestionOption | null;
+  question: import('../store/models').Question;
+  answer?: import('../store/models').QuestionOption | null;
 }
 
 // Keeps track of a test's progress:

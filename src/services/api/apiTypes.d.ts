@@ -93,6 +93,7 @@ declare namespace API {
     slug: string;
     answers: {
       answerId?: number;
+      answer?: string;
       questionId: number;
     }[];
   };

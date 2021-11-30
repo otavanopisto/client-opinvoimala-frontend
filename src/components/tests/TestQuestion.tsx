@@ -55,6 +55,7 @@ const TestQuestion: React.FC<Props> = ({
       case 'text':
         return (
           <TextArea
+            id={question.id}
             text={testAnswer.answer?.label ?? ''}
             onChange={(text: string) =>
               setAnswer({ id: -1, label: text ?? '' })

@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Divider, Grid } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
+import { Divider, Grid, Popup } from 'semantic-ui-react';
 import styled from 'styled-components';
+import { path } from '../../routes/routes';
 import { SimpleTest } from '../../store/models';
+import { useStore } from '../../store/storeContext';
 import { makeLink } from '../../utils/links';
 import Card from '../Card';
 import Icon from '../Icon';
@@ -57,6 +60,10 @@ const TestsList: React.FC<Props> = ({
 }) => {
   const { t } = useTranslation();
 
+  const {
+    auth: { isLoggedIn },
+  } = useStore();
+
   const [itemCount, setItemCount] = useState(initialItemCount);
 
   if (!items.length) return null;
@@ -96,6 +103,24 @@ const TestsList: React.FC<Props> = ({
       },
     });
 
+  const renderBadge = (test: SimpleTest) => {
+    const to = `/${path('tests')}/${test.slug}/${path('outcome')}`;
+    const icon = <Icon type="Completed" width={28} />;
+
+    if (!isLoggedIn) return icon;
+
+    return (
+      <Popup
+        content={t('view.tests.show_outcome')}
+        trigger={
+          <Link aria-label={t('aria.show_outcome')} to={to}>
+            {icon}
+          </Link>
+        }
+      />
+    );
+  };
+
   return (
     <>
       <h2 id={id}>{title}</h2>
@@ -107,9 +132,7 @@ const TestsList: React.FC<Props> = ({
               text={test.description}
               tags={test.categories?.map(({ label }) => label)}
               link={getLink(test)}
-              badge={
-                test.completedByUser && <Icon type="Completed" width={28} />
-              }
+              badge={test.completedByUser && renderBadge(test)}
             />
           </Grid.Column>
         ))}

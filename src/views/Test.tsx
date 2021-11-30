@@ -133,7 +133,8 @@ export const Test: React.FC = observer(() => {
       slug: testProgress.slug,
       answers: testProgress.testAnswers.map(({ answer, question }) => ({
         questionId: question.id,
-        answerId: answer?.id,
+        answerId: Number(answer?.id) > 0 ? answer?.id : undefined,
+        answer: question.answerType === 'text' ? answer?.label : undefined,
       })),
     };
 
