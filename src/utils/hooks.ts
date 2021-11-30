@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useStore } from '../store/storeContext';
 import { BREAKPOINTS } from '../theme';
 
 interface UseOutsideClickActionProps {
@@ -64,21 +65,27 @@ interface CookiebotConsent {
 }
 
 export const useCookiebotConsent = () => {
+  const {
+    settings: { settings },
+  } = useStore();
+
+  const cookiebotActivated = !!settings?.scripts?.cookiebotDomainGroupId;
+
   const [consent, setConsent] = useState<CookiebotConsent>({
-    necessary: undefined,
-    marketing: undefined,
-    preferences: undefined,
-    statistics: undefined,
+    necessary: cookiebotActivated ? undefined : true,
+    marketing: cookiebotActivated ? undefined : true,
+    preferences: cookiebotActivated ? undefined : true,
+    statistics: cookiebotActivated ? undefined : true,
   });
 
   useEffect(() => {
-    if (window) {
+    if (window && cookiebotActivated) {
       setTimeout(() => {
         // @ts-ignore
-        setConsent(window.Cookiebot?.consent);
-      }, 100);
+        if (window.Cookiebot?.consent) setConsent(window.Cookiebot?.consent);
+      }, 250);
     }
-  }, []);
+  }, [cookiebotActivated]);
 
   return consent;
 };
