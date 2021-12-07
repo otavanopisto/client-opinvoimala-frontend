@@ -1,4 +1,6 @@
 import React from 'react';
+import { observer } from 'mobx-react-lite';
+import { useStore } from '../store/storeContext';
 import { useCookiebotConsent } from '../utils/hooks/useCookiebotConsent';
 
 const noConcentContainerStyle = `
@@ -22,8 +24,12 @@ interface Props {
   html: string;
 }
 
-const InnerHtmlDiv: React.FC<Props> = ({ html }) => {
-  const cookieConsent = useCookiebotConsent();
+const InnerHtmlDiv: React.FC<Props> = observer(({ html }) => {
+  const {
+    settings: { isCookiebotActivated },
+  } = useStore();
+
+  const cookieConsent = useCookiebotConsent(isCookiebotActivated);
 
   let __html = html;
 
@@ -36,6 +42,6 @@ const InnerHtmlDiv: React.FC<Props> = ({ html }) => {
   }
 
   return <div dangerouslySetInnerHTML={{ __html }}></div>;
-};
+});
 
 export default InnerHtmlDiv;

@@ -56,6 +56,12 @@ export const SettingsStore = types
     get settings() {
       return self.data ? getSnapshot(self.data) : undefined;
     },
+
+    get isCookiebotActivated() {
+      return self.data?.scripts?.cookiebotDomainGroupId
+        ? !!self.data.scripts.cookiebotDomainGroupId
+        : false;
+    },
   }))
   .actions(self => {
     const fetchSettings = flow(function* (params: API.GetSettings = {}) {

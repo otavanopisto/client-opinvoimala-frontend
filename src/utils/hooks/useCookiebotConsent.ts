@@ -1,20 +1,13 @@
-import { useState, useEffect } from 'react';
-import { useStore } from '../../store/storeContext';
+import { useState, useEffect, useCallback } from 'react';
 
-interface CookiebotConsent {
+export interface CookiebotConsent {
   necessary?: boolean;
   marketing?: boolean;
   preferences?: boolean;
   statistics?: boolean;
 }
 
-export const useCookiebotConsent = () => {
-  const {
-    settings: { state, settings },
-  } = useStore();
-
-  const [cookiebotActivated, setCookiebotActivated] = useState<boolean>();
-
+export const useCookiebotConsent = (cookiebotActivated: boolean) => {
   const [consent, setConsent] = useState<CookiebotConsent>({
     necessary: true,
     marketing: undefined,
@@ -22,11 +15,23 @@ export const useCookiebotConsent = () => {
     statistics: undefined,
   });
 
+  const updateConsent = useCallback(consent => {
+    setConsent({
+      necessary: consent.necessary,
+      marketing: consent.marketing,
+      preferences: consent.preferences,
+      statistics: consent.statistics,
+    });
+  }, []);
+
   useEffect(() => {
-    if (state === 'FETCHED' && settings) {
-      setCookiebotActivated(!!settings?.scripts?.cookiebotDomainGroupId);
+    // @ts-ignore
+    if (cookiebotActivated && window?.Cookiebot?.consent) {
+      // @ts-ignore
+      const cookiebotConsent = window?.Cookiebot?.consent;
+      updateConsent(cookiebotConsent);
     }
-  }, [settings, state]);
+  }, [cookiebotActivated, updateConsent]);
 
   useEffect(() => {
     const observer = new MutationObserver(
@@ -39,12 +44,7 @@ export const useCookiebotConsent = () => {
           if (mutation.type === 'childList' && isCookiebotReady) {
             // A child node has been added or removed to/from <head>.
 
-            setConsent({
-              necessary: cookiebotConsent.necessary,
-              marketing: cookiebotConsent.marketing,
-              preferences: cookiebotConsent.preferences,
-              statistics: cookiebotConsent.statistics,
-            });
+            updateConsent(cookiebotConsent);
           }
         });
       }
@@ -58,7 +58,7 @@ export const useCookiebotConsent = () => {
     return () => {
       observer.disconnect();
     };
-  }, [cookiebotActivated]);
+  }, [cookiebotActivated, updateConsent]);
 
   return consent;
 };
