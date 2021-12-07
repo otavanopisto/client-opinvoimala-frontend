@@ -30,7 +30,7 @@ const InnerHtmlDiv: React.FC<Props> = ({ html }) => {
   if (!cookieConsent?.marketing) {
     // Marketing cookies not accepted. Show placeholder div instead of iframe elements (youtube embeds etc)
     __html = __html.replaceAll(
-      /<iframe.*<\/iframe>/gi,
+      /<iframe[^<]*<\/iframe>/gi,
       `<div style="${noConcentContainerStyle}">Markkinointievästeet tulee olla hyväksyttynä, jotta tämä sisältö voidaan näyttää.</div>`
     );
   }
