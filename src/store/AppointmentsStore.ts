@@ -9,6 +9,7 @@ import {
   applySnapshot,
 } from 'mobx-state-tree';
 import api from '../services/api/Api';
+import { ANALYTICS_EVENT, sendAnalyticsEvent } from '../utils/analytics';
 import { isFutureDate, isPastDate } from '../utils/date';
 import { byStartTime } from '../utils/sort';
 
@@ -146,6 +147,7 @@ export const AppointmentsStore = types
         yield api.cancelAppointment(params);
 
       if (response.kind === 'ok') {
+        sendAnalyticsEvent(ANALYTICS_EVENT.APPOINTMENT_CANCELLED);
         const data = getSnapshot(self.userAppointments);
 
         self.userAppointments = cast(
@@ -167,6 +169,8 @@ export const AppointmentsStore = types
         yield api.makeAppointment(params);
 
       if (response.kind === 'ok') {
+        sendAnalyticsEvent(ANALYTICS_EVENT.APPOINTMENT_BOOKED);
+
         // Update user appointments
         self.userAppointments = cast([
           ...self.userAppointments,

@@ -12,6 +12,7 @@ import TestsList from '../components/tests/TestsList';
 import TestsSummary from '../components/tests/TestsSummary';
 import { path } from '../routes/routes';
 import { useStore } from '../store/storeContext';
+import { ANALYTICS_EVENT, sendAnalyticsEvent } from '../utils/analytics';
 
 const VISIBLE_TESTS = 9;
 const VISIBLE_EXERCISES = 3;
@@ -60,7 +61,10 @@ export const WellBeingProfile: React.FC = observer(() => {
       id: 'well-being-profile__download-button',
       text: t('action.download'),
       icon: <Icon type="Download" color="none" />,
-      onClick: () => window.print(),
+      onClick: () => {
+        sendAnalyticsEvent(ANALYTICS_EVENT.USER_PRINTED_PROFILE);
+        window.print();
+      },
     },
   ];
 

@@ -9,6 +9,7 @@ import {
 } from 'mobx-state-tree';
 import api from '../services/api/Api';
 import Storage from '../services/storage';
+import { ANALYTICS_EVENT, sendAnalyticsEvent } from '../utils/analytics';
 
 const States = ['IDLE' as const, 'PROCESSING' as const, 'ERROR' as const];
 
@@ -48,6 +49,7 @@ export const AuthStore = types
       );
 
       if (response.kind === 'ok') {
+        sendAnalyticsEvent(ANALYTICS_EVENT.USER_REGISTERED);
         self.user = cast(response.data.user);
         self.jwt = cast(response.data.jwt);
         self.state = 'IDLE';
@@ -76,6 +78,8 @@ export const AuthStore = types
       );
 
       if (response.kind === 'ok') {
+        sendAnalyticsEvent(ANALYTICS_EVENT.USER_LOGGED_IN);
+
         // Reset tests store after successful login:
         const { tests } = getParent(self);
         tests.reset();

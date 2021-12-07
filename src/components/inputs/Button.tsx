@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
 import { Colors } from '../../theme/styled';
+import { sendAnalyticsEvent } from '../../utils/analytics';
 
 const StyledButton = styled.button<{
   color: ColorType;
@@ -114,6 +115,10 @@ interface Props {
   noMargin?: boolean;
   autoFocus?: boolean;
   ariaLabel?: string;
+  gaEvent?: {
+    name: string;
+    variables?: any;
+  };
 }
 
 export const Button: FC<Props> = ({
@@ -131,8 +136,14 @@ export const Button: FC<Props> = ({
   noMargin = false,
   autoFocus = false,
   ariaLabel,
+  gaEvent,
 }) => {
   const isIconButton = !!icon && !text;
+
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    if (gaEvent) sendAnalyticsEvent(gaEvent.name, gaEvent.variables);
+    if (onClick) onClick(e);
+  };
 
   const getClassName = () => {
     let className = `button-${variant}`;
@@ -148,7 +159,7 @@ export const Button: FC<Props> = ({
       id={id}
       data-testid={id}
       type={type}
-      onClick={onClick}
+      onClick={handleClick}
       className={getClassName()}
       disabled={disabled}
       color={color}

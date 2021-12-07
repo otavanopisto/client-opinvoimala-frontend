@@ -17,6 +17,7 @@ import {
   getTestFromStorage,
   saveTestToStorage,
 } from '../utils/storage';
+import { ANALYTICS_EVENT, sendAnalyticsEvent } from '../utils/analytics';
 
 const SAVE_PROGRESS_TO_STORAGE = true;
 
@@ -78,8 +79,12 @@ export const Test: React.FC = observer(() => {
         : undefined;
 
       if (testFromStorage) {
+        // Test was started earlier and saved into storage
         setTestProgress(testFromStorage);
       } else {
+        // New test started from the begin, send an event
+        sendAnalyticsEvent(ANALYTICS_EVENT.TEST_STARTED, { test: test.slug });
+
         setTestProgress(currentProgress => ({
           ...currentProgress,
           currentQuestion: 0,
@@ -140,9 +145,11 @@ export const Test: React.FC = observer(() => {
 
     createTestOutcome(completedTest);
 
-    history.push(`/${path('tests')}/${slug}/${path('outcome')}`);
+    sendAnalyticsEvent(ANALYTICS_EVENT.TEST_FINISHED, { test: test?.slug });
 
     if (SAVE_PROGRESS_TO_STORAGE) clearTestFromStorage(testProgress.slug);
+
+    history.push(`/${path('tests')}/${slug}/${path('outcome')}`);
   };
 
   const setCurrentQuestion = (currentQuestion: number) => {
