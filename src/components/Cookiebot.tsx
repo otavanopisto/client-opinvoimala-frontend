@@ -2,11 +2,11 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 
 interface Props {
-  cbid?: string;
+  cbid?: string | null;
 }
 
 const Cookiebot: React.FC<Props> = ({ cbid }) => {
-  if (!cbid || process.env.NODE_ENV === 'development') {
+  if (!cbid) {
     return null;
   }
 

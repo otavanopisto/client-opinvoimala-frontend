@@ -36,7 +36,8 @@ const SettingsModel = types.model({
   logos: types.array(ImageModel),
   scripts: types.maybeNull(
     types.model({
-      cookiebotDomainGroupId: types.string,
+      cookiebotDomainGroupId: types.maybeNull(types.string),
+      googleAnalyticsMeasurementId: types.maybeNull(types.string),
     })
   ),
 });
