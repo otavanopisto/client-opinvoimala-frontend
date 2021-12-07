@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import Helmet from 'react-helmet';
-import { useCookiebotConsent } from '../utils/hooks';
+import { useCookiebotConsent } from '../utils/hooks/useCookiebotConsent';
 
 interface Props {
   gaMeasurementId?: string | null;

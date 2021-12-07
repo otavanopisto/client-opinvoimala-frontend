@@ -1,5 +1,5 @@
 import React from 'react';
-import { useCookiebotConsent } from '../utils/hooks';
+import { useCookiebotConsent } from '../utils/hooks/useCookiebotConsent';
 
 const noConcentContainerStyle = `
   min-height: 100px;
