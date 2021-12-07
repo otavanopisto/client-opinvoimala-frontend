@@ -3,9 +3,10 @@ import { observer } from 'mobx-react-lite';
 import { useStore } from '../store/storeContext';
 import { useCookiebotConsent } from '../utils/hooks/useCookiebotConsent';
 
-const noConcentContainerStyle = `
+const noConsentContainerStyle = `
   min-height: 100px;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   padding: 8px 16px;
@@ -34,11 +35,18 @@ const InnerHtmlDiv: React.FC<Props> = observer(({ html }) => {
   let __html = html;
 
   if (!cookieConsent?.marketing) {
-    // Marketing cookies not accepted. Show placeholder div instead of iframe elements (youtube embeds etc)
-    __html = __html.replaceAll(
-      /<iframe[^<]*<\/iframe>/gi,
-      `<div style="${noConcentContainerStyle}">Markkinointievästeet tulee olla hyväksyttynä, jotta tämä sisältö voidaan näyttää.</div>`
-    );
+    // Matches an <iframe ... src="xyz"></iframe> element and captures its src-value as a group $1.
+    const embedContentRegex = /<iframe[^>]*src="([^"]*)"[^<]*<\/iframe>/gi;
+
+    // Placeholder element to be shown instead of the embedded iframe element.
+    const placeholderElement = `
+      <div style="${noConsentContainerStyle}">
+        <div>Markkinointievästeet tulee olla hyväksyttynä, jotta tämä sisältö voidaan näyttää.</div>
+        <a href="$1" target="_blank">$1</a>
+      </div>`;
+
+    // Marketing cookies are not accepted. Show placeholder div instead of iframe elements (youtube embeds etc)
+    __html = __html.replaceAll(embedContentRegex, placeholderElement);
   }
 
   return <div dangerouslySetInnerHTML={{ __html }}></div>;
