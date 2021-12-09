@@ -38,6 +38,7 @@ const SettingsModel = types.model({
     types.model({
       cookiebotDomainGroupId: types.maybeNull(types.string),
       googleAnalyticsMeasurementId: types.maybeNull(types.string),
+      giosgCompanyId: types.maybeNull(types.string),
     })
   ),
 });

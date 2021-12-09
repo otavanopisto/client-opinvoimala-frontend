@@ -7,6 +7,7 @@ import { GlobalStyle, theme, ThemeProvider } from './theme';
 import AppRouter from './routes/AppRouter';
 import Cookiebot from './components/Cookiebot';
 import Analytics from './components/Analytics';
+import Chat from './components/Chat';
 
 const App: React.FC = observer(() => {
   const {
@@ -40,13 +41,17 @@ const App: React.FC = observer(() => {
     }
   }, [fetchSettings, settingsState]);
 
-  const { cookiebotDomainGroupId, googleAnalyticsMeasurementId } =
-    settings?.scripts ?? {};
+  const {
+    cookiebotDomainGroupId,
+    googleAnalyticsMeasurementId,
+    giosgCompanyId,
+  } = settings?.scripts ?? {};
 
   return (
     <ThemeProvider theme={theme}>
       <Cookiebot cbid={cookiebotDomainGroupId} />
       <Analytics gaMeasurementId={googleAnalyticsMeasurementId} />
+      <Chat giosgCompanyId={giosgCompanyId} />
 
       <Dimmer inverted active={appIsLoading} style={{ position: 'fixed' }}>
         <Loader size="massive" />
