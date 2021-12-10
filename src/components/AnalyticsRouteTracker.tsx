@@ -31,22 +31,30 @@ const AnalyticsRouteTracker: React.FC = observer(() => {
     const { location } = window;
     const page_path = pathname + search;
     const page_location = `${location.origin}${page_path}`;
+    const page_title = document.title.replace('Opinvoimala - ', '');
 
-    sendAnalyticsEvent('page_view', { page_path, page_location });
+    sendAnalyticsEvent('page_view', { page_title, page_path, page_location });
   }, []);
 
   useEffect(() => {
-    if (isAnalyticsReady()) {
-      const { pathname, search } = location;
-      const pathChanged = pathname !== pathRef.current;
-      const searchChanged = search !== searchRef.current;
+    // Set short delay: Wait for page title etc. to get updated before logging.
+    const delayedLogging = setTimeout(() => {
+      if (isAnalyticsReady()) {
+        const { pathname, search } = location;
+        const pathChanged = pathname !== pathRef.current;
+        const searchChanged = search !== searchRef.current;
 
-      if (pathChanged || searchChanged) {
-        logPageChange(pathname, search);
-        pathRef.current = pathname;
-        searchRef.current = search;
+        if (pathChanged || searchChanged) {
+          logPageChange(pathname, search);
+          pathRef.current = pathname;
+          searchRef.current = search;
+        }
       }
-    }
+    }, 200);
+
+    return () => {
+      clearTimeout(delayedLogging);
+    };
   }, [isAnalyticsReady, location, logPageChange]);
 
   return null;

@@ -10,6 +10,7 @@ import ScrollToTop from './ScrollToTop';
 import { useStore } from '../store/storeContext';
 import NotFound404 from '../views/404';
 import RouteTracker from '../components/AnalyticsRouteTracker';
+import PageWrapper from './PageWrapper';
 
 interface Props {
   routes?: Route[];
@@ -32,7 +33,9 @@ const AppRouter: FC<Props> = observer(({ routes = appRoutes }) => {
           <RouterRoute
             key={route.path}
             path={route.path}
-            component={() => route.component()}
+            component={() => (
+              <PageWrapper title={route.title}>{route.component()}</PageWrapper>
+            )}
             exact={route.exact}
           />
         ))}
@@ -40,7 +43,11 @@ const AppRouter: FC<Props> = observer(({ routes = appRoutes }) => {
           <RouterRoute
             key={route.path}
             path={route.path}
-            component={() => route.component({ unauthorized: !isLoggedIn })}
+            component={() => (
+              <PageWrapper title={route.title}>
+                {route.component({ unauthorized: !isLoggedIn })}
+              </PageWrapper>
+            )}
             exact={route.exact}
           />
         ))}

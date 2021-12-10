@@ -22,6 +22,7 @@ interface ComponentProps {
 
 export interface Route {
   path: string;
+  title?: string;
   component: (props?: ComponentProps) => JSX.Element;
   exact: boolean;
   isPublic?: boolean;
@@ -44,69 +45,85 @@ const checkAuth = (component: JSX.Element, isUnauthorized?: boolean) => {
 };
 
 const appRoutes: (Route | NavLinkRoute)[] = [
-  { path: '/', component: () => <FrontPage />, exact: true, isPublic: true },
+  {
+    path: '/',
+    component: () => <FrontPage />,
+    exact: true,
+    isPublic: true,
+  },
   {
     path: `/${path('register')}`,
+    title: rt('register'),
     component: () => <Register />,
     exact: true,
     isPublic: true,
   },
   {
     path: `/${path('forgot_password')}`,
+    title: rt('forgot_password'),
     component: () => <ForgotPassword />,
     exact: true,
     isPublic: true,
   },
   {
     path: `/${path('reset_password')}`,
+    title: rt('reset_password'),
     component: () => <ResetPassword />,
     exact: true,
     isPublic: true,
   },
   {
     path: `/${path('appointments')}`,
+    title: rt('appointments'),
     component: props => checkAuth(<UserAppointments />, props?.unauthorized),
     exact: true,
     isPublic: false,
   },
   {
     path: `/${path('change_password')}`,
+    title: rt('change_password'),
     component: props => checkAuth(<ChangePassword />, props?.unauthorized),
     exact: true,
     isPublic: false,
   },
   {
     path: `/${path('logout')}`,
+    title: rt('logout'),
     component: () => <Logout />,
     exact: true,
     isPublic: true,
   },
   {
     path: `/${path('content_page')}/:slug`,
+    title: rt('content_page'),
     component: () => <ContentPage />,
     exact: true,
     isPublic: true,
   },
   {
     path: `/${path('tests')}`,
+    title: rt('tests'),
     component: () => <Tests />,
     exact: true,
     isPublic: true,
   },
   {
     path: `/${path('tests')}/:slug`,
+    title: rt('tests'),
     component: () => <Test />,
     exact: true,
     isPublic: true,
   },
   {
     path: `/${path('tests')}/:slug/${path('outcome')}`,
+    title: rt('outcome'),
     component: () => <TestOutcomes />,
     exact: true,
     isPublic: true,
   },
   {
     path: `/${path('well_being_profile')}`,
+    title: rt('well_being_profile'),
     component: props => checkAuth(<WellBeingProfile />, props?.unauthorized),
     exact: true,
     isPublic: false,
