@@ -9,6 +9,7 @@ import appRoutes, { Route } from './routes';
 import ScrollToTop from './ScrollToTop';
 import { useStore } from '../store/storeContext';
 import NotFound404 from '../views/404';
+import RouteTracker from '../components/AnalyticsRouteTracker';
 
 interface Props {
   routes?: Route[];
@@ -25,6 +26,7 @@ const AppRouter: FC<Props> = observer(({ routes = appRoutes }) => {
   return (
     <Router>
       <ScrollToTop />
+      <RouteTracker />
       <Switch>
         {publicRoutes.map(route => (
           <RouterRoute

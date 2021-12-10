@@ -13,6 +13,9 @@ export const sendAnalyticsEvent = (eventName: string, variables?: any) => {
     const { gtag } = window as any;
     if (gtag) {
       gtag('event', eventName, variables);
+      if (process.env.NODE_ENV === 'development') {
+        console.log('EVENT:', eventName, variables);
+      }
     }
   }
 };
