@@ -236,6 +236,12 @@ export const Test: React.FC = observer(() => {
       }));
     };
 
+  // Progress is disabled if not answered, and if question type is NOT
+  // either 'text' or 'none' (these doesn't require any action from user).
+  const isProgressDisabled =
+    !currentTestAnswer?.answer &&
+    !['text', 'none'].includes(currentTestAnswer?.question?.answerType ?? '');
+
   return (
     <Layout wrapperSize="sm" hero={hero} isLoading={isBusy}>
       {currentTestAnswer && (
@@ -262,12 +268,14 @@ export const Test: React.FC = observer(() => {
             text={t('action.show_result')}
             onClick={handleTestCompleted}
             type="submit"
+            disabled={isProgressDisabled}
           />
         ) : (
           <Button
             id="test-controls__next-button"
             text={t('action.continue')}
             onClick={() => changeQuestion('next')}
+            disabled={isProgressDisabled}
           />
         )}
         {isMobile && <div>{getProgressText()}</div>}
