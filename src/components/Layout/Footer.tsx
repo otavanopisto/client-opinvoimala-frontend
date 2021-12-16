@@ -92,6 +92,7 @@ const LogoArea = styled.div`
     img {
       width: 70px;
       margin: ${p => p.theme.spacing.lg} 0;
+      border-radius: 0;
       @media ${p => p.theme.breakpoint.tablet} {
         width: 50px;
       }
