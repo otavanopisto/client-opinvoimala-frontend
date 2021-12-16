@@ -5,8 +5,8 @@
   "student": "Opiskelija",
   "annotation": {
     "nb": "Huom!",
-    "test": "Tämän testin tulokset eivät perustu tieteellisiin menetelmiin, eikä niitä tule ottaa tosissaan.",
-    "well_being_profile": "Tämän profiilin tulokset eivät perustu tieteellisiin menetelmiin, eikä niitä tule ottaa tosissaan."
+    "test": "Huom! Tämän testin tulokset ovat suuntaa-antavia.",
+    "well_being_profile": "Huom! Tämän profiilin tulokset ovat suuntaa-antavia."
   },
   "action": {
     "register": "Rekisteröidy",
