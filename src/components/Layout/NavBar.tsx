@@ -25,7 +25,13 @@ const NavBar: React.FC = observer(() => {
   const navItems = navigation?.items ?? [];
 
   const getVisibleLinks = (links: Link[]) => {
-    return links.filter(({ page }) => !!page);
+    return links.filter(({ type, page, test, internal, external }) => {
+      const isPage = type === 'page' && !!page;
+      const isTest = type === 'test' && !!test;
+      const isInternal = type === 'internal' && !!internal?.length;
+      const isExternal = type === 'external' && !!external?.length;
+      return isPage || isTest || isInternal || isExternal;
+    });
   };
 
   if (isTablet || isMobile) {
