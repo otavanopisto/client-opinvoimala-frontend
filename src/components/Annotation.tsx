@@ -9,7 +9,7 @@ const Container = styled.div`
   border-radius: ${p => p.theme.borderRadius.sm};
   padding: ${p => p.theme.spacing.md} ${p => p.theme.spacing.lg};
   color: ${p => p.theme.color.secondary};
-  ${p => p.theme.font.size.sm};
+  ${p => p.theme.font.size.md};
 
   svg {
     margin-right: ${p => p.theme.spacing.lg};

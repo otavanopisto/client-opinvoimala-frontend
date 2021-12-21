@@ -4,13 +4,12 @@ import styled from 'styled-components';
 
 const Container = styled.div`
   display: inline-block;
-  margin: ${p => p.theme.spacing.md} 0;
   padding: ${p => p.theme.spacing.sm} ${p => p.theme.spacing.md};
   background-color: ${p => p.theme.color.grey3};
   border-radius: ${p => p.theme.borderRadius.sm};
 
   font-family: ${p => p.theme.font.secondary};
-  ${p => p.theme.font.size.sm};
+  ${p => p.theme.font.size.md};
 `;
 
 const NoCompletedTests: React.FC = () => {

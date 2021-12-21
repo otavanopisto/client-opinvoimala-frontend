@@ -25,7 +25,7 @@ const Container = styled.div`
 
   .tests-summary-total__details {
     font-family: ${p => p.theme.font.secondary};
-    ${p => p.theme.font.size.sm};
+    ${p => p.theme.font.size.md};
   }
 `;
 

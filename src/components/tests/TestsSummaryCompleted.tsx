@@ -4,6 +4,11 @@ import styled from 'styled-components';
 import { TestsSummaryCategory } from '../../store/models';
 
 const Container = styled.div`
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
   h2 {
     ${p => p.theme.font.h4};
   }
@@ -11,6 +16,7 @@ const Container = styled.div`
   ul {
     list-style-type: none;
     padding: 0;
+    margin: 0;
 
     li {
       margin-bottom: ${p => p.theme.spacing.lg};
@@ -24,7 +30,7 @@ const Label = styled.div`
   align-items: center;
   width: 100%;
   color: ${p => p.theme.color.secondary};
-  ${p => p.theme.font.size.sm};
+  ${p => p.theme.font.size.md};
   font-family: ${p => p.theme.font.secondary};
 `;
 
@@ -32,12 +38,12 @@ const ProgressBar = styled.div<{ progress: number }>`
   background-color: ${p => p.theme.color.grey3};
   border: 1px solid ${p => p.theme.color.secondary};
   border-radius: ${p => p.theme.borderRadius.sm};
-  height: 8px;
+  height: 10px;
   width: 100%;
 
   .progress-bar {
     display: ${p => (p.progress ? 'block' : 'none')};
-    height: 6px;
+    height: 8px;
     width: ${p => p.progress}%;
     background-color: ${p => p.theme.color.progress};
 
