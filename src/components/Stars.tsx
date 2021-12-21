@@ -5,7 +5,7 @@ import StarSvg from '../assets/icons/star.svg';
 
 const MOBILE_STAR_SIZE = 0.75;
 
-const Container = styled.div`
+const Container = styled.section`
   display: flex;
 
   > div {
@@ -59,7 +59,7 @@ const Stars: React.FC<Props> = ({ stars, starWidth = 40 }) => {
   }
 
   return (
-    <Container aria-label={t('aria.stars', { stars })}>
+    <Container role="stars" aria-label={t('aria.stars', { stars })}>
       {starObjects.map(({ id, width }) => (
         <Star key={id} fullStarWidth={starWidth} width={width} />
       ))}
