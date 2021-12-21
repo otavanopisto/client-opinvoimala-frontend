@@ -11,7 +11,7 @@ import NoPrint from '../NoPrint';
 
 const StyledFooter = styled.footer`
   background-color: ${p => p.theme.color.grey3};
-  padding-top: ${p => p.theme.spacing.lg};
+  padding-top: ${p => p.theme.spacing.xl};
 
   ${p => p.theme.font.size.md};
 
@@ -25,17 +25,25 @@ const StyledFooter = styled.footer`
     padding: 0;
     li {
       margin: ${p => p.theme.spacing.md} 0;
-      a {
-        display: flex;
-        align-items: center;
-        justify-content: flex-end;
-        font-family: ${p => p.theme.font.secondary};
-        color: ${p => p.theme.color.foreground};
+      div {
+        display: inline-block;
+        a {
+          display: flex;
+          align-items: center;
+          justify-content: flex-end;
+          font-family: ${p => p.theme.font.secondary};
+          color: ${p => p.theme.color.foreground};
 
-        i.inverted.circular.icon {
           text-decoration: none;
-          margin-left: ${p => p.theme.spacing.md};
-          background-color: ${p => p.theme.color.secondary} !important;
+          :hover {
+            text-decoration: underline;
+          }
+
+          i.inverted.circular.icon {
+            text-decoration: none;
+            margin-left: ${p => p.theme.spacing.md};
+            background-color: ${p => p.theme.color.secondary} !important;
+          }
         }
       }
     }
@@ -46,7 +54,7 @@ const StyledFooter = styled.footer`
 
       li {
         margin: 0;
-        margin-bottom: ${p => p.theme.spacing.md};
+        margin-bottom: ${p => p.theme.spacing.lg};
         &:not(:last-child) {
           margin-right: ${p => p.theme.spacing.lg};
         }
@@ -64,6 +72,10 @@ const StyledFooter = styled.footer`
   .footer__copyright-text,
   .footer__links-list {
     ${p => p.theme.font.size.sm};
+    li {
+      margin-top: ${p => p.theme.spacing.sm};
+      margin-bottom: ${p => p.theme.spacing.sm};
+    }
   }
 
   ul.footer__links-list {
@@ -130,10 +142,12 @@ const Footer: React.FC = observer(() => {
         if (!url) return null;
         return (
           <li key={id}>
-            <a href={url} target="_blank" rel="noreferrer">
-              {label}
-              <Icon circular inverted name={(platform ?? 'linkify') as any} />
-            </a>
+            <div>
+              <a href={url} target="_blank" rel="noreferrer">
+                {label}
+                <Icon circular inverted name={(platform ?? 'linkify') as any} />
+              </a>
+            </div>
           </li>
         );
       })}
@@ -182,8 +196,11 @@ const Footer: React.FC = observer(() => {
           <Divider section />
 
           <Grid columns={2} doubling>
-            <Grid.Column verticalAlign="middle">{renderLinks()}</Grid.Column>
+            <Grid.Column width={10} verticalAlign="middle">
+              {renderLinks()}
+            </Grid.Column>
             <Grid.Column
+              width={6}
               verticalAlign="middle"
               textAlign={isTablet ? 'left' : 'right'}
               className="footer__copyright-text"
