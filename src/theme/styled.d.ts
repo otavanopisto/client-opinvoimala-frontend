@@ -52,6 +52,7 @@ declare module 'styled-components' {
       main: string;
       secondary: string;
       size: {
+        xs: string;
         sm: string;
         md: string;
         lg: string;

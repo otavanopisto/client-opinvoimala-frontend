@@ -37,7 +37,7 @@ const StyledButton = styled.button<{
   }
 
   font-family: ${p => p.theme.font.secondary};
-  ${p => (p.isSmall ? p.theme.font.size.sm : p.theme.font.size.md)};
+  ${p => (p.isSmall ? p.theme.font.size.xs : p.theme.font.size.sm)};
   font-weight: bold;
   user-select: none;
   cursor: pointer;

@@ -10,7 +10,7 @@ import Cards from '../components/Cards';
 
 const Details = styled(InnerHtmlDiv)`
   p {
-    ${p => p.theme.font.size.md}
+    ${p => p.theme.font.size.sm}
   }
   h1 {
     ${p => p.theme.font.h2};

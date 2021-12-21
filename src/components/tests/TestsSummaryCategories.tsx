@@ -46,7 +46,7 @@ const Container = styled.div`
         align-items: center;
         margin-top: ${p => p.theme.spacing.md};
         color: ${p => p.theme.color.secondary};
-        ${p => p.theme.font.size.md};
+        ${p => p.theme.font.size.sm};
         text-decoration: none;
 
         svg {
@@ -73,7 +73,7 @@ const Container = styled.div`
           flex: 1;
         }
         &__side {
-          ${p => p.theme.font.size.sm};
+          ${p => p.theme.font.size.xs};
           position: absolute;
           right: ${p => p.theme.spacing.md};
         }

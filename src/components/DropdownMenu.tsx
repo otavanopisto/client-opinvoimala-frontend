@@ -19,7 +19,7 @@ const StyledDropdownMenu = styled.div<{
       button {
         color: ${p => p.theme.color[p.color]};
         font-family: ${p => p.theme.font.secondary};
-        ${p => p.theme.font.size.md};
+        ${p => p.theme.font.size.sm};
         font-weight: bold;
         margin-left: ${p => p.theme.spacing.lg};
         margin-right: ${p => p.theme.spacing.lg};

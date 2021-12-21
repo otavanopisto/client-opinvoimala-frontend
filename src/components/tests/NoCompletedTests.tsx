@@ -9,7 +9,7 @@ const Container = styled.div`
   border-radius: ${p => p.theme.borderRadius.sm};
 
   font-family: ${p => p.theme.font.secondary};
-  ${p => p.theme.font.size.md};
+  ${p => p.theme.font.size.sm};
 `;
 
 const NoCompletedTests: React.FC = () => {

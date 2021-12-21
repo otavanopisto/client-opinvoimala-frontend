@@ -30,7 +30,7 @@ const Label = styled.div`
   align-items: center;
   width: 100%;
   color: ${p => p.theme.color.secondary};
-  ${p => p.theme.font.size.md};
+  ${p => p.theme.font.size.sm};
   font-family: ${p => p.theme.font.secondary};
 `;
 

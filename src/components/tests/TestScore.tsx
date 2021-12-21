@@ -34,7 +34,7 @@ const TestPoints = styled.div`
   color: ${p => p.theme.color.background};
   font-family: ${p => p.theme.font.secondary};
   font-weight: bold;
-  ${p => p.theme.font.size.sm};
+  ${p => p.theme.font.size.xs};
 `;
 
 interface Props {

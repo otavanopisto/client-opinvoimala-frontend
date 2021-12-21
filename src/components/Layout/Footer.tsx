@@ -13,7 +13,7 @@ const StyledFooter = styled.footer`
   background-color: ${p => p.theme.color.grey3};
   padding-top: ${p => p.theme.spacing.xl};
 
-  ${p => p.theme.font.size.md};
+  ${p => p.theme.font.size.sm};
 
   .footer__description-text {
     margin: ${p => p.theme.spacing.md} 0;
@@ -71,7 +71,7 @@ const StyledFooter = styled.footer`
 
   .footer__copyright-text,
   .footer__links-list {
-    ${p => p.theme.font.size.sm};
+    ${p => p.theme.font.size.xs};
     li {
       margin-top: ${p => p.theme.spacing.sm};
       margin-bottom: ${p => p.theme.spacing.sm};

@@ -7,7 +7,7 @@ import { Input } from '../inputs';
 import AppointmentDetails from './AppointmentDetails';
 
 const Container = styled.div`
-  ${p => p.theme.font.size.sm};
+  ${p => p.theme.font.size.xs};
   h2 {
     ${p => p.theme.font.h5};
     margin-bottom: 0;

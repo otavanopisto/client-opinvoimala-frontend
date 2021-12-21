@@ -12,7 +12,7 @@ const Container = styled.div<{ direction: Direction }>`
   margin-top: ${p => p.theme.spacing.lg};
   margin-bottom: ${p => p.theme.spacing.lg};
 
-  ${p => p.theme.font.size.sm};
+  ${p => p.theme.font.size.xs};
   h2 {
     ${p => p.theme.font.h5};
     margin-bottom: 0;

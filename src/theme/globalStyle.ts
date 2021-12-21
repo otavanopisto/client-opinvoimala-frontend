@@ -96,7 +96,7 @@ export const GlobalStyle = createGlobalStyle`
   figcaption {
     text-align: center;
     font-style: italic;
-    ${p => p.theme.font.size.md};
+    ${p => p.theme.font.size.sm};
   }
 
   iframe {
@@ -115,7 +115,7 @@ export const GlobalStyle = createGlobalStyle`
 
   label {
     user-select: none;
-    ${p => p.theme.font.size.md};
+    ${p => p.theme.font.size.sm};
   }
 
   input {

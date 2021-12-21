@@ -72,8 +72,9 @@ export const theme: DefaultTheme = {
     main: 'Open sans',
     secondary: 'Urbanist',
     size: {
-      sm: fontSize(12, 14),
-      md: fontSize(14, 16),
+      xs: fontSize(12, 14),
+      sm: fontSize(14, 16),
+      md: fontSize(16, 20),
       lg: fontSize(18, 22),
       xl: fontSize(22, 28),
     },

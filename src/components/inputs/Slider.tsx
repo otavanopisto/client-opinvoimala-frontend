@@ -10,7 +10,7 @@ const Container = styled.div`
   border-radius: ${p => p.theme.borderRadius.md};
 
   font-family: ${p => p.theme.font.secondary};
-  ${p => p.theme.font.size.sm};
+  ${p => p.theme.font.size.xs};
 `;
 
 const Labels = styled.div`

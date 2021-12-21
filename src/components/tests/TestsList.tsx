@@ -25,7 +25,7 @@ const ChildrenContainer = styled.div`
     display: flex;
     align-items: center;
     color: ${p => p.theme.color.secondary};
-    ${p => p.theme.font.size.md};
+    ${p => p.theme.font.size.sm};
     svg {
       margin-left: ${p => p.theme.spacing.md};
     }
