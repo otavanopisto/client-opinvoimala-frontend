@@ -106,7 +106,6 @@ export const LoginModal: React.FC<Props> = observer(({ ...props }) => {
             id="login-modal__email-input"
             placeholder={t('label.email')}
             label={t('label.email')}
-            labelHidden
             icon="user"
             iconPosition="left"
             name="username"
@@ -119,7 +118,6 @@ export const LoginModal: React.FC<Props> = observer(({ ...props }) => {
             id="login-modal__password-input"
             placeholder={t('label.password')}
             label={t('label.password')}
-            labelHidden
             icon="lock"
             iconPosition="left"
             name="password"

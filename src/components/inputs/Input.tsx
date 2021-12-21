@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 const Container = styled.div<{ labelHidden?: boolean }>`
   margin: ${p => p.theme.spacing.lg} 0;
+  text-align: left;
   label {
     display: ${p => (p.labelHidden ? 'none' : 'initial')};
     .input__label--required {
