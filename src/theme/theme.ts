@@ -29,10 +29,10 @@ export const BREAKPOINTS = Object.freeze({
   laptop: 1200,
 });
 
-export const fontSize = (sm: number, md: number) => {
+export const fontSize = (sm: number, md: number, lineHeight?: number) => {
   return `
     font-size: ${md}px;
-    line-height: 160%;
+    line-height: ${lineHeight ?? 160}%;
     @media (max-width: ${BREAKPOINTS.mobile}px) {
       font-size: ${sm}px;
     }
@@ -79,11 +79,11 @@ export const theme: DefaultTheme = {
       xl: fontSize(22, 28),
     },
     h1: fontSize(36, 64),
-    h2: fontSize(28, 36),
-    h3: fontSize(24, 28),
-    h4: fontSize(20, 22),
-    h5: fontSize(18, 20),
-    h6: fontSize(16, 18),
+    h2: fontSize(28, 36, 120),
+    h3: fontSize(24, 28, 120),
+    h4: fontSize(20, 22, 120),
+    h5: fontSize(18, 20, 120),
+    h6: fontSize(16, 18, 120),
   },
 };
 
