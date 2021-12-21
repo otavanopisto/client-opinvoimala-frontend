@@ -8,11 +8,12 @@ import AppRouter from './routes/AppRouter';
 import Cookiebot from './components/Cookiebot';
 import Analytics from './components/Analytics';
 import Chat from './components/Chat';
+import MaintenancePage from './views/auth/MaintenancePage';
 
 const App: React.FC = observer(() => {
   const {
     auth: { state: authState },
-    settings: { state: settingsState, fetchSettings, settings },
+    settings: { state: settingsState, fetchSettings, settings, maintenance },
     navigation: { state: navigationState },
     appointments: { appointmentState },
   } = useStore();
@@ -46,6 +47,14 @@ const App: React.FC = observer(() => {
     googleAnalyticsMeasurementId,
     giosgCompanyId,
   } = settings?.scripts ?? {};
+
+  if (maintenance) {
+    return (
+      <ThemeProvider theme={theme}>
+        <MaintenancePage text={maintenance.reason} />
+      </ThemeProvider>
+    );
+  }
 
   return (
     <ThemeProvider theme={theme}>

@@ -41,6 +41,13 @@ const SettingsModel = types.model({
       giosgCompanyId: types.maybeNull(types.string),
     })
   ),
+  maintenance: types.maybeNull(
+    types.model({
+      maintenance: types.maybeNull(types.boolean),
+      domain: types.maybeNull(types.string),
+      reason: types.maybeNull(types.string),
+    })
+  ),
 });
 
 export interface ISettingsModel extends Instance<typeof SettingsModel> {}
@@ -62,6 +69,21 @@ export const SettingsStore = types
       return self.data?.scripts?.cookiebotDomainGroupId
         ? !!self.data.scripts.cookiebotDomainGroupId
         : false;
+    },
+
+    get maintenance() {
+      const { maintenance } = this.settings ?? {};
+      const { domain, reason } = maintenance ?? {};
+
+      const maintenanceModeOn = !!maintenance?.maintenance;
+      const inMaintenanceDomain = domain
+        ? window.location.hostname.includes(domain.toLowerCase())
+        : true;
+
+      if (maintenanceModeOn && inMaintenanceDomain) {
+        return { domain, reason };
+      }
+      return undefined;
     },
   }))
   .actions(self => {
