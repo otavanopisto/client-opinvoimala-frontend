@@ -43,6 +43,7 @@ interface Props {
   color?: keyof Colors | 'none';
   strokeColor?: keyof Colors;
   width?: number;
+  className?: string;
 }
 
 const Icon: FC<Props> = ({
@@ -50,6 +51,7 @@ const Icon: FC<Props> = ({
   color = 'secondary',
   strokeColor,
   width = 18,
+  className,
 }) => {
   const themeContext = useContext(ThemeContext);
 
@@ -60,6 +62,7 @@ const Icon: FC<Props> = ({
     stroke,
     width,
     fill,
+    className,
   };
 
   const IconComponent = Icons[type];

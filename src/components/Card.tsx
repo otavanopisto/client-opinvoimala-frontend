@@ -65,9 +65,7 @@ const Container = styled.article<{ isLocked?: boolean }>`
       color: ${p => p.theme.color.secondary};
       font-family: ${p => p.theme.font.secondary};
       ${p => p.theme.font.size.md};
-      svg {
-        margin-left: ${p => p.theme.spacing.md};
-      }
+      text-decoration: none;
     }
   }
 `;
@@ -111,7 +109,7 @@ const Card: React.FC<Props> = observer(
     const isLinkPublic = link ? linkIsPublic(link) : undefined;
 
     return (
-      <Container isLocked={isLocked || (!isLinkPublic && !isLoggedIn)}>
+      <Container isLocked={isLocked || (isLinkPublic === false && !isLoggedIn)}>
         <main>
           {title && <h1>{title}</h1>}
           {text && <p>{text}</p>}

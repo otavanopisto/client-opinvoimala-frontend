@@ -60,7 +60,7 @@ export const FrontPage: React.FC = observer(() => {
         stackable
         centered
         reversed="computer tablet mobile"
-        style={{ position: 'relative' }}
+        style={{ position: 'relative', marginTop: '80px' }}
       >
         <Watermark right={-80} />
         <Watermark bottom={-10} left={-80} />

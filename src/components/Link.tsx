@@ -22,6 +22,19 @@ const Content = styled.div<{ center?: boolean }>`
   i {
     height: inherit;
     margin-right: ${p => p.theme.spacing.sm};
+
+    &.arrow-icon {
+      position: relative;
+      left: 0px;
+      margin-left: ${p => p.theme.spacing.sm};
+      transition: left 0.1s ease-in-out;
+    }
+  }
+
+  :hover {
+    svg.arrow-icon {
+      left: 5px;
+    }
   }
 `;
 
@@ -63,6 +76,7 @@ const Link: React.FC<Props> = ({
         {children}
         {showArrow && (
           <Icon
+            className="arrow-icon"
             type="ArrowRight"
             strokeColor="secondary"
             color="none"
