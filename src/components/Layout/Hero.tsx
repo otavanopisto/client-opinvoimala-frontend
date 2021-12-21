@@ -24,6 +24,12 @@ const Container = styled.div`
         display: flex;
         justify-content: space-between;
         align-items: center;
+        margin-top: ${p => p.theme.spacing.lg};
+        margin-bottom: ${p => p.theme.spacing.lg};
+      }
+
+      .lead-text {
+        margin-bottom: ${p => p.theme.spacing.lg};
       }
     }
 
@@ -193,7 +199,7 @@ const Hero: React.FC<HeroProps> = ({
         </h1>
 
         {isMobile && smallImage && <NoPrint>{imageEl}</NoPrint>}
-        <div>{lead}</div>
+        <div className="lead-text">{lead}</div>
       </div>
 
       {imageEl && (!isMobile || !smallImage) && (

@@ -31,7 +31,7 @@ const TestQuestion: React.FC<Props> = ({
             options={question.options}
             selectedOption={answer}
             onSelect={setAnswer}
-            autoFocus={questionNo === 1}
+            autoFocus
           />
         );
       case 'dropdown':
@@ -40,7 +40,7 @@ const TestQuestion: React.FC<Props> = ({
             options={question.options}
             selectedOption={answer}
             onSelect={setAnswer}
-            autoFocus={questionNo === 1}
+            autoFocus
           />
         );
       case 'slider':
@@ -60,7 +60,7 @@ const TestQuestion: React.FC<Props> = ({
             onChange={(text: string) =>
               setAnswer({ id: -1, label: text ?? '' })
             }
-            autoFocus={questionNo === 1}
+            autoFocus
           />
         );
       case 'none':

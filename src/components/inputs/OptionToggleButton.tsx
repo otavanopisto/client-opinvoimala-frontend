@@ -15,6 +15,7 @@ const ToggleButton = styled.button<{ size: ToggleButtonSize }>`
   text-align: left;
   margin: ${p => p.theme.spacing.md} 0;
   padding: ${p => (p.size === 'sm' ? p.theme.spacing.md : p.theme.spacing.lg)};
+  padding-right: ${p => (p.size === 'sm' ? 50 : 60)}px;
   background-color: ${p => p.theme.color.grey3};
   color: ${p => p.theme.color.secondary};
   border-radius: ${p => p.theme.borderRadius.md};

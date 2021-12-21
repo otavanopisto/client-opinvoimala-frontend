@@ -23,7 +23,7 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   *:focus {
-    outline-color: ${p => p.theme.color.accent};
+    outline-color: ${p => p.theme.color.secondary};
   }
   
   hr {
