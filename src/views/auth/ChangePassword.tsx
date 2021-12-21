@@ -7,6 +7,8 @@ import Layout from '../../components/Layout';
 import { useStore } from '../../store/storeContext';
 import { validatePassword } from '../../utils/string';
 import Message from '../../components/Message';
+import Annotation from '../../components/Annotation';
+import { COLORS } from '../../theme';
 
 export const ChangePassword: React.FC = observer(() => {
   const { t } = useTranslation();
@@ -150,6 +152,12 @@ export const ChangePassword: React.FC = observer(() => {
           noMargin
         />
       </form>
+
+      <Annotation
+        simple
+        text={t('annotation.asterisk_is_required')}
+        prefix={<span style={{ color: COLORS.accent }}>* </span>}
+      />
     </Layout>
   );
 });

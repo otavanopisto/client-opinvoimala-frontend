@@ -8,6 +8,7 @@ const Container = styled.div`
   border: 1px solid ${p => p.theme.color.secondary};
   border-radius: ${p => p.theme.borderRadius.sm};
   padding: ${p => p.theme.spacing.md} ${p => p.theme.spacing.lg};
+  margin: ${p => p.theme.spacing.lg} 0;
   color: ${p => p.theme.color.secondary};
   ${p => p.theme.font.size.sm};
 
@@ -23,18 +24,35 @@ const Container = styled.div`
   }
 `;
 
+const SimpleContainer = styled.div`
+  margin: ${p => p.theme.spacing.lg} 0;
+  ${p => p.theme.font.size.sm};
+`;
+
 interface Props {
-  text: string;
+  text: string | JSX.Element;
+  prefix?: string | JSX.Element;
+  simple?: boolean;
 }
 
-const Annotation: React.FC<Props> = ({ text }) => {
+const Annotation: React.FC<Props> = ({ text, prefix, simple }) => {
   const { t } = useTranslation();
+
+  if (simple) {
+    return (
+      <SimpleContainer>
+        {prefix && prefix}
+        {text}
+      </SimpleContainer>
+    );
+  }
 
   return (
     <Container>
       <Icon type="Annotation" width={28} />
       <div>
         <strong>{t('annotation.nb')} </strong>
+        {prefix && prefix}
         {text}
       </div>
     </Container>

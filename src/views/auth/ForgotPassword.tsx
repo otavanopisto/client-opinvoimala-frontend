@@ -1,10 +1,12 @@
 import React, { ChangeEvent, Dispatch, SetStateAction, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Divider, Transition } from 'semantic-ui-react';
+import Annotation from '../../components/Annotation';
 import { Button, Input } from '../../components/inputs';
 import Layout from '../../components/Layout';
 import Message from '../../components/Message';
 import { useStore } from '../../store/storeContext';
+import { COLORS } from '../../theme';
 import { getApiErrorMessages } from '../../utils/api';
 
 export const ForgotPassword: React.FC = () => {
@@ -94,6 +96,12 @@ export const ForgotPassword: React.FC = () => {
           type="submit"
           disabled={!isValidForm || isBusy}
           noMargin
+        />
+
+        <Annotation
+          simple
+          text={t('annotation.asterisk_is_required')}
+          prefix={<span style={{ color: COLORS.accent }}>* </span>}
         />
       </form>
     </Layout>

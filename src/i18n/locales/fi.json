@@ -6,7 +6,8 @@
   "annotation": {
     "nb": "Huom!",
     "test": "Huom! Tämän testin tulokset ovat suuntaa-antavia.",
-    "well_being_profile": "Huom! Tämän profiilin tulokset ovat suuntaa-antavia."
+    "well_being_profile": "Huom! Tämän profiilin tulokset ovat suuntaa-antavia.",
+    "asterisk_is_required": "Tähdellä merkityt kentät ovat pakollisia."
   },
   "action": {
     "register": "Rekisteröidy",

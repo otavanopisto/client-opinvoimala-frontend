@@ -3,6 +3,8 @@ import React, { ChangeEvent, Dispatch, SetStateAction } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { Appointment } from '../../store/AppointmentsStore';
+import { COLORS } from '../../theme';
+import Annotation from '../Annotation';
 import { Input } from '../inputs';
 import AppointmentDetails from './AppointmentDetails';
 
@@ -65,6 +67,12 @@ export const MakeAppointmentPhase3Confirm: React.FC<Props> = observer(
           value={email}
           onChange={handleChange(setEmail)}
           size="large"
+        />
+
+        <Annotation
+          simple
+          text={t('annotation.asterisk_is_required')}
+          prefix={<span style={{ color: COLORS.accent }}>* </span>}
         />
 
         <p className="make_appointment__cancel_info">

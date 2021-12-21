@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Asterisk is required annotations
+
 ## [0.2.6] - 2021-12-21
 
 ### Added

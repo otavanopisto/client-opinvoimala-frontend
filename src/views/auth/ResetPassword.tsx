@@ -9,6 +9,8 @@ import { validatePassword } from '../../utils/string';
 import Message from '../../components/Message';
 import { useQueryParams } from '../../routes/hooks';
 import { getApiErrorMessages } from '../../utils/api';
+import Annotation from '../../components/Annotation';
+import { COLORS } from '../../theme';
 
 interface Props {}
 
@@ -133,6 +135,12 @@ export const ResetPassword: React.FC<Props> = observer(() => {
           type="submit"
           disabled={isBusy}
           noMargin
+        />
+
+        <Annotation
+          simple
+          text={t('annotation.asterisk_is_required')}
+          prefix={<span style={{ color: COLORS.accent }}>* </span>}
         />
       </form>
     </Layout>

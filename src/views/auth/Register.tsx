@@ -11,6 +11,8 @@ import { useStore } from '../../store/storeContext';
 import { validatePassword } from '../../utils/string';
 import { getApiErrorMessages } from '../../utils/api';
 import Message from '../../components/Message';
+import Annotation from '../../components/Annotation';
+import { COLORS } from '../../theme';
 
 interface Props {}
 
@@ -179,6 +181,12 @@ export const Register: React.FC<Props> = observer(() => {
           type="submit"
           disabled={isBusy}
           noMargin
+        />
+
+        <Annotation
+          simple
+          text={t('annotation.asterisk_is_required')}
+          prefix={<span style={{ color: COLORS.accent }}>* </span>}
         />
       </form>
     </Layout>
