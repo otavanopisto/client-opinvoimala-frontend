@@ -47,6 +47,7 @@ interface Props {
     icon?: JSX.Element;
     onClick: Function;
   };
+  showBadges?: ('completedByUser' | 'affectsUserProfile')[];
 }
 
 const TestsList: React.FC<Props> = ({
@@ -56,6 +57,7 @@ const TestsList: React.FC<Props> = ({
   initialItemCount = 3,
   disableExpand = false,
   customExpandAction,
+  showBadges,
   children,
 }) => {
   const { t } = useTranslation();
@@ -103,7 +105,30 @@ const TestsList: React.FC<Props> = ({
       },
     });
 
-  const renderBadge = (test: SimpleTest) => {
+  const getAffectsProfileBadge = (test: SimpleTest) => {
+    if (
+      !showBadges?.includes('affectsUserProfile') ||
+      !isLoggedIn ||
+      !test.affectsUserProfile
+    )
+      return;
+
+    return (
+      <Popup
+        content={t('view.tests.affects_user_profile')}
+        trigger={
+          <span>
+            <Icon type="ChartLine" width={20} color="secondary" />
+          </span>
+        }
+      />
+    );
+  };
+
+  const getCompletedBadge = (test: SimpleTest) => {
+    if (!showBadges?.includes('completedByUser') || !test.completedByUser)
+      return;
+
     const to = `/${path('tests')}/${test.slug}/${path('outcome')}`;
     const icon = <Icon type="Completed" width={28} />;
 
@@ -121,6 +146,17 @@ const TestsList: React.FC<Props> = ({
     );
   };
 
+  const getBadges = (test: SimpleTest) => {
+    const completedBagde = getCompletedBadge(test);
+    const affectsProfileBadge = getAffectsProfileBadge(test);
+
+    const badges: JSX.Element[] = [];
+    if (completedBagde) badges.push(completedBagde);
+    if (affectsProfileBadge) badges.push(affectsProfileBadge);
+
+    return badges;
+  };
+
   return (
     <>
       <h2 id={id}>{title}</h2>
@@ -132,7 +168,7 @@ const TestsList: React.FC<Props> = ({
               text={test.description}
               tags={test.categories?.map(({ label }) => label)}
               link={getLink(test)}
-              badge={test.completedByUser && renderBadge(test)}
+              badges={getBadges(test)}
             />
           </Grid.Column>
         ))}

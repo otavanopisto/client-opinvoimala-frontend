@@ -115,6 +115,18 @@ export const TestsStore = types
       return tests;
     },
 
+    get affectsProfileTests() {
+      return this.allTests.filter(
+        ({ affectsUserProfile }) => affectsUserProfile
+      );
+    },
+
+    get affectsProfileExercises() {
+      return (this.exercises ?? []).filter(
+        ({ affectsUserProfile }) => affectsUserProfile
+      );
+    },
+
     get testsSummary() {
       return self.testsSummaryData
         ? getSnapshot(self.testsSummaryData)

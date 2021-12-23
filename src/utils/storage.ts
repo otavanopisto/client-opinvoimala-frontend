@@ -58,6 +58,8 @@ export const saveTestToStorage = (newTest: TestProgress) => {
 // Clear given test progress from storage
 export const clearTestFromStorage = (slug: string) => {
   const storageTests = getStorageTests();
-  delete storageTests[slug];
-  Storage.write({ key: 'TESTS_IN_PROGRESS', value: storageTests });
+  if (storageTests?.[slug]) {
+    delete storageTests[slug];
+    Storage.write({ key: 'TESTS_IN_PROGRESS', value: storageTests });
+  }
 };

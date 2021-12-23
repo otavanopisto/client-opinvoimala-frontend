@@ -7,6 +7,7 @@ export const SimpleTestModel = types.model({
   description: types.maybeNull(types.string),
   type: types.enumeration(['test', 'exercise']),
   isPublic: types.boolean,
+  affectsUserProfile: types.boolean,
   priority: types.maybeNull(types.number),
   publishedAt: types.string,
   completedByUser: types.maybeNull(types.boolean),

@@ -33,7 +33,7 @@ const Container = styled.article<{ isLocked?: boolean }>`
     h1 {
       ${p => p.theme.font.h4};
       line-height: 28px;
-      padding-right: 24px;
+      padding-right: 48px;
     }
 
     p {
@@ -97,11 +97,11 @@ interface Props {
   tags?: string[];
   link?: LinkType | null;
   isLocked?: boolean;
-  badge?: JSX.Element | false | null;
+  badges?: JSX.Element[] | null;
 }
 
 const Card: React.FC<Props> = observer(
-  ({ title, text, tags, link, isLocked, badge }) => {
+  ({ title, text, tags, link, isLocked, badges }) => {
     const {
       auth: { isLoggedIn },
     } = useStore();
@@ -120,7 +120,13 @@ const Card: React.FC<Props> = observer(
               ))}
             </TagList>
           )}
-          {badge && <div className="card__badge">{badge}</div>}
+          {!!badges?.length && (
+            <div className="card__badge">
+              {badges.map((badge, i) => (
+                <span key={i}>{badge}</span>
+              ))}
+            </div>
+          )}
         </main>
 
         {link && (

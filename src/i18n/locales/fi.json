@@ -81,7 +81,8 @@
         "start_test": "Tee testi",
         "show_all_from_category": "Näytä kaikki aiheen testit"
       },
-      "show_outcome": "Suoritettu! Klikkaa nähdäksesi lopputuleman."
+      "show_outcome": "Suoritettu! Klikkaa nähdäksesi lopputuleman.",
+      "affects_user_profile": "Vaikuttaa hyvinvointiprofiilisi tuloksiin."
     },
     "test": {
       "progressText": "Kysymys {{current}}/{{total}}"

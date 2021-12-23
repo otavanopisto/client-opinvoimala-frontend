@@ -4,6 +4,7 @@ import { Colors } from '../theme/styled';
 
 import { ReactComponent as Annotation } from '../assets/icons/comment-exclamation.svg';
 import { ReactComponent as ArrowRight } from '../assets/icons/arrow-right.svg';
+import { ReactComponent as ChartLine } from '../assets/icons/chart-line.svg';
 import { ReactComponent as Chat } from '../assets/icons/bx-chat.svg';
 import { ReactComponent as ChevronDown } from '../assets/icons/chevron-down.svg';
 import { ReactComponent as ChevronLeft } from '../assets/icons/chevron-left.svg';
@@ -21,6 +22,7 @@ import { ReactComponent as Video } from '../assets/icons/video.svg';
 const Icons = {
   Annotation,
   ArrowRight,
+  ChartLine,
   Chat,
   ChevronDown,
   ChevronLeft,

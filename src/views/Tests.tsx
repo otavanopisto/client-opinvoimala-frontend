@@ -36,7 +36,13 @@ export const Tests: React.FC = observer(() => {
   return (
     <Layout hero={hero} isLoading={isBusy}>
       {categories?.map(({ id, label, tests }) => (
-        <TestsList id={`category-${id}`} key={id} title={label} items={tests} />
+        <TestsList
+          id={`category-${id}`}
+          key={id}
+          title={label}
+          items={tests}
+          showBadges={['completedByUser', 'affectsUserProfile']}
+        />
       ))}
 
       {exercises && (
@@ -44,6 +50,7 @@ export const Tests: React.FC = observer(() => {
           id={'exercises'}
           title={t('view.tests.exercises')}
           items={exercises}
+          showBadges={['completedByUser', 'affectsUserProfile']}
         />
       )}
     </Layout>

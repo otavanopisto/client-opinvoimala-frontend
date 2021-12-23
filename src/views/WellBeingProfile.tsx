@@ -26,10 +26,10 @@ export const WellBeingProfile: React.FC = observer(() => {
       testsSummary,
       testsSummaryState,
       fetchTestsSummary,
-      allTests,
+      affectsProfileTests,
       categoriesState,
       fetchCategories,
-      exercises,
+      affectsProfileExercises,
       exercisesState,
       fetchExercises,
     },
@@ -80,11 +80,11 @@ export const WellBeingProfile: React.FC = observer(() => {
 
     switch (type) {
       case 'tests':
-        isVisible = allTests?.length > VISIBLE_TESTS;
+        isVisible = affectsProfileTests?.length > VISIBLE_TESTS;
         label = t('view.well_being_profile.all_tests');
         break;
       case 'exercises':
-        isVisible = !!exercises && exercises.length > VISIBLE_EXERCISES;
+        isVisible = affectsProfileExercises.length > VISIBLE_EXERCISES;
         label = t('view.well_being_profile.all_exercises');
         to = `${to}#exercises`;
         break;
@@ -114,24 +114,24 @@ export const WellBeingProfile: React.FC = observer(() => {
         <TestsList
           id="tests"
           title={t('view.well_being_profile.tests')}
-          items={allTests}
+          items={affectsProfileTests}
           initialItemCount={VISIBLE_TESTS}
+          showBadges={['completedByUser']}
           disableExpand
         >
           {getTestsLink('tests')}
         </TestsList>
 
-        {exercises && (
-          <TestsList
-            id="exercises"
-            title={t('view.well_being_profile.exercises')}
-            items={exercises}
-            initialItemCount={VISIBLE_EXERCISES}
-            disableExpand
-          >
-            {getTestsLink('exercises')}
-          </TestsList>
-        )}
+        <TestsList
+          id="exercises"
+          title={t('view.well_being_profile.exercises')}
+          items={affectsProfileExercises}
+          initialItemCount={VISIBLE_EXERCISES}
+          showBadges={['completedByUser']}
+          disableExpand
+        >
+          {getTestsLink('exercises')}
+        </TestsList>
       </NoPrint>
     </Layout>
   );
