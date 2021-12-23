@@ -28,8 +28,8 @@ const AppointmentStates = [
 ];
 
 const SpecialistModel = types.model({
-  id: types.number,
-  name: types.string,
+  id: types.maybeNull(types.number),
+  name: types.maybeNull(types.string),
   role: types.maybeNull(types.string),
   roleId: types.maybeNull(types.number),
 });

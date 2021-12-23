@@ -41,7 +41,7 @@ const ToggleButton = styled.button<{ size: ToggleButtonSize }>`
 
 interface Props {
   isSelected: boolean;
-  autoFocus: boolean;
+  autoFocus?: boolean;
   onClick: () => void;
   size?: ToggleButtonSize;
 }

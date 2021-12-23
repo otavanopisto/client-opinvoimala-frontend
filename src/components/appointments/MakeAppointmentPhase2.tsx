@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react-lite';
-import React, { Dispatch, SetStateAction } from 'react';
+import React, { Dispatch, SetStateAction, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { Appointment } from '../../store/AppointmentsStore';
@@ -98,6 +98,14 @@ export const MakeAppointmentPhase2: React.FC<Props> = observer(
   }) => {
     const { t } = useTranslation();
 
+    // On mount, set focus to selected day
+    useEffect(() => {
+      const selectedDay = document.getElementsByClassName(
+        'react-datepicker__day--selected'
+      )[0] as HTMLButtonElement;
+      selectedDay?.focus();
+    }, []);
+
     const bySelectedDate = ({ startTime }: Appointment) => {
       return isSameDay(startTime, selectedDate.toISOString());
     };
@@ -158,7 +166,6 @@ export const MakeAppointmentPhase2: React.FC<Props> = observer(
                   <OptionToggleButton
                     aria-label={t('aria.appointment_option')}
                     isSelected={isSelected(appointment)}
-                    autoFocus={i === 0}
                     size="sm"
                     onClick={handleAppointmentClick(appointment)}
                   >
