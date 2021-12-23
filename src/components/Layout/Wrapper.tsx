@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 
-const Wrapper = styled.div<{ size?: 'sm' | 'normal' }>`
+export type WrapperSize = 'sm' | 'normal';
+
+const Wrapper = styled.div<{ size?: WrapperSize }>`
   position: relative;
   margin: auto;
   max-width: ${p => (p.size === 'sm' ? 992 : 1200)}px;

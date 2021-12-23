@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import Footer from './Footer';
 import Header from './Header';
 import Hero, { HeroProps } from './Hero';
-import Wrapper from './Wrapper';
+import Wrapper, { WrapperSize } from './Wrapper';
 import LoadingPlaceholder from '../LoadingPlaceholder';
 import { LoginModal } from '../../views';
 
@@ -47,7 +47,7 @@ const DiagonalSeparator = styled.div`
 `;
 
 interface Props {
-  wrapperSize?: 'sm' | 'normal';
+  wrapperSize?: WrapperSize;
   hero?: HeroProps;
   isLoading?: boolean;
 }
@@ -70,7 +70,11 @@ const Layout: React.FC<Props> = ({
         {hero && (
           <div className="header__hero">
             <Wrapper size={wrapperSize}>
-              {isLoading ? <LoadingPlaceholder.Hero /> : <Hero {...hero} />}
+              {isLoading ? (
+                <LoadingPlaceholder.Hero />
+              ) : (
+                <Hero {...hero} wrapperSize={wrapperSize} />
+              )}
             </Wrapper>
           </div>
         )}

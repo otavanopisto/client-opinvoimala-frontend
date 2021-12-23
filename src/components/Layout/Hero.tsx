@@ -8,6 +8,7 @@ import Icon from '../Icon';
 import { Button } from '../inputs';
 import NoPrint from '../NoPrint';
 import Watermark from './Watermark';
+import { WrapperSize } from './Wrapper';
 
 const Container = styled.div`
   margin-bottom: -40px;
@@ -126,6 +127,7 @@ export interface HeroProps {
     icon?: JSX.Element;
     onClick: () => void;
   }[];
+  wrapperSize?: WrapperSize;
 }
 
 const Hero: React.FC<HeroProps> = ({
@@ -138,10 +140,13 @@ const Hero: React.FC<HeroProps> = ({
   showGoBack,
   onGoBackClick,
   actions,
+  wrapperSize,
 }) => {
   const { t } = useTranslation();
   const history = useHistory();
-  const { isMobile } = useWindowDimensions();
+  const { isMobile, width } = useWindowDimensions();
+
+  const showWatermarkThreshold = wrapperSize === 'sm' ? 1400 : 1600;
 
   const handleGoBack = () => {
     if (onGoBackClick) {
@@ -182,7 +187,9 @@ const Hero: React.FC<HeroProps> = ({
 
   return (
     <Container>
-      <Watermark isNegative left={-220} top={-20} />
+      {width > showWatermarkThreshold && (
+        <Watermark isNegative left={-220} top={-20} />
+      )}
 
       <div className={`hero__main-column align-${align}`}>
         {(showGoBack || goBackText || onGoBackClick) && (
