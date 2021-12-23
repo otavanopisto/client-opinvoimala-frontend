@@ -12,10 +12,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Asterisk is required annotations
 - User sees which tests affecs well being profile
 
-### changed
+### Changed
 
 - Set focus to selected day when making appointments
 - Hide hero's watermark on smaller screens
+- Consider image alignment
 
 ## [0.2.6] - 2021-12-21
 

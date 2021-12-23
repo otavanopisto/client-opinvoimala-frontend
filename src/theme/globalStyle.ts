@@ -87,6 +87,20 @@ export const GlobalStyle = createGlobalStyle`
     ${fontSize(20, 22, 120)}
   }
 
+  figure {
+    &.image-style-align-left {
+      float: left;
+      margin-top: 10px;
+      margin-right: 20px;
+    }
+
+    &.image-style-align-right {
+      float: right;
+      margin-top: 10px;
+      margin-left: 20px;
+    }
+  }
+
   img, figure {
     max-width: 100%;
     object-fit: contain;
