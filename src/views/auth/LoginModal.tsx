@@ -135,7 +135,7 @@ export const LoginModal: React.FC<Props> = observer(({ ...props }) => {
           />
         </form>
 
-        <Divider hidden />
+        <Divider hidden aria-hidden="true" />
 
         <div>
           <Trans i18nKey="view.login.forgot_password_link">

@@ -99,7 +99,7 @@ export const ForgotPassword: React.FC = () => {
           )}
         </Transition.Group>
 
-        <Divider hidden />
+        <Divider hidden aria-hidden="true" />
 
         <Button
           id="forgot-password-view__send-button"

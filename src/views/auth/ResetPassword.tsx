@@ -133,7 +133,7 @@ export const ResetPassword: React.FC<Props> = observer(() => {
           )}
         </Transition.Group>
 
-        <Divider hidden />
+        <Divider hidden aria-hidden="true" />
 
         <Button
           id="reset-password-view__reset_password-button"

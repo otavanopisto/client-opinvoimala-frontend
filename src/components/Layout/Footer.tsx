@@ -193,7 +193,7 @@ const Footer: React.FC = observer(() => {
             </Grid.Column>
           </Grid>
 
-          <Divider section />
+          <Divider section aria-hidden="true" />
 
           <Grid columns={2} doubling>
             <Grid.Column width={10} verticalAlign="middle">

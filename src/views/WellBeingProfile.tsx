@@ -104,12 +104,12 @@ export const WellBeingProfile: React.FC = observer(() => {
     <Layout hero={hero} isLoading={initialLoading}>
       {testsSummary && <TestsSummary {...testsSummary} />}
 
-      <Divider section hidden />
+      <Divider section hidden aria-hidden="true" />
 
       <Annotation text={t('annotation.well_being_profile')} />
 
       <NoPrint>
-        <Divider section hidden />
+        <Divider section hidden aria-hidden="true" />
 
         <TestsList
           id="tests"

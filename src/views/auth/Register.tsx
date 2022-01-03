@@ -135,7 +135,7 @@ export const Register: React.FC<Props> = observer(() => {
           onChange={handleChange(setEmail)}
         />
 
-        <Divider hidden />
+        <Divider hidden aria-hidden="true" />
 
         <h3>{t('view.register.password_title')}</h3>
 
@@ -179,7 +179,7 @@ export const Register: React.FC<Props> = observer(() => {
           )}
         </Transition.Group>
 
-        <Divider hidden />
+        <Divider hidden aria-hidden="true" />
 
         <Button
           id="register-view__register-button"

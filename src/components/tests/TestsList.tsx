@@ -220,7 +220,7 @@ const TestsList: React.FC<Props> = ({
       )}
 
       <ChildrenContainer>{children}</ChildrenContainer>
-      <Divider hidden section />
+      <Divider hidden section aria-hidden="true" />
     </>
   );
 };

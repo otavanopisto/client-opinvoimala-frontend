@@ -111,7 +111,7 @@ export const ChangePassword: React.FC = observer(() => {
           onChange={handleChange(setCurrentPassword)}
         />
 
-        <Divider hidden />
+        <Divider hidden aria-hidden="true" />
 
         <h3>{t('view.change_password.new_password_title')}</h3>
         <p>{t('view.change_password.new_password_info')}</p>
@@ -148,7 +148,7 @@ export const ChangePassword: React.FC = observer(() => {
           )}
         </Transition.Group>
 
-        <Divider hidden />
+        <Divider hidden aria-hidden="true" />
 
         <Button
           id="change-password-view__change_password-button"

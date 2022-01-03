@@ -10,7 +10,7 @@ export interface Props extends MessageProps {}
 const Message: React.FC<Props> = ({ size = 'mini', ...props }) => (
   <>
     <SemanticMessage {...props} size={size} />
-    <Divider hidden />
+    <Divider hidden aria-hidden="true" />
   </>
 );
 

@@ -97,7 +97,7 @@ export const ContentPage = observer(() => {
 
       {page?.cards && (
         <>
-          <Divider section hidden />
+          <Divider section hidden aria-hidden="true" />
           <Cards cards={page.cards} columns={3} />
         </>
       )}

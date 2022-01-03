@@ -50,11 +50,11 @@ export const FrontPage: React.FC = observer(() => {
 
   return (
     <Layout hero={hero} isLoading={isLoading}>
-      <Divider section hidden />
+      <Divider section hidden aria-hidden="true" />
 
       {cards && <Cards cards={cards} />}
 
-      <Divider section hidden />
+      <Divider section hidden aria-hidden="true" />
 
       <Grid
         stackable
@@ -68,7 +68,7 @@ export const FrontPage: React.FC = observer(() => {
           {details && (
             <Grid.Column mobile={16} tablet={16} computer={8}>
               <Details html={details} />
-              <Divider hidden />
+              <Divider hidden aria-hidden="true" />
             </Grid.Column>
           )}
           {detailsImage && (
