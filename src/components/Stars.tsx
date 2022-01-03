@@ -59,7 +59,7 @@ const Stars: React.FC<Props> = ({ stars, starWidth = 40 }) => {
   }
 
   return (
-    <Container role="stars" aria-label={t('aria.stars', { stars })}>
+    <Container aria-label={t('aria.stars', { stars })}>
       {starObjects.map(({ id, width }) => (
         <Star key={id} fullStarWidth={starWidth} width={width} />
       ))}
