@@ -52,8 +52,8 @@ const Watermark: React.FC<Props> = ({
   const Image = isNegative ? WatermarkNegativeSvg : WatermarkDefaultSvg;
 
   return (
-    <Container position={positionCss}>
-      <Image width={`${width}px`} />
+    <Container position={positionCss} aria-hidden="true">
+      <Image width={`${width}px`} aria-hidden="true" />
     </Container>
   );
 };
