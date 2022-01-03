@@ -14,6 +14,7 @@ import {
   WellBeingProfile,
 } from '../views';
 import Unauthorized from '../views/Unauthorized';
+import CookieDeclaration from '../views/CookieDeclaration';
 import { slug } from '../utils/string';
 
 interface ComponentProps {
@@ -125,6 +126,13 @@ const appRoutes: (Route | NavLinkRoute)[] = [
     component: props => checkAuth(<WellBeingProfile />, props?.unauthorized),
     exact: true,
     isPublic: false,
+  },
+  {
+    path: `/${path('cookies')}`,
+    title: rt('cookies'),
+    component: () => <CookieDeclaration />,
+    exact: true,
+    isPublic: true,
   },
 ];
 

@@ -45,7 +45,8 @@
     "reset_password": "Salasanan palautus",
     "logout": "Kirjaudu ulos",
     "terms": "Käyttöehdot",
-    "conditions": "Tietosuojaseloste"
+    "conditions": "Tietosuojaseloste",
+    "cookies": "Evästeet"
   },
   "view": {
     "404": {
