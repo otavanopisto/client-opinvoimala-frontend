@@ -18,10 +18,10 @@ const CookieDeclaration: React.FC<Props> = observer(() => {
 
   useEffect(() => {
     const scriptTag: any = document.createElement('script');
-    scriptTag.src = `https://consent.cookiebot.com/febff317-056e-4ce8-83a9-dba27baacf9b/cd.js`;
     scriptTag.async = true;
     scriptTag.type = 'text/javascript';
     scriptTag.id = 'CookieDeclaration';
+    scriptTag.src = `https://consent.cookiebot.com/${cookiebotDomainGroupId}/cd.js`;
     scriptTag['data-culture'] = 'FI';
 
     cookieDeclarationRef.current?.appendChild(scriptTag);
@@ -38,13 +38,6 @@ const CookieDeclaration: React.FC<Props> = observer(() => {
   return (
     <Layout hero={hero}>
       <div ref={cookieDeclarationRef}></div>
-      <script
-        async
-        data-culture="FI"
-        id="CookieDeclaration"
-        src={`https://consent.cookiebot.com/${cookiebotDomainGroupId}/cd.js`}
-        type="text/javascript"
-      ></script>
     </Layout>
   );
 });
