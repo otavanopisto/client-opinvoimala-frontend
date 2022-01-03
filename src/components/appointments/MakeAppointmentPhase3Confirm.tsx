@@ -48,6 +48,12 @@ export const MakeAppointmentPhase3Confirm: React.FC<Props> = observer(
         <h2>{t('view.appointments.make_new.contact_data_title')}</h2>
         <p>{t('view.appointments.make_new.contact_data_info')}</p>
 
+        <Annotation
+          simple
+          text={t('annotation.asterisk_is_required')}
+          prefix={<span style={{ color: COLORS.accent }}>* </span>}
+        />
+
         <Input
           autoFocus
           required
@@ -67,12 +73,6 @@ export const MakeAppointmentPhase3Confirm: React.FC<Props> = observer(
           value={email}
           onChange={handleChange(setEmail)}
           size="large"
-        />
-
-        <Annotation
-          simple
-          text={t('annotation.asterisk_is_required')}
-          prefix={<span style={{ color: COLORS.accent }}>* </span>}
         />
 
         <p className="make_appointment__cancel_info">

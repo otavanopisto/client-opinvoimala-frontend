@@ -91,6 +91,12 @@ export const ResetPassword: React.FC<Props> = observer(() => {
           )}
         </Transition.Group>
 
+        <Annotation
+          simple
+          text={t('annotation.asterisk_is_required')}
+          prefix={<span style={{ color: COLORS.accent }}>* </span>}
+        />
+
         <h3>{t('view.reset_password.info_text')}</h3>
         <p>{t('view.change_password.new_password_info')}</p>
 
@@ -135,12 +141,6 @@ export const ResetPassword: React.FC<Props> = observer(() => {
           type="submit"
           disabled={isBusy}
           noMargin
-        />
-
-        <Annotation
-          simple
-          text={t('annotation.asterisk_is_required')}
-          prefix={<span style={{ color: COLORS.accent }}>* </span>}
         />
       </form>
     </Layout>

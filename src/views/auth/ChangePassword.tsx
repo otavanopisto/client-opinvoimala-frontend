@@ -92,6 +92,12 @@ export const ChangePassword: React.FC = observer(() => {
           )}
         </Transition.Group>
 
+        <Annotation
+          simple
+          text={t('annotation.asterisk_is_required')}
+          prefix={<span style={{ color: COLORS.accent }}>* </span>}
+        />
+
         <h3>{t('view.change_password.current_password_title')}</h3>
 
         <Input
@@ -152,12 +158,6 @@ export const ChangePassword: React.FC = observer(() => {
           noMargin
         />
       </form>
-
-      <Annotation
-        simple
-        text={t('annotation.asterisk_is_required')}
-        prefix={<span style={{ color: COLORS.accent }}>* </span>}
-      />
     </Layout>
   );
 });

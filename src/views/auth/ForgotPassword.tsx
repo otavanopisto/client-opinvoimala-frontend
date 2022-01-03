@@ -66,7 +66,15 @@ export const ForgotPassword: React.FC = () => {
             </div>
           )}
         </Transition.Group>
+
         <p>{t('view.forgot_password.info_text')}</p>
+
+        <Annotation
+          simple
+          text={t('annotation.asterisk_is_required')}
+          prefix={<span style={{ color: COLORS.accent }}>* </span>}
+        />
+
         <Input
           required
           autoFocus
@@ -77,6 +85,7 @@ export const ForgotPassword: React.FC = () => {
           value={email}
           onChange={handleChange(setEmail)}
         />
+
         <Transition.Group>
           {!!errorMsgs.length && (
             <div>
@@ -89,19 +98,15 @@ export const ForgotPassword: React.FC = () => {
             </div>
           )}
         </Transition.Group>
+
         <Divider hidden />
+
         <Button
           id="forgot-password-view__send-button"
           text={t('action.send_link')}
           type="submit"
           disabled={!isValidForm || isBusy}
           noMargin
-        />
-
-        <Annotation
-          simple
-          text={t('annotation.asterisk_is_required')}
-          prefix={<span style={{ color: COLORS.accent }}>* </span>}
         />
       </form>
     </Layout>
