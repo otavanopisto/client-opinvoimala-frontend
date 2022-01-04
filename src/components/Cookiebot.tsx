@@ -13,7 +13,6 @@ const Cookiebot: React.FC<Props> = ({ cbid }) => {
   return (
     <Helmet>
       <script
-        async
         data-culture="FI"
         id="Cookiebot"
         src="https://consent.cookiebot.com/uc.js"

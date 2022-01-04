@@ -17,7 +17,6 @@ const CookieDeclaration: React.FC = observer(() => {
   useEffect(() => {
     if (cookiebotDomainGroupId) {
       const scriptTag = document.createElement('script');
-      scriptTag.async = true;
       scriptTag.type = 'text/javascript';
       scriptTag.id = 'CookieDeclaration';
       scriptTag.src = `https://consent.cookiebot.com/${cookiebotDomainGroupId}/cd.js`;
