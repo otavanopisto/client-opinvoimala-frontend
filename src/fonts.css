@@ -1,0 +1,48 @@
+/* 
+ * OPEN SANS
+ */
+
+@font-face {
+  font-family: 'Open Sans';
+  src: local('Open Sans'),
+    url(./assets/fonts/OpenSans-Regular.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'Open Sans';
+  font-style: italic;
+  src: local('Open Sans'),
+    url(./assets/fonts/OpenSans-Italic.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'Open Sans';
+  font-weight: 700;
+  src: local('Open Sans'),
+    url(./assets/fonts/OpenSans-Bold.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'Open Sans';
+  font-weight: 700;
+  font-style: italic;
+  src: local('Open Sans'),
+    url(./assets/fonts/OpenSans-BoldItalic.ttf) format('truetype');
+}
+
+/* 
+ * URBANIST
+ */
+
+@font-face {
+  font-family: 'Urbanist';
+  src: local('Urbanist'),
+    url(./assets/fonts/Urbanist-Regular.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'Urbanist';
+  font-weight: 700;
+  src: local('Urbanist'),
+    url(./assets/fonts/Urbanist-Bold.ttf) format('truetype');
+}
