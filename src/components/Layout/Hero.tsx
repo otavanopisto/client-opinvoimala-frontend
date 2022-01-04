@@ -19,14 +19,29 @@ const Container = styled.div`
   .hero {
     &__main-column {
       flex: 1;
-      h1 {
+
+      .heading-container {
         position: relative;
-        line-height: 77px;
         display: flex;
         justify-content: space-between;
         align-items: center;
         margin-top: ${p => p.theme.spacing.lg};
         margin-bottom: ${p => p.theme.spacing.lg};
+
+        h1 {
+          display: inline-block;
+          line-height: 77px;
+        }
+      }
+
+      .action-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        > button {
+          :not(:last-child) {
+            margin-right: ${p => p.theme.spacing.md};
+          }
+        }
       }
 
       .lead-text {
@@ -54,28 +69,18 @@ const Container = styled.div`
         margin-right: 5px;
       }
     }
-
-    &__action-buttons {
-      display: flex;
-      flex-wrap: wrap;
-      > button {
-        :not(:last-child) {
-          margin-right: ${p => p.theme.spacing.md};
-        }
-      }
-    }
   }
 
   @media ${p => p.theme.breakpoint.tablet} {
     .hero {
       &__main-column {
-        h1 {
+        .heading-container {
           flex-direction: column;
           align-items: flex-start;
         }
-      }
-      &__action-buttons {
-        margin-top: ${p => p.theme.spacing.lg};
+        .action-buttons {
+          margin-top: ${p => p.theme.spacing.lg};
+        }
       }
     }
   }
@@ -196,14 +201,14 @@ const Hero: React.FC<HeroProps> = ({
           <NoPrint>{goBackButton}</NoPrint>
         )}
 
-        <h1>
-          {title}
+        <div className="heading-container">
+          <h1>{title}</h1>
           {!!actionButtons?.length && (
             <NoPrint>
-              <div className="hero__action-buttons">{actionButtons}</div>
+              <div className="action-buttons">{actionButtons}</div>
             </NoPrint>
           )}
-        </h1>
+        </div>
 
         {isMobile && smallImage && <NoPrint>{imageEl}</NoPrint>}
         <div className="lead-text">{lead}</div>
