@@ -146,11 +146,7 @@ const TestsSummaryCategories: React.FC<Props> = ({ categories }) => {
               <div className="test-summary-categories__main">
                 <h2>{label}</h2>
 
-                {!!completedTests ? (
-                  <Stars stars={stars ?? 0} />
-                ) : (
-                  <NoCompletedTests />
-                )}
+                <Stars stars={!!completedTests ? stars : null} />
 
                 {renderCategoryLink(testCategoryLink, id)}
               </div>

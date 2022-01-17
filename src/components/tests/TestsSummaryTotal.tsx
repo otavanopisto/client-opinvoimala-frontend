@@ -59,11 +59,7 @@ const TestsSummaryTotal: React.FC<Props> = ({
       </div>
 
       <div>
-        {!!completedTests ? (
-          <Stars stars={stars ?? 0} starWidth={60} />
-        ) : (
-          <NoCompletedTests />
-        )}
+        <Stars stars={!!completedTests ? stars : null} starWidth={60} />
       </div>
 
       {stars !== null && stars !== undefined && (

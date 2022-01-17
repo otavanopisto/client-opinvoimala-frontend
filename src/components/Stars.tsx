@@ -35,12 +35,14 @@ const Star = styled.div<{ fullStarWidth: number; width: number }>`
 `;
 
 interface Props {
-  stars: number;
+  stars?: number | null;
   starWidth?: number;
 }
 
 const Stars: React.FC<Props> = ({ stars, starWidth = 40 }) => {
   const { t } = useTranslation();
+
+  if (stars === null || stars === undefined) return null;
 
   const fullStars = Math.floor(stars);
   const lastStarWidth = (stars - fullStars) * starWidth;
