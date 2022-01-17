@@ -2,11 +2,12 @@ import React from 'react';
 import styled from 'styled-components';
 import { HashLink } from 'react-router-hash-link';
 import { useTranslation } from 'react-i18next';
-import { TestsSummaryCategory } from '../../store/models';
+import { Link, TestsSummaryCategory } from '../../store/models';
 import Stars from '../Stars';
 import { path } from '../../routes/routes';
 import Icon from '../Icon';
 import NoCompletedTests from './NoCompletedTests';
+import { linkTargetUrl } from '../../utils/links';
 
 const Container = styled.div`
   height: 100%;
@@ -108,39 +109,60 @@ interface Props {
 const TestsSummaryCategories: React.FC<Props> = ({ categories }) => {
   const { t } = useTranslation();
 
+  const renderCategoryLink = (link: Link | null, categoryId: number) => {
+    const linkTo = link && linkTargetUrl(link);
+    const to = linkTo ?? `/${path('tests')}#category-${categoryId}`;
+
+    const label = (
+      <>
+        {link?.label ?? t('view.well_being_profile.tests_by_category')}
+        <Icon type="ArrowRight" strokeColor="secondary" color="none" />
+      </>
+    );
+
+    if (link?.type === 'external') {
+      return (
+        <a href={to} target="_blank" rel="noreferrer">
+          {label}
+        </a>
+      );
+    }
+
+    return <HashLink to={to}>{label}</HashLink>;
+  };
+
   return (
     <Container>
       <ul>
-        {categories?.map(({ id, label, image, stars, completedTests }) => (
-          <li key={id}>
-            <div className="test-summary-categories__image">
-              {image?.url && (
-                <img src={image.url} alt={image.alternativeText ?? ''} />
-              )}
-            </div>
-
-            <div className="test-summary-categories__main">
-              <h2>{label}</h2>
-
-              {!!completedTests ? (
-                <Stars stars={stars ?? 0} />
-              ) : (
-                <NoCompletedTests />
-              )}
-
-              <HashLink to={`/${path('tests')}#category-${id}`}>
-                {t('view.well_being_profile.tests_by_category')}
-                <Icon type="ArrowRight" strokeColor="secondary" color="none" />
-              </HashLink>
-            </div>
-
-            {stars !== null && stars !== undefined && (
-              <div className="test-summary-categories__side">
-                {`${stars ?? 0} / 5`}
+        {categories?.map(
+          ({ id, label, image, testCategoryLink, stars, completedTests }) => (
+            <li key={id}>
+              <div className="test-summary-categories__image">
+                {image?.url && (
+                  <img src={image.url} alt={image.alternativeText ?? ''} />
+                )}
               </div>
-            )}
-          </li>
-        ))}
+
+              <div className="test-summary-categories__main">
+                <h2>{label}</h2>
+
+                {!!completedTests ? (
+                  <Stars stars={stars ?? 0} />
+                ) : (
+                  <NoCompletedTests />
+                )}
+
+                {renderCategoryLink(testCategoryLink, id)}
+              </div>
+
+              {stars !== null && stars !== undefined && (
+                <div className="test-summary-categories__side">
+                  {`${stars ?? 0} / 5`}
+                </div>
+              )}
+            </li>
+          )
+        )}
       </ul>
     </Container>
   );

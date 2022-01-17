@@ -1,5 +1,5 @@
 import { Instance, SnapshotIn, SnapshotOut, types } from 'mobx-state-tree';
-import { ImageModel } from '..';
+import { ImageModel, LinkModel } from '..';
 import { SimpleTestModel } from './SimpleTestModel';
 
 export const TestCategoryModel = types.model({
@@ -7,6 +7,7 @@ export const TestCategoryModel = types.model({
   label: types.string,
   image: types.maybeNull(ImageModel),
   tests: types.array(SimpleTestModel),
+  testCategoryLink: types.maybeNull(LinkModel),
 });
 
 export interface ITestCategoryModel
@@ -18,6 +19,7 @@ export const TestsSummaryCategoryModel = types.model({
   id: types.identifierNumber,
   label: types.string,
   image: types.maybeNull(ImageModel),
+  testCategoryLink: types.maybeNull(LinkModel),
   stars: types.maybeNull(types.number),
   completedTests: types.maybeNull(types.number),
   totalTests: types.maybeNull(types.number),
