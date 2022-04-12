@@ -93,7 +93,7 @@ export class Api extends BaseApi {
     params: API.DeleteAccount
   ): Promise<Response<API.RES.Auth>> {
     const path = 'users/me/delete-account';
-    const response = await this.api.post(path, params, this.auth());
+    const response = await this.api.delete(path, params, this.auth());
     return this.handleResponse(response);
   }
 
