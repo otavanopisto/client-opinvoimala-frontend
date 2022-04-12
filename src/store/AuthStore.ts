@@ -142,11 +142,17 @@ export const AuthStore = types
 
     const logout = flow(function* () {
       self.state = 'PROCESSING';
+
       self.jwt = null;
       self.user = null;
       Storage.write({ key: 'AUTH_TOKEN', value: null });
       Storage.write({ key: 'TESTS_IN_PROGRESS', value: null });
       yield api.logout();
+
+      const { tests, contentPages } = getParent(self);
+      tests.reset();
+      contentPages.reset();
+
       self.state = 'IDLE';
     });
 

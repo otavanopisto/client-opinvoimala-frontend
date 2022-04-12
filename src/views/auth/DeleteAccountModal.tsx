@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { observer } from 'mobx-react-lite';
+import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Loader, Transition } from 'semantic-ui-react';
 import styled from 'styled-components';
@@ -30,6 +31,7 @@ interface Props extends ModalProps {
 export const DeleteAccountModal: React.FC<Props> = observer(
   ({ isOpen, onClose, ...props }) => {
     const { t } = useTranslation();
+    const history = useHistory();
 
     const {
       auth: { state, deleteAccount, logout },
@@ -62,6 +64,7 @@ export const DeleteAccountModal: React.FC<Props> = observer(
           setTimeout(() => {
             // Logout after showing success message to user:
             logout();
+            history.push('/');
           }, LOGOUT_TIMER * 1000 + 500);
         } else {
           setErrorMsgs(getApiErrorMessages(error?.data));
