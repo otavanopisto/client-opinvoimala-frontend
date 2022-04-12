@@ -59,6 +59,8 @@ declare namespace API {
     password: string;
   };
 
+  type DeleteAccount = {};
+
   type GetSettings = {};
   type GetNavigation = {};
   type GetFrontPage = {};
@@ -116,6 +118,7 @@ declare namespace API {
     };
 
     type AuthForgotPassword = { ok: boolean };
+    type DeleteAccount = {};
 
     type GetSettings = import('../../store/SettingsStore').Settings;
     type GetNavigation = import('../../store/NavigationStore').Navigation;

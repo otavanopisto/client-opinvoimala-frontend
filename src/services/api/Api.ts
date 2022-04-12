@@ -87,6 +87,17 @@ export class Api extends BaseApi {
   }
 
   /**
+   * Resets user's password
+   */
+  async deleteAccount(
+    params: API.DeleteAccount
+  ): Promise<Response<API.RES.Auth>> {
+    const path = 'users/me/delete-account';
+    const response = await this.api.post(path, params, this.auth());
+    return this.handleResponse(response);
+  }
+
+  /**
    * Fetch app settings (app name, logo etc.)
    */
   async getSettings(

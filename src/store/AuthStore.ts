@@ -150,6 +150,21 @@ export const AuthStore = types
       self.state = 'IDLE';
     });
 
+    const deleteAccount = flow(function* (params: API.DeleteAccount = {}) {
+      self.state = 'PROCESSING';
+
+      const response: API.GeneralResponse<API.RES.DeleteAccount> =
+        yield api.deleteAccount(params);
+
+      if (response.kind === 'ok') {
+        self.state = 'IDLE';
+        return { success: true };
+      } else {
+        self.state = 'ERROR';
+        return { success: false, error: response.data };
+      }
+    });
+
     return {
       register,
       openLoginModal,
@@ -159,6 +174,7 @@ export const AuthStore = types
       forgotPassword,
       resetPassword,
       logout,
+      deleteAccount,
     };
   });
 

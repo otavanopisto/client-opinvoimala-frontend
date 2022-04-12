@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { LinkIn } from '../store/models';
 import { Colors } from '../theme/styled';
 import { useOutsideClickAction } from '../utils/hooks/useOutsideClickAction';
-import Link from './Link';
+import Link, { LinkItem } from './Link';
 
 const StyledDropdownMenu = styled.div<{
   color: keyof Colors;
@@ -65,7 +64,8 @@ const StyledDropdownMenu = styled.div<{
         display: none;
       }
 
-      a {
+      a,
+      .link {
         display: block;
         padding: ${p => p.theme.spacing.md} ${p => p.theme.spacing.lg};
         margin: 0;
@@ -86,7 +86,7 @@ interface Props {
   // (Will override possible label & url props above)
   triggerEl?: (isOpen: boolean, onClick: OnClick) => JSX.Element;
 
-  items: LinkIn[];
+  items: LinkItem[];
   align?: 'left' | 'right';
   verticalPosition?: number;
 }

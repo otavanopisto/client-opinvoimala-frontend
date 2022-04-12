@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { observer } from 'mobx-react-lite';
@@ -9,8 +9,8 @@ import DropdownMenu from '../DropdownMenu';
 import { useWindowDimensions } from '../../utils/hooks';
 import Drawer from '../Drawer';
 import { useStore } from '../../store/storeContext';
-import { LinkIn } from '../../store/models';
-import Link from '../Link';
+import Link, { LinkItem } from '../Link';
+import DeleteAccountModal from '../../views/auth/DeleteAccountModal';
 
 const UserIconContainer = styled.div`
   width: 40px;
@@ -26,7 +26,7 @@ const UserIconContainer = styled.div`
   ${p => p.theme.shadows[1]};
 `;
 
-const DesktopMenu: React.FC<{ items: LinkIn[] }> = ({ items }) => {
+const DesktopMenu: React.FC<{ items: LinkItem[] }> = ({ items }) => {
   const { t } = useTranslation();
   return (
     <DropdownMenu
@@ -54,7 +54,7 @@ const DesktopMenu: React.FC<{ items: LinkIn[] }> = ({ items }) => {
   );
 };
 
-const MobileMenu: React.FC<{ items: LinkIn[] }> = ({ items }) => {
+const MobileMenu: React.FC<{ items: LinkItem[] }> = ({ items }) => {
   const { t } = useTranslation();
   return (
     <Drawer
@@ -86,6 +86,8 @@ const UserMenu: React.FC = observer(() => {
 
   const { isTablet } = useWindowDimensions();
 
+  const [deleteAccountOpen, setDeleteAccountOpen] = useState(false);
+
   const {
     auth: { isLoggedIn, openLoginModal },
   } = useStore();
@@ -95,7 +97,7 @@ const UserMenu: React.FC = observer(() => {
   };
 
   if (isLoggedIn) {
-    const items: LinkIn[] = [
+    const items: LinkItem[] = [
       {
         id: 'my_profile',
         label: rt('well_being_profile'),
@@ -126,12 +128,31 @@ const UserMenu: React.FC = observer(() => {
         type: 'internal',
         internal: `/${path('logout')}`,
       },
+      {
+        id: 'delete_account',
+        label: t('view.delete_account.title'),
+        type: 'button',
+        onClick: () => {
+          setDeleteAccountOpen(true);
+        },
+        style: 'alert',
+      },
     ];
 
-    return isTablet ? (
-      <MobileMenu items={items} />
-    ) : (
-      <DesktopMenu items={items} />
+    return (
+      <>
+        {isTablet ? (
+          <MobileMenu items={items} />
+        ) : (
+          <DesktopMenu items={items} />
+        )}
+        <DeleteAccountModal
+          isOpen={deleteAccountOpen}
+          onClose={() => {
+            setDeleteAccountOpen(false);
+          }}
+        />
+      </>
     );
   } else {
     // User is not logged in, show login button.

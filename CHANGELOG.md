@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- OPI-92: Users can delete own accounts and related data
 - OPI-95: Card component can have image
 - OPI-97: Test outcomes are printable (=downloadable)
 

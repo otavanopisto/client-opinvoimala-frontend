@@ -164,6 +164,13 @@
     "logout": {
       "in_progress": "Kirjaudutaan ulos...",
       "success": "Sinut on nyt kirjattu ulos. Siirrytään <1>etusivulle</1>..."
+    },
+    "delete_account": {
+      "title": "Poista käyttäjätili",
+      "info_text": "Haluatko varmasti poistaa käyttätilisi pysyvästi? Kaikki tiliisi liitetyt tiedot poistetaan ja mahdollisesti tekemäsi ajanvaraukset perutaan, eikä ne ole tämän jälkeen enää palautettavissa.",
+      "success_message": "Käyttäjätili poistettu onnistuneesti!",
+      "logging_out": "Kirjaudutaan ulos {{seconds}} sekunnin kuluttua...",
+      "error_message_header": "Käyttäjätilin poisto epäonnistui"
     }
   },
   "error": {
