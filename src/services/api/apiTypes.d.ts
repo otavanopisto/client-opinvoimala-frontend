@@ -104,6 +104,21 @@ declare namespace API {
   };
   type GetTestsSummary = {};
 
+  type GetGoals = {};
+  type CreateGoal = {
+    description: string;
+  };
+  type EditGoal = {
+    id: number;
+    description: string;
+  };
+  type DeleteGoal = {
+    id: number;
+  };
+  type MarkGoalDone = {
+    id: number;
+  };
+
   /**
    * API RESPONSES
    */
@@ -139,5 +154,11 @@ declare namespace API {
     type CreateTestOutcome = import('../../store/models').TestOutcomes;
     type GetTestOutcome = import('../../store/models').TestOutcomes;
     type GetTestsSummary = import('../../store/models').TestsSummary;
+
+    type GetGoals = import('../../store/models').Goals;
+    type CreateGoal = import('../../store/models').Goal;
+    type EditGoal = import('../../store/models').Goal;
+    type DeleteGoal = import('../../store/models').Goal;
+    type MarkGoalDone = import('../../store/models').Goal;
   }
 }
