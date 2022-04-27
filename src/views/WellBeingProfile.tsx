@@ -5,6 +5,7 @@ import { useHistory } from 'react-router';
 import { HashLink } from 'react-router-hash-link';
 import { Divider } from 'semantic-ui-react';
 import Icon from '../components/Icon';
+import { Goals } from '../components/Goals';
 import Layout from '../components/Layout';
 import NoPrint from '../components/NoPrint';
 import TestsList from '../components/tests/TestsList';
@@ -89,8 +90,8 @@ export const WellBeingProfile: React.FC = observer(() => {
   return (
     <Layout hero={hero} isLoading={initialLoading}>
       {testsSummary && <TestsSummary {...testsSummary} />}
-
       <Divider section hidden aria-hidden="true" />
+      <Goals />
 
       <NoPrint>
         <Divider section hidden aria-hidden="true" />
