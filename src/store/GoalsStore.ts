@@ -27,7 +27,7 @@ export const GoalsStore = types
     get goalsInfo() {
       if (self.data) {
         const { goals, ...goalsInfo } = self.data;
-        return getSnapshot(goalsInfo);
+        return goalsInfo;
       }
       return undefined;
     },
