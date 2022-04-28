@@ -4,6 +4,8 @@ import { Divider, Icon } from 'semantic-ui-react';
 import styled from 'styled-components';
 import { useStore } from '../store/storeContext';
 import { Button } from './inputs';
+import LoadingPlaceholder from './LoadingPlaceholder';
+import { useTranslation } from 'react-i18next';
 
 const Header = styled.header`
   display: flex;
@@ -18,6 +20,9 @@ const Header = styled.header`
     color: ${p => p.theme.color.secondary};
     ${p => p.theme.font.size.md};
     font-weight: 600;
+    div {
+      margin-right: ${p => p.theme.spacing.lg};
+    }
   }
 `;
 const GoalInfoText = styled.div`
@@ -25,16 +30,24 @@ const GoalInfoText = styled.div`
   ${p => p.theme.font.size.lg};
 `;
 
+const GoalsList = styled.ul`
+  list-style-type: none;
+  padding: 0;
+`;
+
 const Goal = styled.div<{ done?: boolean }>`
-  background-color: ${p => (p.done ? p.theme.color.primaryLightest : 'none')};
-  border-radius: 4px;
   ${p => p.theme.shadows[0]};
-  ${p => p.theme.font.h4};
+  color: ${p => (p.done ? p.theme.color.grey : p.theme.color.secondary)};
+  background-color: ${p => (p.done ? p.theme.color.primaryLightest : 'none')};
+  border-radius: ${p => p.theme.borderRadius.sm};
+  font-family: ${p => p.theme.font.secondary};
+  ${p => p.theme.font.size.lg};
+  font-weight: 700;
   line-height: 28px;
   margin-top: ${p => p.theme.spacing.lg};
   margin-bottom: ${p => p.theme.spacing.md};
   margin-left: 0;
-  padding: 32px;
+  padding: ${p => p.theme.spacing.xl};
 `;
 
 export const Goals: React.FC = observer(() => {
@@ -47,12 +60,22 @@ export const Goals: React.FC = observer(() => {
       // editGoal,
       // markGoalDone,
       // deleteGoal,
+      state,
     },
   } = useStore();
 
+  const { t } = useTranslation();
+
   useEffect(() => {
-    fetchGoals();
-  }, [fetchGoals]);
+    if (!['FETCHED', 'FETCHING'].includes(state)) {
+      fetchGoals();
+    }
+  }, [fetchGoals, state]);
+
+  if (state === 'FETCHING') {
+    return <LoadingPlaceholder.Content />;
+  }
+
   return (
     <>
       <Header>
@@ -62,25 +85,32 @@ export const Goals: React.FC = observer(() => {
         </div>
 
         <div className="goals-accomplished-container">
-          <div style={{ marginRight: '24px' }}>Tavoitteita saavutettu X</div>
-          <img src={goalsInfo?.image.url} alt="new" />
+          <div>
+            {t('view.user_goals.accomplished', { count: goalsInfo?.doneTotal })}
+          </div>
+          {goalsInfo && (
+            <img
+              src={goalsInfo.image.url}
+              alt={goalsInfo.image.alternativeText ?? ''}
+            />
+          )}
         </div>
       </Header>
 
       <Divider section hidden aria-hidden="true" />
 
-      {goals.map(({ id, description, done }) => (
-        <ul style={{ margin: 0 }}>
+      <GoalsList>
+        {goals.map(({ id, description, done }) => (
           <Goal key={id} done={done}>
-            <h4>{description}</h4>
+            {description}
           </Goal>
-        </ul>
-      ))}
+        ))}
+      </GoalsList>
 
       <Divider section hidden aria-hidden="true" />
 
       <Button
-        id="appointments__make-new-appointment-button"
+        id="user-goals__add-goals-button"
         text={'Uusi tavoite'}
         color="primary"
         icon={<Icon name="plus square outline" size="large" />}

@@ -171,6 +171,10 @@
       "success_message": "Käyttäjätili poistettu onnistuneesti!",
       "logging_out": "Kirjaudutaan ulos {{seconds}} sekunnin kuluttua...",
       "error_message_header": "Käyttäjätilin poisto epäonnistui"
+    },
+    "user_goals": {
+      "accomplished": "Tavoitetteita saavutettu {{count}}",
+      "add": "Uusi tavoite"
     }
   },
   "error": {
