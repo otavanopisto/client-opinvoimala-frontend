@@ -4,6 +4,7 @@ import 'styled-components';
 interface Colors {
   primary: string;
   primaryLight: string;
+  primaryLightest: string;
   secondary: string;
   accent: string;
   accentLight: string;
