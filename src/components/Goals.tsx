@@ -2,10 +2,10 @@ import { observer } from 'mobx-react-lite';
 import React, { useEffect } from 'react';
 import { Divider, Icon } from 'semantic-ui-react';
 import styled from 'styled-components';
+import { useTranslation } from 'react-i18next';
 import { useStore } from '../store/storeContext';
 import { Button } from './inputs';
 import LoadingPlaceholder from './LoadingPlaceholder';
-import { useTranslation } from 'react-i18next';
 
 const Header = styled.header`
   display: flex;
@@ -20,11 +20,25 @@ const Header = styled.header`
     color: ${p => p.theme.color.secondary};
     ${p => p.theme.font.size.md};
     font-weight: 600;
-    div {
+    > div {
       margin-right: ${p => p.theme.spacing.lg};
     }
   }
+
+  @media ${p => p.theme.breakpoint.mobile} {
+    flex-direction: column;
+    align-items: flex-start;
+
+    .goals-accomplished-container {
+      margin-top: ${p => p.theme.spacing.md};
+      flex-direction: row-reverse;
+      > div {
+        margin-left: ${p => p.theme.spacing.md};
+      }
+    }
+  }
 `;
+
 const GoalInfoText = styled.div`
   font-family: ${p => p.theme.font.secondary};
   ${p => p.theme.font.size.lg};
@@ -37,7 +51,7 @@ const GoalsList = styled.ul`
 
 const Goal = styled.div<{ done?: boolean }>`
   ${p => p.theme.shadows[0]};
-  color: ${p => (p.done ? p.theme.color.grey : p.theme.color.secondary)};
+  color: ${p => p.theme.color[p.done ? 'grey' : 'secondary']};
   background-color: ${p => (p.done ? p.theme.color.primaryLightest : 'none')};
   border-radius: ${p => p.theme.borderRadius.sm};
   font-family: ${p => p.theme.font.secondary};
@@ -77,27 +91,30 @@ export const Goals: React.FC = observer(() => {
   }
 
   return (
-    <>
-      <Header>
-        <div>
-          <h2>{goalsInfo?.title}</h2>
-          <GoalInfoText>{goalsInfo?.infoText}</GoalInfoText>
-        </div>
-
-        <div className="goals-accomplished-container">
+    <section>
+      {goalsInfo && (
+        <Header>
           <div>
-            {t('view.user_goals.accomplished', { count: goalsInfo?.doneTotal })}
+            <h2>{goalsInfo?.title}</h2>
+            <GoalInfoText>{goalsInfo?.infoText}</GoalInfoText>
           </div>
-          {goalsInfo && (
+
+          <div className="goals-accomplished-container">
+            <div>
+              {t('view.user_goals.accomplished', {
+                count: goalsInfo?.doneTotal,
+              })}
+            </div>
+
             <img
               src={goalsInfo.image.url}
               alt={goalsInfo.image.alternativeText ?? ''}
             />
-          )}
-        </div>
-      </Header>
+          </div>
+        </Header>
+      )}
 
-      <Divider section hidden aria-hidden="true" />
+      <Divider hidden aria-hidden="true" />
 
       <GoalsList>
         {goals.map(({ id, description, done }) => (
@@ -107,7 +124,7 @@ export const Goals: React.FC = observer(() => {
         ))}
       </GoalsList>
 
-      <Divider section hidden aria-hidden="true" />
+      <Divider hidden aria-hidden="true" />
 
       <Button
         id="user-goals__add-goals-button"
@@ -115,6 +132,6 @@ export const Goals: React.FC = observer(() => {
         color="primary"
         icon={<Icon name="plus square outline" size="large" />}
       />
-    </>
+    </section>
   );
 });
