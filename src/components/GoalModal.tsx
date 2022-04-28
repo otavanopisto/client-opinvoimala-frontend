@@ -26,16 +26,12 @@ const Container = styled.div`
 `;
 
 interface Props extends ModalProps {
-  goalObject: GoalType;
+  goalObject?: GoalType;
+  setGoalObject: React.Dispatch<React.SetStateAction<GoalType | undefined>>;
 }
 
 export const GoalModal: React.FC<Props> = observer(
   ({ goalObject, setGoalObject, ...props }) => {
-    const [openModal, setOpenModal] = useState<boolean>(false);
-    useEffect(() => {
-      if (goalObject) setOpenModal(true);
-    }, [goalObject]);
-
     // const { t } = useTranslation();
     // // const history = useHistory();
 
@@ -74,8 +70,7 @@ export const GoalModal: React.FC<Props> = observer(
       event: React.MouseEvent<HTMLElement, MouseEvent>,
       data: ModalProps
     ) => {
-      setGoalObject();
-      setOpenModal(false);
+      setGoalObject(undefined);
 
       // Modal should not close if account was just deleted .
       // A success message is show for the user for a few seconds
@@ -89,14 +84,14 @@ export const GoalModal: React.FC<Props> = observer(
     return (
       <Modal
         {...props}
-        open={openModal}
+        open={!!goalObject}
         onClose={handleClose}
         closeButtonType="icon"
         title={'Muokkaa tavoitetta'}
         size="small"
       >
         <Container>
-          {goalObject.description}
+          {goalObject?.description}
           {/* <form onSubmit={handleSubmit}>
             <Loader disabled={!isBusy} size="massive" />
 

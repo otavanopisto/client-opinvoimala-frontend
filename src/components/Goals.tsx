@@ -150,9 +150,8 @@ export const Goals: React.FC = observer(() => {
         color="primary"
         icon={<Icon name="plus square outline" size="large" />}
       />
-      {goalObject && (
-        <GoalModal goalObject={goalObject} setGoalObject={setGoalObject} />
-      )}
+
+      <GoalModal goalObject={goalObject} setGoalObject={setGoalObject} />
     </section>
   );
 });
