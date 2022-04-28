@@ -1,11 +1,13 @@
 import { observer } from 'mobx-react-lite';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Divider, Icon } from 'semantic-ui-react';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { useStore } from '../store/storeContext';
 import { Button } from './inputs';
 import LoadingPlaceholder from './LoadingPlaceholder';
+import { Goal as GoalType } from '../store/models';
+import { GoalModal } from './GoalModal';
 
 const Header = styled.header`
   display: flex;
@@ -49,7 +51,7 @@ const GoalsList = styled.ul`
   padding: 0;
 `;
 
-const Goal = styled.div<{ done?: boolean }>`
+const Goal = styled.li<{ done?: boolean }>`
   ${p => p.theme.shadows[0]};
   color: ${p => p.theme.color[p.done ? 'grey' : 'secondary']};
   background-color: ${p => (p.done ? p.theme.color.primaryLightest : 'none')};
@@ -61,7 +63,11 @@ const Goal = styled.div<{ done?: boolean }>`
   margin-top: ${p => p.theme.spacing.lg};
   margin-bottom: ${p => p.theme.spacing.md};
   margin-left: 0;
-  padding: ${p => p.theme.spacing.xl};
+
+  > button {
+    text-align: left;
+    padding: ${p => p.theme.spacing.xl};
+  }
 
   @media ${p => p.theme.breakpoint.mobile} {
     padding: ${p => p.theme.spacing.lg};
@@ -82,7 +88,13 @@ export const Goals: React.FC = observer(() => {
     },
   } = useStore();
 
+  const [goalObject, setGoalObject] = useState<GoalType>();
+
   const { t } = useTranslation();
+
+  const handleEditGoal = (goal: GoalType) => {
+    setGoalObject(goal);
+  };
 
   useEffect(() => {
     if (!['FETCHED', 'FETCHING'].includes(state)) {
@@ -121,9 +133,11 @@ export const Goals: React.FC = observer(() => {
       <Divider hidden aria-hidden="true" />
 
       <GoalsList>
-        {goals.map(({ id, description, done }) => (
-          <Goal key={id} done={done}>
-            {description}
+        {goals.map(goal => (
+          <Goal key={goal.id} done={goal.done}>
+            <button onClick={() => handleEditGoal(goal)}>
+              {goal.description}
+            </button>
           </Goal>
         ))}
       </GoalsList>
@@ -136,6 +150,9 @@ export const Goals: React.FC = observer(() => {
         color="primary"
         icon={<Icon name="plus square outline" size="large" />}
       />
+      {goalObject && (
+        <GoalModal goalObject={goalObject} setGoalObject={setGoalObject} />
+      )}
     </section>
   );
 });
