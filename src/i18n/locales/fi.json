@@ -173,7 +173,7 @@
       "error_message_header": "Käyttäjätilin poisto epäonnistui"
     },
     "user_goals": {
-      "accomplished": "Tavoitetteita saavutettu {{count}}",
+      "accomplished": "Tavoitteita saavutettu {{count}}",
       "add": "Uusi tavoite"
     }
   },
