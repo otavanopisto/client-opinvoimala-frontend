@@ -62,6 +62,10 @@ const Goal = styled.div<{ done?: boolean }>`
   margin-bottom: ${p => p.theme.spacing.md};
   margin-left: 0;
   padding: ${p => p.theme.spacing.xl};
+
+  @media ${p => p.theme.breakpoint.mobile} {
+    padding: ${p => p.theme.spacing.lg};
+  }
 `;
 
 export const Goals: React.FC = observer(() => {
@@ -95,14 +99,14 @@ export const Goals: React.FC = observer(() => {
       {goalsInfo && (
         <Header>
           <div>
-            <h2>{goalsInfo?.title}</h2>
-            <GoalInfoText>{goalsInfo?.infoText}</GoalInfoText>
+            <h2>{goalsInfo.title}</h2>
+            <GoalInfoText>{goalsInfo.infoText}</GoalInfoText>
           </div>
 
           <div className="goals-accomplished-container">
             <div>
               {t('view.user_goals.accomplished', {
-                count: goalsInfo?.doneTotal,
+                count: goalsInfo.doneTotal,
               })}
             </div>
 
