@@ -111,7 +111,7 @@ export const Goals: React.FC = observer(() => {
 
       <Button
         id="user-goals__add-goals-button"
-        text={'Uusi tavoite'}
+        text={t('view.user_goals.add')}
         color="primary"
         icon={<Icon name="plus square outline" size="large" />}
       />
