@@ -6,6 +6,7 @@ import { NavigationStore } from './NavigationStore';
 import { ContentPageStore } from './ContentPageStore';
 import { AuthStore } from './AuthStore';
 import { AppointmentsStore } from './AppointmentsStore';
+import { EventsStore } from './EventsStore';
 import { TestsStore } from './TestsStore';
 
 const RootStoreModel = types.model({
@@ -26,6 +27,9 @@ const RootStoreModel = types.model({
     appointmentsState: 'NOT_FETCHED',
     appointmentState: 'IDLE',
     userAppointmentsState: 'NOT_FETCHED',
+  }),
+  events: types.optional(EventsStore, {
+    state: 'NOT_FETCHED',
   }),
   tests: types.optional(TestsStore, {
     categoriesState: 'NOT_FETCHED',

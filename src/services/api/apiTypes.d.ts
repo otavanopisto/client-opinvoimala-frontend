@@ -104,6 +104,8 @@ declare namespace API {
   };
   type GetTestsSummary = {};
 
+  type GetEvents = {};
+
   /**
    * API RESPONSES
    */
@@ -139,5 +141,6 @@ declare namespace API {
     type CreateTestOutcome = import('../../store/models').TestOutcomes;
     type GetTestOutcome = import('../../store/models').TestOutcomes;
     type GetTestsSummary = import('../../store/models').TestsSummary;
+    type GetEvents = import('../../store/models').Event[];
   }
 }
