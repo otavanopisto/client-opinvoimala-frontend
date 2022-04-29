@@ -12,6 +12,7 @@ const ResetPassword = lazy(() => import('../views/auth/ResetPassword'));
 const Test = lazy(() => import('../views/Test'));
 const Tests = lazy(() => import('../views/Tests'));
 const UserAppointments = lazy(() => import('../views/UserAppointments'));
+const Events = lazy(() => import('../views/Events'));
 const TestOutcomes = lazy(() => import('../views/TestOutcomes'));
 const WellBeingProfile = lazy(() => import('../views/WellBeingProfile'));
 const Unauthorized = lazy(() => import('../views/Unauthorized'));
@@ -78,6 +79,13 @@ const appRoutes: (Route | NavLinkRoute)[] = [
     path: `/${path('appointments')}`,
     title: rt('appointments'),
     component: props => checkAuth(<UserAppointments />, props?.unauthorized),
+    exact: true,
+    isPublic: false,
+  },
+  {
+    path: `/${path('events')}`,
+    title: rt('events'),
+    component: props => checkAuth(<Events />, props?.unauthorized),
     exact: true,
     isPublic: false,
   },
