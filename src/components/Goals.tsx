@@ -53,20 +53,21 @@ const GoalsList = styled.ul`
 
 const Goal = styled.li<{ done?: boolean }>`
   ${p => p.theme.shadows[0]};
-  color: ${p => p.theme.color[p.done ? 'grey' : 'secondary']};
   background-color: ${p => (p.done ? p.theme.color.primaryLightest : 'none')};
   border-radius: ${p => p.theme.borderRadius.sm};
-  font-family: ${p => p.theme.font.secondary};
-  ${p => p.theme.font.size.lg};
-  font-weight: 700;
-  line-height: 28px;
   margin-top: ${p => p.theme.spacing.lg};
   margin-bottom: ${p => p.theme.spacing.md};
   margin-left: 0;
 
   > button {
+    width: 100%;
     text-align: left;
     padding: ${p => p.theme.spacing.xl};
+    color: ${p => p.theme.color[p.done ? 'grey' : 'secondary']};
+    font-family: ${p => p.theme.font.secondary};
+    ${p => p.theme.font.size.lg};
+    font-weight: 700;
+    line-height: 28px;
   }
 
   @media ${p => p.theme.breakpoint.mobile} {

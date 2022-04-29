@@ -1,29 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { observer } from 'mobx-react-lite';
-// import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 // import { Loader, Transition } from 'semantic-ui-react';
 import styled from 'styled-components';
 // import { getApiErrorMessages } from '../utils/api';
-// import { Button } from './inputs';
 import Modal, { Props as ModalProps } from './Modal';
 // import Message from './Message';
-import { useStore } from '../store/storeContext';
+// import { useStore } from '../store/storeContext';
 import { Goal as GoalType } from '../store/models';
+import { Button, Input } from './inputs';
 
-// const LOGOUT_TIMER = 3; // seconds
-
-const Container = styled.div`
-  .delete-account {
-    &__info-text {
-      margin: ${p => p.theme.spacing.xl} 0;
-    }
-  }
-
-  button {
-    width: 100%;
-  }
-`;
+const Container = styled.div``;
 
 interface Props extends ModalProps {
   goalObject?: GoalType;
@@ -32,8 +19,19 @@ interface Props extends ModalProps {
 
 export const GoalModal: React.FC<Props> = observer(
   ({ goalObject, setGoalObject, ...props }) => {
-    // const { t } = useTranslation();
-    // // const history = useHistory();
+    const { t } = useTranslation();
+
+    const addingNewGoal = goalObject && goalObject?.id < 0;
+
+    const titleText = addingNewGoal
+      ? t('view.user_goals.modal_title_add_goal')
+      : t('view.user_goals.modal_title_edit_goal');
+
+    const buttonText = addingNewGoal
+      ? t('view.user_goals.modal_button_add_goal_save')
+      : t('view.user_goals.modal_button_edit_goal_save');
+
+    const inputValue = addingNewGoal ? '' : goalObject?.description;
 
     // const {
     //   auth: { state },
@@ -43,8 +41,6 @@ export const GoalModal: React.FC<Props> = observer(
     // const [success, setSuccess] = useState<boolean>();
 
     // const isBusy = state === 'PROCESSING';
-
-    /** Start logout timer when account was successfully deleted */
 
     // const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     //   event.preventDefault();
@@ -71,27 +67,31 @@ export const GoalModal: React.FC<Props> = observer(
       data: ModalProps
     ) => {
       setGoalObject(undefined);
-
-      // Modal should not close if account was just deleted .
-      // A success message is show for the user for a few seconds
-      // and user is automatically logged out after that.
-      //   if (!success) {
-      //     setErrorMsgs([]);
-      //     if (onClose) onClose(event, data);
-      //   }
     };
 
+    const handleSubmit = () => {};
+
     return (
-      <Modal
-        {...props}
-        open={!!goalObject}
-        onClose={handleClose}
-        closeButtonType="icon"
-        title={'Muokkaa tavoitetta'}
-        size="small"
-      >
-        <Container>
-          {goalObject?.description}
+      <Container>
+        <Modal
+          {...props}
+          open={!!goalObject}
+          onClose={handleClose}
+          closeButtonType="icon"
+          title={titleText}
+          size="small"
+        >
+          <form onSubmit={handleSubmit}>
+            <Input value={inputValue} />
+          </form>
+
+          <Button
+            id="login-modal__login-button"
+            text={buttonText}
+            type="submit"
+            noMargin
+          />
+
           {/* <form onSubmit={handleSubmit}>
             <Loader disabled={!isBusy} size="massive" />
 
@@ -109,22 +109,6 @@ export const GoalModal: React.FC<Props> = observer(
               )}
             </Transition.Group>
 
-            <Transition.Group>
-              {success && (
-                <div>
-                  <Message
-                    success
-                    header={t('view.delete_account.success_message')}
-                    list={[
-                      t('view.delete_account.logging_out', {
-                        seconds: logoutTimer,
-                      }),
-                    ]}
-                  />
-                </div>
-              )}
-            </Transition.Group>
-
             {!success && (
               <Button
                 id="delete-account__delete-button"
@@ -137,8 +121,8 @@ export const GoalModal: React.FC<Props> = observer(
               />
             )}
           </form> */}
-        </Container>
-      </Modal>
+        </Modal>
+      </Container>
     );
   }
 );
