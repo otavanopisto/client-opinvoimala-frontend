@@ -6,20 +6,20 @@ import Message from '../components/Message';
 import { useStore } from '../store/storeContext';
 import { today } from '../utils/date';
 
-const UPCOMING_WEEKS = 1;
-const PAST_WEEKS = 2;
+const UPCOMING_DAYS = 7;
+const PAST_DAYS = 30;
 
 export const Events: React.FC = observer(() => {
   const { t } = useTranslation();
 
-  const [weeksShown, setWeeksShown] = useState(UPCOMING_WEEKS);
+  const [daysShown, setDaysShown] = useState(UPCOMING_DAYS);
 
   const {
     events: { state, getUpcomingEvents, getPastEvents, fetchEvents },
   } = useStore();
 
-  const upcomingEvents = getUpcomingEvents(today().plus({ weeks: weeksShown }));
-  const pastEvents = getPastEvents(today().minus({ weeks: PAST_WEEKS }));
+  const upcomingEvents = getUpcomingEvents(today().plus({ days: daysShown }));
+  const pastEvents = getPastEvents(today().minus({ days: PAST_DAYS }));
 
   const isBusy = state === 'FETCHING';
 
@@ -30,7 +30,7 @@ export const Events: React.FC = observer(() => {
   }, [fetchEvents, state]);
 
   const handleLoadMoreEvents = () => {
-    setWeeksShown(weeksShown + UPCOMING_WEEKS);
+    setDaysShown(daysShown + UPCOMING_DAYS);
   };
 
   const handleJoinMeeting = (link: string) => {
