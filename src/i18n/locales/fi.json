@@ -23,7 +23,8 @@
     "show_result": "Näytä tulos",
     "done": "Valmis",
     "select": "Valitse",
-    "download": "Lataa"
+    "download": "Lataa",
+    "save": "Tallenna"
   },
   "label": {
     "name": "Nimi",
@@ -175,10 +176,9 @@
     "user_goals": {
       "accomplished": "Tavoitteita saavutettu {{count}}",
       "add": "Uusi tavoite",
-      "modal_title_add_goal": "Luo uusi tavoite",
-      "modal_title_edit_goal": "Muokkaa tavoitetta",
-      "modal_button_edit_goal_save": "Merkitse valmiiksi",
-      "modal_button_add_goal_save": "Tallenna"
+      "add_goal": "Luo uusi tavoite",
+      "edit_goal": "Muokkaa tavoitetta",
+      "mark_done": "Merkitse valmiiksi"
     }
   },
   "error": {

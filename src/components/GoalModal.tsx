@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { observer } from 'mobx-react-lite';
 import { useTranslation } from 'react-i18next';
 // import { Loader, Transition } from 'semantic-ui-react';
@@ -8,9 +8,14 @@ import Modal, { Props as ModalProps } from './Modal';
 // import Message from './Message';
 // import { useStore } from '../store/storeContext';
 import { Goal as GoalType } from '../store/models';
-import { Button, Input } from './inputs';
+import { Button, TextArea } from './inputs';
 
-const Container = styled.div``;
+const Container = styled.div`
+  display: flex;
+  .goals-modal-input {
+    height: 566px;
+  }
+`;
 
 interface Props extends ModalProps {
   goalObject?: GoalType;
@@ -18,20 +23,20 @@ interface Props extends ModalProps {
 }
 
 export const GoalModal: React.FC<Props> = observer(
-  ({ goalObject, setGoalObject, ...props }) => {
+  ({ goalObject, setGoalObject, markGoalDone, ...props }) => {
     const { t } = useTranslation();
 
     const addingNewGoal = goalObject && goalObject?.id < 0;
 
-    const titleText = addingNewGoal
-      ? t('view.user_goals.modal_title_add_goal')
-      : t('view.user_goals.modal_title_edit_goal');
+    const [goalDescription, setGoalDescription] = useState('');
 
-    const buttonText = addingNewGoal
-      ? t('view.user_goals.modal_button_add_goal_save')
-      : t('view.user_goals.modal_button_edit_goal_save');
+    const titleKey = addingNewGoal ? 'add_goal' : 'edit_goal';
+    const titleText = t(`view.user_goals.${titleKey}`);
 
-    const inputValue = addingNewGoal ? '' : goalObject?.description;
+    const buttonKey = addingNewGoal
+      ? 'action.save'
+      : 'view.user_goals.mark_done';
+    const buttonText = t(`${buttonKey}`);
 
     // const {
     //   auth: { state },
@@ -69,7 +74,11 @@ export const GoalModal: React.FC<Props> = observer(
       setGoalObject(undefined);
     };
 
-    const handleSubmit = () => {};
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+      event.preventDefault();
+
+      markGoalDone(goalObject?.id); // WIP: selvitä metodin tarvittavat parametrit
+    };
 
     return (
       <Container>
@@ -81,16 +90,26 @@ export const GoalModal: React.FC<Props> = observer(
           title={titleText}
           size="small"
         >
-          <form onSubmit={handleSubmit}>
-            <Input value={inputValue} />
-          </form>
+          <div className="goals-modal-input">
+            <form className="goals-modal-input" onSubmit={handleSubmit}>
+              <TextArea
+                id={goalObject?.id ?? -1}
+                text={goalObject?.description ?? ''}
+                onChange={(text: string) => setGoalDescription(text)}
+              />
 
-          <Button
-            id="login-modal__login-button"
-            text={buttonText}
-            type="submit"
-            noMargin
-          />
+              <Button
+                id={
+                  addingNewGoal
+                    ? 'user-goals__save-new-goal-button'
+                    : 'user-goals__mark-goal-as-done'
+                }
+                text={buttonText}
+                type="submit"
+                noMargin
+              />
+            </form>
+          </div>
 
           {/* <form onSubmit={handleSubmit}>
             <Loader disabled={!isBusy} size="massive" />

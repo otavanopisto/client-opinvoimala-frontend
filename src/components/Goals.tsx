@@ -83,7 +83,7 @@ export const Goals: React.FC = observer(() => {
       fetchGoals,
       // addGoal,
       // editGoal,
-      // markGoalDone,
+      markGoalDone,
       // deleteGoal,
       state,
     },
@@ -152,7 +152,11 @@ export const Goals: React.FC = observer(() => {
         icon={<Icon name="plus square outline" size="large" />}
       />
 
-      <GoalModal goalObject={goalObject} setGoalObject={setGoalObject} />
+      <GoalModal
+        goalObject={goalObject}
+        setGoalObject={setGoalObject}
+        markGoalDone={markGoalDone}
+      />
     </section>
   );
 });
