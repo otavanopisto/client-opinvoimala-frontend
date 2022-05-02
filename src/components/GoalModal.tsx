@@ -13,7 +13,7 @@ import { useStore } from '../store/storeContext';
 
 const Container = styled.div`
   display: flex;
-  .goals-modal-input {
+  textarea {resize: none}
   }
 `;
 
@@ -40,10 +40,8 @@ export const GoalModal: React.FC<Props> = observer(
     const [goalDescription, setGoalDescription] = useState('');
 
     useEffect(() => {
-      goalObject &&
-        !addingNewGoal &&
-        setGoalDescription(goalObject?.description);
-    }, [addingNewGoal, goalObject]);
+      setGoalDescription(goalObject?.description ?? '');
+    }, [goalObject]);
 
     const titleKey = addingNewGoal ? 'add_goal' : 'edit_goal';
     const titleText = t(`view.user_goals.${titleKey}`);
@@ -61,26 +59,6 @@ export const GoalModal: React.FC<Props> = observer(
     // const [success, setSuccess] = useState<boolean>();
 
     // const isBusy = state === 'PROCESSING';
-
-    // const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    //   event.preventDefault();
-    //   if (!isBusy) {
-    //     setErrorMsgs([]);
-
-    //     const { success, error } = await deleteAccount();
-
-    //     if (success) {
-    //       setSuccess(true);
-    //       setTimeout(() => {
-    //         // Logout after showing success message to user:
-    //         logout();
-    //         history.push('/');
-    //       }, LOGOUT_TIMER * 1000 + 500);
-    //     } else {
-    //       setErrorMsgs(getApiErrorMessages(error?.data));
-    //     }
-    //   }
-    // };
 
     const closeModal = () => {
       setGoalObject(undefined);
@@ -101,6 +79,7 @@ export const GoalModal: React.FC<Props> = observer(
         closeModal();
       }
     };
+    console.log(goalDescription);
 
     return (
       <Container>
@@ -112,13 +91,14 @@ export const GoalModal: React.FC<Props> = observer(
           title={titleText}
           size="small"
         >
-          <div className="goals-modal-input">
+          <div className="goals-modal-textarea">
             <form className="goals-modal-input" onSubmit={handleSubmit}>
               <TextArea
                 id={goalObject?.id ?? -1}
                 text={goalDescription}
                 onChange={(text: string) => setGoalDescription(text)}
                 rows={10}
+                autoFocus={true}
               />
 
               <Button
@@ -129,36 +109,6 @@ export const GoalModal: React.FC<Props> = observer(
               />
             </form>
           </div>
-
-          {/* <form onSubmit={handleSubmit}>
-            <Loader disabled={!isBusy} size="massive" />
-
-            {!success && <p>{t('view.delete_account.info_text')}</p>}
-
-            <Transition.Group>
-              {!!errorMsgs.length && (
-                <div>
-                  <Message
-                    error
-                    header={t('view.delete_account.error_message_header')}
-                    list={errorMsgs}
-                  />
-                </div>
-              )}
-            </Transition.Group>
-
-            {!success && (
-              <Button
-                id="delete-account__delete-button"
-                text={t('view.delete_account.title')}
-                type="submit"
-                color="accent"
-                disabled={isBusy}
-                autoFocus
-                noMargin
-              />
-            )}
-          </form> */}
         </Modal>
       </Container>
     );
