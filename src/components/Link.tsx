@@ -75,7 +75,7 @@ const Link: React.FC<Props> = ({
 
   const isExternal = link.type === 'external';
   const url = !isButton && linkTargetUrl(link as LinkIn);
-  const isPublic = !isButton && linkIsPublic(link as LinkIn);
+  const isPublic = isButton ? true : linkIsPublic(link as LinkIn);
   const showLock = !isPublic && !isLoggedIn;
 
   const content = (

@@ -10,7 +10,11 @@ import Button from '../inputs/Button';
 import Icon from '../Icon';
 import AccordionMenu from '../AccordionMenu';
 
-const NavBar: React.FC = observer(() => {
+interface Props {
+  admin?: boolean;
+}
+
+const NavBar: React.FC<Props> = observer(({ admin }) => {
   const { t } = useTranslation();
   const { isTablet, isMobile } = useWindowDimensions();
 
@@ -33,6 +37,8 @@ const NavBar: React.FC = observer(() => {
       return isPage || isTest || isInternal || isExternal;
     });
   };
+
+  if (admin) return null;
 
   if (isTablet || isMobile) {
     return (

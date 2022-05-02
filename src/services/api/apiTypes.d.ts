@@ -140,4 +140,18 @@ declare namespace API {
     type GetTestOutcome = import('../../store/models').TestOutcomes;
     type GetTestsSummary = import('../../store/models').TestsSummary;
   }
+
+  declare namespace Admin {
+    type Login = {
+      email: string;
+      password: string;
+    };
+
+    declare namespace RES {
+      type Login = {
+        token: string;
+        user: import('../../store/admin/AdminAuthStore').AdminUser;
+      };
+    }
+  }
 }

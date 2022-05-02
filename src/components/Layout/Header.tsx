@@ -2,6 +2,7 @@ import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { path } from '../../routes/routes';
 import { useStore } from '../../store/storeContext';
 import { useWindowDimensions } from '../../utils/hooks';
 import NoPrint from '../NoPrint';
@@ -40,7 +41,11 @@ const StyledHeader = styled.header`
   }
 `;
 
-const Header: React.FC = observer(() => {
+interface Props {
+  admin?: boolean;
+}
+
+const Header: React.FC<Props> = observer(({ admin }) => {
   const { isTablet } = useWindowDimensions();
   const {
     settings: { settings },
@@ -54,7 +59,7 @@ const Header: React.FC = observer(() => {
       <Wrapper className="header__wrapper">
         <div>
           {logo && (
-            <Link to="/">
+            <Link to={admin ? `/${path('admin')}` : '/'}>
               <img src={logo.url} height={`${logoHeight}px`} alt="logo" />
             </Link>
           )}
@@ -64,12 +69,12 @@ const Header: React.FC = observer(() => {
           <div className="mobile-header__menus">
             <div>
               <NoPrint>
-                <UserMenu />
+                <UserMenu admin={admin} />
               </NoPrint>
             </div>
             <div>
               <NoPrint>
-                <NavBar />
+                <NavBar admin={admin} />
               </NoPrint>
             </div>
           </div>
@@ -77,12 +82,12 @@ const Header: React.FC = observer(() => {
           <>
             <div>
               <NoPrint>
-                <NavBar />
+                <NavBar admin={admin} />
               </NoPrint>
             </div>
             <div>
               <NoPrint>
-                <UserMenu />
+                <UserMenu admin={admin} />
               </NoPrint>
             </div>
           </>
