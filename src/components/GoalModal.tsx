@@ -25,13 +25,7 @@ interface Props extends ModalProps {
 export const GoalModal: React.FC<Props> = observer(
   ({ goalObject, setGoalObject, ...props }) => {
     const {
-      goals: {
-        // addGoal,
-        // editGoal,
-        markGoalDone,
-        // deleteGoal,
-        // state,
-      },
+      goals: { addGoal, editGoal, markGoalDone, deleteGoal },
     } = useStore();
     const { t } = useTranslation();
 
@@ -51,15 +45,6 @@ export const GoalModal: React.FC<Props> = observer(
       : 'view.user_goals.mark_done';
     const buttonText = t(`${buttonKey}`);
 
-    // const {
-    //   auth: { state },
-    // } = useStore();
-
-    // const [errorMsgs, setErrorMsgs] = useState<string[]>([]);
-    // const [success, setSuccess] = useState<boolean>();
-
-    // const isBusy = state === 'PROCESSING';
-
     const closeModal = () => {
       setGoalObject(undefined);
     };
@@ -72,14 +57,24 @@ export const GoalModal: React.FC<Props> = observer(
     };
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-      event.preventDefault();
-
-      if (goalObject) {
-        markGoalDone({ id: goalObject.id });
+      if (addingNewGoal) {
+        addGoal({ description: goalDescription });
+      } else {
+        addingNewGoal && markGoalDone({ id: goalObject.id });
         closeModal();
       }
     };
-    console.log(goalDescription);
+
+    const handleDelete = () => {
+      goalObject && deleteGoal({ id: goalObject.id });
+      closeModal();
+    };
+
+    const handleEdit = () => {
+      goalObject &&
+        editGoal({ id: goalObject.id, description: goalDescription });
+      closeModal();
+    };
 
     return (
       <Container>
@@ -95,11 +90,32 @@ export const GoalModal: React.FC<Props> = observer(
             <form className="goals-modal-input" onSubmit={handleSubmit}>
               <TextArea
                 id={goalObject?.id ?? -1}
-                text={goalDescription}
+                text={goalObject ? goalObject?.description : ''}
                 onChange={(text: string) => setGoalDescription(text)}
                 rows={10}
                 autoFocus={true}
               />
+              {!addingNewGoal && (
+                <>
+                  <Button
+                    id={'user-goals__edit-button'}
+                    text={t('view.user_goals.confirm_changes')}
+                    type="button"
+                    color="grey3"
+                    negativeText
+                    onClick={handleEdit}
+                  />
+
+                  <Button
+                    id={'user-goals__delete-button'}
+                    text={t('view.user_goals.delete_goal')}
+                    type="button"
+                    color="grey3"
+                    negativeText
+                    onClick={handleDelete}
+                  />
+                </>
+              )}
 
               <Button
                 id={'user-goals__submit-button'}

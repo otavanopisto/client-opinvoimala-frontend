@@ -178,7 +178,9 @@
       "add": "Uusi tavoite",
       "add_goal": "Luo uusi tavoite",
       "edit_goal": "Muokkaa tavoitetta",
-      "mark_done": "Merkitse valmiiksi"
+      "mark_done": "Merkitse valmiiksi",
+      "delete_goal": "Poista tavoite",
+      "confirm_changes": "Tallenna muutokset"
     }
   },
   "error": {

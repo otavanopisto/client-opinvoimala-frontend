@@ -58,16 +58,30 @@ const Goal = styled.li<{ done?: boolean }>`
   margin-top: ${p => p.theme.spacing.lg};
   margin-bottom: ${p => p.theme.spacing.md};
   margin-left: 0;
+  font-family: ${p => p.theme.font.secondary};
+  font-weight: 700;
+  line-height: 28px;
 
   > button {
     width: 100%;
     text-align: left;
     padding: ${p => p.theme.spacing.xl};
     color: ${p => p.theme.color[p.done ? 'grey' : 'secondary']};
-    font-family: ${p => p.theme.font.secondary};
+    font-family: inherit;
     ${p => p.theme.font.size.lg};
-    font-weight: 700;
-    line-height: 28px;
+    font-weight: inherit;
+    line-height: inherit;
+  }
+
+  > div {
+    width: 100%;
+    text-align: left;
+    padding: ${p => p.theme.spacing.xl};
+    color: ${p => p.theme.color.grey};
+    font-family: inherit;
+    ${p => p.theme.font.size.lg};
+    font-weight: inherit;
+    line-height: inherit;
   }
 
   @media ${p => p.theme.breakpoint.mobile} {
@@ -77,16 +91,7 @@ const Goal = styled.li<{ done?: boolean }>`
 
 export const Goals: React.FC = observer(() => {
   const {
-    goals: {
-      goals,
-      goalsInfo,
-      fetchGoals,
-      // addGoal,
-      // editGoal,
-      // markGoalDone,
-      // deleteGoal,
-      state,
-    },
+    goals: { goals, goalsInfo, fetchGoals, state },
   } = useStore();
 
   const [goalObject, setGoalObject] = useState<GoalType>();
@@ -94,7 +99,11 @@ export const Goals: React.FC = observer(() => {
   const { t } = useTranslation();
 
   const handleEditGoal = (goal: GoalType) => {
-    setGoalObject(goal);
+    !goal.done && setGoalObject(goal);
+  };
+
+  const handleNewGoal = () => {
+    setGoalObject({ id: -1, description: '', done: false });
   };
 
   useEffect(() => {
@@ -136,9 +145,13 @@ export const Goals: React.FC = observer(() => {
       <GoalsList>
         {goals.map(goal => (
           <Goal key={goal.id} done={goal.done}>
-            <button onClick={() => handleEditGoal(goal)}>
-              {goal.description}
-            </button>
+            {goal.done ? (
+              <div>{goal.description}</div>
+            ) : (
+              <button onClick={() => handleEditGoal(goal)}>
+                {goal.description}
+              </button>
+            )}
           </Goal>
         ))}
       </GoalsList>
@@ -146,10 +159,11 @@ export const Goals: React.FC = observer(() => {
       <Divider hidden aria-hidden="true" />
 
       <Button
-        id="user-goals__add-goals-button"
+        id="user-goals__add-goal-button"
         text={t('view.user_goals.add')}
         color="primary"
         icon={<Icon name="plus square outline" size="large" />}
+        onClick={handleNewGoal}
       />
 
       <GoalModal goalObject={goalObject} setGoalObject={setGoalObject} />
