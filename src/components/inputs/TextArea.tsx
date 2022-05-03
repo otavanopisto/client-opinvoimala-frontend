@@ -1,13 +1,28 @@
 import React, { ChangeEvent, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 
-const StyledTextArea = styled.textarea`
+const StyledTextArea = styled.textarea<{ variant?: 'filled' | 'outlined' }>`
   width: 100%;
-  border: none;
-  border-radius: ${p => p.theme.borderRadius.md};
-  background-color: ${p => p.theme.color.grey3};
-  padding: ${p => p.theme.spacing.lg};
+  padding: ${p => p.theme.spacing.md};
   line-height: 150%;
+
+  ${p => {
+    switch (p.variant) {
+      case 'outlined':
+        return `border: solid;
+                border-color: ${p.theme.color.grey};
+                border-width: 1px;
+                border-radius: ${p.theme.borderRadius.sm};
+                background-color: ${p.theme.color.background};
+                resize: vertical;
+        `;
+      default:
+        return `border: none;
+                border-radius: ${p.theme.borderRadius.md};
+                background-color: ${p.theme.color.grey3};
+`;
+    }
+  }}
 `;
 
 interface Props {
@@ -17,6 +32,7 @@ interface Props {
   rows?: number;
   autoFocus?: boolean;
   placeholder?: string;
+  variant?: 'filled' | 'outlined';
 }
 
 export const TextArea: React.FC<Props> = ({
@@ -26,6 +42,7 @@ export const TextArea: React.FC<Props> = ({
   rows = 6,
   autoFocus = false,
   placeholder,
+  variant = 'filled',
 }) => {
   const idRef = useRef<number>();
   const [value, setValue] = useState<string>(text);
@@ -62,7 +79,8 @@ export const TextArea: React.FC<Props> = ({
       rows={rows}
       autoFocus={autoFocus}
       placeholder={placeholder}
-    ></StyledTextArea>
+      variant={variant}
+    />
   );
 };
 

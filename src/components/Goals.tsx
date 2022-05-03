@@ -79,7 +79,10 @@ const Goal = styled.li<{ done?: boolean }>`
     color: ${p => p.theme.color.grey};
 
     .user-goals__done-text {
+      display: flex;
+      justify-content: space-between;
       ${p => p.theme.font.size.xs};
+      padding: ${p => p.theme.spacing.sm};
     }
   }
 
@@ -153,7 +156,8 @@ export const Goals: React.FC = observer(() => {
                 <div className="user-goals__done-goal-container">
                   {goal.description}
                   <div className="user-goals__done-text">
-                    Valmis <Icon name="check" size="large" fitted />
+                    {t('action.done')}
+                    <Icon name="check" size="large" fitted />
                   </div>
                 </div>
               </>

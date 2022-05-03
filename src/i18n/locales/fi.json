@@ -180,7 +180,8 @@
       "edit_goal": "Muokkaa tavoitetta",
       "mark_done": "Merkitse valmiiksi",
       "delete_goal": "Poista tavoite",
-      "confirm_changes": "Tallenna muutokset"
+      "confirm_changes": "Tallenna muutokset",
+      "description_placeholder": "Kirjoita tavoite tähän"
     }
   },
   "error": {

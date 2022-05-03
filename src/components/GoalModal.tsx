@@ -22,6 +22,8 @@ const Buttons = styled.div`
   div {
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
+    margin-top: ${p => p.theme.spacing.md};
   }
 `;
 
@@ -94,7 +96,7 @@ export const GoalModal: React.FC<Props> = observer(
           title={titleText}
           size="small"
           closeButtonType="both"
-          closeButtonText="Peruuta"
+          closeButtonText={t('action.cancel')}
         >
           <div className="goals-modal-textarea">
             <form className="goals-modal-input" onSubmit={handleSubmit}>
@@ -104,7 +106,8 @@ export const GoalModal: React.FC<Props> = observer(
                 onChange={(text: string) => setGoalDescription(text)}
                 rows={10}
                 autoFocus={true}
-                placeholder="Kirjoita tavoite tähän"
+                placeholder={t('view.user_goals.description_placeholder')}
+                variant="outlined"
               />
 
               <Buttons>
@@ -112,7 +115,7 @@ export const GoalModal: React.FC<Props> = observer(
                   {!addingNewGoal && (
                     <div>
                       <Button
-                        id={'user-goals__edit-button'}
+                        id="user-goals__edit-button"
                         text={t('view.user_goals.confirm_changes')}
                         type="button"
                         color="grey3"
@@ -121,7 +124,7 @@ export const GoalModal: React.FC<Props> = observer(
                       />
 
                       <Button
-                        id={'user-goals__delete-button'}
+                        id="user-goals__delete-button"
                         text={t('view.user_goals.delete_goal')}
                         type="button"
                         color="grey3"
@@ -133,7 +136,7 @@ export const GoalModal: React.FC<Props> = observer(
                 </div>
 
                 <Button
-                  id={'user-goals__submit-button'}
+                  id="user-goals__submit-button"
                   text={buttonText}
                   type="submit"
                   noMargin
