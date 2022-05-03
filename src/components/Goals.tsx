@@ -87,8 +87,8 @@ const Goal = styled.li<{ done?: boolean }>`
       justify-content: space-between;
       ${p => p.theme.font.size.xs};
 
-      div {
-        margin-left: 10px;
+      svg {
+        margin-left: ${p => p.theme.spacing.sm};
       }
     }
   }
@@ -164,9 +164,8 @@ export const Goals: React.FC = observer(() => {
                   {goal.description}
                   <div className="user-goals__done-text">
                     {t('action.done')}
-                    <div>
-                      <Icon type="Check" width={16} color="none" />
-                    </div>
+
+                    <Icon type="Check" width={16} color="none" />
                   </div>
                 </div>
               </>
