@@ -62,26 +62,29 @@ const Goal = styled.li<{ done?: boolean }>`
   font-weight: 700;
   line-height: 28px;
 
-  > button {
+  .user-goals__done-goal-container,
+  .user-goals__goal-item-button {
     width: 100%;
     text-align: left;
-    padding: ${p => p.theme.spacing.xl};
-    color: ${p => p.theme.color[p.done ? 'grey' : 'secondary']};
+    padding: ${p => p.theme.spacing.lg};
     font-family: inherit;
     ${p => p.theme.font.size.lg};
     font-weight: inherit;
     line-height: inherit;
   }
 
-  > div {
-    width: 100%;
-    text-align: left;
-    padding: ${p => p.theme.spacing.xl};
+  .user-goals__done-goal-container {
+    display: flex;
+    justify-content: space-between;
     color: ${p => p.theme.color.grey};
-    font-family: inherit;
-    ${p => p.theme.font.size.lg};
-    font-weight: inherit;
-    line-height: inherit;
+
+    .user-goals__done-text {
+      ${p => p.theme.font.size.xs};
+    }
+  }
+
+  .user-goals__goal-item-button {
+    color: ${p => p.theme.color.secondary};
   }
 
   @media ${p => p.theme.breakpoint.mobile} {
@@ -146,9 +149,19 @@ export const Goals: React.FC = observer(() => {
         {goals.map(goal => (
           <Goal key={goal.id} done={goal.done}>
             {goal.done ? (
-              <div>{goal.description}</div>
+              <>
+                <div className="user-goals__done-goal-container">
+                  {goal.description}
+                  <div className="user-goals__done-text">
+                    Valmis <Icon name="check" size="large" fitted />
+                  </div>
+                </div>
+              </>
             ) : (
-              <button onClick={() => handleEditGoal(goal)}>
+              <button
+                className="user-goals__goal-item-button"
+                onClick={() => handleEditGoal(goal)}
+              >
                 {goal.description}
               </button>
             )}

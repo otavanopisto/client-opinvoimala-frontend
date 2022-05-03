@@ -11,9 +11,17 @@ import { Goal as GoalType } from '../store/models';
 import { Button, TextArea } from './inputs';
 import { useStore } from '../store/storeContext';
 
-const Container = styled.div`
+const Container = styled.div``;
+
+const Buttons = styled.div`
   display: flex;
-  textarea {resize: none}
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+
+  div {
+    display: flex;
+    flex-direction: row;
   }
 `;
 
@@ -57,12 +65,13 @@ export const GoalModal: React.FC<Props> = observer(
     };
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+      event.preventDefault();
       if (addingNewGoal) {
         addGoal({ description: goalDescription });
       } else {
-        addingNewGoal && markGoalDone({ id: goalObject.id });
-        closeModal();
+        goalObject && markGoalDone({ id: goalObject.id });
       }
+      closeModal();
     };
 
     const handleDelete = () => {
@@ -82,9 +91,10 @@ export const GoalModal: React.FC<Props> = observer(
           {...props}
           open={!!goalObject}
           onClose={handleClose}
-          closeButtonType="icon"
           title={titleText}
           size="small"
+          closeButtonType="both"
+          closeButtonText="Peruuta"
         >
           <div className="goals-modal-textarea">
             <form className="goals-modal-input" onSubmit={handleSubmit}>
@@ -94,35 +104,41 @@ export const GoalModal: React.FC<Props> = observer(
                 onChange={(text: string) => setGoalDescription(text)}
                 rows={10}
                 autoFocus={true}
+                placeholder="Kirjoita tavoite tähän"
               />
-              {!addingNewGoal && (
-                <>
-                  <Button
-                    id={'user-goals__edit-button'}
-                    text={t('view.user_goals.confirm_changes')}
-                    type="button"
-                    color="grey3"
-                    negativeText
-                    onClick={handleEdit}
-                  />
 
-                  <Button
-                    id={'user-goals__delete-button'}
-                    text={t('view.user_goals.delete_goal')}
-                    type="button"
-                    color="grey3"
-                    negativeText
-                    onClick={handleDelete}
-                  />
-                </>
-              )}
+              <Buttons>
+                <div>
+                  {!addingNewGoal && (
+                    <div>
+                      <Button
+                        id={'user-goals__edit-button'}
+                        text={t('view.user_goals.confirm_changes')}
+                        type="button"
+                        color="grey3"
+                        negativeText
+                        onClick={handleEdit}
+                      />
 
-              <Button
-                id={'user-goals__submit-button'}
-                text={buttonText}
-                type="submit"
-                noMargin
-              />
+                      <Button
+                        id={'user-goals__delete-button'}
+                        text={t('view.user_goals.delete_goal')}
+                        type="button"
+                        color="grey3"
+                        negativeText
+                        onClick={handleDelete}
+                      />
+                    </div>
+                  )}
+                </div>
+
+                <Button
+                  id={'user-goals__submit-button'}
+                  text={buttonText}
+                  type="submit"
+                  noMargin
+                />
+              </Buttons>
             </form>
           </div>
         </Modal>

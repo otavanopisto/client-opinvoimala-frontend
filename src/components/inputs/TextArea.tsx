@@ -16,6 +16,7 @@ interface Props {
   onChange: (text: string) => void;
   rows?: number;
   autoFocus?: boolean;
+  placeholder?: string;
 }
 
 export const TextArea: React.FC<Props> = ({
@@ -24,6 +25,7 @@ export const TextArea: React.FC<Props> = ({
   onChange,
   rows = 6,
   autoFocus = false,
+  placeholder,
 }) => {
   const idRef = useRef<number>();
   const [value, setValue] = useState<string>(text);
@@ -59,7 +61,8 @@ export const TextArea: React.FC<Props> = ({
       onChange={handleTextChange}
       rows={rows}
       autoFocus={autoFocus}
-    />
+      placeholder={placeholder}
+    ></StyledTextArea>
   );
 };
 
