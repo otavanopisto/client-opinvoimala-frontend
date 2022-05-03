@@ -48,8 +48,11 @@
     "terms": "Käyttöehdot",
     "conditions": "Tietosuojaseloste",
     "cookies": "Evästeet",
-    "admin": "Admin",
-    "login": "Kirjaudu"
+    "login": "Kirjaudu",
+    "admin": {
+      "root": "Admin",
+      "appointments": "Vastaanotto"
+    }
   },
   "view": {
     "404": {

@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { observer } from 'mobx-react-lite';
 import { path, rt } from '../../routes/routes';
+import { adminPath } from '../../routes/routesAdmin';
 import Icon from '../Icon';
 import Button from '../inputs/Button';
 import DropdownMenu from '../DropdownMenu';
@@ -105,7 +106,7 @@ const UserMenu: React.FC<Props> = observer(({ admin }) => {
   const {
     auth: { isLoggedIn: isAdminLoggedIn, adminName, logout: adminLogout },
   } = useAdminStore();
-  const isAdminPath = history.location.pathname.includes(path('admin'));
+  const isAdminPath = history.location.pathname.includes(adminPath());
 
   const handleLoginClick = () => {
     openLoginModal();
@@ -115,6 +116,12 @@ const UserMenu: React.FC<Props> = observer(({ admin }) => {
 
   if (isAdminLoggedIn && isAdminPath) {
     items = [
+      {
+        id: 'admin_appointments',
+        label: rt('admin.appointments'),
+        type: 'internal',
+        internal: adminPath('admin.appointments'),
+      },
       {
         id: 'logout',
         label: rt('logout'),

@@ -1,8 +1,9 @@
 import { observer } from 'mobx-react-lite';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { path } from '../../routes/routes';
+import { adminPath } from '../../routes/routesAdmin';
 import { useStore } from '../../store/storeContext';
 import { useWindowDimensions } from '../../utils/hooks';
 import NoPrint from '../NoPrint';
@@ -34,6 +35,21 @@ const StyledHeader = styled.header`
     }
   }
 
+  .header__logo-container {
+    display: flex;
+    align-items: center;
+    a.admin-title {
+      margin-left: ${p => p.theme.spacing.lg};
+      padding: ${p => p.theme.spacing.sm} ${p => p.theme.spacing.md};
+      background-color: ${p => p.theme.color.accent};
+      color: ${p => p.theme.color.background};
+      border-radius: ${p => p.theme.borderRadius.md};
+      ${p => p.theme.font.size.sm};
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+  }
+
   .mobile-header__menus {
     position: fixed;
     z-index: 1;
@@ -46,6 +62,7 @@ interface Props {
 }
 
 const Header: React.FC<Props> = observer(({ admin }) => {
+  const { t } = useTranslation();
   const { isTablet } = useWindowDimensions();
   const {
     settings: { settings },
@@ -57,10 +74,15 @@ const Header: React.FC<Props> = observer(({ admin }) => {
   return (
     <StyledHeader>
       <Wrapper className="header__wrapper">
-        <div>
+        <div className="header__logo-container">
           {logo && (
-            <Link to={admin ? `/${path('admin')}` : '/'}>
+            <Link to="/">
               <img src={logo.url} height={`${logoHeight}px`} alt="logo" />
+            </Link>
+          )}
+          {admin && (
+            <Link to={adminPath()} className="admin-title">
+              {t('route.admin.root')}
             </Link>
           )}
         </div>
