@@ -11,7 +11,17 @@ import { Goal as GoalType } from '../store/models';
 import { Button, TextArea } from './inputs';
 import { useStore } from '../store/storeContext';
 
-const Container = styled.div``;
+const Container = styled.div`
+  textarea {
+    margin: 10px 0;
+  }
+
+  button {
+    :not(:last-child) {
+      margin-right: 10px;
+    }
+  }
+`;
 
 const Buttons = styled.div`
   display: flex;
@@ -21,9 +31,7 @@ const Buttons = styled.div`
 
   div {
     display: flex;
-    flex-direction: row;
     justify-content: space-between;
-    margin-top: ${p => p.theme.spacing.md};
   }
 `;
 
@@ -88,16 +96,16 @@ export const GoalModal: React.FC<Props> = observer(
     };
 
     return (
-      <Container>
-        <Modal
-          {...props}
-          open={!!goalObject}
-          onClose={handleClose}
-          title={titleText}
-          size="small"
-          closeButtonType="both"
-          closeButtonText={t('action.cancel')}
-        >
+      <Modal
+        {...props}
+        open={!!goalObject}
+        onClose={handleClose}
+        title={titleText}
+        size="small"
+        closeButtonType="both"
+        closeButtonText={t('action.cancel')}
+      >
+        <Container>
           <div className="goals-modal-textarea">
             <form className="goals-modal-input" onSubmit={handleSubmit}>
               <TextArea
@@ -144,8 +152,8 @@ export const GoalModal: React.FC<Props> = observer(
               </Buttons>
             </form>
           </div>
-        </Modal>
-      </Container>
+        </Container>
+      </Modal>
     );
   }
 );

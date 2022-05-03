@@ -1,6 +1,8 @@
 import { observer } from 'mobx-react-lite';
 import React, { useEffect, useState } from 'react';
-import { Divider, Icon } from 'semantic-ui-react';
+import { Divider } from 'semantic-ui-react';
+import { Icon as SemanticIcon } from 'semantic-ui-react';
+import Icon from './Icon';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { useStore } from '../store/storeContext';
@@ -22,6 +24,7 @@ const Header = styled.header`
     color: ${p => p.theme.color.secondary};
     ${p => p.theme.font.size.md};
     font-weight: 600;
+
     > div {
       margin-right: ${p => p.theme.spacing.lg};
     }
@@ -34,6 +37,7 @@ const Header = styled.header`
     .goals-accomplished-container {
       margin-top: ${p => p.theme.spacing.md};
       flex-direction: row-reverse;
+
       > div {
         margin-left: ${p => p.theme.spacing.md};
       }
@@ -82,7 +86,10 @@ const Goal = styled.li<{ done?: boolean }>`
       display: flex;
       justify-content: space-between;
       ${p => p.theme.font.size.xs};
-      padding: ${p => p.theme.spacing.sm};
+
+      div {
+        margin-left: 10px;
+      }
     }
   }
 
@@ -157,7 +164,9 @@ export const Goals: React.FC = observer(() => {
                   {goal.description}
                   <div className="user-goals__done-text">
                     {t('action.done')}
-                    <Icon name="check" size="large" fitted />
+                    <div>
+                      <Icon type="Check" width={16} color="none" />
+                    </div>
                   </div>
                 </div>
               </>
@@ -179,7 +188,7 @@ export const Goals: React.FC = observer(() => {
         id="user-goals__add-goal-button"
         text={t('view.user_goals.add')}
         color="primary"
-        icon={<Icon name="plus square outline" size="large" />}
+        icon={<SemanticIcon name="plus square outline" size="large" />}
         onClick={handleNewGoal}
       />
 

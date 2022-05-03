@@ -6,6 +6,7 @@ import { ReactComponent as Annotation } from '../assets/icons/comment-exclamatio
 import { ReactComponent as ArrowRight } from '../assets/icons/arrow-right.svg';
 import { ReactComponent as ChartLine } from '../assets/icons/chart-line.svg';
 import { ReactComponent as Chat } from '../assets/icons/bx-chat.svg';
+import { ReactComponent as Check } from '../assets/icons/check.svg';
 import { ReactComponent as ChevronDown } from '../assets/icons/chevron-down.svg';
 import { ReactComponent as ChevronLeft } from '../assets/icons/chevron-left.svg';
 import { ReactComponent as ChevronUp } from '../assets/icons/chevron-up.svg';
@@ -25,6 +26,7 @@ const Icons = {
   ArrowRight,
   ChartLine,
   Chat,
+  Check,
   ChevronDown,
   ChevronLeft,
   ChevronUp,
