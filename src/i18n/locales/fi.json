@@ -47,7 +47,12 @@
     "logout": "Kirjaudu ulos",
     "terms": "Käyttöehdot",
     "conditions": "Tietosuojaseloste",
-    "cookies": "Evästeet"
+    "cookies": "Evästeet",
+    "login": "Kirjaudu",
+    "admin": {
+      "root": "Admin",
+      "appointments": "Vastaanotto"
+    }
   },
   "view": {
     "404": {
