@@ -6,7 +6,8 @@ import { AppointmentsList } from '../../components/appointments';
 import DropdownMenu from '../../components/DropdownMenu';
 import Layout from '../../components/Layout';
 import { useAdminStore } from '../../store/admin/adminStoreContext';
-import { AppointmentStatus } from '../../store/models';
+import { Appointment, AppointmentStatus } from '../../store/models';
+import { formatDateTime } from '../../utils/date';
 
 type StatusFilter = AppointmentStatus | 'show_all';
 
@@ -41,12 +42,27 @@ const AdminAppointments: React.FC = observer(() => {
     }
   }, [fetchSpecialists, specialistsState]);
 
+  const getAppointmentTime = ({ startTime, endTime }: Appointment) => {
+    const start = formatDateTime(startTime);
+    const end = formatDateTime(endTime, { format: 'T' });
+    return `${start}\u2013${end}`;
+  };
+
   const handleEdit = () => {
     console.log('TODO: Edit appointment');
   };
 
   const handleCancel = (id: number) => {
-    cancelAppointment({ id });
+    const appointment = appointments.find(appointment => appointment.id === id);
+    if (appointment?.status === 'booked') {
+      const confirmText = t(
+        'view.admin.appointments.cancel_confirmation_text',
+        { date: getAppointmentTime(appointment) }
+      );
+      window.confirm(confirmText) && cancelAppointment({ id });
+    } else {
+      cancelAppointment({ id });
+    }
   };
 
   const handleJoin = (link: string) => {

@@ -188,7 +188,8 @@
     },
     "admin": {
       "appointments": {
-        "list_title": "Vastaanottoajat"
+        "list_title": "Vastaanottoajat",
+        "cancel_confirmation_text": "Olet perumassa vastaanottoaikaa {{date}}. Muistathan ilmoittaa opiskelijalle ajan peruutuksesta. Opiskelijan yhteystiedot löytyvät sähköpostiisi saamastasi vahvistusviestistä."
       }
     }
   },
