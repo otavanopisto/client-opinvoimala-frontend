@@ -97,6 +97,12 @@ const Goal = styled.li<{ done?: boolean }>`
 
   .user-goals__goal-item-button {
     color: ${p => p.theme.color.secondary};
+    cursor: pointer;
+
+    :hover {
+      border: 1px solid ${p => p.theme.color.grey};
+      border-radius: inherit;
+    }
   }
 
   @media ${p => p.theme.breakpoint.mobile} {
