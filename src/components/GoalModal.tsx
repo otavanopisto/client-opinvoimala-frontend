@@ -115,10 +115,11 @@ export const GoalModal: React.FC<Props> = observer(
               id={goalObject?.id ?? -1}
               text={goalObject ? goalObject?.description : ''}
               onChange={(text: string) => setGoalDescription(text)}
-              rows={10}
+              rows={6}
               autoFocus={true}
               placeholder={t('view.user_goals.description_placeholder')}
               variant="outlined"
+              maxLength={160}
             />
 
             <Buttons>
