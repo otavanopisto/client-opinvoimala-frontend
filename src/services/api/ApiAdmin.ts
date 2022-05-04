@@ -24,6 +24,40 @@ export class AdminApi extends BaseApi {
     }
     return { ...successResponse, data };
   }
+
+  /**
+   * Fetch appointments
+   */
+  async getAppointments(
+    params: API.GetAppointments = {}
+  ): Promise<Response<API.RES.GetAppointments>> {
+    const url = '/admin-api/appointments';
+    const response = await this.api.get(url, params, this.auth());
+    return this.handleResponse(response);
+  }
+
+  /**
+   * Fetch appointment specialists
+   */
+  async getAppointmentSpecialists(
+    params: API.Admin.GetAppointmentSpecialists = {}
+  ): Promise<Response<API.Admin.RES.GetAppointmentSpecialists>> {
+    const url = '/admin-api/appointment-specialists';
+    const response = await this.api.get(url, params, this.auth());
+    return this.handleResponse(response);
+  }
+
+  /**
+   * Cancel appointment
+   */
+  async cancelAppointment({
+    id,
+    ...params
+  }: API.CancelAppointment): Promise<Response<API.RES.CancelAppointment>> {
+    const url = `/admin-api/appointments/${id}/cancel`;
+    const response = await this.api.post(url, params, this.auth());
+    return this.handleResponse(response);
+  }
 }
 
 export const adminApi = new AdminApi();

@@ -4,7 +4,7 @@ import { Redirect } from 'react-router-dom';
 import { Loader } from 'semantic-ui-react';
 import { Button, Input } from '../../components/inputs';
 import Layout from '../../components/Layout';
-import { path } from '../../routes/routes';
+import { adminPath } from '../../routes/routesAdmin';
 import { useAdminStore } from '../../store/admin/adminStoreContext';
 
 const AdminLogin: React.FC = () => {
@@ -33,11 +33,11 @@ const AdminLogin: React.FC = () => {
   };
 
   const hero = {
-    title: t('route.admin'),
+    title: t('route.admin.root'),
   };
 
   if (isLoggedIn) {
-    return <Redirect to={`/${path('admin')}`} />;
+    return <Redirect to={adminPath()} />;
   }
 
   return (
