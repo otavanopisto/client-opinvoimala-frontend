@@ -40,6 +40,7 @@ const Content = styled.div<{ center?: boolean; linkStyle: 'normal' | 'alert' }>`
 `;
 
 const LinkButton = styled.button`
+  width: 100%;
   margin: 0 !important;
   padding: 0 !important;
 `;

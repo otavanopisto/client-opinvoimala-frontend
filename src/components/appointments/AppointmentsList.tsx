@@ -6,8 +6,14 @@ import AppointmentsListItem from './AppointmentsListItem';
 const Container = styled.section`
   margin-bottom: ${p => p.theme.spacing.xl};
 
-  h1 {
-    ${p => p.theme.font.h2};
+  > header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    h1 {
+      ${p => p.theme.font.h2};
+    }
   }
 
   ul {
@@ -23,6 +29,7 @@ interface Props {
   onCancel?: (id: number) => void;
   onJoin?: (link: string) => void;
   showStatus?: boolean;
+  tools?: JSX.Element;
 }
 
 export const AppointmentsList: React.FC<Props> = ({
@@ -32,9 +39,13 @@ export const AppointmentsList: React.FC<Props> = ({
   onCancel,
   onJoin,
   showStatus,
+  tools,
 }) => (
   <Container>
-    {title && <h1>{title}</h1>}
+    <header>
+      {title && <h1>{title}</h1>}
+      <div>{tools}</div>
+    </header>
 
     <ul>
       {items.map(appointment => (

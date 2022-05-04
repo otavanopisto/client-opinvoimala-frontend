@@ -140,7 +140,8 @@
         "available": "Vapaa",
         "booked": "Varattu",
         "cancelled": "Peruttu",
-        "hidden": "Piilotettu"
+        "hidden": "Piilotettu",
+        "show_all": "Näytä kaikki"
       }
     },
     "register": {
