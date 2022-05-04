@@ -80,11 +80,13 @@ const Goal = styled.li<{ done?: boolean }>`
   .user-goals__done-goal-container {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     color: ${p => p.theme.color.grey};
 
     .user-goals__done-text {
       display: flex;
       justify-content: space-between;
+      align-items: center;
       ${p => p.theme.font.size.xs};
 
       svg {
@@ -159,16 +161,14 @@ export const Goals: React.FC = observer(() => {
         {goals.map(goal => (
           <Goal key={goal.id} done={goal.done}>
             {goal.done ? (
-              <>
-                <div className="user-goals__done-goal-container">
-                  {goal.description}
-                  <div className="user-goals__done-text">
-                    {t('action.done')}
+              <div className="user-goals__done-goal-container">
+                {goal.description}
+                <div className="user-goals__done-text">
+                  {t('action.done')}
 
-                    <Icon type="Check" width={16} color="none" />
-                  </div>
+                  <Icon type="Check" width={16} color="none" />
                 </div>
-              </>
+              </div>
             ) : (
               <button
                 className="user-goals__goal-item-button"

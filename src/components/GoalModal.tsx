@@ -13,13 +13,7 @@ import { useStore } from '../store/storeContext';
 
 const Container = styled.div`
   textarea {
-    margin: 10px 0;
-  }
-
-  button {
-    :not(:last-child) {
-      margin-right: 10px;
-    }
+    margin: ${p => p.theme.spacing.md} 0;
   }
 `;
 
@@ -29,9 +23,15 @@ const Buttons = styled.div`
   align-items: center;
   justify-content: space-between;
 
-  div {
+  > div {
     display: flex;
     justify-content: space-between;
+  }
+
+  button {
+    :not(:last-child) {
+      margin-right: ${p => p.theme.spacing.md};
+    }
   }
 `;
 
@@ -106,52 +106,50 @@ export const GoalModal: React.FC<Props> = observer(
         closeButtonText={t('action.cancel')}
       >
         <Container>
-          <div className="goals-modal-textarea">
-            <form className="goals-modal-input" onSubmit={handleSubmit}>
-              <TextArea
-                id={goalObject?.id ?? -1}
-                text={goalObject ? goalObject?.description : ''}
-                onChange={(text: string) => setGoalDescription(text)}
-                rows={10}
-                autoFocus={true}
-                placeholder={t('view.user_goals.description_placeholder')}
-                variant="outlined"
+          <form className="goals-modal-input" onSubmit={handleSubmit}>
+            <TextArea
+              id={goalObject?.id ?? -1}
+              text={goalObject ? goalObject?.description : ''}
+              onChange={(text: string) => setGoalDescription(text)}
+              rows={10}
+              autoFocus={true}
+              placeholder={t('view.user_goals.description_placeholder')}
+              variant="outlined"
+            />
+
+            <Buttons>
+              <div>
+                {!addingNewGoal && (
+                  <>
+                    <Button
+                      id="user-goals__edit-button"
+                      text={t('view.user_goals.confirm_changes')}
+                      type="button"
+                      color="grey3"
+                      negativeText
+                      onClick={handleEdit}
+                    />
+
+                    <Button
+                      id="user-goals__delete-button"
+                      text={t('view.user_goals.delete_goal')}
+                      type="button"
+                      color="grey3"
+                      negativeText
+                      onClick={handleDelete}
+                    />
+                  </>
+                )}
+              </div>
+
+              <Button
+                id="user-goals__submit-button"
+                text={buttonText}
+                type="submit"
+                noMargin
               />
-
-              <Buttons>
-                <div>
-                  {!addingNewGoal && (
-                    <div>
-                      <Button
-                        id="user-goals__edit-button"
-                        text={t('view.user_goals.confirm_changes')}
-                        type="button"
-                        color="grey3"
-                        negativeText
-                        onClick={handleEdit}
-                      />
-
-                      <Button
-                        id="user-goals__delete-button"
-                        text={t('view.user_goals.delete_goal')}
-                        type="button"
-                        color="grey3"
-                        negativeText
-                        onClick={handleDelete}
-                      />
-                    </div>
-                  )}
-                </div>
-
-                <Button
-                  id="user-goals__submit-button"
-                  text={buttonText}
-                  type="submit"
-                  noMargin
-                />
-              </Buttons>
-            </form>
-          </div>
+            </Buttons>
+          </form>
         </Container>
       </Modal>
     );

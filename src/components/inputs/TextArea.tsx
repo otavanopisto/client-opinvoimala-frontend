@@ -9,9 +9,7 @@ const StyledTextArea = styled.textarea<{ variant?: 'filled' | 'outlined' }>`
   ${p => {
     switch (p.variant) {
       case 'outlined':
-        return `border: solid;
-                border-color: ${p.theme.color.grey};
-                border-width: 1px;
+        return `border: 1px solid ${p.theme.color.grey};
                 border-radius: ${p.theme.borderRadius.sm};
                 background-color: ${p.theme.color.background};
                 resize: vertical;
@@ -80,6 +78,14 @@ export const TextArea: React.FC<Props> = ({
       autoFocus={autoFocus}
       placeholder={placeholder}
       variant={variant}
+      // move cursor to end of text
+      ref={ref => ref && ref.focus()}
+      onFocus={e =>
+        e.currentTarget.setSelectionRange(
+          e.currentTarget.value.length,
+          e.currentTarget.value.length
+        )
+      }
     />
   );
 };
