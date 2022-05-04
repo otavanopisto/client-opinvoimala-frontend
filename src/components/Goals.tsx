@@ -6,10 +6,12 @@ import Icon from './Icon';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { useStore } from '../store/storeContext';
+import { useWindowDimensions } from '../utils/hooks';
 import { Button } from './inputs';
 import LoadingPlaceholder from './LoadingPlaceholder';
 import { Goal as GoalType } from '../store/models';
 import { GoalModal } from './GoalModal';
+import GoalDrawer from './GoalDrawer';
 
 const Header = styled.header`
   display: flex;
@@ -119,6 +121,8 @@ export const Goals: React.FC = observer(() => {
 
   const { t } = useTranslation();
 
+  const { isTablet } = useWindowDimensions();
+
   const handleEditGoal = (goal: GoalType) => {
     !goal.done && setGoalObject(goal);
   };
@@ -196,8 +200,11 @@ export const Goals: React.FC = observer(() => {
         icon={<SemanticIcon name="plus square outline" size="large" />}
         onClick={handleNewGoal}
       />
-
-      <GoalModal goalObject={goalObject} setGoalObject={setGoalObject} />
+      {isTablet ? (
+        <GoalDrawer goalObject={goalObject} setGoalObject={setGoalObject} />
+      ) : (
+        <GoalModal goalObject={goalObject} setGoalObject={setGoalObject} />
+      )}
     </section>
   );
 });
