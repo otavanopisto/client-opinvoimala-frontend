@@ -1,13 +1,26 @@
 import React, { ChangeEvent, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 
-const StyledTextArea = styled.textarea`
+const StyledTextArea = styled.textarea<{ variant?: 'filled' | 'outlined' }>`
   width: 100%;
-  border: none;
-  border-radius: ${p => p.theme.borderRadius.md};
-  background-color: ${p => p.theme.color.grey3};
-  padding: ${p => p.theme.spacing.lg};
+  padding: ${p => p.theme.spacing.md};
   line-height: 150%;
+
+  ${p => {
+    switch (p.variant) {
+      case 'outlined':
+        return `border: 1px solid ${p.theme.color.grey};
+                border-radius: ${p.theme.borderRadius.sm};
+                background-color: ${p.theme.color.background};
+                resize: vertical;
+        `;
+      default:
+        return `border: none;
+                border-radius: ${p.theme.borderRadius.md};
+                background-color: ${p.theme.color.grey3};
+`;
+    }
+  }}
 `;
 
 interface Props {
@@ -16,6 +29,8 @@ interface Props {
   onChange: (text: string) => void;
   rows?: number;
   autoFocus?: boolean;
+  placeholder?: string;
+  variant?: 'filled' | 'outlined';
 }
 
 export const TextArea: React.FC<Props> = ({
@@ -24,6 +39,8 @@ export const TextArea: React.FC<Props> = ({
   onChange,
   rows = 6,
   autoFocus = false,
+  placeholder,
+  variant = 'filled',
 }) => {
   const idRef = useRef<number>();
   const [value, setValue] = useState<string>(text);
@@ -59,6 +76,16 @@ export const TextArea: React.FC<Props> = ({
       onChange={handleTextChange}
       rows={rows}
       autoFocus={autoFocus}
+      placeholder={placeholder}
+      variant={variant}
+      // move cursor to end of text
+      ref={ref => ref && ref.focus()}
+      onFocus={e =>
+        e.currentTarget.setSelectionRange(
+          e.currentTarget.value.length,
+          e.currentTarget.value.length
+        )
+      }
     />
   );
 };

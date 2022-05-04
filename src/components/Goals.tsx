@@ -1,11 +1,15 @@
 import { observer } from 'mobx-react-lite';
-import React, { useEffect } from 'react';
-import { Divider, Icon } from 'semantic-ui-react';
+import React, { useEffect, useState } from 'react';
+import { Divider } from 'semantic-ui-react';
+import { Icon as SemanticIcon } from 'semantic-ui-react';
+import Icon from './Icon';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { useStore } from '../store/storeContext';
 import { Button } from './inputs';
 import LoadingPlaceholder from './LoadingPlaceholder';
+import { Goal as GoalType } from '../store/models';
+import { GoalModal } from './GoalModal';
 
 const Header = styled.header`
   display: flex;
@@ -20,6 +24,7 @@ const Header = styled.header`
     color: ${p => p.theme.color.secondary};
     ${p => p.theme.font.size.md};
     font-weight: 600;
+
     > div {
       margin-right: ${p => p.theme.spacing.lg};
     }
@@ -32,6 +37,7 @@ const Header = styled.header`
     .goals-accomplished-container {
       margin-top: ${p => p.theme.spacing.md};
       flex-direction: row-reverse;
+
       > div {
         margin-left: ${p => p.theme.spacing.md};
       }
@@ -49,19 +55,55 @@ const GoalsList = styled.ul`
   padding: 0;
 `;
 
-const Goal = styled.div<{ done?: boolean }>`
+const Goal = styled.li<{ done?: boolean }>`
   ${p => p.theme.shadows[0]};
-  color: ${p => p.theme.color[p.done ? 'grey' : 'secondary']};
   background-color: ${p => (p.done ? p.theme.color.primaryLightest : 'none')};
   border-radius: ${p => p.theme.borderRadius.sm};
-  font-family: ${p => p.theme.font.secondary};
-  ${p => p.theme.font.size.lg};
-  font-weight: 700;
-  line-height: 28px;
   margin-top: ${p => p.theme.spacing.lg};
   margin-bottom: ${p => p.theme.spacing.md};
   margin-left: 0;
-  padding: ${p => p.theme.spacing.xl};
+  font-family: ${p => p.theme.font.secondary};
+  font-weight: 700;
+  line-height: 28px;
+
+  .user-goals__done-goal-container,
+  .user-goals__goal-item-button {
+    width: 100%;
+    text-align: left;
+    padding: ${p => p.theme.spacing.lg};
+    font-family: inherit;
+    ${p => p.theme.font.size.lg};
+    font-weight: inherit;
+    line-height: inherit;
+  }
+
+  .user-goals__done-goal-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: ${p => p.theme.color.grey};
+
+    .user-goals__done-text {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      ${p => p.theme.font.size.xs};
+
+      svg {
+        margin-left: ${p => p.theme.spacing.sm};
+      }
+    }
+  }
+
+  .user-goals__goal-item-button {
+    color: ${p => p.theme.color.secondary};
+    cursor: pointer;
+
+    :hover {
+      border: 1px solid ${p => p.theme.color.grey};
+      border-radius: inherit;
+    }
+  }
 
   @media ${p => p.theme.breakpoint.mobile} {
     padding: ${p => p.theme.spacing.lg};
@@ -70,19 +112,20 @@ const Goal = styled.div<{ done?: boolean }>`
 
 export const Goals: React.FC = observer(() => {
   const {
-    goals: {
-      goals,
-      goalsInfo,
-      fetchGoals,
-      // addGoal,
-      // editGoal,
-      // markGoalDone,
-      // deleteGoal,
-      state,
-    },
+    goals: { goals, goalsInfo, fetchGoals, state },
   } = useStore();
 
+  const [goalObject, setGoalObject] = useState<GoalType>();
+
   const { t } = useTranslation();
+
+  const handleEditGoal = (goal: GoalType) => {
+    !goal.done && setGoalObject(goal);
+  };
+
+  const handleNewGoal = () => {
+    setGoalObject({ id: -1, description: '', done: false });
+  };
 
   useEffect(() => {
     if (!['FETCHED', 'FETCHING'].includes(state)) {
@@ -121,9 +164,25 @@ export const Goals: React.FC = observer(() => {
       <Divider hidden aria-hidden="true" />
 
       <GoalsList>
-        {goals.map(({ id, description, done }) => (
-          <Goal key={id} done={done}>
-            {description}
+        {goals.map(goal => (
+          <Goal key={goal.id} done={goal.done}>
+            {goal.done ? (
+              <div className="user-goals__done-goal-container">
+                {goal.description}
+                <div className="user-goals__done-text">
+                  {t('action.done')}
+
+                  <Icon type="Check" width={16} color="none" />
+                </div>
+              </div>
+            ) : (
+              <button
+                className="user-goals__goal-item-button"
+                onClick={() => handleEditGoal(goal)}
+              >
+                {goal.description}
+              </button>
+            )}
           </Goal>
         ))}
       </GoalsList>
@@ -131,11 +190,14 @@ export const Goals: React.FC = observer(() => {
       <Divider hidden aria-hidden="true" />
 
       <Button
-        id="user-goals__add-goals-button"
+        id="user-goals__add-goal-button"
         text={t('view.user_goals.add')}
         color="primary"
-        icon={<Icon name="plus square outline" size="large" />}
+        icon={<SemanticIcon name="plus square outline" size="large" />}
+        onClick={handleNewGoal}
       />
+
+      <GoalModal goalObject={goalObject} setGoalObject={setGoalObject} />
     </section>
   );
 });
