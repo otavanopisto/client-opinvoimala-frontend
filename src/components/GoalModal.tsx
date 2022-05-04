@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { observer } from 'mobx-react-lite';
+import { Loader } from 'semantic-ui-react';
 import { useTranslation } from 'react-i18next';
-// import { Loader, Transition } from 'semantic-ui-react';
 import styled from 'styled-components';
 // import { getApiErrorMessages } from '../utils/api';
 import Modal, { Props as ModalProps } from './Modal';
@@ -43,13 +43,15 @@ interface Props extends ModalProps {
 export const GoalModal: React.FC<Props> = observer(
   ({ goalObject, setGoalObject, ...props }) => {
     const {
-      goals: { addGoal, editGoal, markGoalDone, deleteGoal },
+      goals: { addGoal, editGoal, markGoalDone, deleteGoal, goalState },
     } = useStore();
     const { t } = useTranslation();
 
     const addingNewGoal = goalObject && goalObject?.id < 0;
 
     const [goalDescription, setGoalDescription] = useState('');
+
+    const isBusy = ['CREATING', 'EDITING', 'DELETING'].includes(goalState);
 
     useEffect(() => {
       setGoalDescription(goalObject?.description ?? '');
@@ -64,7 +66,7 @@ export const GoalModal: React.FC<Props> = observer(
     const buttonText = t(`${buttonKey}`);
 
     const closeModal = () => {
-      setGoalObject(undefined);
+      !isBusy && setGoalObject(undefined);
     };
 
     const handleClose = (
@@ -74,24 +76,25 @@ export const GoalModal: React.FC<Props> = observer(
       closeModal();
     };
 
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault();
+
       if (addingNewGoal) {
-        addGoal({ description: goalDescription });
+        await addGoal({ description: goalDescription });
       } else {
-        goalObject && markGoalDone({ id: goalObject.id });
+        goalObject && (await markGoalDone({ id: goalObject.id }));
       }
       closeModal();
     };
 
-    const handleDelete = () => {
-      goalObject && deleteGoal({ id: goalObject.id });
+    const handleDelete = async () => {
+      goalObject && (await deleteGoal({ id: goalObject.id }));
       closeModal();
     };
 
-    const handleEdit = () => {
+    const handleEdit = async () => {
       goalObject &&
-        editGoal({ id: goalObject.id, description: goalDescription });
+        (await editGoal({ id: goalObject.id, description: goalDescription }));
       closeModal();
     };
 
@@ -106,6 +109,7 @@ export const GoalModal: React.FC<Props> = observer(
         closeButtonText={t('action.cancel')}
       >
         <Container>
+          <Loader disabled={!isBusy} size="massive" />
           <form className="goals-modal-input" onSubmit={handleSubmit}>
             <TextArea
               id={goalObject?.id ?? -1}
@@ -128,6 +132,7 @@ export const GoalModal: React.FC<Props> = observer(
                       color="grey3"
                       negativeText
                       onClick={handleEdit}
+                      disabled={isBusy}
                     />
 
                     <Button
@@ -137,6 +142,7 @@ export const GoalModal: React.FC<Props> = observer(
                       color="grey3"
                       negativeText
                       onClick={handleDelete}
+                      disabled={isBusy}
                     />
                   </>
                 )}
@@ -147,6 +153,7 @@ export const GoalModal: React.FC<Props> = observer(
                 text={buttonText}
                 type="submit"
                 noMargin
+                disabled={isBusy}
               />
             </Buttons>
           </form>
