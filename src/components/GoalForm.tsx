@@ -33,6 +33,20 @@ const Buttons = styled.div`
       margin-right: ${p => p.theme.spacing.md};
     }
   }
+
+  @media ${p => p.theme.breakpoint.mobile} {
+    flex-direction: column;
+    div {
+      width: 100%;
+      flex-direction: column;
+    }
+
+    button {
+      width: 100%;
+      margin-right: 0;
+      margin: ${p => p.theme.spacing.sm} 0;
+    }
+  }
 `;
 
 interface Props {

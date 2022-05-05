@@ -108,7 +108,7 @@ const Goal = styled.li<{ done?: boolean }>`
   }
 
   @media ${p => p.theme.breakpoint.mobile} {
-    padding: ${p => p.theme.spacing.lg};
+    padding: ${p => p.theme.spacing.sm};
   }
 `;
 

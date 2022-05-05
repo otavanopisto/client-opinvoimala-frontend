@@ -123,10 +123,11 @@ const Drawer: React.FC<Props> = ({
     const unlistenHistory = history.listen(() => {
       // Route changed, close drawer:
       setIsOpen(false);
+      onClose && onClose();
     });
 
     return () => unlistenHistory();
-  }, [history]);
+  }, [history, onClose]);
 
   return (
     <div>
