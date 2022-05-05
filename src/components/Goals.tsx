@@ -133,7 +133,7 @@ export const Goals: React.FC = observer(() => {
   };
 
   useEffect(() => {
-    if (!['FETCHED', 'FETCHING'].includes(state)) {
+    if (!['FETCHED', 'FETCHING', 'ERROR'].includes(state)) {
       fetchGoals();
     }
   }, [fetchGoals, state]);

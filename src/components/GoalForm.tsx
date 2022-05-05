@@ -68,13 +68,9 @@ export const GoalForm: React.FC<Props> = observer(
     );
 
     useEffect(() => {
+      setError(false);
       setGoalDescription(goalObject?.description ?? '');
-      goalObject === undefined && setError(false);
     }, [goalObject]);
-
-    useEffect(() => {
-      if (goalState === 'ERROR') setError(true);
-    }, [goalState]);
 
     const buttonKey = addingNewGoal
       ? 'action.save'
@@ -90,10 +86,13 @@ export const GoalForm: React.FC<Props> = observer(
       event.preventDefault();
 
       if (addingNewGoal) {
-        await addGoal({ description: goalDescription });
+        const { success } = await addGoal({ description: goalDescription });
+        if (success) closeForm();
+        else setError(true);
       } else if (goalObject) {
         const { success } = await markGoalDone({ id: goalObject.id });
         if (success) closeForm();
+        else setError(true);
       }
     };
 
@@ -101,6 +100,7 @@ export const GoalForm: React.FC<Props> = observer(
       if (goalObject) {
         const { success } = await deleteGoal({ id: goalObject.id });
         if (success) closeForm();
+        else setError(true);
       }
     };
 
@@ -111,6 +111,7 @@ export const GoalForm: React.FC<Props> = observer(
           description: goalDescription,
         });
         if (success) closeForm();
+        else setError(true);
       }
     };
 
@@ -123,6 +124,9 @@ export const GoalForm: React.FC<Props> = observer(
             text={goalObject ? goalObject?.description : ''}
             onChange={(text: string) => {
               setGoalDescription(text);
+              if (text !== goalDescription) {
+                setError(false);
+              }
             }}
             rows={6}
             autoFocus={true}
