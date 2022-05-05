@@ -63,9 +63,7 @@ export const GoalForm: React.FC<Props> = observer(
     const [goalDescription, setGoalDescription] = useState('');
     const [error, setError] = useState(false);
 
-    const isBusy = ['CREATING', 'EDITING', 'DELETING', 'PROCESSING'].includes(
-      goalState
-    );
+    const isBusy = ['CREATING', 'EDITING', 'DELETING'].includes(goalState);
 
     useEffect(() => {
       setError(false);
@@ -77,6 +75,11 @@ export const GoalForm: React.FC<Props> = observer(
       : 'view.user_goals.mark_done';
     const buttonText = t(`${buttonKey}`);
 
+    const handleActionResponse = ({ success }: { success: boolean }) => {
+      if (success) closeForm();
+      else setError(true);
+    };
+
     const closeForm = () => {
       if (!isBusy) setGoalObject(undefined);
       setError(false);
@@ -86,32 +89,33 @@ export const GoalForm: React.FC<Props> = observer(
       event.preventDefault();
 
       if (addingNewGoal) {
-        const { success } = await addGoal({ description: goalDescription });
-        if (success) closeForm();
-        else setError(true);
+        handleActionResponse(await addGoal({ description: goalDescription }));
       } else if (goalObject) {
-        const { success } = await markGoalDone({ id: goalObject.id });
-        if (success) closeForm();
-        else setError(true);
+        handleActionResponse(await markGoalDone({ id: goalObject.id }));
       }
     };
 
     const handleDelete = async () => {
       if (goalObject) {
-        const { success } = await deleteGoal({ id: goalObject.id });
-        if (success) closeForm();
-        else setError(true);
+        handleActionResponse(await deleteGoal({ id: goalObject.id }));
       }
     };
 
     const handleEdit = async () => {
       if (goalObject) {
-        const { success } = await editGoal({
-          id: goalObject.id,
-          description: goalDescription,
-        });
-        if (success) closeForm();
-        else setError(true);
+        handleActionResponse(
+          await editGoal({
+            id: goalObject.id,
+            description: goalDescription,
+          })
+        );
+      }
+    };
+
+    const handleTextAreaChange = (text: string) => {
+      setGoalDescription(text);
+      if (text !== goalDescription) {
+        setError(false);
       }
     };
 
@@ -122,12 +126,7 @@ export const GoalForm: React.FC<Props> = observer(
           <TextArea
             id={goalObject?.id ?? -1}
             text={goalObject ? goalObject?.description : ''}
-            onChange={(text: string) => {
-              setGoalDescription(text);
-              if (text !== goalDescription) {
-                setError(false);
-              }
-            }}
+            onChange={handleTextAreaChange}
             rows={6}
             autoFocus={true}
             placeholder={t('view.user_goals.description_placeholder')}

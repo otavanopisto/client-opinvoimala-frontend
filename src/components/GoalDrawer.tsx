@@ -12,13 +12,14 @@ const Header = styled.header`
   font-weight: bold;
   font-family: ${p => p.theme.font.secondary};
 `;
+
 interface Props {
   goalObject?: GoalType;
   setGoalObject: React.Dispatch<React.SetStateAction<GoalType | undefined>>;
 }
 
 export const GoalDrawer: React.FC<Props> = observer(
-  ({ goalObject, setGoalObject, ...props }) => {
+  ({ goalObject, setGoalObject }) => {
     const { t } = useTranslation();
 
     const addingNewGoal = goalObject && goalObject?.id < 0;
@@ -30,12 +31,8 @@ export const GoalDrawer: React.FC<Props> = observer(
       setGoalObject(undefined);
     };
 
-    const handleClose = () => {
-      closeDrawer();
-    };
-
     return (
-      <Drawer fullWidth open={!!goalObject} onClose={handleClose}>
+      <Drawer fullWidth open={!!goalObject} onClose={closeDrawer}>
         <Header>{titleText}</Header>
         <GoalForm setGoalObject={setGoalObject} goalObject={goalObject} />
       </Drawer>
