@@ -204,13 +204,16 @@
           "repeat_once": "Vain kerran",
           "repeat_weekly": "Viikoittain samaan aikaan",
           "repeat_daily": "Arkipäivisin (ma-pe)",
-          "submit": "Luo varaus"
+          "submit": "Luo varaus",
+          "error": {
+            "heading": "Vastaanottoajan tallennus ei onnistunut"
+          }
         }
       }
     }
   },
   "error": {
-    "unknown_error": "Jotain meni pieleen",
+    "unknown_error": "Jotain meni pieleen, yritä myöhemmin uudelleen.",
     "page_not_found": "Virhe! Sivua ei löytynyt.",
     "test_not_found": "Virhe! Testiä ei löytynyt.",
     "Forbidden": "Ei käyttöoikeutta",

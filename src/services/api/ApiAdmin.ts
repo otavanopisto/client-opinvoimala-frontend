@@ -58,6 +58,34 @@ export class AdminApi extends BaseApi {
     const response = await this.api.post(url, params, this.auth());
     return this.handleResponse(response);
   }
+
+  /**
+   * Create appointment
+   */
+  async createAppointment({
+    id,
+    ...params
+  }: API.Admin.CreateAppointment): Promise<
+    Response<API.Admin.RES.CreateAppointment>
+  > {
+    const url = `/admin-api/appointments`;
+    const response = await this.api.post(url, params, this.auth());
+    return this.handleResponse(response);
+  }
+
+  /**
+   * Edit appointment
+   */
+  async editAppointment({
+    id,
+    ...params
+  }: API.Admin.EditAppointment): Promise<
+    Response<API.Admin.RES.EditAppointment>
+  > {
+    const url = `/admin-api/appointments/${id}`;
+    const response = await this.api.put(url, params, this.auth());
+    return this.handleResponse(response);
+  }
 }
 
 export const adminApi = new AdminApi();

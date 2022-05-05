@@ -7,6 +7,7 @@ import React, {
   useState,
 } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Transition } from 'semantic-ui-react';
 import styled from 'styled-components';
 import i18n from '../../../i18n';
 import { useAdminStore } from '../../../store/admin/adminStoreContext';
@@ -14,6 +15,7 @@ import { AppointmentIn, AppointmentStatus } from '../../../store/models';
 import { Button, Input, Select } from '../../inputs';
 import DatePicker from '../../inputs/DatePicker';
 import TimePicker from '../../inputs/TimePicker';
+import Message from '../../Message';
 
 const statusOptions = Object.values(AppointmentStatus).map(status => ({
   id: status,
@@ -83,7 +85,7 @@ const EditAppointmentForm: React.FC<Props> = ({
   const { t } = useTranslation();
 
   const {
-    appointments: { appointmentState },
+    appointments: { appointmentState, createAppointment, editAppointment },
     specialists: {
       specialists,
       specialistOptions,
@@ -104,6 +106,8 @@ const EditAppointmentForm: React.FC<Props> = ({
     useState<SelectOption<string>>(defaultStatus);
   const [specialistOption, setSpecialistOption] =
     useState<SelectOption<number>>(defaultSpecialist);
+
+  const [errorMsgs, setErrorMsgs] = useState<string[]>([]);
 
   // Refs
   const appointmentRef = useRef<number>();
@@ -139,7 +143,7 @@ const EditAppointmentForm: React.FC<Props> = ({
     }
   }, [appointment, getSpecialist, getSpecialistOption, specialists]);
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const _appointment: AppointmentIn = {
       id: appointment?.id ?? -1,
       status: statusOption.id as AppointmentStatus,
@@ -149,7 +153,16 @@ const EditAppointmentForm: React.FC<Props> = ({
       appointmentSpecialist:
         specialistOption.id > 0 ? specialistOption.id : defaultSpecialist?.id,
     };
-    console.log('TODO: Submit', _appointment);
+
+    if (_appointment.id > 0) {
+      const { success } = await editAppointment(_appointment);
+      if (success) closeForm();
+      else setErrorMsgs([t('error.unknown_error')]);
+    } else {
+      const { success } = await createAppointment(_appointment);
+      if (success) closeForm();
+      else setErrorMsgs([t('error.unknown_error')]);
+    }
   };
 
   const handleDateChange =
@@ -248,6 +261,19 @@ const EditAppointmentForm: React.FC<Props> = ({
           </FlexRow>
         </div>
       </div>
+
+      <Transition.Group>
+        {!!errorMsgs.length && (
+          <div>
+            <Message
+              error
+              icon="warning sign"
+              header={t('view.admin.appointments.form.error.heading')}
+              list={errorMsgs}
+            />
+          </div>
+        )}
+      </Transition.Group>
 
       <div className="appointment-form__buttons-container">
         <Button

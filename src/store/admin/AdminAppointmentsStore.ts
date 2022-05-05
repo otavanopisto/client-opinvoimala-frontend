@@ -82,6 +82,40 @@ export const AdminAppointmentsStore = types
       }
     });
 
+    const createAppointment = flow(function* (
+      params: API.Admin.CreateAppointment
+    ) {
+      self.appointmentState = 'PROCESSING';
+
+      const response: API.GeneralResponse<API.Admin.RES.CreateAppointment> =
+        yield adminApi.createAppointment(params);
+
+      if (response.kind === 'ok') {
+        fetchAppointments();
+        self.appointmentState = 'IDLE';
+        return { success: true };
+      } else {
+        self.appointmentState = 'ERROR';
+        return { success: false };
+      }
+    });
+
+    const editAppointment = flow(function* (params: API.Admin.EditAppointment) {
+      self.appointmentState = 'PROCESSING';
+
+      const response: API.GeneralResponse<API.Admin.RES.EditAppointment> =
+        yield adminApi.editAppointment(params);
+
+      if (response.kind === 'ok') {
+        fetchAppointments();
+        self.appointmentState = 'IDLE';
+        return { success: true };
+      } else {
+        self.appointmentState = 'ERROR';
+        return { success: false };
+      }
+    });
+
     return {
       afterCreate: () => {
         initialState = getSnapshot(self);
@@ -91,6 +125,8 @@ export const AdminAppointmentsStore = types
       },
       fetchAppointments,
       cancelAppointment,
+      createAppointment,
+      editAppointment,
     };
   });
 

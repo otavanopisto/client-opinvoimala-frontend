@@ -145,6 +145,8 @@ declare namespace API {
       password: string;
     };
     type GetAppointmentSpecialists = {};
+    type CreateAppointment = import('../../store/models').AppointmentIn;
+    type EditAppointment = import('../../store/models').AppointmentIn;
 
     declare namespace RES {
       type Login = {
@@ -153,6 +155,8 @@ declare namespace API {
       };
       type GetAppointmentSpecialists =
         import('../../store/models').AdminSpecialist[];
+      type CreateAppointment = import('../../store/models').Appointment[];
+      type EditAppointment = import('../../store/models').Appointment[];
     }
   }
 }
