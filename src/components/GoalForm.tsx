@@ -1,15 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { observer } from 'mobx-react-lite';
-import { Loader } from 'semantic-ui-react';
+import { Loader, Transition } from 'semantic-ui-react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-// import { getApiErrorMessages } from '../utils/api';
-
-// import Message from './Message';
-// import { useStore } from '../store/storeContext';
 import { Goal as GoalType } from '../store/models';
 import { Button, TextArea } from './inputs';
 import { useStore } from '../store/storeContext';
+import Message from './Message';
 
 const Container = styled.div`
   textarea {
@@ -64,20 +61,29 @@ export const GoalForm: React.FC<Props> = observer(
     const addingNewGoal = goalObject && goalObject?.id < 0;
 
     const [goalDescription, setGoalDescription] = useState('');
+    const [error, setError] = useState(false);
 
-    const isBusy = ['CREATING', 'EDITING', 'DELETING'].includes(goalState);
+    const isBusy = ['CREATING', 'EDITING', 'DELETING', 'PROCESSING'].includes(
+      goalState
+    );
 
     useEffect(() => {
       setGoalDescription(goalObject?.description ?? '');
+      goalObject === undefined && setError(false);
     }, [goalObject]);
+
+    useEffect(() => {
+      if (goalState === 'ERROR') setError(true);
+    }, [goalState]);
 
     const buttonKey = addingNewGoal
       ? 'action.save'
       : 'view.user_goals.mark_done';
     const buttonText = t(`${buttonKey}`);
 
-    const closeModal = () => {
-      !isBusy && setGoalObject(undefined);
+    const closeForm = () => {
+      if (!isBusy) setGoalObject(undefined);
+      setError(false);
     };
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -85,21 +91,27 @@ export const GoalForm: React.FC<Props> = observer(
 
       if (addingNewGoal) {
         await addGoal({ description: goalDescription });
-      } else {
-        goalObject && (await markGoalDone({ id: goalObject.id }));
+      } else if (goalObject) {
+        const { success } = await markGoalDone({ id: goalObject.id });
+        if (success) closeForm();
       }
-      closeModal();
     };
 
     const handleDelete = async () => {
-      goalObject && (await deleteGoal({ id: goalObject.id }));
-      closeModal();
+      if (goalObject) {
+        const { success } = await deleteGoal({ id: goalObject.id });
+        if (success) closeForm();
+      }
     };
 
     const handleEdit = async () => {
-      goalObject &&
-        (await editGoal({ id: goalObject.id, description: goalDescription }));
-      closeModal();
+      if (goalObject) {
+        const { success } = await editGoal({
+          id: goalObject.id,
+          description: goalDescription,
+        });
+        if (success) closeForm();
+      }
     };
 
     return (
@@ -109,14 +121,26 @@ export const GoalForm: React.FC<Props> = observer(
           <TextArea
             id={goalObject?.id ?? -1}
             text={goalObject ? goalObject?.description : ''}
-            onChange={(text: string) => setGoalDescription(text)}
+            onChange={(text: string) => {
+              setGoalDescription(text);
+            }}
             rows={6}
             autoFocus={true}
             placeholder={t('view.user_goals.description_placeholder')}
             variant="outlined"
             maxLength={160}
           />
-
+          <Transition.Group>
+            {error && (
+              <div>
+                <Message
+                  error
+                  icon="warning sign"
+                  header={t('error.unknown_error')}
+                />
+              </div>
+            )}
+          </Transition.Group>
           <Buttons>
             <div>
               {!addingNewGoal && (

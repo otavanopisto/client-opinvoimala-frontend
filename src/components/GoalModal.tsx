@@ -1,10 +1,7 @@
 import React from 'react';
 import { observer } from 'mobx-react-lite';
 import { useTranslation } from 'react-i18next';
-// import { getApiErrorMessages } from '../utils/api';
 import Modal, { Props as ModalProps } from './Modal';
-// import Message from './Message';
-// import { useStore } from '../store/storeContext';
 import { Goal as GoalType } from '../store/models';
 import GoalForm from './GoalForm';
 interface Props extends ModalProps {

@@ -100,6 +100,7 @@ const Goal = styled.li<{ done?: boolean }>`
   .user-goals__goal-item-button {
     color: ${p => p.theme.color.secondary};
     cursor: pointer;
+    border: 1px solid transparent;
 
     :hover {
       border: 1px solid ${p => p.theme.color.grey};

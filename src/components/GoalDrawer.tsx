@@ -26,12 +26,12 @@ export const GoalDrawer: React.FC<Props> = observer(
     const titleKey = addingNewGoal ? 'add_goal' : 'edit_goal';
     const titleText = t(`view.user_goals.${titleKey}`);
 
-    const closeModal = () => {
+    const closeDrawer = () => {
       setGoalObject(undefined);
     };
 
     const handleClose = () => {
-      closeModal();
+      closeDrawer();
     };
 
     return (
