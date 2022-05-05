@@ -105,7 +105,7 @@ const Link: React.FC<Props> = ({
 
   if (isButton) {
     return (
-      <LinkButton role="link" onClick={link.onClick}>
+      <LinkButton role="link" type="button" onClick={link.onClick}>
         <span className="link">{content}</span>
       </LinkButton>
     );

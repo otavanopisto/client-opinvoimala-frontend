@@ -23,7 +23,8 @@
     "show_result": "Näytä tulos",
     "done": "Valmis",
     "select": "Valitse",
-    "download": "Lataa"
+    "download": "Lataa",
+    "save": "Tallenna"
   },
   "label": {
     "name": "Nimi",
@@ -188,8 +189,23 @@
     },
     "admin": {
       "appointments": {
+        "title": "Vastaanotto",
         "list_title": "Vastaanottoajat",
-        "cancel_confirmation_text": "Olet perumassa vastaanottoaikaa {{date}}. Muistathan ilmoittaa opiskelijalle ajan peruutuksesta. Opiskelijan yhteystiedot löytyvät sähköpostiisi saamastasi vahvistusviestistä."
+        "cancel_confirmation_text": "Olet perumassa vastaanottoaikaa {{date}}. Muistathan ilmoittaa opiskelijalle ajan peruutuksesta. Opiskelijan yhteystiedot löytyvät sähköpostiisi saamastasi vahvistusviestistä.",
+        "create_new": "Luo vastaanottoaika",
+        "form": {
+          "title": "Syötä vastaanottoaika ja linkki",
+          "add_title": "Uusi vastaanottoaika",
+          "edit_title": "Muokkaa vastaanottoaikaa",
+          "start_time": "Alkamisaika",
+          "end_time": "Päättymisaika",
+          "meet_link": "Liittymislinkki",
+          "repeat": "Toistuminen",
+          "repeat_once": "Vain kerran",
+          "repeat_weekly": "Viikoittain samaan aikaan",
+          "repeat_daily": "Arkipäivisin (ma-pe)",
+          "submit": "Luo varaus"
+        }
       }
     }
   },

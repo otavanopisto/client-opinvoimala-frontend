@@ -5,6 +5,7 @@ export const SpecialistModel = types.model({
   name: types.maybeNull(types.string),
   role: types.maybeNull(types.string),
   roleId: types.maybeNull(types.number),
+  meetingLink: types.maybeNull(types.string),
 });
 
 export interface Specialist extends SnapshotOut<typeof SpecialistModel> {}

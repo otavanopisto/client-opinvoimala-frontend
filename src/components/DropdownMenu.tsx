@@ -132,7 +132,11 @@ const DropdownMenu: React.FC<Props> = ({
       const { label } = triggerButton;
       if (label)
         return (
-          <TriggerButton aria-expanded={isOpen} aria-haspopup={true}>
+          <TriggerButton
+            type="button"
+            aria-expanded={isOpen}
+            aria-haspopup={true}
+          >
             {label}
             {showArrow && (
               <Icon type={isOpen ? 'ChevronUp' : 'ChevronDown'} color="none" />

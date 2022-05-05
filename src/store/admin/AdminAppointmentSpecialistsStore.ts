@@ -25,6 +25,28 @@ export const AdminAppointmentSpecialistsStore = types
     get specialists() {
       return getSnapshot(self.data);
     },
+
+    get specialistOptions() {
+      return this.specialists.map(({ id, role, name }) => ({
+        id: id ?? -1,
+        label: `${role} ${name}`,
+      }));
+    },
+
+    getSpecialist(id?: number | null) {
+      const specialists = getSnapshot(self.data);
+      const specialist = specialists.find(options => options.id === id);
+      return specialist ?? specialist?.[0];
+    },
+
+    getSpecialistOption(id?: number | null) {
+      const specialists = getSnapshot(self.data);
+      const specialist = specialists.find(specialist => specialist.id === id);
+      return {
+        id: specialist?.id ?? -1,
+        label: specialist ? `${specialist.role ?? ''} ${specialist.name}` : '',
+      };
+    },
   }))
   .actions(self => {
     let initialState = {};
