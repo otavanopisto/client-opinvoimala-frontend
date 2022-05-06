@@ -209,6 +209,7 @@
         },
         "repeat": {
           "label": "Toistuminen",
+          "until_label": "Toistuvuus päättyy",
           "once": "Vain kerran",
           "weekly": "Viikoittain samaan aikaan",
           "daily": "Arkipäivisin (ma-pe)"

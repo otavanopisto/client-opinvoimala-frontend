@@ -1,3 +1,4 @@
+import { DateTime } from 'luxon';
 import React, {
   ChangeEvent,
   Dispatch,
@@ -7,11 +8,16 @@ import React, {
   useState,
 } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Transition } from 'semantic-ui-react';
+import { Divider, Transition } from 'semantic-ui-react';
 import styled from 'styled-components';
 import i18n from '../../../i18n';
 import { useAdminStore } from '../../../store/admin/adminStoreContext';
-import { AppointmentIn, AppointmentStatus } from '../../../store/models';
+import {
+  AppointmentIn,
+  AppointmentStatus,
+  RepeatRule,
+} from '../../../store/models';
+import { today } from '../../../utils/date';
 import { Button, Input, Select } from '../../inputs';
 import DatePicker from '../../inputs/DatePicker';
 import TimePicker from '../../inputs/TimePicker';
@@ -25,6 +31,11 @@ const statusOptions = Object.values(AppointmentStatus).map(status => ({
 const getStatusOption = (status: AppointmentStatus) => {
   return statusOptions.find(({ id }) => id === status) ?? statusOptions[0];
 };
+
+const REPEAT_OPTIONS = Object.values(RepeatRule).map(rule => ({
+  id: rule,
+  label: i18n.t(`view.admin.appointments.repeat.${rule}`),
+}));
 
 const Form = styled.form`
   margin-top: ${p => p.theme.spacing.lg};
@@ -95,17 +106,22 @@ const EditAppointmentForm: React.FC<Props> = ({
   } = useAdminStore();
 
   // Default values
+  const defaultDate = today().plus({ days: 1 }).toJSDate();
   const defaultStatus = getStatusOption(AppointmentStatus.available);
   const defaultSpecialist = specialistOptions[0];
 
   // Form data
-  const [date, setDate] = useState(new Date());
-  const [endDate, setEndDate] = useState(new Date());
+  const [date, setDate] = useState(defaultDate);
+  const [endDate, setEndDate] = useState(defaultDate);
   const [meetLink, setMeetLink] = useState('');
   const [statusOption, setStatusOption] =
     useState<SelectOption<string>>(defaultStatus);
   const [specialistOption, setSpecialistOption] =
     useState<SelectOption<number>>(defaultSpecialist);
+  const [repeatOption, setRepeatOption] = useState<SelectOption<string>>(
+    REPEAT_OPTIONS[0]
+  );
+  const [repeatUntil, setRepeatUntil] = useState(defaultDate);
 
   const [errorMsgs, setErrorMsgs] = useState<string[]>([]);
 
@@ -116,6 +132,8 @@ const EditAppointmentForm: React.FC<Props> = ({
   // Other stuff
   const isBusy = appointmentState === 'PROCESSING';
   const closeForm = () => setAppointment(undefined);
+  const repeatRule = repeatOption.id;
+  const repeatOnce = repeatRule === 'once';
 
   /**
    * Initializes form data when editing appointment
@@ -143,15 +161,26 @@ const EditAppointmentForm: React.FC<Props> = ({
     }
   }, [appointment, getSpecialist, getSpecialistOption, specialists]);
 
+  useEffect(() => {
+    // Update repeatUntil if date was set later than the current until date
+    setRepeatUntil(repeatUntil => (date > repeatUntil ? date : repeatUntil));
+  }, [date]);
+
   const handleSubmit = async () => {
+    const startTime = date.toISOString();
+    const endTime = endDate.toISOString();
+    const specialist =
+      specialistOption.id > 0 ? specialistOption.id : defaultSpecialist?.id;
+
     const _appointment: AppointmentIn = {
       id: appointment?.id ?? -1,
       status: statusOption.id as AppointmentStatus,
-      startTime: date?.toISOString(),
-      endTime: endDate?.toISOString(),
+      startTime,
+      endTime,
       meetingLink: meetLink,
-      appointmentSpecialist:
-        specialistOption.id > 0 ? specialistOption.id : defaultSpecialist?.id,
+      appointmentSpecialist: specialist,
+      repeatRule: repeatOption.id as RepeatRule,
+      repeatUntil: repeatOnce ? startTime : repeatUntil.toISOString(),
     };
 
     if (_appointment.id > 0) {
@@ -203,6 +232,12 @@ const EditAppointmentForm: React.FC<Props> = ({
     }
   };
 
+  const handleRepeatRuleChange = (
+    option?: SelectOption<string> | null | undefined
+  ) => {
+    !!option && setRepeatOption(option);
+  };
+
   const submitText = isAddingNew
     ? t('view.admin.appointments.form.submit')
     : t('action.save');
@@ -214,6 +249,7 @@ const EditAppointmentForm: React.FC<Props> = ({
           <DatePicker
             selected={date}
             onChange={handleDateChange(setDate, 'updateEndDate')}
+            minDate={today().plus({ days: 1 }).toJSDate()}
             inline
           />
         </div>
@@ -232,11 +268,19 @@ const EditAppointmentForm: React.FC<Props> = ({
               selected={date}
               onChange={handleDateChange(setDate)}
               label={t('view.admin.appointments.form.start_time')}
+              minTime={DateTime.fromJSDate(date).startOf('day').toJSDate()}
+              maxTime={DateTime.fromJSDate(endDate)
+                .minus({ minutes: 1 })
+                .toJSDate()}
             />
             <TimePicker
               selected={endDate}
               onChange={handleDateChange(setEndDate)}
               label={t('view.admin.appointments.form.end_time')}
+              minTime={DateTime.fromJSDate(date)
+                .plus({ minutes: 1 })
+                .toJSDate()}
+              maxTime={DateTime.fromJSDate(endDate).endOf('day').toJSDate()}
             />
           </FlexRow>
 
@@ -257,6 +301,27 @@ const EditAppointmentForm: React.FC<Props> = ({
               icon="linkify"
               iconPosition="left"
               noMargin
+            />
+          </FlexRow>
+
+          <Divider hidden />
+
+          <FlexRow>
+            <Select<string>
+              id="appointment-form__repeat-rule-select"
+              label={t('view.admin.appointments.repeat.label')}
+              options={REPEAT_OPTIONS}
+              selectedOption={repeatOption}
+              onSelect={handleRepeatRuleChange}
+              showDefaultOption={false}
+              disabled={!isAddingNew}
+            />
+            <DatePicker
+              selected={repeatOnce ? date : repeatUntil}
+              onChange={handleDateChange(setRepeatUntil)}
+              label={t('view.admin.appointments.repeat.until_label')}
+              disabled={!isAddingNew || repeatOnce}
+              minDate={date}
             />
           </FlexRow>
         </div>

@@ -50,6 +50,7 @@ interface Props<T extends OptionId> {
   autoFocus?: boolean;
   showDefaultOption?: boolean;
   variant?: SelectVariant;
+  disabled?: boolean;
 }
 
 export function Select<T extends OptionId>(props: Props<T>) {
@@ -62,6 +63,7 @@ export function Select<T extends OptionId>(props: Props<T>) {
     autoFocus = false,
     showDefaultOption = true,
     variant = 'default',
+    disabled,
   } = props;
   const { t } = useTranslation();
 
@@ -90,6 +92,7 @@ export function Select<T extends OptionId>(props: Props<T>) {
           value={selectedOption?.id ?? defaultOption}
           onChange={handleSelect}
           variant={variant}
+          disabled={disabled}
         >
           {_options.map(option => (
             <option key={option.id} value={option.id}>

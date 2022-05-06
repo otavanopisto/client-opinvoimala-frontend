@@ -38,7 +38,7 @@ const AdminAppointments: React.FC = observer(() => {
   const isBusy = ['PROCESSING'].includes(appointmentState);
 
   useEffect(() => {
-    if (!['FETCHED', 'FETCHING'].includes(state)) {
+    if (!['FETCHED', 'FETCHING', 'ERROR'].includes(state)) {
       fetchAppointments();
     }
   }, [fetchAppointments, state]);
@@ -65,7 +65,11 @@ const AdminAppointments: React.FC = observer(() => {
   };
 
   const handleAddNew = () => {
-    const startDateTime = today().startOf('day').set({ hour: 12 });
+    const startDateTime = today()
+      .plus({ days: 1 })
+      .startOf('day')
+      .set({ hour: 12 });
+
     setAppointment({
       id: -1,
       status: AppointmentStatus.available,
