@@ -77,44 +77,61 @@ interface Props {
   // If drawer's content needs access to the drawer ref and close method,
   // use the following content prop, otherwise set content as a children.
   content?: (ref: RefType, onClose: () => void) => JSX.Element;
-  triggerEl: (isOpen: boolean, onClick: OnClick) => JSX.Element;
+  triggerEl?: (isOpen: boolean, onClick: OnClick) => JSX.Element;
   fullWidth?: boolean;
+  open?: boolean;
+  onClose?: () => void;
 }
 
 const Drawer: React.FC<Props> = ({
+  open = false,
   content,
   triggerEl,
   fullWidth,
+  onClose,
   children,
 }) => {
   const { t } = useTranslation();
   const ref: RefType = createRef();
   const history = useHistory();
 
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(open);
 
-  const toggleDrawer = () => {
-    setIsOpen(!isOpen);
+  useEffect(() => {
+    setIsOpen(open);
+  }, [open]);
+
+  const closeDrawer = () => {
+    setIsOpen(false);
+    onClose && onClose();
+  };
+
+  const openDrawer = () => {
+    setIsOpen(true);
   };
 
   useOutsideClickAction({
     ref,
     condition: isOpen,
-    action: () => setIsOpen(false),
+    action: () => {
+      setIsOpen(false);
+      onClose && onClose();
+    },
   });
 
   useEffect(() => {
     const unlistenHistory = history.listen(() => {
       // Route changed, close drawer:
       setIsOpen(false);
+      onClose && onClose();
     });
 
     return () => unlistenHistory();
-  }, [history]);
+  }, [history, onClose]);
 
   return (
     <div>
-      <div>{triggerEl(isOpen, toggleDrawer)}</div>
+      <div>{triggerEl && triggerEl(isOpen, openDrawer)}</div>
       <DrawerContainer ref={ref} isOpen={isOpen} fullWidth={fullWidth}>
         {isOpen && (
           <section aria-label="aside content">
@@ -125,13 +142,13 @@ const Drawer: React.FC<Props> = ({
                   id="drawer__close-button"
                   variant="filled"
                   icon={<Icon type="Close" color="background" />}
-                  onClick={toggleDrawer}
+                  onClick={closeDrawer}
                   noMargin
                 />
               </div>
             </header>
             <main className="drawer__main-content">
-              {content ? content(ref, toggleDrawer) : children}
+              {content ? content(ref, closeDrawer) : children}
             </main>
           </section>
         )}

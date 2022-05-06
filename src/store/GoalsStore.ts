@@ -59,8 +59,10 @@ export const GoalsStore = types
       if (response.kind === 'ok') {
         self.goalState = 'IDLE';
         fetchGoals();
+        return { success: true };
       } else {
         self.goalState = 'ERROR';
+        return { success: false };
       }
     });
 
@@ -87,8 +89,10 @@ export const GoalsStore = types
         self.goalState = 'IDLE';
         const updatedGoal = response.data;
         updateGoal(updatedGoal);
+        return { success: true };
       } else {
         self.goalState = 'ERROR';
+        return { success: false };
       }
     });
 
@@ -102,8 +106,10 @@ export const GoalsStore = types
         self.goalState = 'IDLE';
         const updatedGoal = response.data;
         updateGoal(updatedGoal);
+        return { success: true };
       } else {
         self.goalState = 'ERROR';
+        return { success: false };
       }
     });
 
@@ -116,8 +122,10 @@ export const GoalsStore = types
       if (response.kind === 'ok') {
         self.goalState = 'IDLE';
         fetchGoals();
+        return { success: true };
       } else {
         self.goalState = 'ERROR';
+        return { success: false };
       }
     });
 

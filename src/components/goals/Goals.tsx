@@ -2,14 +2,16 @@ import { observer } from 'mobx-react-lite';
 import React, { useEffect, useState } from 'react';
 import { Divider } from 'semantic-ui-react';
 import { Icon as SemanticIcon } from 'semantic-ui-react';
-import Icon from './Icon';
+import Icon from '../Icon';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
-import { useStore } from '../store/storeContext';
-import { Button } from './inputs';
-import LoadingPlaceholder from './LoadingPlaceholder';
-import { Goal as GoalType } from '../store/models';
+import { useStore } from '../../store/storeContext';
+import { useWindowDimensions } from '../../utils/hooks';
+import { Button } from '../inputs';
+import LoadingPlaceholder from '../LoadingPlaceholder';
+import { Goal as GoalType } from '../../store/models';
 import { GoalModal } from './GoalModal';
+import GoalDrawer from './GoalDrawer';
 
 const Header = styled.header`
   display: flex;
@@ -98,6 +100,7 @@ const Goal = styled.li<{ done?: boolean }>`
   .user-goals__goal-item-button {
     color: ${p => p.theme.color.secondary};
     cursor: pointer;
+    border: 1px solid transparent;
 
     :hover {
       border: 1px solid ${p => p.theme.color.grey};
@@ -106,7 +109,7 @@ const Goal = styled.li<{ done?: boolean }>`
   }
 
   @media ${p => p.theme.breakpoint.mobile} {
-    padding: ${p => p.theme.spacing.lg};
+    padding: ${p => p.theme.spacing.sm};
   }
 `;
 
@@ -119,6 +122,8 @@ export const Goals: React.FC = observer(() => {
 
   const { t } = useTranslation();
 
+  const { isTablet } = useWindowDimensions();
+
   const handleEditGoal = (goal: GoalType) => {
     !goal.done && setGoalObject(goal);
   };
@@ -128,7 +133,7 @@ export const Goals: React.FC = observer(() => {
   };
 
   useEffect(() => {
-    if (!['FETCHED', 'FETCHING'].includes(state)) {
+    if (!['FETCHED', 'FETCHING', 'ERROR'].includes(state)) {
       fetchGoals();
     }
   }, [fetchGoals, state]);
@@ -196,8 +201,11 @@ export const Goals: React.FC = observer(() => {
         icon={<SemanticIcon name="plus square outline" size="large" />}
         onClick={handleNewGoal}
       />
-
-      <GoalModal goalObject={goalObject} setGoalObject={setGoalObject} />
+      {isTablet ? (
+        <GoalDrawer goalObject={goalObject} setGoalObject={setGoalObject} />
+      ) : (
+        <GoalModal goalObject={goalObject} setGoalObject={setGoalObject} />
+      )}
     </section>
   );
 });

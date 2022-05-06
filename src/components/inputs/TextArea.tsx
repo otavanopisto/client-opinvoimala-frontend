@@ -1,6 +1,16 @@
 import React, { ChangeEvent, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 
+const Container = styled.div`
+  position: relative;
+
+  .textarea-text-length-indicator {
+    position: absolute;
+    right: 20px;
+    bottom: 20px;
+  }
+`;
+
 const StyledTextArea = styled.textarea<{ variant?: 'filled' | 'outlined' }>`
   width: 100%;
   padding: ${p => p.theme.spacing.md};
@@ -31,6 +41,7 @@ interface Props {
   autoFocus?: boolean;
   placeholder?: string;
   variant?: 'filled' | 'outlined';
+  maxLength?: number;
 }
 
 export const TextArea: React.FC<Props> = ({
@@ -41,6 +52,7 @@ export const TextArea: React.FC<Props> = ({
   autoFocus = false,
   placeholder,
   variant = 'filled',
+  maxLength = undefined,
 }) => {
   const idRef = useRef<number>();
   const [value, setValue] = useState<string>(text);
@@ -71,22 +83,28 @@ export const TextArea: React.FC<Props> = ({
   }, [onChange, text, value]);
 
   return (
-    <StyledTextArea
-      value={value}
-      onChange={handleTextChange}
-      rows={rows}
-      autoFocus={autoFocus}
-      placeholder={placeholder}
-      variant={variant}
-      // move cursor to end of text
-      ref={ref => ref && ref.focus()}
-      onFocus={e =>
-        e.currentTarget.setSelectionRange(
-          e.currentTarget.value.length,
-          e.currentTarget.value.length
-        )
-      }
-    />
+    <Container>
+      <StyledTextArea
+        value={value}
+        onChange={handleTextChange}
+        rows={rows}
+        autoFocus={autoFocus}
+        placeholder={placeholder}
+        variant={variant}
+        maxLength={maxLength}
+        // move cursor to end of text
+        ref={ref => ref && ref.focus()}
+        onFocus={e =>
+          e.currentTarget.setSelectionRange(
+            e.currentTarget.value.length,
+            e.currentTarget.value.length
+          )
+        }
+      />
+      <div className="textarea-text-length-indicator">
+        {value.length}/{maxLength}
+      </div>
+    </Container>
   );
 };
 
