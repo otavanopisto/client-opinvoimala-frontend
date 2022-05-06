@@ -43,16 +43,16 @@ const Container = styled.section`
 
 interface Props {
   list: LinkListType;
-  initialItemCount?: number | undefined;
+  initialItemCount?: number;
 }
 
-const LinkList: React.FC<Props> = ({ list, initialItemCount = 2 }) => {
+const LinkList: React.FC<Props> = ({ list, initialItemCount }) => {
   const { title, links } = list;
 
   const { t } = useTranslation();
 
   const [itemCount, setItemCount] = useState(
-    initialItemCount === undefined ? list.links.length : initialItemCount
+    initialItemCount || list.links.length
   );
 
   if (!links.length) return null;
@@ -67,10 +67,12 @@ const LinkList: React.FC<Props> = ({ list, initialItemCount = 2 }) => {
 
   const iconType = isAllItemsVisible ? 'ChevronUp' : 'ChevronDown';
 
-  const handleShowAllItems = () => {
-    isAllItemsVisible
-      ? setItemCount(initialItemCount)
-      : setItemCount(list.links.length);
+  const handleShowAll = () => {
+    setItemCount(
+      isAllItemsVisible && initialItemCount
+        ? initialItemCount
+        : list.links.length
+    );
   };
 
   return (
@@ -85,15 +87,17 @@ const LinkList: React.FC<Props> = ({ list, initialItemCount = 2 }) => {
         ))}
       </ul>
 
-      <Grid centered>
-        <Button
-          id={`link-list-${title}-show-all-button`}
-          text={buttonText}
-          variant="link"
-          icon={<Icon type={iconType} color="none" width={24} />}
-          onClick={handleShowAllItems}
-        />
-      </Grid>
+      {initialItemCount !== undefined && list.links.length && (
+        <Grid centered>
+          <Button
+            id={`link-list-${title}-show-all-button`}
+            text={buttonText}
+            variant="link"
+            icon={<Icon type={iconType} color="none" width={24} />}
+            onClick={handleShowAll}
+          />
+        </Grid>
+      )}
     </Container>
   );
 };
