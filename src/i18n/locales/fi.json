@@ -197,17 +197,21 @@
           "title": "Syötä vastaanottoaika ja linkki",
           "add_title": "Uusi vastaanottoaika",
           "edit_title": "Muokkaa vastaanottoaikaa",
+          "status": "Status",
+          "specialist": "Rooli/Asiantuntija",
           "start_time": "Alkamisaika",
           "end_time": "Päättymisaika",
           "meet_link": "Liittymislinkki",
-          "repeat": "Toistuminen",
-          "repeat_once": "Vain kerran",
-          "repeat_weekly": "Viikoittain samaan aikaan",
-          "repeat_daily": "Arkipäivisin (ma-pe)",
           "submit": "Luo varaus",
           "error": {
             "heading": "Vastaanottoajan tallennus ei onnistunut"
           }
+        },
+        "repeat": {
+          "label": "Toistuminen",
+          "once": "Vain kerran",
+          "weekly": "Viikoittain samaan aikaan",
+          "daily": "Arkipäivisin (ma-pe)"
         }
       }
     }

@@ -99,9 +99,9 @@ const EditAppointmentForm: React.FC<Props> = ({
   const defaultSpecialist = specialistOptions[0];
 
   // Form data
-  const [date, setDate] = useState<Date>(new Date());
-  const [endDate, setEndDate] = useState<Date>(new Date());
-  const [meetLink, setMeetLink] = useState<string>('');
+  const [date, setDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(new Date());
+  const [meetLink, setMeetLink] = useState('');
   const [statusOption, setStatusOption] =
     useState<SelectOption<string>>(defaultStatus);
   const [specialistOption, setSpecialistOption] =
@@ -222,7 +222,7 @@ const EditAppointmentForm: React.FC<Props> = ({
           <FlexRow>
             <Select<string>
               id="appointment-form__status-select"
-              label="Status"
+              label={t('view.admin.appointments.form.status')}
               options={statusOptions}
               selectedOption={statusOption}
               onSelect={handleStatusChange}
@@ -243,7 +243,7 @@ const EditAppointmentForm: React.FC<Props> = ({
           <FlexRow>
             <Select<number>
               id="appointment-form__specialist-role-select"
-              label="Rooli"
+              label={t('view.admin.appointments.form.specialist')}
               options={specialistOptions}
               selectedOption={specialistOption}
               onSelect={handleSpecialistChange}
