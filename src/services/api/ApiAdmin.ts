@@ -1,3 +1,4 @@
+import { toSnakeCase, transformKeys } from '../../utils/objects';
 import BaseApi from './BaseApi';
 import { ADMIN_API_CONFIG, ApiConfig } from './config';
 
@@ -69,7 +70,11 @@ export class AdminApi extends BaseApi {
     Response<API.Admin.RES.CreateAppointment>
   > {
     const url = `/admin-api/appointments`;
-    const response = await this.api.post(url, params, this.auth());
+    const response = await this.api.post(
+      url,
+      transformKeys(params, toSnakeCase),
+      this.auth()
+    );
     return this.handleResponse(response);
   }
 
@@ -83,7 +88,11 @@ export class AdminApi extends BaseApi {
     Response<API.Admin.RES.EditAppointment>
   > {
     const url = `/admin-api/appointments/${id}`;
-    const response = await this.api.put(url, params, this.auth());
+    const response = await this.api.put(
+      url,
+      transformKeys(params, toSnakeCase),
+      this.auth()
+    );
     return this.handleResponse(response);
   }
 }
