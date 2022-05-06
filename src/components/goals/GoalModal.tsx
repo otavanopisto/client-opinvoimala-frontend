@@ -1,8 +1,8 @@
 import React from 'react';
 import { observer } from 'mobx-react-lite';
 import { useTranslation } from 'react-i18next';
-import Modal, { Props as ModalProps } from './Modal';
-import { Goal as GoalType } from '../store/models';
+import Modal, { Props as ModalProps } from '../Modal';
+import { Goal as GoalType } from '../../store/models';
 import GoalForm from './GoalForm';
 interface Props extends ModalProps {
   goalObject?: GoalType;

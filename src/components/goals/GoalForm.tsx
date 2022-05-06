@@ -3,10 +3,10 @@ import { observer } from 'mobx-react-lite';
 import { Loader, Transition } from 'semantic-ui-react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { Goal as GoalType } from '../store/models';
-import { Button, TextArea } from './inputs';
-import { useStore } from '../store/storeContext';
-import Message from './Message';
+import { Goal as GoalType } from '../../store/models';
+import { Button, TextArea } from '../inputs';
+import { useStore } from '../../store/storeContext';
+import Message from '../Message';
 
 const Container = styled.div`
   textarea {

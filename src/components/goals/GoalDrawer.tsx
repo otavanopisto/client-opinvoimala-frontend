@@ -2,9 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { observer } from 'mobx-react-lite';
-import { Goal as GoalType } from '../store/models';
+import { Goal as GoalType } from '../../store/models';
 import GoalForm from './GoalForm';
-import Drawer from './Drawer';
+import Drawer from '../Drawer';
 
 const Header = styled.header`
   color: ${p => p.theme.color.secondary};
