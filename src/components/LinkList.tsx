@@ -87,7 +87,7 @@ const LinkList: React.FC<Props> = ({ list, initialItemCount }) => {
         ))}
       </ul>
 
-      {initialItemCount !== undefined && list.links.length && (
+      {initialItemCount !== undefined && (
         <Grid centered>
           <Button
             id={`link-list-${title}-show-all-button`}
