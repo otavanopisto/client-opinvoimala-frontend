@@ -1,6 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { Grid } from 'semantic-ui-react';
 import styled from 'styled-components';
 import { LinkList as LinkListType } from '../store/models';
+import Icon from './Icon';
+import Button from './inputs/Button';
 import Link from './Link';
 
 const Container = styled.section`
@@ -39,24 +43,49 @@ const Container = styled.section`
 
 interface Props {
   list: LinkListType;
+  initialItemCount?: number;
 }
 
-const LinkList: React.FC<Props> = ({ list }) => {
+const LinkList: React.FC<Props> = ({ list, initialItemCount = list.links }) => {
   const { title, links } = list;
 
+  const { t } = useTranslation();
+
+  const [itemCount, setItemCount] = useState(initialItemCount);
+
   if (!links.length) return null;
+
+  const visibleItems = list.links.slice(0, itemCount);
+
+  const isAllItemsVisible = visibleItems.length >= list.links.length;
+
+  const handleShowAllItems = () => {
+    setItemCount(list.links.length);
+  };
 
   return (
     <Container>
       {title && <h1>{title}</h1>}
 
       <ul>
-        {links.map(link => (
+        {visibleItems.map(link => (
           <li key={link.id}>
             <Link link={link} label={link.label} showArrow />
           </li>
         ))}
       </ul>
+
+      {!isAllItemsVisible && (
+        <Grid centered>
+          <Button
+            id={`test-list-${title}-show-more-button`}
+            text={t('action.show_all')}
+            variant="link"
+            icon={<Icon type="ChevronDown" color="none" width={24} />}
+            onClick={handleShowAllItems}
+          />
+        </Grid>
+      )}
     </Container>
   );
 };
