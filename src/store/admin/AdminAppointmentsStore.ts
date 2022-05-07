@@ -116,6 +116,30 @@ export const AdminAppointmentsStore = types
       }
     });
 
+    const deleteAppointment = flow(function* (
+      params: API.Admin.DeleteAppointment
+    ) {
+      self.appointmentState = 'PROCESSING';
+
+      const response: API.GeneralResponse<API.Admin.RES.DeleteAppointment> =
+        yield adminApi.deleteAppointment(params);
+
+      if (response.kind === 'ok') {
+        const { deletedIds } = response.data;
+        const appointments = getSnapshot(self.data);
+        console.log('DELETED', deletedIds);
+        const updatedAppointments = appointments.filter(
+          appointment => !deletedIds.includes(appointment.id)
+        );
+        self.data = cast(updatedAppointments);
+        self.appointmentState = 'IDLE';
+        return { success: true };
+      } else {
+        self.appointmentState = 'ERROR';
+        return { success: false };
+      }
+    });
+
     return {
       afterCreate: () => {
         initialState = getSnapshot(self);
@@ -127,6 +151,7 @@ export const AdminAppointmentsStore = types
       cancelAppointment,
       createAppointment,
       editAppointment,
+      deleteAppointment,
     };
   });
 

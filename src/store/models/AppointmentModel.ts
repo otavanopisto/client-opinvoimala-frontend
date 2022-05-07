@@ -14,6 +14,12 @@ export enum RepeatRule {
   weekly = 'weekly',
 }
 
+export enum RepeatScope {
+  none = 'none',
+  all = 'all',
+  following = 'following',
+}
+
 export const AppointmentModel = types.model({
   id: types.number,
   status: types.enumeration<AppointmentStatus>(

@@ -147,6 +147,10 @@ declare namespace API {
     type GetAppointmentSpecialists = {};
     type CreateAppointment = import('../../store/models').AppointmentIn;
     type EditAppointment = import('../../store/models').AppointmentIn;
+    type DeleteAppointment = {
+      id: number;
+      repeatScope: import('../../store/models').RepeatScope;
+    };
 
     declare namespace RES {
       type Login = {
@@ -157,6 +161,7 @@ declare namespace API {
         import('../../store/models').AdminSpecialist[];
       type CreateAppointment = import('../../store/models').Appointment[];
       type EditAppointment = import('../../store/models').Appointment[];
+      type DeleteAppointment = { deletedIds: number[] };
     }
   }
 }

@@ -16,6 +16,7 @@ import {
   AppointmentIn,
   AppointmentStatus,
   RepeatRule,
+  RepeatScope,
 } from '../../../store/models';
 import { today } from '../../../utils/date';
 import { Button, Input, Select } from '../../inputs';
@@ -46,7 +47,7 @@ const Form = styled.form`
       display: flex;
     }
     &__buttons-container {
-      justify-content: flex-end;
+      justify-content: space-between;
       align-items: center;
       button {
         :not(:last-child) {
@@ -96,7 +97,12 @@ const EditAppointmentForm: React.FC<Props> = ({
   const { t } = useTranslation();
 
   const {
-    appointments: { appointmentState, createAppointment, editAppointment },
+    appointments: {
+      appointmentState,
+      createAppointment,
+      editAppointment,
+      deleteAppointment,
+    },
     specialists: {
       specialists,
       specialistOptions,
@@ -193,6 +199,20 @@ const EditAppointmentForm: React.FC<Props> = ({
       else setErrorMsgs([t('error.unknown_error')]);
     }
   };
+
+  const handleDelete =
+    (repeatScope = RepeatScope.none) =>
+    async () => {
+      // TODO: Ask user which repeat scope should be used (none/all/following)
+      if (appointment?.id) {
+        const { success } = await deleteAppointment({
+          id: appointment.id,
+          repeatScope,
+        });
+        if (success) closeForm();
+        else setErrorMsgs([t('error.unknown_error')]);
+      }
+    };
 
   const handleDateChange =
     (setter: Dispatch<SetStateAction<Date>>, action?: 'updateEndDate') =>
@@ -340,21 +360,36 @@ const EditAppointmentForm: React.FC<Props> = ({
         )}
       </Transition.Group>
 
+      <Divider hidden />
+
       <div className="appointment-form__buttons-container">
-        <Button
-          id="appointment-form__cancel-button"
-          text={t('action.cancel')}
-          onClick={closeForm}
-          disabled={isBusy}
-          color="grey3"
-          negativeText
-        />
-        <Button
-          id="appointment-form__continue-button"
-          text={submitText}
-          onClick={handleSubmit}
-          disabled={isBusy}
-        />
+        <FlexRow>
+          {!isAddingNew && (
+            <Button
+              id="appointment-form__delete-button"
+              text={t('action.delete')}
+              onClick={handleDelete()}
+              disabled={isBusy}
+              color="accent"
+            />
+          )}
+        </FlexRow>
+        <FlexRow>
+          <Button
+            id="appointment-form__cancel-button"
+            text={t('action.cancel')}
+            onClick={closeForm}
+            disabled={isBusy}
+            color="grey3"
+            negativeText
+          />
+          <Button
+            id="appointment-form__continue-button"
+            text={submitText}
+            onClick={handleSubmit}
+            disabled={isBusy}
+          />
+        </FlexRow>
       </div>
     </Form>
   );

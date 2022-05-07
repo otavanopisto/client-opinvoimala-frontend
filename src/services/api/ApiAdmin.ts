@@ -95,6 +95,20 @@ export class AdminApi extends BaseApi {
     );
     return this.handleResponse(response);
   }
+
+  /**
+   * Delete appointment
+   */
+  async deleteAppointment({
+    id,
+    ...params
+  }: API.Admin.DeleteAppointment): Promise<
+    Response<API.Admin.RES.DeleteAppointment>
+  > {
+    const url = `/admin-api/appointments/${id}`;
+    const response = await this.api.delete(url, params, this.auth());
+    return this.handleResponse(response);
+  }
 }
 
 export const adminApi = new AdminApi();

@@ -79,6 +79,7 @@ const AdminAppointments: React.FC = observer(() => {
     });
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleCancel = (id: number) => {
     const appointment = getAppointment(id);
     if (appointment?.status === 'booked') {
@@ -156,7 +157,7 @@ const AdminAppointments: React.FC = observer(() => {
         title={t('view.admin.appointments.list_title')}
         tools={renderListTools()}
         items={appointments.filter(filterByStatus)}
-        onCancel={handleCancel}
+        // onCancel={handleCancel}
         onJoin={handleJoin}
         onEdit={handleEdit}
         showStatus

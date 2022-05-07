@@ -20,6 +20,7 @@ const StyledButton = styled.button<{
   padding-bottom: ${p => (p.isSmall ? p.theme.spacing.sm : p.theme.spacing.md)};
   padding-left: ${p => p.theme.spacing.lg};
   padding-right: ${p => p.theme.spacing.lg};
+  white-space: nowrap;
 
   > svg,
   > i {
