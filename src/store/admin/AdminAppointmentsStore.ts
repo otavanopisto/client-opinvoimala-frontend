@@ -107,7 +107,14 @@ export const AdminAppointmentsStore = types
         yield adminApi.editAppointment(params);
 
       if (response.kind === 'ok') {
-        fetchAppointments();
+        const updatedAppointments = response.data;
+        const updatedData = getSnapshot(self.data).map(appointment => {
+          const updatedAppointment = updatedAppointments.find(
+            ({ id }) => id === appointment.id
+          );
+          return updatedAppointment ?? appointment;
+        });
+        self.data = cast(updatedData);
         self.appointmentState = 'IDLE';
         return { success: true };
       } else {
@@ -127,7 +134,6 @@ export const AdminAppointmentsStore = types
       if (response.kind === 'ok') {
         const { deletedIds } = response.data;
         const appointments = getSnapshot(self.data);
-        console.log('DELETED', deletedIds);
         const updatedAppointments = appointments.filter(
           appointment => !deletedIds.includes(appointment.id)
         );

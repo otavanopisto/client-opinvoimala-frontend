@@ -200,6 +200,7 @@ const EditAppointmentForm: React.FC<Props> = ({
       appointmentSpecialist: specialist,
       repeatRule: repeatOption.id as RepeatRule,
       repeatUntil: repeatOnce ? startTime : repeatUntil.toISOString(),
+      repeatGroup: appointment?.repeatGroup,
     };
 
     if (_appointment.id > 0) {
