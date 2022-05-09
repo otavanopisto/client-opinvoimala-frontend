@@ -136,6 +136,9 @@
       "title": {
         "upcoming": "Tulevat tapahtumat",
         "past": "Menneet tapahtumat"
+      },
+      "action": {
+        "join_webinar": "Liity webinaariin"
       }
     },
     "register": {

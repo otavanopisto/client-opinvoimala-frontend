@@ -12,6 +12,7 @@ export const EventModel = types.model({
   description: types.maybeNull(types.string),
   image: types.maybeNull(ImageModel),
   links: types.array(LinkModel),
+  link: types.maybeNull(types.string),
 });
 
 export interface Event extends SnapshotOut<typeof EventModel> {}
