@@ -65,7 +65,7 @@ interface Props {
 
 const Event: React.FC<Props> = ({ event, isSimple = false }) => {
   const { date, description, duration, image, link, links, title } = event;
-  console.log(event);
+
   const { t } = useTranslation();
   const startTime = formatDateTime(date);
   const endTime = localizedDate(date)

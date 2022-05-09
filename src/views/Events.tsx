@@ -50,8 +50,6 @@ export const Events: React.FC = observer(() => {
     title: t('route.events'),
   };
 
-  console.log(upcomingEvents);
-
   return (
     <Layout hero={hero} isLoading={isBusy}>
       <section>
