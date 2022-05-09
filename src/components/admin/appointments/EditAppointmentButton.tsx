@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { CheckboxProps } from 'semantic-ui-react';
+import { CheckboxProps, Transition } from 'semantic-ui-react';
 import styled from 'styled-components';
 import i18n from '../../../i18n';
+import { useAdminStore } from '../../../store/admin/adminStoreContext';
 import { AppointmentIn, RepeatScope } from '../../../store/models';
-import { formatDateTime } from '../../../utils/date';
+import { formatDateTime, isFutureDate } from '../../../utils/date';
 import ConfirmDialog from '../../ConfirmDialog';
 import { RadioButtons } from '../../inputs';
+import Message from '../../Message';
 
 const REPEAT_SCOPE_OPTIONS = Object.values(RepeatScope).map(scope => ({
   value: scope,
@@ -43,14 +45,53 @@ const EditAppointmentButton: React.FC<Props> = ({
 }) => {
   const { t } = useTranslation();
 
+  const {
+    appointments: { getBookedAppointmentsInGroup },
+  } = useAdminStore();
+
   const [selectedScope, setSelectedScope] = useState<RepeatScope>(
     RepeatScope.none
   );
+  const [bookedAppointmentsInScope, setBookedAppointmentsInScope] = useState<
+    string[]
+  >([]);
 
   const { startTime, endTime, repeatRule } = appointment;
 
   const isDeleteAction = actionType === 'delete';
   const isRepeating = repeatRule !== 'once';
+
+  /**
+   * Find booked dates that are in selected scope.
+   * Needed to notify admin user that the student should be notified (manually) as well.
+   */
+  useEffect(() => {
+    if (appointment.repeatGroup) {
+      const booked = getBookedAppointmentsInGroup(appointment.repeatGroup);
+      let inScope: AppointmentIn[] = [];
+      switch (selectedScope) {
+        case RepeatScope.none:
+          inScope = booked.filter(({ id }) => id === appointment.id);
+          break;
+        case RepeatScope.following:
+          inScope = booked.filter(
+            ({ startTime }) => startTime >= appointment.startTime
+          );
+          break;
+        case RepeatScope.all:
+          inScope = booked.filter(({ endTime }) => isFutureDate(endTime));
+          break;
+        default:
+        // do nothing
+      }
+
+      const dates = inScope.map(({ startTime }) => formatDateTime(startTime));
+
+      setBookedAppointmentsInScope(dates);
+    } else {
+      setBookedAppointmentsInScope([]);
+    }
+  }, [getBookedAppointmentsInGroup, selectedScope, appointment]);
 
   const _startTime = formatDateTime(startTime);
   const _endTime = formatDateTime(endTime, {
@@ -96,6 +137,22 @@ const EditAppointmentButton: React.FC<Props> = ({
                 onChange={handleScopeChange}
               />
             </div>
+
+            <Transition.Group>
+              {!!bookedAppointmentsInScope.length && (
+                <div>
+                  <Message
+                    warning
+                    icon="warning sign"
+                    header={t(
+                      'view.admin.appointments.repeat.scope_includes_booked_appointments'
+                    )}
+                    content={t('view.admin.appointments.repeat.notify_student')}
+                    list={bookedAppointmentsInScope}
+                  />
+                </div>
+              )}
+            </Transition.Group>
           </>
         )}
       </Container>

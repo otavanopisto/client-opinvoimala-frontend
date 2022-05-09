@@ -34,6 +34,21 @@ export const AdminAppointmentsStore = types
       const appointments = getSnapshot(self.data);
       return [...appointments].sort(byStartTime);
     },
+
+    getBookedAppointments() {
+      const appointments = getSnapshot(self.data);
+      return appointments.filter(
+        ({ status }) => status === AppointmentStatus.booked
+      );
+    },
+
+    getBookedAppointmentsInGroup(group: number) {
+      const appointments = getSnapshot(self.data);
+      return appointments.filter(
+        ({ status, repeatGroup }) =>
+          status === AppointmentStatus.booked && repeatGroup === group
+      );
+    },
   }))
   .actions(self => {
     let initialState = {};

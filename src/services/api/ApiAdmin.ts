@@ -1,4 +1,3 @@
-import { useParams } from 'react-router-dom';
 import { toSnakeCase, transformKeys } from '../../utils/objects';
 import BaseApi from './BaseApi';
 import { ADMIN_API_CONFIG, ApiConfig } from './config';

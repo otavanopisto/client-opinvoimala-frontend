@@ -225,7 +225,9 @@
             "all": "Kaikki tämän sarjan vastaanottoajat"
           },
           "edit_confirm_text": "Tämä on toistuva vastaanottoaika. Valitse muokataanko vain yksittäistä valittua aikaa, tätä ja seuraavia aikoja vai kaikkia sarjaan kuuluvia vastaanottoaikoja.",
-          "delete_confirm_text": "Tämä on toistuva vastaanottoaika. Valitse poistetaanko vain yksittäinen valittu aika, tämä ja seuraavat ajat vai kaikki sarjaan kuuluvat vastaanottoajat."
+          "delete_confirm_text": "Tämä on toistuva vastaanottoaika. Valitse poistetaanko vain yksittäinen valittu aika, tämä ja seuraavat ajat vai kaikki sarjaan kuuluvat vastaanottoajat.",
+          "scope_includes_booked_appointments": "Valitsemasi ajanjakso sisältää varattuja vastaanottoaikoja:",
+          "notify_student": "Muistathan ilmoittaa varauksen tehneelle opiskelijalle muutoksista. Opiskelijan yhteystiedot löytyvät sähköpostiin saamastasi vahvistusviestistä."
         }
       }
     }
