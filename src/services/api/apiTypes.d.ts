@@ -146,7 +146,10 @@ declare namespace API {
     };
     type GetAppointmentSpecialists = {};
     type CreateAppointment = import('../../store/models').AppointmentIn;
-    type EditAppointment = import('../../store/models').AppointmentIn;
+    type EditAppointment = {
+      appointment: import('../../store/models').AppointmentIn;
+      repeatScope: import('../../store/models').RepeatScope;
+    };
     type DeleteAppointment = {
       id: number;
       repeatScope: import('../../store/models').RepeatScope;

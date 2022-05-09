@@ -23,6 +23,7 @@ import { Button, Input, Select } from '../../inputs';
 import DatePicker from '../../inputs/DatePicker';
 import TimePicker from '../../inputs/TimePicker';
 import Message from '../../Message';
+import EditAppointmentButton from './EditAppointmentButton';
 
 const statusOptions = Object.values(AppointmentStatus).map(status => ({
   id: status,
@@ -151,7 +152,13 @@ const EditAppointmentForm: React.FC<Props> = ({
       appointmentRef.current = appointment.id;
       specialistsRef.current = specialists.length;
 
-      const { status, appointmentSpecialist, meetingLink } = appointment;
+      const {
+        status,
+        appointmentSpecialist,
+        meetingLink,
+        repeatRule,
+        repeatUntil,
+      } = appointment;
       const specialistId = appointmentSpecialist?.id;
       const specialistOption = getSpecialistOption(specialistId);
       const specialist = getSpecialist(specialistId) ?? specialists[0];
@@ -164,6 +171,12 @@ const EditAppointmentForm: React.FC<Props> = ({
       setEndDate(new Date(appointment.endTime));
       setSpecialistOption(specialistOption);
       setMeetLink(meetLink);
+
+      const repeatOption = REPEAT_OPTIONS.find(({ id }) => id === repeatRule);
+      if (repeatOption) {
+        setRepeatOption(repeatOption);
+      }
+      if (repeatUntil) setRepeatUntil(new Date(repeatUntil));
     }
   }, [appointment, getSpecialist, getSpecialistOption, specialists]);
 
@@ -172,7 +185,7 @@ const EditAppointmentForm: React.FC<Props> = ({
     setRepeatUntil(repeatUntil => (date > repeatUntil ? date : repeatUntil));
   }, [date]);
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (repeatScope = RepeatScope.none) => {
     const startTime = date.toISOString();
     const endTime = endDate.toISOString();
     const specialist =
@@ -190,7 +203,10 @@ const EditAppointmentForm: React.FC<Props> = ({
     };
 
     if (_appointment.id > 0) {
-      const { success } = await editAppointment(_appointment);
+      const { success } = await editAppointment({
+        appointment: _appointment,
+        repeatScope,
+      });
       if (success) closeForm();
       else setErrorMsgs([t('error.unknown_error')]);
     } else {
@@ -200,19 +216,16 @@ const EditAppointmentForm: React.FC<Props> = ({
     }
   };
 
-  const handleDelete =
-    (repeatScope = RepeatScope.none) =>
-    async () => {
-      // TODO: Ask user which repeat scope should be used (none/all/following)
-      if (appointment?.id) {
-        const { success } = await deleteAppointment({
-          id: appointment.id,
-          repeatScope,
-        });
-        if (success) closeForm();
-        else setErrorMsgs([t('error.unknown_error')]);
-      }
-    };
+  const handleDelete = async (repeatScope = RepeatScope.none) => {
+    if (appointment?.id) {
+      const { success } = await deleteAppointment({
+        id: appointment.id,
+        repeatScope,
+      });
+      if (success) closeForm();
+      else setErrorMsgs([t('error.unknown_error')]);
+    }
+  };
 
   const handleDateChange =
     (setter: Dispatch<SetStateAction<Date>>, action?: 'updateEndDate') =>
@@ -364,13 +377,11 @@ const EditAppointmentForm: React.FC<Props> = ({
 
       <div className="appointment-form__buttons-container">
         <FlexRow>
-          {!isAddingNew && (
-            <Button
-              id="appointment-form__delete-button"
-              text={t('action.delete')}
-              onClick={handleDelete()}
-              disabled={isBusy}
-              color="accent"
+          {!isAddingNew && appointment && (
+            <EditAppointmentButton
+              actionType="delete"
+              appointment={appointment}
+              onConfirm={handleDelete}
             />
           )}
         </FlexRow>
@@ -383,12 +394,29 @@ const EditAppointmentForm: React.FC<Props> = ({
             color="grey3"
             negativeText
           />
-          <Button
-            id="appointment-form__continue-button"
-            text={submitText}
-            onClick={handleSubmit}
-            disabled={isBusy}
-          />
+          {isAddingNew && (
+            <Button
+              id="appointment-form__submit-button"
+              text={submitText}
+              onClick={() => handleSubmit()}
+              disabled={isBusy}
+            />
+          )}
+          {!isAddingNew && repeatOnce && (
+            <Button
+              id="appointment-form__submit-button"
+              text={submitText}
+              onClick={() => handleSubmit()}
+              disabled={isBusy}
+            />
+          )}
+          {!isAddingNew && !repeatOnce && appointment && (
+            <EditAppointmentButton
+              appointment={appointment}
+              actionType="edit"
+              onConfirm={handleSubmit}
+            />
+          )}
         </FlexRow>
       </div>
     </Form>

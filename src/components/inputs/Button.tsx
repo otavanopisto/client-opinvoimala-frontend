@@ -101,7 +101,7 @@ const StyledButton = styled.button<{
 type ColorType = keyof Colors;
 type VariantType = 'filled' | 'outlined' | 'link';
 
-interface Props {
+export interface Props {
   id: string;
   text?: string | JSX.Element;
   icon?: JSX.Element;
