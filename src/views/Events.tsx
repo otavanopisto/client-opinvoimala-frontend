@@ -5,22 +5,13 @@ import Layout from '../components/Layout';
 import Message from '../components/Message';
 import { useStore } from '../store/storeContext';
 import { today } from '../utils/date';
-import Event from '../components/Event';
-import styled from 'styled-components';
 import { Grid } from 'semantic-ui-react';
 import { Button } from '../components/inputs';
 import Icon from '../components/Icon';
+import EventsList from './EventsList';
 
 const SHOW_NEXT = 5;
 const PAST_DAYS = 30;
-
-const EventsList = styled.li`
-  list-style-type: none;
-  padding: 0;
-  width: 100%;
-  margin-top: ${p => p.theme.spacing.xl};
-  margin-bottom: ${p => p.theme.spacing.xl};
-`;
 
 export const Events: React.FC = observer(() => {
   const { t } = useTranslation();
@@ -54,16 +45,12 @@ export const Events: React.FC = observer(() => {
   return (
     <Layout hero={hero} isLoading={isBusy}>
       <section>
-        <EventsList>
-          <h2>{t('view.events.title.upcoming')}</h2>
-          {!shownUpcomingEvents.length && (
-            <Message content={t('view.events.no_events')} />
-          )}
+        <h2>{t('view.events.title.upcoming')}</h2>
+        {!shownUpcomingEvents.length && (
+          <Message content={t('view.events.no_events')} />
+        )}
+        <EventsList events={shownUpcomingEvents} />
 
-          {shownUpcomingEvents.map(event => (
-            <Event key={`${event.id}-${event.date}`} event={event} />
-          ))}
-        </EventsList>
         {eventsShown < upcomingEvents.length && (
           <Grid centered>
             <Button
@@ -78,17 +65,9 @@ export const Events: React.FC = observer(() => {
       </section>
       {!!pastEvents.length && (
         <section>
-          <EventsList>
-            <h2>{t('view.events.title.past')}</h2>
+          <h2>{t('view.events.title.past')}</h2>
 
-            {pastEvents.map(event => (
-              <Event
-                key={`${event.id}-${event.date}`}
-                event={event}
-                isSimple={true}
-              ></Event>
-            ))}
-          </EventsList>
+          <EventsList events={pastEvents} isSimple />
         </section>
       )}
     </Layout>

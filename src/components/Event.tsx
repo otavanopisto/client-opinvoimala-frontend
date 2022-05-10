@@ -22,30 +22,41 @@ const EventContainer = styled.li<{ isSimple: boolean }>`
   line-height: 28px;
   padding: ${p => p.theme.spacing.lg};
 
-  h4 {
+  .main-column {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  h3 {
     color: ${p => (p.isSimple ? p.theme.color.grey : undefined)};
     margin-top: ${p => p.theme.spacing.md};
     margin-bottom: ${p => p.theme.spacing.md};
+    ${p => p.theme.font.h4}
   }
 
-  div {
-    font-family: ${p => p.theme.font.secondary};
-    ${p => p.theme.font.size.sm};
-  }
+  font-family: ${p => p.theme.font.secondary};
+  ${p => p.theme.font.size.sm};
 
   img {
     width: 360px;
     border-radius: 0;
-    justify-content: flex-end;
-    margin-bottom: ${p => p.theme.spacing.lg};
   }
 
   button {
     margin-top: ${p => p.theme.spacing.lg};
   }
 
+  a {
+    color: ${p => (p.isSimple ? p.theme.color.grey : undefined)};
+  }
+
   @media ${p => p.theme.breakpoint.mobile} {
     flex-direction: column-reverse;
+
+    img {
+      margin-bottom: ${p => p.theme.spacing.lg};
+    }
   }
 `;
 
@@ -78,24 +89,33 @@ const Event: React.FC<Props> = ({ event, isSimple = false }) => {
 
   return (
     <EventContainer isSimple={isSimple}>
-      <EventText>
-        <div>{`${startTime}\u2013${endTime}`}</div>
-        <h4>{title}</h4>
-        <div className="event-description">{description}</div>
+      <div className="main-column">
+        <EventText>
+          <div>{`${startTime}\u2013${endTime}`}</div>
+          <h3>{title}</h3>
+          <div className="event-description">{description}</div>
 
-        {!isSimple &&
-          links.map(link => <Link link={link} label={link.label} />)}
+          {links.map(link => (
+            <Link link={link} label={link.label} />
+          ))}
+        </EventText>
         {!isSimple && !!link && (
-          <Button
-            id="event-join-webinar"
-            text={t('view.events.action.join_webinar')}
-            color="secondary"
-            icon={<Icon type="Video" width={24} />}
-            onClick={() => handleJoinMeeting(link)}
-          />
+          <div>
+            <Button
+              id="event-join-webinar"
+              text={t('view.events.action.join_webinar')}
+              color="secondary"
+              icon={<Icon type="Video" width={24} />}
+              onClick={() => handleJoinMeeting(link)}
+            />
+          </div>
         )}
-      </EventText>
-      {!isSimple && <img src={image?.url} alt={image?.alternativeText ?? ''} />}
+      </div>
+      <div>
+        {!isSimple && (
+          <img src={image?.url} alt={image?.alternativeText ?? ''} />
+        )}
+      </div>
     </EventContainer>
   );
 };
