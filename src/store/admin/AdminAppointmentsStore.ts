@@ -34,6 +34,21 @@ export const AdminAppointmentsStore = types
       const appointments = getSnapshot(self.data);
       return [...appointments].sort(byStartTime);
     },
+
+    getBookedAppointments() {
+      const appointments = getSnapshot(self.data);
+      return appointments.filter(
+        ({ status }) => status === AppointmentStatus.booked
+      );
+    },
+
+    getBookedAppointmentsInGroup(group: number) {
+      const appointments = getSnapshot(self.data);
+      return appointments.filter(
+        ({ status, repeatGroup }) =>
+          status === AppointmentStatus.booked && repeatGroup === group
+      );
+    },
   }))
   .actions(self => {
     let initialState = {};
@@ -107,7 +122,14 @@ export const AdminAppointmentsStore = types
         yield adminApi.editAppointment(params);
 
       if (response.kind === 'ok') {
-        fetchAppointments();
+        const updatedAppointments = response.data;
+        const updatedData = getSnapshot(self.data).map(appointment => {
+          const updatedAppointment = updatedAppointments.find(
+            ({ id }) => id === appointment.id
+          );
+          return updatedAppointment ?? appointment;
+        });
+        self.data = cast(updatedData);
         self.appointmentState = 'IDLE';
         return { success: true };
       } else {

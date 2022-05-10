@@ -25,7 +25,10 @@
     "done": "Valmis",
     "select": "Valitse",
     "download": "Lataa",
-    "save": "Tallenna"
+    "save": "Tallenna",
+    "confirm": "Vahvista",
+    "confirm_delete": "Vahvista poisto",
+    "confirm_edit": "Vahvista muokkaus"
   },
   "label": {
     "name": "Nimi",
@@ -33,8 +36,9 @@
     "password": "Salasana",
     "password_confirm": "Salasana uudelleen",
     "specialist": "Asiantuntija",
+    "time_abbrv": "klo",
     "date": "Ajankohta",
-    "time_abbrv": "klo"
+    "repeat": "Toistuvuus"
   },
   "route": {
     "register": "Rekisteröidy",
@@ -198,6 +202,7 @@
           "title": "Syötä vastaanottoaika ja linkki",
           "add_title": "Uusi vastaanottoaika",
           "edit_title": "Muokkaa vastaanottoaikaa",
+          "delete_title": "Poista vastaanottoaika",
           "status": "Status",
           "specialist": "Rooli/Asiantuntija",
           "start_time": "Alkamisaika",
@@ -209,11 +214,20 @@
           }
         },
         "repeat": {
-          "label": "Toistuminen",
+          "label": "Toistuvuus",
           "until_label": "Toistuvuus päättyy",
           "once": "Vain kerran",
           "weekly": "Viikoittain samaan aikaan",
-          "daily": "Arkipäivisin (ma-pe)"
+          "daily": "Arkipäivisin (ma-pe)",
+          "scope": {
+            "none": "Vain tämä yksi vastaanottoaika",
+            "following": "Tämä ja tätä seuraavat vastaanottoajat",
+            "all": "Kaikki tämän sarjan vastaanottoajat"
+          },
+          "edit_confirm_text": "Tämä on toistuva vastaanottoaika. Valitse muokataanko vain yksittäistä valittua aikaa, tätä ja seuraavia aikoja vai kaikkia sarjaan kuuluvia vastaanottoaikoja.",
+          "delete_confirm_text": "Tämä on toistuva vastaanottoaika. Valitse poistetaanko vain yksittäinen valittu aika, tämä ja seuraavat ajat vai kaikki sarjaan kuuluvat vastaanottoajat.",
+          "scope_includes_booked_appointments": "Valitsemasi ajanjakso sisältää varattuja vastaanottoaikoja:",
+          "notify_student": "Muistathan ilmoittaa varauksen tehneelle opiskelijalle muutoksista. Opiskelijan yhteystiedot löytyvät sähköpostiin saamastasi vahvistusviestistä."
         }
       }
     }

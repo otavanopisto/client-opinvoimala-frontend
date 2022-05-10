@@ -16,8 +16,8 @@ export enum RepeatRule {
 
 export enum RepeatScope {
   none = 'none',
-  all = 'all',
   following = 'following',
+  all = 'all',
 }
 
 export const AppointmentModel = types.model({

@@ -82,12 +82,13 @@ export class AdminApi extends BaseApi {
    * Edit appointment
    */
   async editAppointment({
-    id,
-    ...params
+    repeatScope,
+    appointment,
   }: API.Admin.EditAppointment): Promise<
     Response<API.Admin.RES.EditAppointment>
   > {
-    const url = `/admin-api/appointments/${id}`;
+    const { id, ...params } = appointment;
+    const url = `/admin-api/appointments/${id}?repeatScope=${repeatScope}`;
     const response = await this.api.put(
       url,
       transformKeys(params, toSnakeCase),
