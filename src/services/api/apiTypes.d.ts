@@ -125,13 +125,11 @@ declare namespace API {
     type GetFrontPage = import('../../store/FrontPageStore').FrontPage;
     type GetContentPage = import('../../store/models').Page;
     type GetContentPages = import('../../store/models').Page[];
-    type GetAppointments =
-      import('../../store/AppointmentsStore').Appointment[];
-    type GetUserAppointments =
-      import('../../store/AppointmentsStore').Appointment[];
+    type GetAppointments = import('../../store/models').Appointment[];
+    type GetUserAppointments = import('../../store/models').Appointment[];
     type CancelAppointment = { ok: boolean };
     type MakeAppointment = {
-      data: import('../../store/AppointmentsStore').Appointment;
+      data: import('../../store/models').Appointment;
     };
     type GetTestCategories = import('../../store/models').TestCategory[];
     type GetExercises = import('../../store/models').SimpleTest[];
@@ -146,12 +144,15 @@ declare namespace API {
       email: string;
       password: string;
     };
+    type GetAppointmentSpecialists = {};
 
     declare namespace RES {
       type Login = {
         token: string;
         user: import('../../store/admin/AdminAuthStore').AdminUser;
       };
+      type GetAppointmentSpecialists =
+        import('../../store/models').AdminSpecialist[];
     }
   }
 }

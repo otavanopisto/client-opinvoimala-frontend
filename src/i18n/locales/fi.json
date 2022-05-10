@@ -31,7 +31,8 @@
     "password": "Salasana",
     "password_confirm": "Salasana uudelleen",
     "specialist": "Asiantuntija",
-    "date": "Ajankohta"
+    "date": "Ajankohta",
+    "time_abbrv": "klo"
   },
   "route": {
     "register": "Rekisteröidy",
@@ -109,8 +110,9 @@
         "cancel_error": "Varauksen peruminen ei onnistunut"
       },
       "action": {
-        "cancel_appointment": "Peruuta varaus",
+        "cancel_appointment": "Peru varaus",
         "join_meeting": "Liity kokoukseen",
+        "join_meeting_short": "Liity",
         "cancelled": "Peruttu"
       },
       "make_new": {
@@ -133,6 +135,13 @@
           "back_to_appointments": "Siirry varauksiin",
           "go_back": "Palaa takaisin"
         }
+      },
+      "status": {
+        "available": "Vapaa",
+        "booked": "Varattu",
+        "cancelled": "Peruttu",
+        "hidden": "Piilotettu",
+        "show_all": "Näytä kaikki"
       }
     },
     "register": {
@@ -176,6 +185,12 @@
       "success_message": "Käyttäjätili poistettu onnistuneesti!",
       "logging_out": "Kirjaudutaan ulos {{seconds}} sekunnin kuluttua...",
       "error_message_header": "Käyttäjätilin poisto epäonnistui"
+    },
+    "admin": {
+      "appointments": {
+        "list_title": "Vastaanottoajat",
+        "cancel_confirmation_text": "Olet perumassa vastaanottoaikaa {{date}}. Muistathan ilmoittaa opiskelijalle ajan peruutuksesta. Opiskelijan yhteystiedot löytyvät sähköpostiisi saamastasi vahvistusviestistä."
+      }
     }
   },
   "error": {

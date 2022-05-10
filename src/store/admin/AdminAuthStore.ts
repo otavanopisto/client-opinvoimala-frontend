@@ -5,6 +5,7 @@ import {
   cast,
   SnapshotOut,
   SnapshotIn,
+  getParent,
 } from 'mobx-state-tree';
 import adminApi from '../../services/api/ApiAdmin';
 import Storage from '../../services/storage';
@@ -38,12 +39,19 @@ export const AdminAuthStore = types
     get isLoggedIn() {
       return !!self.jwt?.length;
     },
+    get adminFirstName() {
+      return self.user?.firstname ?? '';
+    },
+    get adminLastName() {
+      return self.user?.lastname ?? '';
+    },
     get adminName() {
-      const firstName = self.user?.firstname ?? '';
-      const lastName = self.user?.lastname?.length
-        ? `${self.user?.lastname[0]}.`
-        : '';
-      return `${firstName} ${lastName}`;
+      const lastName = this.adminLastName;
+      const shortLastName = lastName?.length ? `${lastName[0]}.` : '';
+      return `${this.adminFirstName} ${shortLastName}`;
+    },
+    get adminFullName() {
+      return `${this.adminFirstName} ${this.adminLastName}`;
     },
   }))
   .actions(self => {
@@ -74,6 +82,11 @@ export const AdminAuthStore = types
       self.user = null;
       Storage.write({ key: 'ADMIN_AUTH_TOKEN', value: null });
       Storage.write({ key: 'ADMIN_USER', value: null });
+
+      const { appointments, specialists } = getParent(self);
+      appointments.reset();
+      specialists.reset();
+
       self.state = 'IDLE';
     };
 

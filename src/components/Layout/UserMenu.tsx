@@ -131,7 +131,7 @@ const UserMenu: React.FC<Props> = observer(({ admin }) => {
     ];
     if (isTablet) return <MobileMenu items={items} />;
     return <DesktopMenu items={items} text={adminName} />;
-  } else if (isLoggedIn) {
+  } else if (isLoggedIn && !isAdminPath) {
     items = [
       {
         id: 'my_profile',

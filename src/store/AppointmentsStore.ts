@@ -4,14 +4,13 @@ import {
   flow,
   cast,
   getSnapshot,
-  SnapshotOut,
-  SnapshotIn,
   applySnapshot,
 } from 'mobx-state-tree';
 import api from '../services/api/Api';
 import { ANALYTICS_EVENT, sendAnalyticsEvent } from '../utils/analytics';
 import { isFutureDate, isPastDate } from '../utils/date';
 import { byStartTime } from '../utils/sort';
+import { Appointment, AppointmentModel } from './models';
 
 const States = [
   'NOT_FETCHED' as const,
@@ -26,26 +25,6 @@ const AppointmentStates = [
   'BOOKING' as const,
   'ERROR' as const,
 ];
-
-const SpecialistModel = types.model({
-  id: types.maybeNull(types.number),
-  name: types.maybeNull(types.string),
-  role: types.maybeNull(types.string),
-  roleId: types.maybeNull(types.number),
-});
-export interface Specialist extends SnapshotOut<typeof SpecialistModel> {}
-
-const AppointmentModel = types.model({
-  id: types.number,
-  status: types.enumeration(['available', 'booked', 'cancelled', 'hidden']),
-  startTime: types.string,
-  endTime: types.string,
-  meetingLink: types.string,
-  appointmentSpecialist: types.maybeNull(SpecialistModel),
-});
-export interface IAppointmentModel extends Instance<typeof AppointmentModel> {}
-export interface Appointment extends SnapshotOut<typeof AppointmentModel> {}
-export interface AppointmentIn extends SnapshotIn<typeof AppointmentModel> {}
 
 export const AppointmentsStore = types
   .model({
