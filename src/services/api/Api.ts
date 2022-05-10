@@ -305,6 +305,17 @@ export class Api extends BaseApi {
     const response = await this.api.delete(url, params, this.auth());
     return this.handleResponse(response);
   }
+
+  /**
+   * Fetch user's interests
+   */
+  async getUserInterests(
+    params: API.GetUserInterests
+  ): Promise<Response<API.RES.GetUserInterests>> {
+    const url = `/users/me/interests`;
+    const response = await this.api.get(url, params, this.auth());
+    return this.handleResponse(response);
+  }
 }
 
 export const api = new Api();

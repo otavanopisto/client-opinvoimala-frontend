@@ -118,6 +118,7 @@ declare namespace API {
   type MarkGoalDone = {
     id: number;
   };
+  type GetUserInterests = {};
 
   /**
    * API RESPONSES
@@ -160,5 +161,7 @@ declare namespace API {
     type EditGoal = import('../../store/models').Goal;
     type DeleteGoal = import('../../store/models').Goal;
     type MarkGoalDone = import('../../store/models').Goal;
+
+    type GetUserInterests = import('../../store/models').UserInterests;
   }
 }
