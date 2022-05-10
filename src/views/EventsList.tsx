@@ -13,24 +13,18 @@ const EventsContainer = styled.li`
 `;
 
 interface Props {
+  title: string;
   isSimple?: boolean;
   events: EventType[];
 }
 
-const EventsList: React.FC<Props> = ({ events, isSimple }) => {
+const EventsList: React.FC<Props> = ({ title, events, isSimple }) => {
   const { t } = useTranslation();
 
   return (
     <EventsContainer>
-      {!isSimple && (
-        <>
-          <h2>{t('view.events.title.upcoming')}</h2>
-          {!events.length && <Message content={t('view.events.no_events')} />}
-        </>
-      )}
-
-      {isSimple && <h2>{t('view.events.title.past')}</h2>}
-
+      <h2>{title}</h2>
+      {!events.length && <Message content={t('view.events.no_events')} />}
       {events.map(event => (
         <Event
           key={`${event.id}-${event.date}`}

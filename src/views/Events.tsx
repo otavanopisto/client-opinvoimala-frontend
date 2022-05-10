@@ -44,7 +44,10 @@ export const Events: React.FC = observer(() => {
   return (
     <Layout hero={hero} isLoading={isBusy}>
       <section>
-        <EventsList events={shownUpcomingEvents} />
+        <EventsList
+          title={t('view.events.title.upcoming')}
+          events={shownUpcomingEvents}
+        />
         {eventsShown < upcomingEvents.length && (
           <Grid centered>
             <Button
@@ -59,7 +62,11 @@ export const Events: React.FC = observer(() => {
       </section>
       {!!pastEvents.length && (
         <section>
-          <EventsList events={pastEvents} isSimple />
+          <EventsList
+            events={pastEvents}
+            title={t('view.events.title.past')}
+            isSimple
+          />
         </section>
       )}
     </Layout>
