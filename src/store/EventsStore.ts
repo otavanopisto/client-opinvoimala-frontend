@@ -28,7 +28,7 @@ export const EventsStore = types
         repeatEvent(event, {
           from: today(),
           until:
-            until ??
+            until?.endOf('day') ??
             localizedDate(event.repeatUntil ?? event.date).endOf('day'),
         })
       );

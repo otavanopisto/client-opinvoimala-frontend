@@ -32,7 +32,7 @@ export const Events: React.FC = observer(() => {
   } = useStore();
 
   const upcomingEvents = getUpcomingEvents();
-  const shownUpcomingEvents = [...upcomingEvents].slice(0, eventsShown);
+  const shownUpcomingEvents = upcomingEvents.slice(0, eventsShown);
   const pastEvents = getPastEvents(today().minus({ days: PAST_DAYS }));
 
   const isBusy = state === 'FETCHING';
