@@ -15,6 +15,7 @@
     "change_password": "Vaihda salasana",
     "send_link": "Lähetä linkki",
     "cancel": "Peruuta",
+    "delete": "Poista",
     "close": "Sulje",
     "minimize": "Pienennä",
     "go_back": "Takaisin",
@@ -23,7 +24,8 @@
     "show_result": "Näytä tulos",
     "done": "Valmis",
     "select": "Valitse",
-    "download": "Lataa"
+    "download": "Lataa",
+    "save": "Tallenna"
   },
   "label": {
     "name": "Nimi",
@@ -188,13 +190,36 @@
     },
     "admin": {
       "appointments": {
+        "title": "Vastaanotto",
         "list_title": "Vastaanottoajat",
-        "cancel_confirmation_text": "Olet perumassa vastaanottoaikaa {{date}}. Muistathan ilmoittaa opiskelijalle ajan peruutuksesta. Opiskelijan yhteystiedot löytyvät sähköpostiisi saamastasi vahvistusviestistä."
+        "cancel_confirmation_text": "Olet perumassa vastaanottoaikaa {{date}}. Muistathan ilmoittaa opiskelijalle ajan peruutuksesta. Opiskelijan yhteystiedot löytyvät sähköpostiisi saamastasi vahvistusviestistä.",
+        "create_new": "Luo vastaanottoaika",
+        "form": {
+          "title": "Syötä vastaanottoaika ja linkki",
+          "add_title": "Uusi vastaanottoaika",
+          "edit_title": "Muokkaa vastaanottoaikaa",
+          "status": "Status",
+          "specialist": "Rooli/Asiantuntija",
+          "start_time": "Alkamisaika",
+          "end_time": "Päättymisaika",
+          "meet_link": "Liittymislinkki",
+          "submit": "Luo varaus",
+          "error": {
+            "heading": "Vastaanottoajan tallennus ei onnistunut"
+          }
+        },
+        "repeat": {
+          "label": "Toistuminen",
+          "until_label": "Toistuvuus päättyy",
+          "once": "Vain kerran",
+          "weekly": "Viikoittain samaan aikaan",
+          "daily": "Arkipäivisin (ma-pe)"
+        }
       }
     }
   },
   "error": {
-    "unknown_error": "Jotain meni pieleen",
+    "unknown_error": "Jotain meni pieleen, yritä myöhemmin uudelleen.",
     "page_not_found": "Virhe! Sivua ei löytynyt.",
     "test_not_found": "Virhe! Testiä ei löytynyt.",
     "Forbidden": "Ei käyttöoikeutta",

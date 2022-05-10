@@ -1,19 +1,26 @@
 import { observer } from 'mobx-react-lite';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Loader } from 'semantic-ui-react';
+import { Icon, Loader } from 'semantic-ui-react';
+import EditAppointmentModal from '../../components/admin/appointments/EditAppointmentModal';
 import { AppointmentsList } from '../../components/appointments';
 import DropdownMenu from '../../components/DropdownMenu';
+import { Button } from '../../components/inputs';
 import Layout from '../../components/Layout';
 import { useAdminStore } from '../../store/admin/adminStoreContext';
-import { Appointment, AppointmentStatus } from '../../store/models';
-import { formatDateTime } from '../../utils/date';
+import {
+  Appointment,
+  AppointmentIn,
+  AppointmentStatus,
+} from '../../store/models';
+import { formatDateTime, today } from '../../utils/date';
 
 type StatusFilter = AppointmentStatus | 'show_all';
 
 const AdminAppointments: React.FC = observer(() => {
   const { t } = useTranslation();
 
+  const [appointment, setAppointment] = useState<AppointmentIn>();
   const [statusFilter, setStatusFilter] = useState<StatusFilter>('show_all');
 
   const {
@@ -31,7 +38,7 @@ const AdminAppointments: React.FC = observer(() => {
   const isBusy = ['PROCESSING'].includes(appointmentState);
 
   useEffect(() => {
-    if (!['FETCHED', 'FETCHING'].includes(state)) {
+    if (!['FETCHED', 'FETCHING', 'ERROR'].includes(state)) {
       fetchAppointments();
     }
   }, [fetchAppointments, state]);
@@ -42,18 +49,39 @@ const AdminAppointments: React.FC = observer(() => {
     }
   }, [fetchSpecialists, specialistsState]);
 
+  const getAppointment = (id: number) => {
+    return appointments.find(appointment => appointment.id === id);
+  };
+
   const getAppointmentTime = ({ startTime, endTime }: Appointment) => {
     const start = formatDateTime(startTime);
     const end = formatDateTime(endTime, { format: 'T' });
     return `${start}\u2013${end}`;
   };
 
-  const handleEdit = () => {
-    console.log('TODO: Edit appointment');
+  const handleEdit = (id: number) => {
+    const appointment = getAppointment(id);
+    if (appointment) setAppointment(appointment);
   };
 
+  const handleAddNew = () => {
+    const startDateTime = today()
+      .plus({ days: 1 })
+      .startOf('day')
+      .set({ hour: 12 });
+
+    setAppointment({
+      id: -1,
+      status: AppointmentStatus.available,
+      startTime: startDateTime.toISO(),
+      endTime: startDateTime.plus({ hours: 1 }).toISO(),
+      meetingLink: '',
+    });
+  };
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleCancel = (id: number) => {
-    const appointment = appointments.find(appointment => appointment.id === id);
+    const appointment = getAppointment(id);
     if (appointment?.status === 'booked') {
       const confirmText = t(
         'view.admin.appointments.cancel_confirmation_text',
@@ -73,8 +101,14 @@ const AdminAppointments: React.FC = observer(() => {
     title: t('route.admin.appointments'),
     lead: (
       <>
-        {adminFullName}
-        <div>TODO: Add appointment button</div>
+        <div style={{ marginBottom: 24 }}>{adminFullName}</div>
+        <Button
+          id="admin-appointments__make-new-appointment-button"
+          text={t('view.admin.appointments.create_new')}
+          color="primary"
+          icon={<Icon name="plus square outline" size="large" />}
+          onClick={handleAddNew}
+        />
       </>
     ),
   };
@@ -123,10 +157,15 @@ const AdminAppointments: React.FC = observer(() => {
         title={t('view.admin.appointments.list_title')}
         tools={renderListTools()}
         items={appointments.filter(filterByStatus)}
-        onCancel={handleCancel}
+        // onCancel={handleCancel}
         onJoin={handleJoin}
         onEdit={handleEdit}
         showStatus
+      />
+
+      <EditAppointmentModal
+        appointment={appointment}
+        setAppointment={setAppointment}
       />
     </Layout>
   );

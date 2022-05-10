@@ -8,6 +8,18 @@ export enum AppointmentStatus {
   hidden = 'hidden',
 }
 
+export enum RepeatRule {
+  oncel = 'once',
+  daily = 'daily',
+  weekly = 'weekly',
+}
+
+export enum RepeatScope {
+  none = 'none',
+  all = 'all',
+  following = 'following',
+}
+
 export const AppointmentModel = types.model({
   id: types.number,
   status: types.enumeration<AppointmentStatus>(
@@ -18,6 +30,12 @@ export const AppointmentModel = types.model({
   endTime: types.string,
   meetingLink: types.string,
   appointmentSpecialist: types.maybeNull(SpecialistModel),
+
+  repeatRule: types.maybeNull(
+    types.enumeration<RepeatRule>('RepeatRule', Object.values(RepeatRule))
+  ),
+  repeatUntil: types.maybeNull(types.string),
+  repeatGroup: types.maybeNull(types.number),
 });
 
 export interface IAppointmentModel extends Instance<typeof AppointmentModel> {}

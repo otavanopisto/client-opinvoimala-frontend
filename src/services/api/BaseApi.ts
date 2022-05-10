@@ -1,5 +1,5 @@
 import { ApisauceInstance, create, ApiResponse } from 'apisauce';
-import { keysToCamelCase } from '../../utils/objects';
+import { toCamelCase, transformKeys } from '../../utils/objects';
 import STORAGE from '../storage';
 import { ApiConfig, DEFAULT_API_CONFIG } from './config';
 
@@ -33,7 +33,10 @@ export abstract class BaseApi {
   }
 
   protected handleSuccess(response: ApiResponse<any>): API.Success<any> {
-    return { kind: 'ok', data: keysToCamelCase(response.data) };
+    return {
+      kind: 'ok',
+      data: transformKeys(response.data, toCamelCase),
+    };
   }
 
   protected handleError(response: ApiResponse<any>) {

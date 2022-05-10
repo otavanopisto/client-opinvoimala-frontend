@@ -1,3 +1,4 @@
+import { toSnakeCase, transformKeys } from '../../utils/objects';
 import BaseApi from './BaseApi';
 import { ADMIN_API_CONFIG, ApiConfig } from './config';
 
@@ -56,6 +57,56 @@ export class AdminApi extends BaseApi {
   }: API.CancelAppointment): Promise<Response<API.RES.CancelAppointment>> {
     const url = `/admin-api/appointments/${id}/cancel`;
     const response = await this.api.post(url, params, this.auth());
+    return this.handleResponse(response);
+  }
+
+  /**
+   * Create appointment
+   */
+  async createAppointment({
+    id,
+    ...params
+  }: API.Admin.CreateAppointment): Promise<
+    Response<API.Admin.RES.CreateAppointment>
+  > {
+    const url = `/admin-api/appointments`;
+    const response = await this.api.post(
+      url,
+      transformKeys(params, toSnakeCase),
+      this.auth()
+    );
+    return this.handleResponse(response);
+  }
+
+  /**
+   * Edit appointment
+   */
+  async editAppointment({
+    id,
+    ...params
+  }: API.Admin.EditAppointment): Promise<
+    Response<API.Admin.RES.EditAppointment>
+  > {
+    const url = `/admin-api/appointments/${id}`;
+    const response = await this.api.put(
+      url,
+      transformKeys(params, toSnakeCase),
+      this.auth()
+    );
+    return this.handleResponse(response);
+  }
+
+  /**
+   * Delete appointment
+   */
+  async deleteAppointment({
+    id,
+    ...params
+  }: API.Admin.DeleteAppointment): Promise<
+    Response<API.Admin.RES.DeleteAppointment>
+  > {
+    const url = `/admin-api/appointments/${id}`;
+    const response = await this.api.delete(url, params, this.auth());
     return this.handleResponse(response);
   }
 }
