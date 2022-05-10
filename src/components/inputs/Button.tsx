@@ -12,7 +12,7 @@ const StyledButton = styled.button<{
   display: flex;
   justify-content: center;
   align-items: center;
-  min-width: ${p => (p.isSmall ? undefined : '120 px')};
+  min-width: ${p => (p.isSmall ? undefined : '120px')};
   border-radius: ${p => (p.isSmall ? p.theme.borderRadius.md : '40px')};
   margin: ${p => (p.noMargin ? 0 : p.theme.spacing.sm)} 0;
 

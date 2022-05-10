@@ -15,7 +15,7 @@ export const EditAppointmentModal: React.FC<Props> = ({
 }) => {
   const { t } = useTranslation();
 
-  const addingNew = !!appointment && appointment?.id <= 0;
+  const addingNew = !!appointment && appointment.id <= 0;
 
   const closeModal = () => setAppointment(undefined);
 

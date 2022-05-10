@@ -127,7 +127,6 @@ export const AdminAppointmentsStore = types
       if (response.kind === 'ok') {
         const { deletedIds } = response.data;
         const appointments = getSnapshot(self.data);
-        console.log('DELETED', deletedIds);
         const updatedAppointments = appointments.filter(
           appointment => !deletedIds.includes(appointment.id)
         );
