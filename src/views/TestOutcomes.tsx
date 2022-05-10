@@ -104,7 +104,7 @@ export const TestOutcomes = observer(() => {
 
       {linkList && (
         <NoPrint>
-          <LinkList list={linkList} />
+          <LinkList list={linkList} initialItemCount={5} />
         </NoPrint>
       )}
     </Layout>

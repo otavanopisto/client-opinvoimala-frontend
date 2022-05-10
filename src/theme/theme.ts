@@ -6,6 +6,7 @@ const secondaryColor = '#0B1159';
 export const COLORS = Object.freeze({
   primary: primaryColor,
   primaryLight: '#CEE5D8',
+  primaryLightest: '#CEE5D833',
   secondary: secondaryColor,
   accent: '#DC0058',
   accentLight: '#EDE2E7',

@@ -20,11 +20,13 @@
     "go_back": "Takaisin",
     "previous": "Edellinen",
     "continue": "Jatka",
+    "show_all": "Näytä kaikki",
     "show_result": "Näytä tulos",
     "done": "Valmis",
     "select": "Valitse",
     "download": "Lataa",
-    "show_more": "Lataa lisää"
+    "show_more": "Lataa lisää",
+    "save": "Tallenna"
   },
   "label": {
     "name": "Nimi",
@@ -183,6 +185,16 @@
       "success_message": "Käyttäjätili poistettu onnistuneesti!",
       "logging_out": "Kirjaudutaan ulos {{seconds}} sekunnin kuluttua...",
       "error_message_header": "Käyttäjätilin poisto epäonnistui"
+    },
+    "user_goals": {
+      "accomplished": "Tavoitteita saavutettu {{count}}",
+      "add": "Uusi tavoite",
+      "add_goal": "Luo uusi tavoite",
+      "edit_goal": "Muokkaa tavoitetta",
+      "mark_done": "Merkitse valmiiksi",
+      "delete_goal": "Poista tavoite",
+      "confirm_changes": "Tallenna muutokset",
+      "description_placeholder": "Kirjoita tavoite tähän"
     }
   },
   "error": {

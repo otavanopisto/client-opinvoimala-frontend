@@ -260,6 +260,62 @@ export class Api extends BaseApi {
     const response = await this.api.get(url, params, this.auth());
     return this.handleResponse(response);
   }
+
+  /**
+   * Fetch user's goals
+   */
+  async getGoals(params: API.GetGoals): Promise<Response<API.RES.GetGoals>> {
+    const url = `/user-goals`;
+    const response = await this.api.get(url, params, this.auth());
+    return this.handleResponse(response);
+  }
+
+  /**
+   * Create new goal
+   */
+  async createGoal(
+    params: API.CreateGoal
+  ): Promise<Response<API.RES.CreateGoal>> {
+    const url = `/user-goals`;
+    const response = await this.api.post(url, params, this.auth());
+    return this.handleResponse(response);
+  }
+
+  /**
+   * Edit goal
+   */
+  async editGoal({
+    id,
+    ...params
+  }: API.EditGoal): Promise<Response<API.RES.EditGoal>> {
+    const url = `/user-goals/${id}`;
+    const response = await this.api.put(url, params, this.auth());
+    return this.handleResponse(response);
+  }
+
+  /**
+   * Mark goal as done
+   */
+  async markGoalDone({
+    id,
+    ...params
+  }: API.MarkGoalDone): Promise<Response<API.RES.MarkGoalDone>> {
+    const url = `/user-goals/${id}/mark-done`;
+    const response = await this.api.post(url, params, this.auth());
+    return this.handleResponse(response);
+  }
+
+  /**
+   * Delete goal
+   */
+  async deleteGoal({
+    id,
+    ...params
+  }: API.DeleteGoal): Promise<Response<API.RES.DeleteGoal>> {
+    const url = `/user-goals/${id}`;
+    const response = await this.api.delete(url, params, this.auth());
+    return this.handleResponse(response);
+  }
 }
 
 export const api = new Api();
