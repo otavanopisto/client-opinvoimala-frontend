@@ -1,7 +1,7 @@
 import { DateTime } from 'luxon';
 import { Instance, types, flow, cast, getSnapshot } from 'mobx-state-tree';
 import api from '../services/api/Api';
-import { isPastDate, today } from '../utils/date';
+import { isPastDate, localizedDate, today } from '../utils/date';
 import { repeatEvent } from '../utils/events';
 import { byDate } from '../utils/sort';
 import { EventModel } from './models/EventModel';
@@ -22,12 +22,14 @@ export const EventsStore = types
     get events() {
       return self.data ? getSnapshot(self.data) : [];
     },
-    getUpcomingEvents(until: DateTime) {
+    getUpcomingEvents(until?: DateTime) {
       const events = self.data ? getSnapshot(self.data) : [];
       const repeatedEvents = events.map(event =>
         repeatEvent(event, {
           from: today(),
-          until: until.endOf('day'),
+          until:
+            until ??
+            localizedDate(event.repeatUntil ?? event.date).endOf('day'),
         })
       );
 

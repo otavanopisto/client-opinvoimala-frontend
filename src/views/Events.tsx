@@ -11,7 +11,7 @@ import { Grid } from 'semantic-ui-react';
 import { Button } from '../components/inputs';
 import Icon from '../components/Icon';
 
-const UPCOMING_DAYS = 7;
+const SHOW_NEXT = 5;
 const PAST_DAYS = 30;
 
 const EventsList = styled.li`
@@ -25,13 +25,14 @@ const EventsList = styled.li`
 export const Events: React.FC = observer(() => {
   const { t } = useTranslation();
 
-  const [daysShown, setDaysShown] = useState(UPCOMING_DAYS);
+  const [eventsShown, setEventsShown] = useState(SHOW_NEXT);
 
   const {
     events: { state, getUpcomingEvents, getPastEvents, fetchEvents },
   } = useStore();
 
-  const upcomingEvents = getUpcomingEvents(today().plus({ days: daysShown }));
+  const upcomingEvents = getUpcomingEvents();
+  const shownUpcomingEvents = [...upcomingEvents].slice(0, eventsShown);
   const pastEvents = getPastEvents(today().minus({ days: PAST_DAYS }));
 
   const isBusy = state === 'FETCHING';
@@ -43,7 +44,7 @@ export const Events: React.FC = observer(() => {
   }, [fetchEvents, state]);
 
   const handleLoadMoreEvents = () => {
-    setDaysShown(daysShown + UPCOMING_DAYS);
+    setEventsShown(eventsShown + SHOW_NEXT);
   };
 
   const hero = {
@@ -55,26 +56,26 @@ export const Events: React.FC = observer(() => {
       <section>
         <EventsList>
           <h2>{t('view.events.title.upcoming')}</h2>
-          {!upcomingEvents.length && (
+          {!shownUpcomingEvents.length && (
             <Message content={t('view.events.no_events')} />
           )}
 
-          {upcomingEvents.map(event => (
+          {shownUpcomingEvents.map(event => (
             <Event key={`${event.id}-${event.date}`} event={event} />
           ))}
         </EventsList>
-
-        <Grid centered>
-          <Button
-            id={`events-show-more-button`}
-            text={t('action.show_more')}
-            variant="link"
-            icon={<Icon type="ChevronDown" color="none" width={24} />}
-            onClick={handleLoadMoreEvents}
-          />
-        </Grid>
+        {eventsShown < upcomingEvents.length && (
+          <Grid centered>
+            <Button
+              id={`events-show-more-button`}
+              text={t('action.show_more')}
+              variant="link"
+              icon={<Icon type="ChevronDown" color="none" width={24} />}
+              onClick={handleLoadMoreEvents}
+            />
+          </Grid>
+        )}
       </section>
-
       {!!pastEvents.length && (
         <section>
           <EventsList>
