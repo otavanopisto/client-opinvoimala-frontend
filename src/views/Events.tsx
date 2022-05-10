@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { observer } from 'mobx-react-lite';
 import { useTranslation } from 'react-i18next';
 import Layout from '../components/Layout';
-import Message from '../components/Message';
 import { useStore } from '../store/storeContext';
 import { today } from '../utils/date';
 import { Grid } from 'semantic-ui-react';
@@ -45,12 +44,7 @@ export const Events: React.FC = observer(() => {
   return (
     <Layout hero={hero} isLoading={isBusy}>
       <section>
-        <h2>{t('view.events.title.upcoming')}</h2>
-        {!shownUpcomingEvents.length && (
-          <Message content={t('view.events.no_events')} />
-        )}
         <EventsList events={shownUpcomingEvents} />
-
         {eventsShown < upcomingEvents.length && (
           <Grid centered>
             <Button
@@ -65,8 +59,6 @@ export const Events: React.FC = observer(() => {
       </section>
       {!!pastEvents.length && (
         <section>
-          <h2>{t('view.events.title.past')}</h2>
-
           <EventsList events={pastEvents} isSimple />
         </section>
       )}
