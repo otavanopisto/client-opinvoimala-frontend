@@ -25,7 +25,8 @@ export const repeatEvent = (
   const eventEndDate = repeatUntil ? DateTime.fromISO(repeatUntil) : undefined;
 
   const startDate = from > eventDate ? from : eventDate;
-  const endDate = eventEndDate && eventEndDate < until ? eventEndDate : until;
+  const endDate =
+    eventEndDate && eventEndDate < until ? eventEndDate.endOf('day') : until;
 
   let currentDate = startDate;
   const repeatedEvents: Event[] = [];
@@ -36,7 +37,7 @@ export const repeatEvent = (
     }
   } else {
     // Repeat event based on given rules (daily/weekly/etc):
-    while (currentDate < endDate) {
+    while (currentDate <= endDate) {
       const isWeekend = currentDate.weekday >= 6;
       const isHoliday = getIsHoliday(currentDate);
 

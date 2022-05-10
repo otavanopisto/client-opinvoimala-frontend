@@ -10,7 +10,7 @@ interface DateOptions {
   locale?: string;
 }
 
-const localizedDate = (
+export const localizedDate = (
   isoDate: string,
   { timezone = TIMEZONE, locale = LOCALE }: DateOptions = {}
 ) => {

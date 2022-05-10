@@ -23,7 +23,8 @@
     "show_result": "Näytä tulos",
     "done": "Valmis",
     "select": "Valitse",
-    "download": "Lataa"
+    "download": "Lataa",
+    "show_more": "Lataa lisää"
   },
   "label": {
     "name": "Nimi",
@@ -136,6 +137,9 @@
       "title": {
         "upcoming": "Tulevat tapahtumat",
         "past": "Menneet tapahtumat"
+      },
+      "action": {
+        "join_webinar": "Liity webinaariin"
       }
     },
     "register": {
