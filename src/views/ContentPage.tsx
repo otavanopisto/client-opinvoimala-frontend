@@ -113,7 +113,7 @@ export const ContentPage = observer(() => {
         </>
       )}
 
-      {page?.linkList && <LinkList list={page.linkList} />}
+      {page?.linkList && <LinkList list={page.linkList} initialItemCount={5} />}
     </Layout>
   );
 });

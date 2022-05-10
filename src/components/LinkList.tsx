@@ -1,6 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { Grid } from 'semantic-ui-react';
 import styled from 'styled-components';
 import { LinkList as LinkListType } from '../store/models';
+import Icon from './Icon';
+import Button from './inputs/Button';
 import Link from './Link';
 
 const Container = styled.section`
@@ -39,24 +43,61 @@ const Container = styled.section`
 
 interface Props {
   list: LinkListType;
+  initialItemCount?: number;
 }
 
-const LinkList: React.FC<Props> = ({ list }) => {
+const LinkList: React.FC<Props> = ({ list, initialItemCount }) => {
   const { title, links } = list;
 
+  const { t } = useTranslation();
+
+  const [itemCount, setItemCount] = useState(
+    initialItemCount || list.links.length
+  );
+
   if (!links.length) return null;
+
+  const visibleItems = list.links.slice(0, itemCount);
+
+  const isAllItemsVisible = visibleItems.length >= list.links.length;
+
+  const buttonText = isAllItemsVisible
+    ? t('action.minimize')
+    : t('action.show_all');
+
+  const iconType = isAllItemsVisible ? 'ChevronUp' : 'ChevronDown';
+
+  const handleShowAll = () => {
+    setItemCount(
+      isAllItemsVisible && initialItemCount
+        ? initialItemCount
+        : list.links.length
+    );
+  };
 
   return (
     <Container>
       {title && <h1>{title}</h1>}
 
       <ul>
-        {links.map(link => (
+        {visibleItems.map(link => (
           <li key={link.id}>
             <Link link={link} label={link.label} showArrow />
           </li>
         ))}
       </ul>
+
+      {initialItemCount !== undefined && list.links.length > initialItemCount && (
+        <Grid centered>
+          <Button
+            id={`link-list-${title}-show-all-button`}
+            text={buttonText}
+            variant="link"
+            icon={<Icon type={iconType} color="none" width={24} />}
+            onClick={handleShowAll}
+          />
+        </Grid>
+      )}
     </Container>
   );
 };

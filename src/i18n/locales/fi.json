@@ -21,6 +21,7 @@
     "go_back": "Takaisin",
     "previous": "Edellinen",
     "continue": "Jatka",
+    "show_all": "Näytä kaikki",
     "show_result": "Näytä tulos",
     "done": "Valmis",
     "select": "Valitse",
@@ -28,7 +29,8 @@
     "save": "Tallenna",
     "confirm": "Vahvista",
     "confirm_delete": "Vahvista poisto",
-    "confirm_edit": "Vahvista muokkaus"
+    "confirm_edit": "Vahvista muokkaus",
+    "show_more": "Lataa lisää"
   },
   "label": {
     "name": "Nimi",
@@ -48,6 +50,7 @@
     "tests": "Testit ja harjoitukset",
     "outcome": "Lopputulema",
     "appointments": "Varaukset",
+    "events": "Tapahtumat",
     "change_password": "Vaihda salasana",
     "forgot_password": "Salasana unohtunut",
     "reset_password": "Salasanan palautus",
@@ -150,6 +153,16 @@
         "show_all": "Näytä kaikki"
       }
     },
+    "events": {
+      "no_events": "Ei tapahtumia",
+      "title": {
+        "upcoming": "Tulevat tapahtumat",
+        "past": "Menneet tapahtumat"
+      },
+      "action": {
+        "join_webinar": "Liity webinaariin"
+      }
+    },
     "register": {
       "email_title": "Syötä sähköpostiosoite",
       "email_info": "Sähköpostiosoite toimii käyttäjätunnuksenasi palveluun.",
@@ -191,6 +204,16 @@
       "success_message": "Käyttäjätili poistettu onnistuneesti!",
       "logging_out": "Kirjaudutaan ulos {{seconds}} sekunnin kuluttua...",
       "error_message_header": "Käyttäjätilin poisto epäonnistui"
+    },
+    "user_goals": {
+      "accomplished": "Tavoitteita saavutettu {{count}}",
+      "add": "Uusi tavoite",
+      "add_goal": "Luo uusi tavoite",
+      "edit_goal": "Muokkaa tavoitetta",
+      "mark_done": "Merkitse valmiiksi",
+      "delete_goal": "Poista tavoite",
+      "confirm_changes": "Tallenna muutokset",
+      "description_placeholder": "Kirjoita tavoite tähän"
     },
     "admin": {
       "appointments": {

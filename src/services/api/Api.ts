@@ -184,6 +184,17 @@ export class Api extends BaseApi {
   }
 
   /**
+   * Fetch events
+   */
+  async getEvents(
+    params: API.GetEvents = {}
+  ): Promise<Response<API.RES.GetEvents>> {
+    const url = `events`;
+    const response = await this.api.get(url, params, this.auth());
+    return this.handleResponse(response);
+  }
+
+  /**
    * Fetch test categories (and tests within)
    */
   async getTestCategories(
@@ -247,6 +258,62 @@ export class Api extends BaseApi {
   ): Promise<Response<API.RES.GetTestsSummary>> {
     const url = `users/me/tests/summary`;
     const response = await this.api.get(url, params, this.auth());
+    return this.handleResponse(response);
+  }
+
+  /**
+   * Fetch user's goals
+   */
+  async getGoals(params: API.GetGoals): Promise<Response<API.RES.GetGoals>> {
+    const url = `/user-goals`;
+    const response = await this.api.get(url, params, this.auth());
+    return this.handleResponse(response);
+  }
+
+  /**
+   * Create new goal
+   */
+  async createGoal(
+    params: API.CreateGoal
+  ): Promise<Response<API.RES.CreateGoal>> {
+    const url = `/user-goals`;
+    const response = await this.api.post(url, params, this.auth());
+    return this.handleResponse(response);
+  }
+
+  /**
+   * Edit goal
+   */
+  async editGoal({
+    id,
+    ...params
+  }: API.EditGoal): Promise<Response<API.RES.EditGoal>> {
+    const url = `/user-goals/${id}`;
+    const response = await this.api.put(url, params, this.auth());
+    return this.handleResponse(response);
+  }
+
+  /**
+   * Mark goal as done
+   */
+  async markGoalDone({
+    id,
+    ...params
+  }: API.MarkGoalDone): Promise<Response<API.RES.MarkGoalDone>> {
+    const url = `/user-goals/${id}/mark-done`;
+    const response = await this.api.post(url, params, this.auth());
+    return this.handleResponse(response);
+  }
+
+  /**
+   * Delete goal
+   */
+  async deleteGoal({
+    id,
+    ...params
+  }: API.DeleteGoal): Promise<Response<API.RES.DeleteGoal>> {
+    const url = `/user-goals/${id}`;
+    const response = await this.api.delete(url, params, this.auth());
     return this.handleResponse(response);
   }
 }
