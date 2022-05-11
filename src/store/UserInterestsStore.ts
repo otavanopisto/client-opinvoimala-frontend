@@ -9,10 +9,16 @@ const States = [
   'ERROR' as const,
 ];
 
+const UserTagsStates = [
+  'IDLE' as const,
+  'PROCESSING' as const,
+  'ERROR' as const,
+];
+
 export const UserInterestsStore = types
   .model({
     state: types.enumeration('State', States),
-
+    userTagsState: types.enumeration('State', UserTagsStates),
     data: types.array(UserInterestsModel),
   })
   .views(self => ({
@@ -37,22 +43,25 @@ export const UserInterestsStore = types
       }
     });
 
-    const addUserInterests = flow(function* (params: API.AddUserInterests) {
+    const setUserTags = flow(function* (params: API.SetUserTags) {
+      self.userTagsState = 'PROCESSING';
+
       const response: API.GeneralResponse<API.RES.CreateGoal> =
-        yield api.addUserInterests(params);
+        yield api.setUserTags(params);
 
       if (response.kind === 'ok') {
+        self.userTagsState = 'IDLE';
         fetchUserInterests();
         return { success: true };
       } else {
-        self.state = 'ERROR';
+        self.userTagsState = 'ERROR';
         return { success: false };
       }
     });
 
     return {
       fetchUserInterests,
-      addUserInterests,
+      setUserTags,
     };
   });
 

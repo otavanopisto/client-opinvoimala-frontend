@@ -119,7 +119,7 @@ declare namespace API {
     id: number;
   };
   type GetUserInterests = {};
-  type AddUserInterests = {};
+  type SetUserTags = {};
 
   /**
    * API RESPONSES
@@ -163,7 +163,7 @@ declare namespace API {
     type DeleteGoal = import('../../store/models').Goal;
     type MarkGoalDone = import('../../store/models').Goal;
 
-    type GetUserInterests = import('../../store/models').UserInterests[];
-    type AddUserInterests = import('../../store/models').UserInterests.tags;
+    type GetUserInterests = import('../../store/models').UserModel;
+    type SetUserTags = import('../../store/models').UserModel.tags;
   }
 }

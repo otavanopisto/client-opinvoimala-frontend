@@ -10,12 +10,9 @@ import {
 import api from '../services/api/Api';
 import Storage from '../services/storage';
 import { ANALYTICS_EVENT, sendAnalyticsEvent } from '../utils/analytics';
+import { UserModel } from './models';
 
 const States = ['IDLE' as const, 'PROCESSING' as const, 'ERROR' as const];
-
-const UserModel = types.model({
-  id: types.number,
-});
 
 export interface IUserModel extends Instance<typeof UserModel> {}
 export interface User extends SnapshotOut<typeof UserModel> {}

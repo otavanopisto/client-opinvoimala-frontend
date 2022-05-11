@@ -42,6 +42,7 @@ const RootStoreModel = types.model({
   }),
   userInterests: types.optional(UserInterestsStore, {
     state: 'NOT_FETCHED',
+    userTagsState: 'IDLE',
   }),
 });
 

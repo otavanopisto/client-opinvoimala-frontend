@@ -320,9 +320,9 @@ export class Api extends BaseApi {
   /**
    * Add user interest
    */
-  async addUserInterests(
-    params: API.AddUserInterests
-  ): Promise<Response<API.RES.AddUserInterests>> {
+  async setUserTags(
+    params: API.SetUserTags
+  ): Promise<Response<API.RES.SetUserTags>> {
     const url = `/users/me/tags`;
     const response = await this.api.post(url, params, this.auth());
     return this.handleResponse(response);
