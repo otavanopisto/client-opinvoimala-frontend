@@ -183,6 +183,10 @@
       "delete_goal": "Poista tavoite",
       "confirm_changes": "Tallenna muutokset",
       "description_placeholder": "Kirjoita tavoite tähän"
+    },
+    "user_interests": {
+      "title": "Sinua voi kiinnostaa",
+      "set_tags": "Valitse aihepiiri"
     }
   },
   "error": {
