@@ -329,9 +329,9 @@ export class Api extends BaseApi {
   }
 
   /**
-   * Get user
+   * Get me
    */
-  async getUser(params: API.GetUser): Promise<Response<API.RES.GetUser>> {
+  async getMe(params: API.GetMe): Promise<Response<API.RES.GetMe>> {
     const url = `/users/me`;
     const response = await this.api.get(url, params, this.auth());
     return this.handleResponse(response);

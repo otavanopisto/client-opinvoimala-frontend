@@ -168,15 +168,16 @@ export const AuthStore = types
       }
     });
 
-    const getMe = flow(function* (params: API.GetUser = {}) {
+    const getMe = flow(function* (params: API.GetMe = {}) {
       self.state = 'PROCESSING';
 
-      const response: API.GeneralResponse<API.RES.GetUser> = yield api.getUser(
+      const response: API.GeneralResponse<API.RES.GetMe> = yield api.getMe(
         params
       );
 
       if (response.kind === 'ok') {
         setUser(response.data);
+        self.user = cast(response.data);
         self.state = 'IDLE';
         return { success: true };
       } else {
@@ -200,6 +201,7 @@ export const AuthStore = types
       logout,
       deleteAccount,
       getMe,
+      setUser,
     };
   });
 

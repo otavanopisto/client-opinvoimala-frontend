@@ -1,10 +1,11 @@
 import { observer } from 'mobx-react-lite';
 import React, { useEffect } from 'react';
 import { useStore } from '../store/storeContext';
+import { Button } from './inputs';
 
 export const UserInterests: React.FC = observer(() => {
   const {
-    userInterests: { fetchUserInterests, state, userInterests },
+    userInterests: { fetchUserInterests, state, userInterests, setUserTags },
   } = useStore();
 
   useEffect(() => {
@@ -13,10 +14,16 @@ export const UserInterests: React.FC = observer(() => {
     }
   }, [fetchUserInterests, state]);
 
+  const postTags = () => {
+    setUserTags({ tags: [2] });
+  };
+
   return (
     <>
       Sinua voi kiinnostaa
-      <button>testaa tageja</button>
+      <Button id={'testi'} onClick={postTags}>
+        testaa tageja
+      </Button>
       <ul>
         {userInterests.map(interest => (
           <li>{interest.title}</li>
