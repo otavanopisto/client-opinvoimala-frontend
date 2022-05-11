@@ -168,6 +168,27 @@ export const AuthStore = types
       }
     });
 
+    const getMe = flow(function* (params: API.GetUser = {}) {
+      self.state = 'PROCESSING';
+
+      const response: API.GeneralResponse<API.RES.GetUser> = yield api.getUser(
+        params
+      );
+
+      if (response.kind === 'ok') {
+        setUser(response.data);
+        self.state = 'IDLE';
+        return { success: true };
+      } else {
+        self.state = 'ERROR';
+        return { success: false, error: response.data };
+      }
+    });
+
+    const setUser = (user: User) => {
+      self.user = cast(user);
+    };
+
     return {
       register,
       openLoginModal,
@@ -178,6 +199,7 @@ export const AuthStore = types
       resetPassword,
       logout,
       deleteAccount,
+      getMe,
     };
   });
 

@@ -327,6 +327,15 @@ export class Api extends BaseApi {
     const response = await this.api.post(url, params, this.auth());
     return this.handleResponse(response);
   }
+
+  /**
+   * Get user
+   */
+  async getUser(params: API.GetUser): Promise<Response<API.RES.GetUser>> {
+    const url = `/users/me`;
+    const response = await this.api.get(url, params, this.auth());
+    return this.handleResponse(response);
+  }
 }
 
 export const api = new Api();

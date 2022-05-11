@@ -121,12 +121,15 @@ declare namespace API {
   type GetUserInterests = {};
   type SetUserTags = {};
 
+  type GetUser = {};
+
   /**
    * API RESPONSES
    */
   declare namespace RES {
     type User = {
       id: number;
+      tags: string[];
     };
 
     type Auth = {
@@ -165,5 +168,7 @@ declare namespace API {
 
     type GetUserInterests = import('../../store/models').UserInterests[];
     type SetUserTags = import('../../store/models').UserModel;
+
+    type GetUser = {};
   }
 }

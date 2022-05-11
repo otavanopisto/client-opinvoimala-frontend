@@ -16,6 +16,7 @@ export const UserInterests: React.FC = observer(() => {
   return (
     <>
       Sinua voi kiinnostaa
+      <button>testaa tageja</button>
       <ul>
         {userInterests.map(interest => (
           <li>{interest.title}</li>

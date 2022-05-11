@@ -12,7 +12,7 @@ import MaintenancePage from './views/auth/MaintenancePage';
 
 const App: React.FC = observer(() => {
   const {
-    auth: { state: authState, isLoggedIn },
+    auth: { state: authState, user, isLoggedIn, getMe },
     settings: { state: settingsState, fetchSettings, settings, maintenance },
     navigation: { state: navigationState },
     appointments: { appointmentState },
@@ -41,6 +41,12 @@ const App: React.FC = observer(() => {
       fetchSettings();
     }
   }, [fetchSettings, settingsState]);
+
+  useEffect(() => {
+    if (!user && isLoggedIn) {
+      getMe();
+    }
+  });
 
   const {
     cookiebotDomainGroupId,

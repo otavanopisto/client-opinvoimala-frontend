@@ -1,4 +1,11 @@
-import { Instance, types, flow, cast, getSnapshot } from 'mobx-state-tree';
+import {
+  Instance,
+  types,
+  flow,
+  cast,
+  getSnapshot,
+  getParent,
+} from 'mobx-state-tree';
 import api from '../services/api/Api';
 import { UserInterestsModel } from './models';
 
@@ -50,8 +57,11 @@ export const UserInterestsStore = types
         yield api.setUserTags(params);
 
       if (response.kind === 'ok') {
-        self.userTagsState = 'IDLE';
+        const { auth } = getParent(self);
+        auth.setUser(cast(response.data));
+
         fetchUserInterests();
+        self.userTagsState = 'IDLE';
         return { success: true };
       } else {
         self.userTagsState = 'ERROR';
