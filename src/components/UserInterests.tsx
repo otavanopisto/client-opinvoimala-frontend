@@ -4,7 +4,7 @@ import { useStore } from '../store/storeContext';
 
 export const UserInterests: React.FC = observer(() => {
   const {
-    userInterests: { fetchUserInterests, state },
+    userInterests: { fetchUserInterests, state, userInterests },
   } = useStore();
 
   useEffect(() => {
@@ -13,5 +13,14 @@ export const UserInterests: React.FC = observer(() => {
     }
   }, [fetchUserInterests, state]);
 
-  return <div>UserInterests</div>;
+  return (
+    <>
+      Sinua voi kiinnostaa
+      <ul>
+        {userInterests.map(interest => (
+          <li>{interest.title}</li>
+        ))}
+      </ul>
+    </>
+  );
 });

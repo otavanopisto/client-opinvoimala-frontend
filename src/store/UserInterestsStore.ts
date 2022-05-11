@@ -9,32 +9,15 @@ const States = [
   'ERROR' as const,
 ];
 
-const UserInterestsStoreStates = [
-  'IDLE' as const,
-  'CREATING' as const,
-  'EDITING' as const,
-  'DELETING' as const,
-  'ERROR' as const,
-];
-
 export const UserInterestsStore = types
   .model({
     state: types.enumeration('State', States),
-    userInterestsState: types.enumeration('State', UserInterestsStoreStates),
-    data: types.maybe(UserInterestsModel),
+
+    data: types.array(UserInterestsModel),
   })
   .views(self => ({
-    get goalsInfo() {
-      if (self.data) {
-        const { userInterests, ...userInterestsInfo } = self.data;
-        return userInterestsInfo;
-      }
-      return undefined;
-    },
     get userInterests() {
-      return self.data?.userInterests
-        ? getSnapshot(self.data.userInterests)
-        : [];
+      return self.data ? getSnapshot(self.data) : [];
     },
   }))
   .actions(self => {
@@ -43,8 +26,8 @@ export const UserInterestsStore = types
     ) {
       self.state = 'FETCHING';
 
-      const response: API.GeneralResponse<API.RES.GetGoals> =
-        yield api.getGoals(params);
+      const response: API.GeneralResponse<API.RES.GetUserInterests> =
+        yield api.getUserInterests(params);
 
       if (response.kind === 'ok') {
         self.data = cast(response.data);
@@ -54,21 +37,22 @@ export const UserInterestsStore = types
       }
     });
 
-    // const updateGoal = (updatedGoal: Goal) => {
-    //   if (self.data) {
-    //     const updatedGoals = self.data.goals.map(goal => {
-    //       if (goal.id !== updatedGoal.id) return goal;
-    //       return updatedGoal;
-    //     });
-    //     self.data = {
-    //       ...self.data,
-    //       goals: cast(updatedGoals),
-    //     };
-    //   }
-    // };
+    const addUserInterests = flow(function* (params: API.AddUserInterests) {
+      const response: API.GeneralResponse<API.RES.CreateGoal> =
+        yield api.addUserInterests(params);
+
+      if (response.kind === 'ok') {
+        fetchUserInterests();
+        return { success: true };
+      } else {
+        self.state = 'ERROR';
+        return { success: false };
+      }
+    });
 
     return {
       fetchUserInterests,
+      addUserInterests,
     };
   });
 
