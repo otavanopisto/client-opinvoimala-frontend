@@ -163,7 +163,7 @@ declare namespace API {
     type DeleteGoal = import('../../store/models').Goal;
     type MarkGoalDone = import('../../store/models').Goal;
 
-    type GetUserInterests = import('../../store/models').UserModel;
-    type SetUserTags = import('../../store/models').UserModel.tags;
+    type GetUserInterests = import('../../store/models').UserInterests[];
+    type SetUserTags = import('../../store/models').UserModel;
   }
 }
