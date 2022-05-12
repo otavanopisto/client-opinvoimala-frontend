@@ -33,11 +33,17 @@ export const UserInterests: React.FC = observer(() => {
     }
   }, [fetchUserInterests, state]);
 
-  const visibleItems = {};
+  const visibleItems = userInterests.slice(firstItem, lastItem);
 
-  const handleShowPrevious = () => {};
+  const handleShowPrevious = () => {
+    setFirstItem(prev => prev - 3);
+    setLastItem(prev => prev - 3);
+  };
 
-  const handleShowNext = () => {};
+  const handleShowNext = () => {
+    setFirstItem(prev => prev + 3);
+    setLastItem(prev => prev + 3);
+  };
 
   const handleSetTags = () => {};
 
