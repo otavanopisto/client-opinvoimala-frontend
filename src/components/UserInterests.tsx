@@ -1,21 +1,14 @@
 import { observer } from 'mobx-react-lite';
 import React, { useEffect, useState } from 'react';
-import { Divider, Icon as SemanticIcon } from 'semantic-ui-react';
-import { Grid } from 'semantic-ui-react';
-import styled from 'styled-components';
+import { Divider, Grid, Icon as SemanticIcon } from 'semantic-ui-react';
+
+// import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { useStore } from '../store/storeContext';
 import { Button } from './inputs';
+import { Carousel } from './Carousel';
 import Card from './Card';
-
-const StyledGrid = styled(Grid)`
-  @media ${p => p.theme.breakpoint.mobile} {
-    &.ui.grid > .column:not(.row) {
-      padding-left: 0 !important;
-      padding-right: 0 !important;
-    }
-  }
-`;
+import { useWindowDimensions } from '../utils/hooks/useWindowDimensions';
 
 export const UserInterests: React.FC = observer(() => {
   const {
@@ -24,68 +17,28 @@ export const UserInterests: React.FC = observer(() => {
 
   const { t } = useTranslation();
 
-  const [firstItem, setFirstItem] = useState(0);
-  const [lastItem, setLastItem] = useState(3);
-
   useEffect(() => {
     if (!['FETCHED', 'FETCHING', 'ERROR'].includes(state)) {
       fetchUserInterests();
     }
   }, [fetchUserInterests, state]);
 
-  const visibleItems =
-    lastItem < firstItem
-      ? userInterests.slice(firstItem).concat(userInterests.slice(0, lastItem))
-      : userInterests.slice(firstItem, lastItem);
-
-  const handleShowPrevious = () => {
-    firstItem - 3 < 0
-      ? setFirstItem(userInterests.length + (firstItem - 3))
-      : setFirstItem(prev => prev - 3);
-
-    lastItem - 3 < 0
-      ? setLastItem(userInterests.length + (lastItem - 3))
-      : setLastItem(prev => prev - 3);
-  };
-
-  const handleShowNext = () => {
-    firstItem + 3 > userInterests.length - 1
-      ? setFirstItem(firstItem + 3 - userInterests.length)
-      : setFirstItem(prev => prev + 3);
-
-    lastItem + 3 > userInterests.length - 1
-      ? setLastItem(lastItem + 3 - userInterests.length)
-      : setLastItem(prev => prev + 3);
-  };
+  const carouselElements = userInterests.map(interest => (
+    <Grid.Column key={interest.id}>
+      <Card
+        title={interest.title}
+        text={interest.description}
+        tags={interest.tags}
+      />
+    </Grid.Column>
+  ));
 
   const handleSetTags = () => {};
 
   return (
     <section>
       <h2>{t('view.user_interests.title')}</h2>
-      <Button
-        id="user-interests__show-previous-button"
-        text={'<-'}
-        color="primary"
-        onClick={handleShowPrevious}
-      />
-      <Button
-        id="user-interests__show-next-button"
-        text={'->'}
-        color="primary"
-        onClick={handleShowNext}
-      />
-      <StyledGrid columns={3} stackable doubling stretched>
-        {visibleItems.map(interest => (
-          <Grid.Column key={interest.id}>
-            <Card
-              title={interest.title}
-              text={interest.description}
-              tags={interest.tags}
-            />
-          </Grid.Column>
-        ))}
-      </StyledGrid>
+      <Carousel elements={carouselElements} />
       <Divider hidden aria-hidden="true" />
       <Button
         id="user-interests__set-tags-button"
