@@ -33,16 +33,29 @@ export const UserInterests: React.FC = observer(() => {
     }
   }, [fetchUserInterests, state]);
 
-  const visibleItems = userInterests.slice(firstItem, lastItem);
+  const visibleItems =
+    lastItem < firstItem
+      ? userInterests.slice(firstItem).concat(userInterests.slice(0, lastItem))
+      : userInterests.slice(firstItem, lastItem);
 
   const handleShowPrevious = () => {
-    setFirstItem(prev => prev - 3);
-    setLastItem(prev => prev - 3);
+    firstItem - 3 < 0
+      ? setFirstItem(userInterests.length + (firstItem - 3))
+      : setFirstItem(prev => prev - 3);
+
+    lastItem - 3 < 0
+      ? setLastItem(userInterests.length + (lastItem - 3))
+      : setLastItem(prev => prev - 3);
   };
 
   const handleShowNext = () => {
-    setFirstItem(prev => prev + 3);
-    setLastItem(prev => prev + 3);
+    firstItem + 3 > userInterests.length - 1
+      ? setFirstItem(firstItem + 3 - userInterests.length)
+      : setFirstItem(prev => prev + 3);
+
+    lastItem + 3 > userInterests.length - 1
+      ? setLastItem(lastItem + 3 - userInterests.length)
+      : setLastItem(prev => prev + 3);
   };
 
   const handleSetTags = () => {};

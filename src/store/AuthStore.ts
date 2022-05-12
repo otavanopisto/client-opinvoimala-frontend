@@ -1,22 +1,11 @@
-import {
-  Instance,
-  types,
-  flow,
-  cast,
-  SnapshotOut,
-  SnapshotIn,
-  getParent,
-} from 'mobx-state-tree';
+import { Instance, types, flow, cast, getParent } from 'mobx-state-tree';
 import api from '../services/api/Api';
 import Storage from '../services/storage';
 import { ANALYTICS_EVENT, sendAnalyticsEvent } from '../utils/analytics';
-import { UserModel } from './models';
+
+import { User, UserModel } from './models';
 
 const States = ['IDLE' as const, 'PROCESSING' as const, 'ERROR' as const];
-
-export interface IUserModel extends Instance<typeof UserModel> {}
-export interface User extends SnapshotOut<typeof UserModel> {}
-export interface UserIn extends SnapshotIn<typeof UserModel> {}
 
 export const AuthStore = types
   .model({
@@ -176,7 +165,6 @@ export const AuthStore = types
       );
 
       if (response.kind === 'ok') {
-        setUser(response.data);
         self.user = cast(response.data);
         self.state = 'IDLE';
         return { success: true };

@@ -1,4 +1,4 @@
-import { SnapshotOut, types } from 'mobx-state-tree';
+import { Instance, SnapshotIn, SnapshotOut, types } from 'mobx-state-tree';
 import { TagModel } from './TagModel';
 
 export const UserModel = types.model({
@@ -7,3 +7,5 @@ export const UserModel = types.model({
 });
 
 export interface User extends SnapshotOut<typeof UserModel> {}
+export interface IUserModel extends Instance<typeof UserModel> {}
+export interface UserIn extends SnapshotIn<typeof UserModel> {}
