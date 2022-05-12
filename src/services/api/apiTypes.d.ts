@@ -118,14 +118,16 @@ declare namespace API {
   type MarkGoalDone = {
     id: number;
   };
+  type GetUserInterests = {};
+  type SetUserTags = {};
+
+  type GetMe = {};
 
   /**
    * API RESPONSES
    */
   declare namespace RES {
-    type User = {
-      id: number;
-    };
+    type User = import('../../store/model').User;
 
     type Auth = {
       jwt: string;
@@ -160,5 +162,10 @@ declare namespace API {
     type EditGoal = import('../../store/models').Goal;
     type DeleteGoal = import('../../store/models').Goal;
     type MarkGoalDone = import('../../store/models').Goal;
+
+    type GetUserInterests = import('../../store/models').UserInterests[];
+    type SetUserTags = import('../../store/models').User;
+
+    type GetMe = import('../../store/models').User;
   }
 }

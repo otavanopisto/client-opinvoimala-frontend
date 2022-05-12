@@ -305,6 +305,37 @@ export class Api extends BaseApi {
     const response = await this.api.delete(url, params, this.auth());
     return this.handleResponse(response);
   }
+
+  /**
+   * Fetch user's interests
+   */
+  async getUserInterests(
+    params: API.GetUserInterests
+  ): Promise<Response<API.RES.GetUserInterests>> {
+    const url = `/users/me/interests`;
+    const response = await this.api.get(url, params, this.auth());
+    return this.handleResponse(response);
+  }
+
+  /**
+   * Add user interest
+   */
+  async setUserTags(
+    params: API.SetUserTags
+  ): Promise<Response<API.RES.SetUserTags>> {
+    const url = `/users/me/tags`;
+    const response = await this.api.post(url, params, this.auth());
+    return this.handleResponse(response);
+  }
+
+  /**
+   * Get me
+   */
+  async getMe(params: API.GetMe): Promise<Response<API.RES.GetMe>> {
+    const url = `/users/me`;
+    const response = await this.api.get(url, params, this.auth());
+    return this.handleResponse(response);
+  }
 }
 
 export const api = new Api();
