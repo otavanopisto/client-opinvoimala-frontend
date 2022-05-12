@@ -14,10 +14,6 @@ import { UserModel } from './models';
 
 const States = ['IDLE' as const, 'PROCESSING' as const, 'ERROR' as const];
 
-export interface IUserModel extends Instance<typeof UserModel> {}
-export interface User extends SnapshotOut<typeof UserModel> {}
-export interface UserIn extends SnapshotIn<typeof UserModel> {}
-
 export const AuthStore = types
   .model({
     state: types.enumeration('State', States),
@@ -176,7 +172,6 @@ export const AuthStore = types
       );
 
       if (response.kind === 'ok') {
-        setUser(response.data);
         self.user = cast(response.data);
         self.state = 'IDLE';
         return { success: true };

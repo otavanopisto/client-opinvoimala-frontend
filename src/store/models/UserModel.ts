@@ -7,3 +7,5 @@ export const UserModel = types.model({
 });
 
 export interface User extends SnapshotOut<typeof UserModel> {}
+export interface IUserModel extends SnapshotOut<typeof UserModel> {}
+export interface UserIn extends SnapshotOut<typeof UserModel> {}
