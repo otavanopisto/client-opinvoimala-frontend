@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react-lite';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Divider, Icon as SemanticIcon } from 'semantic-ui-react';
 import { Grid } from 'semantic-ui-react';
 import styled from 'styled-components';
@@ -24,20 +24,40 @@ export const UserInterests: React.FC = observer(() => {
 
   const { t } = useTranslation();
 
+  const [firstItem, setFirstItem] = useState(0);
+  const [lastItem, setLastItem] = useState(3);
+
   useEffect(() => {
     if (!['FETCHED', 'FETCHING', 'ERROR'].includes(state)) {
       fetchUserInterests();
     }
   }, [fetchUserInterests, state]);
 
+  const visibleItems = {};
+
+  const handleShowPrevious = () => {};
+
+  const handleShowNext = () => {};
+
   const handleSetTags = () => {};
 
   return (
     <section>
       <h2>{t('view.user_interests.title')}</h2>
-
+      <Button
+        id="user-interests__show-previous-button"
+        text={'<-'}
+        color="primary"
+        onClick={handleShowPrevious}
+      />
+      <Button
+        id="user-interests__show-next-button"
+        text={'->'}
+        color="primary"
+        onClick={handleShowNext}
+      />
       <StyledGrid columns={3} stackable doubling stretched>
-        {userInterests.map(interest => (
+        {visibleItems.map(interest => (
           <Grid.Column key={interest.id}>
             <Card
               title={interest.title}
@@ -47,7 +67,6 @@ export const UserInterests: React.FC = observer(() => {
           </Grid.Column>
         ))}
       </StyledGrid>
-
       <Divider hidden aria-hidden="true" />
       <Button
         id="user-interests__set-tags-button"
