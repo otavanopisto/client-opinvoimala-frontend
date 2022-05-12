@@ -2,6 +2,7 @@ import { observer } from 'mobx-react-lite';
 import React, { useEffect } from 'react';
 import { useStore } from '../store/storeContext';
 import { Button } from './inputs';
+import UserInterestsModal from './UserInterestsModal';
 
 export const UserInterests: React.FC = observer(() => {
   const {
@@ -29,6 +30,7 @@ export const UserInterests: React.FC = observer(() => {
           <li>{interest.title}</li>
         ))}
       </ul>
+      <UserInterestsModal />
     </>
   );
 });
