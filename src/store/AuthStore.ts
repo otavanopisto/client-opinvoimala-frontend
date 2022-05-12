@@ -1,16 +1,8 @@
-import {
-  Instance,
-  types,
-  flow,
-  cast,
-  SnapshotOut,
-  SnapshotIn,
-  getParent,
-} from 'mobx-state-tree';
+import { Instance, types, flow, cast, getParent } from 'mobx-state-tree';
 import api from '../services/api/Api';
 import Storage from '../services/storage';
 import { ANALYTICS_EVENT, sendAnalyticsEvent } from '../utils/analytics';
-import { UserModel } from './models';
+import { User, UserModel } from './models';
 
 const States = ['IDLE' as const, 'PROCESSING' as const, 'ERROR' as const];
 
