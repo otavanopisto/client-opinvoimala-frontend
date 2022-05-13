@@ -9,10 +9,6 @@ const Header = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-
-  h1 {
-    ${p => p.theme.font.h2};
-  }
 `;
 
 const Buttons = styled.div`
@@ -60,29 +56,25 @@ export const Carousel: React.FC<Props> = observer(
         : setLastItem(prev => prev + columns);
     };
 
-    const iconArrowLeft = (
-      <Icon type="ArrowLeft" strokeColor="secondary" color="none" width={22} />
-    );
-
-    const iconArrowRight = (
-      <Icon type="ArrowRight" strokeColor="secondary" color="none" width={22} />
+    const getArrowIcon = (type: 'ArrowRight' | 'ArrowLeft') => (
+      <Icon type={type} strokeColor="secondary" color="none" width={22} />
     );
 
     return (
       <div>
         <Header>
-          <h1>{title}</h1>
+          <h2>{title}</h2>
           <Buttons>
             <Button
               id="carousel__show-previous-button"
               color="grey3"
-              icon={iconArrowLeft}
+              icon={getArrowIcon('ArrowLeft')}
               onClick={handleShowPrevious}
             />
             <Button
               id="carousel__show-next-button"
               color="grey3"
-              icon={iconArrowRight}
+              icon={getArrowIcon('ArrowRight')}
               onClick={handleShowNext}
             />
           </Buttons>
