@@ -36,7 +36,7 @@ const TestQuestion: React.FC<Props> = ({
     switch (question.answerType) {
       case 'multiple_choice':
         return (
-          <MultiSelect
+          <MultiSelect<number>
             options={question.options}
             selectedOption={answer}
             onSelect={setAnswer}
@@ -44,15 +44,16 @@ const TestQuestion: React.FC<Props> = ({
         );
       case 'dropdown':
         return (
-          <Select
+          <Select<number>
             options={question.options}
             selectedOption={answer}
             onSelect={setAnswer}
+            variant="filled"
           />
         );
       case 'slider':
         return (
-          <Slider
+          <Slider<number>
             id={question.id}
             options={question.options}
             selectedOption={answer}

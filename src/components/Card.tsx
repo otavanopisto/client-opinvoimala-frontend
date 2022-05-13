@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { Link as LinkType, Image } from '../store/models';
 import { useStore } from '../store/storeContext';
 import { linkIsPublic } from '../utils/links';
+import Heading, { HeadingLevel } from './Heading';
 import Link from './Link';
 
 const Container = styled.article<{ isLocked?: boolean }>`
@@ -36,7 +37,7 @@ const Container = styled.article<{ isLocked?: boolean }>`
     padding-bottom: ${p => p.theme.spacing.lg};
     min-height: 200px;
 
-    h1,
+    .card-heading,
     p,
     ul {
       padding: 0 ${p => p.theme.spacing.lg};
@@ -48,7 +49,7 @@ const Container = styled.article<{ isLocked?: boolean }>`
       right: ${p => p.theme.spacing.lg};
     }
 
-    h1 {
+    .card-heading {
       ${p => p.theme.font.h4};
       line-height: 28px;
       padding-right: 48px;
@@ -66,7 +67,7 @@ const Container = styled.article<{ isLocked?: boolean }>`
       -webkit-box-orient: vertical;
     }
 
-    h1,
+    .card-heading,
     p {
       color: ${p => (p.isLocked ? p.theme.color.grey : undefined)};
     }
@@ -120,10 +121,20 @@ interface Props {
   link?: LinkType | null;
   isLocked?: boolean;
   badges?: JSX.Element[] | null;
+  headingLevel?: HeadingLevel;
 }
 
 const Card: React.FC<Props> = observer(
-  ({ title, text, image, tags, link, isLocked, badges }) => {
+  ({
+    title,
+    text,
+    image,
+    tags,
+    link,
+    isLocked,
+    badges,
+    headingLevel = 'h2',
+  }) => {
     const {
       auth: { isLoggedIn },
     } = useStore();
@@ -135,7 +146,11 @@ const Card: React.FC<Props> = observer(
         {image && <img src={image.url} alt={image.alternativeText ?? ''} />}
 
         <main>
-          {title && <h1>{title}</h1>}
+          {title && (
+            <Heading level={headingLevel} className="card-heading">
+              {title}
+            </Heading>
+          )}
 
           {text && <p>{text}</p>}
 

@@ -172,6 +172,7 @@ const TestsList: React.FC<Props> = ({
               tags={test.categories?.map(({ label }) => label)}
               link={getLink(test)}
               badges={getBadges(test)}
+              headingLevel="h3"
             />
           </Grid.Column>
         ))}

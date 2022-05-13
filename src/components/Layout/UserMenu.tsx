@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { observer } from 'mobx-react-lite';
 import { path, rt } from '../../routes/routes';
+import { adminPath } from '../../routes/routesAdmin';
 import Icon from '../Icon';
 import Button from '../inputs/Button';
 import DropdownMenu from '../DropdownMenu';
@@ -11,6 +12,8 @@ import Drawer from '../Drawer';
 import { useStore } from '../../store/storeContext';
 import Link, { LinkItem } from '../Link';
 import DeleteAccountModal from '../../views/auth/DeleteAccountModal';
+import { useAdminStore } from '../../store/admin/adminStoreContext';
+import { useHistory } from 'react-router-dom';
 
 const UserIconContainer = styled.div`
   width: 40px;
@@ -26,7 +29,10 @@ const UserIconContainer = styled.div`
   ${p => p.theme.shadows[1]};
 `;
 
-const DesktopMenu: React.FC<{ items: LinkItem[] }> = ({ items }) => {
+const DesktopMenu: React.FC<{ items: LinkItem[]; text?: string }> = ({
+  items,
+  text,
+}) => {
   const { t } = useTranslation();
   return (
     <DropdownMenu
@@ -40,7 +46,7 @@ const DesktopMenu: React.FC<{ items: LinkItem[] }> = ({ items }) => {
           aria-expanded={isOpen}
           aria-haspopup={true}
           id="user-menu__button"
-          text={t('student')}
+          text={text ?? t('student')}
           icon={
             <UserIconContainer>
               <Icon type="User" color="primary" />
@@ -81,8 +87,13 @@ const MobileMenu: React.FC<{ items: LinkItem[] }> = ({ items }) => {
   );
 };
 
-const UserMenu: React.FC = observer(() => {
+interface Props {
+  admin?: boolean;
+}
+
+const UserMenu: React.FC<Props> = observer(({ admin }) => {
   const { t } = useTranslation();
+  const history = useHistory();
 
   const { isTablet } = useWindowDimensions();
 
@@ -92,12 +103,36 @@ const UserMenu: React.FC = observer(() => {
     auth: { isLoggedIn, openLoginModal },
   } = useStore();
 
+  const {
+    auth: { isLoggedIn: isAdminLoggedIn, adminName, logout: adminLogout },
+  } = useAdminStore();
+  const isAdminPath = history.location.pathname.includes(adminPath());
+
   const handleLoginClick = () => {
     openLoginModal();
   };
 
-  if (isLoggedIn) {
-    const items: LinkItem[] = [
+  let items: LinkItem[] = [];
+
+  if (isAdminLoggedIn && isAdminPath) {
+    items = [
+      {
+        id: 'admin_appointments',
+        label: rt('admin.appointments'),
+        type: 'internal',
+        internal: adminPath('admin.appointments'),
+      },
+      {
+        id: 'logout',
+        label: rt('logout'),
+        type: 'button',
+        onClick: () => adminLogout(),
+      },
+    ];
+    if (isTablet) return <MobileMenu items={items} />;
+    return <DesktopMenu items={items} text={adminName} />;
+  } else if (isLoggedIn && !isAdminPath) {
+    items = [
       {
         id: 'my_profile',
         label: rt('well_being_profile'),
@@ -115,6 +150,12 @@ const UserMenu: React.FC = observer(() => {
         label: rt('appointments'),
         type: 'internal',
         internal: `/${path('appointments')}`,
+      },
+      {
+        id: 'events',
+        label: rt('events'),
+        type: 'internal',
+        internal: `/${path('events')}`,
       },
       {
         id: 'change_password',
@@ -154,7 +195,7 @@ const UserMenu: React.FC = observer(() => {
         />
       </>
     );
-  } else {
+  } else if (!admin) {
     // User is not logged in, show login button.
     return (
       <Button
@@ -170,6 +211,7 @@ const UserMenu: React.FC = observer(() => {
       />
     );
   }
+  return null;
 });
 
 export default UserMenu;

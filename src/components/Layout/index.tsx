@@ -64,20 +64,22 @@ interface Props {
   wrapperSize?: WrapperSize;
   hero?: HeroProps;
   isLoading?: boolean;
+  admin?: boolean;
 }
 
 const Layout: React.FC<Props> = ({
   hero,
   wrapperSize = 'normal',
   isLoading = false,
+  admin = false,
   children,
 }) => {
   return (
     <Container>
-      <LoginModal />
+      {!admin && <LoginModal />}
 
       <div className="header__header">
-        <Header />
+        <Header admin={admin} />
       </div>
 
       <main>
