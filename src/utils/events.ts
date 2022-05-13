@@ -1,14 +1,6 @@
 import { DateTime } from 'luxon';
 import { Event } from '../store/models';
-import { isHoliday as getIsHoliday } from './date';
-
-const mergeDateAndTime = (date: DateTime, time: DateTime) => {
-  return time.set({
-    year: date.year,
-    month: date.month,
-    day: date.day,
-  });
-};
+import { isHoliday as getIsHoliday, mergeDateAndTime } from './date';
 
 interface RepeatEventOptions {
   from: DateTime;

@@ -4,6 +4,7 @@ import { Grid } from 'semantic-ui-react';
 import styled from 'styled-components';
 import Icon from './Icon';
 import { Button } from './inputs';
+import Heading, { HeadingLevel } from './Heading';
 
 const Header = styled.div`
   display: flex;
@@ -24,10 +25,11 @@ interface Props {
   columns?: number;
   elements: JSX.Element[];
   title: string;
+  headingLevel?: HeadingLevel;
 }
 
 export const Carousel: React.FC<Props> = observer(
-  ({ title, columns = 3, elements }) => {
+  ({ title, columns = 3, elements, headingLevel = 'h2' }) => {
     const [firstItem, setFirstItem] = useState(0);
     const [lastItem, setLastItem] = useState(columns);
 
@@ -63,7 +65,11 @@ export const Carousel: React.FC<Props> = observer(
     return (
       <div>
         <Header>
-          <h2>{title}</h2>
+          {title && (
+            <Heading level={headingLevel} className="card-heading">
+              {title}
+            </Heading>
+          )}
           <Buttons>
             <Button
               id="carousel__show-previous-button"

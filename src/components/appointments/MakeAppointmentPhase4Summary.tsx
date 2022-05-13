@@ -1,7 +1,7 @@
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Appointment } from '../../store/AppointmentsStore';
+import { Appointment } from '../../store/models';
 import AppointmentDetails from './AppointmentDetails';
 
 interface Props {

@@ -1,5 +1,5 @@
 import { ApisauceInstance, create, ApiResponse } from 'apisauce';
-import { keysToCamelCase } from '../../utils/objects';
+import { toCamelCase, transformKeys } from '../../utils/objects';
 import STORAGE from '../storage';
 import { ApiConfig, DEFAULT_API_CONFIG } from './config';
 
@@ -9,10 +9,11 @@ export abstract class BaseApi {
   protected token: string | undefined;
 
   constructor(config: ApiConfig = DEFAULT_API_CONFIG) {
-    this.token = STORAGE.read({ key: 'AUTH_TOKEN' });
+    const { tokenStorageKey, ...apiConfig } = config;
+    this.token = STORAGE.read({ key: tokenStorageKey });
     this.config = config;
     this.api = create({
-      ...config,
+      ...apiConfig,
       headers: {
         Accept: 'application/json',
       },
@@ -28,11 +29,14 @@ export abstract class BaseApi {
 
   protected setToken(token?: string) {
     this.token = token;
-    STORAGE.write({ key: 'AUTH_TOKEN', value: token ?? null });
+    STORAGE.write({ key: this.config.tokenStorageKey, value: token ?? null });
   }
 
   protected handleSuccess(response: ApiResponse<any>): API.Success<any> {
-    return { kind: 'ok', data: keysToCamelCase(response.data) };
+    return {
+      kind: 'ok',
+      data: transformKeys(response.data, toCamelCase),
+    };
   }
 
   protected handleError(response: ApiResponse<any>) {

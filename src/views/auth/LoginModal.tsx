@@ -14,6 +14,10 @@ import Modal, { Props as ModalProps } from '../../components/Modal';
 const Container = styled.div`
   text-align: center;
 
+  h2 {
+    ${p => p.theme.font.h3};
+  }
+
   a {
     color: ${p => p.theme.color.secondary};
     text-decoration: underline;
@@ -85,7 +89,7 @@ export const LoginModal: React.FC<Props> = observer(({ ...props }) => {
     <Modal {...props} open={showLoginModal} onClose={handleClose} size="mini">
       <Container>
         <form onSubmit={handleSubmit}>
-          <h3>{t('view.login.title')}</h3>
+          <h2>{t('view.login.title')}</h2>
 
           <Loader disabled={!isBusy} size="massive" />
 
