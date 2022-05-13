@@ -1,14 +1,11 @@
 import { observer } from 'mobx-react-lite';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Divider, Grid, Icon as SemanticIcon } from 'semantic-ui-react';
-
-// import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { useStore } from '../store/storeContext';
 import { Button } from './inputs';
 import { Carousel } from './Carousel';
 import Card from './Card';
-import { useWindowDimensions } from '../utils/hooks/useWindowDimensions';
 
 export const UserInterests: React.FC = observer(() => {
   const {
@@ -24,11 +21,12 @@ export const UserInterests: React.FC = observer(() => {
   }, [fetchUserInterests, state]);
 
   const carouselElements = userInterests.map(interest => (
-    <Grid.Column key={interest.id}>
+    <Grid.Column key={`interest-${interest.type}-${interest.id}`}>
       <Card
         title={interest.title}
         text={interest.description}
         tags={interest.tags}
+        link={interest.link}
       />
     </Grid.Column>
   ));
@@ -37,8 +35,10 @@ export const UserInterests: React.FC = observer(() => {
 
   return (
     <section>
-      <h2>{t('view.user_interests.title')}</h2>
-      <Carousel elements={carouselElements} />
+      <Carousel
+        title={t('view.user_interests.title')}
+        elements={carouselElements}
+      />
       <Divider hidden aria-hidden="true" />
       <Button
         id="user-interests__set-tags-button"

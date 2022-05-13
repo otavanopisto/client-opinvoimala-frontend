@@ -1,19 +1,41 @@
 import { observer } from 'mobx-react-lite';
 import React, { useState } from 'react';
 import { Grid } from 'semantic-ui-react';
+import styled from 'styled-components';
+import Icon from './Icon';
 import { Button } from './inputs';
+
+const Header = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  h1 {
+    ${p => p.theme.font.h2};
+  }
+`;
+
+const Buttons = styled.div`
+  display: flex;
+
+  button {
+    border-radius: ${p => p.theme.borderRadius.sm};
+    margin-left: ${p => p.theme.spacing.md};
+  }
+`;
 
 interface Props {
   columns?: number;
   elements: JSX.Element[];
+  title: string;
 }
 
 export const Carousel: React.FC<Props> = observer(
-  ({ columns = 3, elements }) => {
+  ({ title, columns = 3, elements }) => {
     const [firstItem, setFirstItem] = useState(0);
     const [lastItem, setLastItem] = useState(columns);
 
-    const visibleItems =
+    const visibleElements =
       lastItem < firstItem
         ? elements.slice(firstItem).concat(elements.slice(0, lastItem))
         : elements.slice(firstItem, lastItem);
@@ -38,22 +60,36 @@ export const Carousel: React.FC<Props> = observer(
         : setLastItem(prev => prev + columns);
     };
 
+    const iconArrowLeft = (
+      <Icon type="ArrowLeft" strokeColor="secondary" color="none" width={22} />
+    );
+
+    const iconArrowRight = (
+      <Icon type="ArrowRight" strokeColor="secondary" color="none" width={22} />
+    );
+
     return (
       <div>
-        <Button
-          id="user-interests__show-previous-button"
-          text={'<-'}
-          color="primary"
-          onClick={handleShowPrevious}
-        />
-        <Button
-          id="user-interests__show-next-button"
-          text={'->'}
-          color="primary"
-          onClick={handleShowNext}
-        />
+        <Header>
+          <h1>{title}</h1>
+          <Buttons>
+            <Button
+              id="carousel__show-previous-button"
+              color="grey3"
+              icon={iconArrowLeft}
+              onClick={handleShowPrevious}
+            />
+            <Button
+              id="carousel__show-next-button"
+              color="grey3"
+              icon={iconArrowRight}
+              onClick={handleShowNext}
+            />
+          </Buttons>
+        </Header>
+
         <Grid padded="vertically" columns={3} stretched>
-          {visibleItems.map(interest => interest)}
+          {visibleElements}
         </Grid>
       </div>
     );
