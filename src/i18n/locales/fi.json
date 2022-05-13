@@ -215,130 +215,134 @@
       "confirm_changes": "Tallenna muutokset",
       "description_placeholder": "Kirjoita tavoite tähän"
     },
-    "admin": {
-      "appointments": {
-        "title": "Vastaanotto",
-        "list_title": "Vastaanottoajat",
-        "cancel_confirmation_text": "Olet perumassa vastaanottoaikaa {{date}}. Muistathan ilmoittaa opiskelijalle ajan peruutuksesta. Opiskelijan yhteystiedot löytyvät sähköpostiisi saamastasi vahvistusviestistä.",
-        "create_new": "Luo vastaanottoaika",
+    "user_interests": {
+      "title": "Sinua voi kiinnostaa",
+      "set_tags": "Valitse aihepiiri",
+      "admin": {
+        "appointments": {
+          "title": "Vastaanotto",
+          "list_title": "Vastaanottoajat",
+          "cancel_confirmation_text": "Olet perumassa vastaanottoaikaa {{date}}. Muistathan ilmoittaa opiskelijalle ajan peruutuksesta. Opiskelijan yhteystiedot löytyvät sähköpostiisi saamastasi vahvistusviestistä.",
+          "create_new": "Luo vastaanottoaika",
+          "form": {
+            "title": "Syötä vastaanottoaika ja linkki",
+            "add_title": "Uusi vastaanottoaika",
+            "edit_title": "Muokkaa vastaanottoaikaa",
+            "delete_title": "Poista vastaanottoaika",
+            "status": "Status",
+            "specialist": "Rooli/Asiantuntija",
+            "start_time": "Alkamisaika",
+            "end_time": "Päättymisaika",
+            "meet_link": "Liittymislinkki",
+            "submit": "Luo varaus",
+            "error": {
+              "heading": "Vastaanottoajan tallennus ei onnistunut"
+            },
+            "overlap": {
+              "heading": "Päällekkäisiä aikoja havaittu",
+              "text": "Varoitus: Olet luomassa/muokkaamassa yllä listattujen vastaanottoaikojen kanssa päällekkäin osuvia aikoja."
+            }
+          },
+          "repeat": {
+            "label": "Toistuvuus",
+            "until_label": "Toistuvuus päättyy",
+            "once": "Vain kerran",
+            "weekly": "Viikoittain samaan aikaan",
+            "daily": "Arkipäivisin (ma-pe)",
+            "scope": {
+              "none": "Vain tämä yksi vastaanottoaika",
+              "following": "Tämä ja tätä seuraavat vastaanottoajat",
+              "all": "Kaikki tämän sarjan vastaanottoajat"
+            },
+            "edit_confirm_text": "Tämä on toistuva vastaanottoaika. Valitse muokataanko vain yksittäistä valittua aikaa, tätä ja seuraavia aikoja vai kaikkia sarjaan kuuluvia vastaanottoaikoja.",
+            "delete_confirm_text": "Tämä on toistuva vastaanottoaika. Valitse poistetaanko vain yksittäinen valittu aika, tämä ja seuraavat ajat vai kaikki sarjaan kuuluvat vastaanottoajat.",
+            "scope_includes_booked_appointments": "Valitsemasi ajanjakso sisältää varattuja vastaanottoaikoja:",
+            "notify_student": "Muistathan ilmoittaa varauksen tehneelle opiskelijalle muutoksista. Opiskelijan yhteystiedot löytyvät sähköpostiin saamastasi vahvistusviestistä."
+          }
+        }
+      }
+    },
+    "error": {
+      "unknown_error": "Jotain meni pieleen, yritä myöhemmin uudelleen.",
+      "page_not_found": "Virhe! Sivua ei löytynyt.",
+      "test_not_found": "Virhe! Testiä ei löytynyt.",
+      "Forbidden": "Ei käyttöoikeutta",
+      "Auth": {
         "form": {
-          "title": "Syötä vastaanottoaika ja linkki",
-          "add_title": "Uusi vastaanottoaika",
-          "edit_title": "Muokkaa vastaanottoaikaa",
-          "delete_title": "Poista vastaanottoaika",
-          "status": "Status",
-          "specialist": "Rooli/Asiantuntija",
-          "start_time": "Alkamisaika",
-          "end_time": "Päättymisaika",
-          "meet_link": "Liittymislinkki",
-          "submit": "Luo varaus",
           "error": {
-            "heading": "Vastaanottoajan tallennus ei onnistunut"
-          },
-          "overlap": {
-            "heading": "Päällekkäisiä aikoja havaittu",
-            "text": "Varoitus: Olet luomassa/muokkaamassa yllä listattujen vastaanottoaikojen kanssa päällekkäin osuvia aikoja."
+            "invalid": "Sähköpostiosoite tai salasana on virheellinen",
+            "confirmed": "Sähköpostiosoitettasi ei ole vahvistettu",
+            "blocked": "Käyttäjätilisi on estetty ylläpitäjän toimesta",
+            "email": {
+              "taken": "Sähköpostiosoite on jo käytössä",
+              "provide": "Anna sähköpostiosoite",
+              "format": "Sähköpostiosoite on virheellinen",
+              "not-exist": "Sähköpostiosoitetta ei löydy"
+            },
+            "password": {
+              "provide": "Anna salasana",
+              "matching": "Salasanat ei täsmää",
+              "format": "Salasanassa voi olla maksimissaan kolme `$` symbolia",
+              "not_valid": "Salasana ei kelpaa"
+            },
+            "role": {
+              "notFound": "Oletusroolia ei löydy"
+            },
+            "user": {
+              "blocked": "Tämä käyttäjä on estetty",
+              "not-exist": "Käyttäjää ei löydy"
+            },
+            "code": {
+              "provide": "Salasanan palautus ei onnistunut"
+            },
+            "terms": {
+              "not_accepted": "Ehtoja ei ole hyväksytty"
+            }
           }
         },
-        "repeat": {
-          "label": "Toistuvuus",
-          "until_label": "Toistuvuus päättyy",
-          "once": "Vain kerran",
-          "weekly": "Viikoittain samaan aikaan",
-          "daily": "Arkipäivisin (ma-pe)",
-          "scope": {
-            "none": "Vain tämä yksi vastaanottoaika",
-            "following": "Tämä ja tätä seuraavat vastaanottoajat",
-            "all": "Kaikki tämän sarjan vastaanottoajat"
-          },
-          "edit_confirm_text": "Tämä on toistuva vastaanottoaika. Valitse muokataanko vain yksittäistä valittua aikaa, tätä ja seuraavia aikoja vai kaikkia sarjaan kuuluvia vastaanottoaikoja.",
-          "delete_confirm_text": "Tämä on toistuva vastaanottoaika. Valitse poistetaanko vain yksittäinen valittu aika, tämä ja seuraavat ajat vai kaikki sarjaan kuuluvat vastaanottoajat.",
-          "scope_includes_booked_appointments": "Valitsemasi ajanjakso sisältää varattuja vastaanottoaikoja:",
-          "notify_student": "Muistathan ilmoittaa varauksen tehneelle opiskelijalle muutoksista. Opiskelijan yhteystiedot löytyvät sähköpostiin saamastasi vahvistusviestistä."
+        "advanced": {
+          "allow_register": "Rekisteröinti on väliaikaisesti pois käytöstä"
         }
-      }
-    }
-  },
-  "error": {
-    "unknown_error": "Jotain meni pieleen, yritä myöhemmin uudelleen.",
-    "page_not_found": "Virhe! Sivua ei löytynyt.",
-    "test_not_found": "Virhe! Testiä ei löytynyt.",
-    "Forbidden": "Ei käyttöoikeutta",
-    "Auth": {
-      "form": {
-        "error": {
-          "invalid": "Sähköpostiosoite tai salasana on virheellinen",
-          "confirmed": "Sähköpostiosoitettasi ei ole vahvistettu",
-          "blocked": "Käyttäjätilisi on estetty ylläpitäjän toimesta",
-          "email": {
-            "taken": "Sähköpostiosoite on jo käytössä",
-            "provide": "Anna sähköpostiosoite",
-            "format": "Sähköpostiosoite on virheellinen",
-            "not-exist": "Sähköpostiosoitetta ei löydy"
-          },
-          "password": {
-            "provide": "Anna salasana",
-            "matching": "Salasanat ei täsmää",
-            "format": "Salasanassa voi olla maksimissaan kolme `$` symbolia",
-            "not_valid": "Salasana ei kelpaa"
-          },
-          "role": {
-            "notFound": "Oletusroolia ei löydy"
-          },
+      },
+      "User": {
+        "change_password": {
           "user": {
-            "blocked": "Tämä käyttäjä on estetty",
-            "not-exist": "Käyttäjää ei löydy"
+            "no_match": "Käyttäjää ei löydy"
           },
-          "code": {
-            "provide": "Salasanan palautus ei onnistunut"
+          "old_password": {
+            "no_match": "Vanha salasana on virheellinen"
           },
-          "terms": {
-            "not_accepted": "Ehtoja ei ole hyväksytty"
+          "new_password": {
+            "no_match": "Uusi salasana on virheellinen"
           }
         }
       },
-      "advanced": {
-        "allow_register": "Rekisteröinti on väliaikaisesti pois käytöstä"
-      }
-    },
-    "User": {
-      "change_password": {
-        "user": {
-          "no_match": "Käyttäjää ei löydy"
+      "appointment": {
+        "cancel": {
+          "too_late": "Varausta ei voi perua alle 24 tuntia ennen varauksen alkamisaikaa",
+          "not_found": "Varausta ei löydy",
+          "failed": "Varauksen peruminen epäonnistui"
         },
-        "old_password": {
-          "no_match": "Vanha salasana on virheellinen"
+        "make": {
+          "not_found": "Varausta ei löydy",
+          "not_available": "Varaus ei ole enää varattavissa",
+          "failed": "Varauksen tekeminen epäonnistui",
+          "appointment_not_selected": "Mitään varausta ei ole valittu"
         },
-        "new_password": {
-          "no_match": "Uusi salasana on virheellinen"
+        "request_body": {
+          "provide": "Anna nimi ja sähköpostiosoite"
         }
       }
     },
-    "appointment": {
-      "cancel": {
-        "too_late": "Varausta ei voi perua alle 24 tuntia ennen varauksen alkamisaikaa",
-        "not_found": "Varausta ei löydy",
-        "failed": "Varauksen peruminen epäonnistui"
-      },
-      "make": {
-        "not_found": "Varausta ei löydy",
-        "not_available": "Varaus ei ole enää varattavissa",
-        "failed": "Varauksen tekeminen epäonnistui",
-        "appointment_not_selected": "Mitään varausta ei ole valittu"
-      },
-      "request_body": {
-        "provide": "Anna nimi ja sähköpostiosoite"
-      }
+    "aria": {
+      "main_navigation": "Päävalikko",
+      "menu": "Valikko",
+      "appointment_option": "Vapaa aika",
+      "user_menu": "Opiskelijan käyttäjävalikko",
+      "login": "Kirjaudu sisään",
+      "close": "Sulje",
+      "stars": "Tähdet {{stars}}/5",
+      "show_outcome": "Avaa lopputulema"
     }
-  },
-  "aria": {
-    "main_navigation": "Päävalikko",
-    "menu": "Valikko",
-    "appointment_option": "Vapaa aika",
-    "user_menu": "Opiskelijan käyttäjävalikko",
-    "login": "Kirjaudu sisään",
-    "close": "Sulje",
-    "stars": "Tähdet {{stars}}/5",
-    "show_outcome": "Avaa lopputulema"
   }
 }

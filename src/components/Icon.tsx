@@ -3,6 +3,7 @@ import { ThemeContext } from 'styled-components';
 import { Colors } from '../theme/styled';
 
 import { ReactComponent as Annotation } from '../assets/icons/comment-exclamation.svg';
+import { ReactComponent as ArrowLeft } from '../assets/icons/arrow-left.svg';
 import { ReactComponent as ArrowRight } from '../assets/icons/arrow-right.svg';
 import { ReactComponent as ChartLine } from '../assets/icons/chart-line.svg';
 import { ReactComponent as Chat } from '../assets/icons/bx-chat.svg';
@@ -23,6 +24,7 @@ import { ReactComponent as Video } from '../assets/icons/video.svg';
 
 const Icons = {
   Annotation,
+  ArrowLeft,
   ArrowRight,
   ChartLine,
   Chat,

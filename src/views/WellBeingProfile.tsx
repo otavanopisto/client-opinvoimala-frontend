@@ -97,6 +97,9 @@ export const WellBeingProfile: React.FC = observer(() => {
       <NoPrint>
         <Divider section hidden aria-hidden="true" />
         <UserInterests />
+
+        <Divider section hidden aria-hidden="true" />
+
         <TestsList
           id="tests"
           title={t('view.well_being_profile.tests')}
