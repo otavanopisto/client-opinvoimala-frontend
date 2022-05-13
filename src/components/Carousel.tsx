@@ -66,7 +66,7 @@ export const Carousel: React.FC<Props> = observer(
       <div>
         <Header>
           {title && (
-            <Heading level={headingLevel} className="card-heading">
+            <Heading level={headingLevel} className="carousel-heading">
               {title}
             </Heading>
           )}
