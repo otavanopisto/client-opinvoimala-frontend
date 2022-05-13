@@ -117,6 +117,12 @@ const UserMenu: React.FC = observer(() => {
         internal: `/${path('appointments')}`,
       },
       {
+        id: 'events',
+        label: rt('events'),
+        type: 'internal',
+        internal: `/${path('events')}`,
+      },
+      {
         id: 'change_password',
         label: rt('change_password'),
         type: 'internal',

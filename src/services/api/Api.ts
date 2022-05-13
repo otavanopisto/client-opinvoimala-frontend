@@ -184,6 +184,17 @@ export class Api extends BaseApi {
   }
 
   /**
+   * Fetch events
+   */
+  async getEvents(
+    params: API.GetEvents = {}
+  ): Promise<Response<API.RES.GetEvents>> {
+    const url = `events`;
+    const response = await this.api.get(url, params, this.auth());
+    return this.handleResponse(response);
+  }
+
+  /**
    * Fetch test categories (and tests within)
    */
   async getTestCategories(

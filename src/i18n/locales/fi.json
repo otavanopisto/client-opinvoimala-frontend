@@ -25,6 +25,7 @@
     "done": "Valmis",
     "select": "Valitse",
     "download": "Lataa",
+    "show_more": "Lataa lisää",
     "save": "Tallenna"
   },
   "label": {
@@ -43,6 +44,7 @@
     "tests": "Testit ja harjoitukset",
     "outcome": "Lopputulema",
     "appointments": "Varaukset",
+    "events": "Tapahtumat",
     "change_password": "Vaihda salasana",
     "forgot_password": "Salasana unohtunut",
     "reset_password": "Salasanan palautus",
@@ -130,6 +132,16 @@
           "back_to_appointments": "Siirry varauksiin",
           "go_back": "Palaa takaisin"
         }
+      }
+    },
+    "events": {
+      "no_events": "Ei tapahtumia",
+      "title": {
+        "upcoming": "Tulevat tapahtumat",
+        "past": "Menneet tapahtumat"
+      },
+      "action": {
+        "join_webinar": "Liity webinaariin"
       }
     },
     "register": {
