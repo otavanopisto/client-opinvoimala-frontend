@@ -1,7 +1,9 @@
 import { observer } from 'mobx-react-lite';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { adminPath } from '../../routes/routesAdmin';
 import { useStore } from '../../store/storeContext';
 import { useWindowDimensions } from '../../utils/hooks';
 import NoPrint from '../NoPrint';
@@ -33,6 +35,21 @@ const StyledHeader = styled.header`
     }
   }
 
+  .header__logo-container {
+    display: flex;
+    align-items: center;
+    a.admin-title {
+      margin-left: ${p => p.theme.spacing.lg};
+      padding: ${p => p.theme.spacing.sm} ${p => p.theme.spacing.md};
+      background-color: ${p => p.theme.color.accent};
+      color: ${p => p.theme.color.background};
+      border-radius: ${p => p.theme.borderRadius.md};
+      ${p => p.theme.font.size.sm};
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+  }
+
   .mobile-header__menus {
     position: fixed;
     z-index: 1;
@@ -40,7 +57,12 @@ const StyledHeader = styled.header`
   }
 `;
 
-const Header: React.FC = observer(() => {
+interface Props {
+  admin?: boolean;
+}
+
+const Header: React.FC<Props> = observer(({ admin }) => {
+  const { t } = useTranslation();
   const { isTablet } = useWindowDimensions();
   const {
     settings: { settings },
@@ -52,10 +74,15 @@ const Header: React.FC = observer(() => {
   return (
     <StyledHeader>
       <Wrapper className="header__wrapper">
-        <div>
+        <div className="header__logo-container">
           {logo && (
             <Link to="/">
               <img src={logo.url} height={`${logoHeight}px`} alt="logo" />
+            </Link>
+          )}
+          {admin && (
+            <Link to={adminPath()} className="admin-title">
+              {t('route.admin.root')}
             </Link>
           )}
         </div>
@@ -64,12 +91,12 @@ const Header: React.FC = observer(() => {
           <div className="mobile-header__menus">
             <div>
               <NoPrint>
-                <UserMenu />
+                <UserMenu admin={admin} />
               </NoPrint>
             </div>
             <div>
               <NoPrint>
-                <NavBar />
+                <NavBar admin={admin} />
               </NoPrint>
             </div>
           </div>
@@ -77,12 +104,12 @@ const Header: React.FC = observer(() => {
           <>
             <div>
               <NoPrint>
-                <NavBar />
+                <NavBar admin={admin} />
               </NoPrint>
             </div>
             <div>
               <NoPrint>
-                <UserMenu />
+                <UserMenu admin={admin} />
               </NoPrint>
             </div>
           </>

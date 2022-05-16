@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDatePicker, { ReactDatePickerProps } from 'react-datepicker';
 import styled from 'styled-components';
+import Input from './Input';
 
 const DAY_SIZE = 32;
 
@@ -52,6 +53,9 @@ const Container = styled.div`
         color: ${p => p.theme.color.background};
         font-weight: normal;
       }
+      &--disabled {
+        opacity: 0.3;
+      }
       &--keyboard-selected {
         background-color: transparent;
       }
@@ -59,12 +63,36 @@ const Container = styled.div`
   }
 `;
 
-interface Props extends ReactDatePickerProps {}
+interface Props extends ReactDatePickerProps {
+  label?: string;
+}
 
-const DatePicker: React.FC<Props> = props => {
+const DatePicker: React.FC<Props> = ({ label, ...props }) => {
+  const TimeSelectInput = (
+    { value, onClick }: React.HTMLProps<HTMLInputElement>,
+    ref: any
+  ) => {
+    return (
+      <Input
+        value={value}
+        label={label}
+        onClick={onClick}
+        size="small"
+        icon="clock outline"
+        iconPosition="left"
+        disabled={props.disabled}
+        noMargin
+      />
+    );
+  };
+
   return (
     <Container>
-      <ReactDatePicker {...props} />
+      <ReactDatePicker
+        {...props}
+        dateFormat="dd.MM.yyyy"
+        customInput={React.createElement(React.forwardRef(TimeSelectInput))}
+      />
     </Container>
   );
 };

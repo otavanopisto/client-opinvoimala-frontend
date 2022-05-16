@@ -13,6 +13,13 @@ export const toCamelCase = (s: string) => {
 };
 
 /**
+ * Transforms given string to snake_case
+ */
+export const toSnakeCase = (str: string) => {
+  return str.replace(/[A-Z]/g, letter => `_${letter.toLowerCase()}`);
+};
+
+/**
  * Tests if a given object is array
  */
 export const isArray = function (a: any) {
@@ -26,21 +33,21 @@ export const isObject = function (o: any) {
   return o === Object(o) && !isArray(o) && typeof o !== 'function';
 };
 
-/**
- * Recursively transforms object(s) keys to camelCase
- */
-export const keysToCamelCase = function (object: any) {
+export const transformKeys = (object: any, caseTransformer = toCamelCase) => {
   if (isObject(object)) {
     const objectCopy: any = {};
 
     Object.keys(object).forEach(key => {
-      objectCopy[toCamelCase(key as string)] = keysToCamelCase(object[key]);
+      objectCopy[caseTransformer(key as string)] = transformKeys(
+        object[key],
+        caseTransformer
+      );
     });
 
     return objectCopy;
   } else if (isArray(object)) {
     return object.map((item: any) => {
-      return keysToCamelCase(item);
+      return transformKeys(item, caseTransformer);
     });
   }
 

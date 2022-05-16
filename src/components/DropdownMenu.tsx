@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Colors } from '../theme/styled';
 import { useOutsideClickAction } from '../utils/hooks/useOutsideClickAction';
+import Icon from './Icon';
 import Link, { LinkItem } from './Link';
 
 const StyledDropdownMenu = styled.div<{
   color: keyof Colors;
   verticalPosition: number;
+  menuWidth?: number;
 }>`
   display: inline-block;
   position: relative;
@@ -49,7 +51,7 @@ const StyledDropdownMenu = styled.div<{
       ${p => p.theme.shadows[0]};
       border-radius: ${p => p.theme.borderRadius.sm};
       z-index: 9;
-      width: 230px;
+      width: ${p => p.menuWidth ?? 230}px;
 
       transition: all 0.4s ease-in-out;
 
@@ -75,6 +77,14 @@ const StyledDropdownMenu = styled.div<{
   }
 `;
 
+const TriggerButton = styled.button`
+  display: flex;
+  align-items: center;
+  svg {
+    margin-left: ${p => p.theme.spacing.md};
+  }
+`;
+
 type OnClick = (event: React.MouseEvent<HTMLElement, MouseEvent>) => void;
 
 interface Props {
@@ -89,6 +99,8 @@ interface Props {
   items: LinkItem[];
   align?: 'left' | 'right';
   verticalPosition?: number;
+  showArrow?: boolean;
+  menuWidth?: number;
 }
 
 const DropdownMenu: React.FC<Props> = ({
@@ -98,6 +110,8 @@ const DropdownMenu: React.FC<Props> = ({
   items,
   align = 'left',
   verticalPosition = 0,
+  showArrow,
+  menuWidth,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const ref: React.RefObject<HTMLDivElement> = React.createRef();
@@ -118,9 +132,16 @@ const DropdownMenu: React.FC<Props> = ({
       const { label } = triggerButton;
       if (label)
         return (
-          <button aria-expanded={isOpen} aria-haspopup={true}>
+          <TriggerButton
+            type="button"
+            aria-expanded={isOpen}
+            aria-haspopup={true}
+          >
             {label}
-          </button>
+            {showArrow && (
+              <Icon type={isOpen ? 'ChevronUp' : 'ChevronDown'} color="none" />
+            )}
+          </TriggerButton>
         );
     }
     return null;
@@ -144,6 +165,7 @@ const DropdownMenu: React.FC<Props> = ({
       onClick={toggleMenu}
       ref={ref}
       verticalPosition={verticalPosition}
+      menuWidth={menuWidth}
     >
       <div className="dropdown__trigger">{renderTrigger()}</div>
       <ul aria-hidden={!isOpen} className={getMenuClassName()}>

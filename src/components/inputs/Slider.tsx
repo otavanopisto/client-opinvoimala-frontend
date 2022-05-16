@@ -51,21 +51,16 @@ const Mark = styled.div<{ isSelected: boolean }>`
   }
 `;
 
-interface Props {
+interface Props<T extends OptionId> {
   id: number;
-  options: SelectOption[];
-  selectedOption?: SelectOption | null;
-  onSelect: (answer?: SelectOption | null) => void;
+  options: SelectOption<T>[];
+  selectedOption?: SelectOption<T> | null;
+  onSelect: (answer?: SelectOption<T> | null) => void;
   step?: number;
 }
 
-export const Slider: React.FC<Props> = ({
-  id,
-  options,
-  selectedOption,
-  onSelect,
-  step = 1,
-}) => {
+export function Slider<T extends OptionId>(props: Props<T>) {
+  const { id, options, selectedOption, onSelect, step = 1 } = props;
   const idRef = useRef<number>();
   const min = 0;
   const max = options.length - 1;
@@ -73,7 +68,7 @@ export const Slider: React.FC<Props> = ({
   const defaultOptionIndex = Math.floor(options.length / 2);
 
   const indexOfOption = useCallback(
-    (option: SelectOption) => options.map(({ id }) => id).indexOf(option.id),
+    (option: SelectOption<T>) => options.map(({ id }) => id).indexOf(option.id),
     [options]
   );
 
@@ -148,6 +143,6 @@ export const Slider: React.FC<Props> = ({
       />
     </Container>
   );
-};
+}
 
 export default Slider;

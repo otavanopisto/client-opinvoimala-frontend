@@ -40,6 +40,7 @@ const Content = styled.div<{ center?: boolean; linkStyle: 'normal' | 'alert' }>`
 `;
 
 const LinkButton = styled.button`
+  width: 100%;
   margin: 0 !important;
   padding: 0 !important;
 `;
@@ -75,7 +76,7 @@ const Link: React.FC<Props> = ({
 
   const isExternal = link.type === 'external';
   const url = !isButton && linkTargetUrl(link as LinkIn);
-  const isPublic = !isButton && linkIsPublic(link as LinkIn);
+  const isPublic = isButton ? true : linkIsPublic(link as LinkIn);
   const showLock = !isPublic && !isLoggedIn;
 
   const content = (
@@ -104,7 +105,7 @@ const Link: React.FC<Props> = ({
 
   if (isButton) {
     return (
-      <LinkButton role="link" onClick={link.onClick}>
+      <LinkButton role="link" type="button" onClick={link.onClick}>
         <span className="link">{content}</span>
       </LinkButton>
     );

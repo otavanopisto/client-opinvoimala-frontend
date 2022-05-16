@@ -6,7 +6,7 @@ import { Loader, Transition } from 'semantic-ui-react';
 import { useStore } from '../../store/storeContext';
 import { today } from '../../utils/date';
 import { Button } from '../inputs';
-import { Appointment } from '../../store/AppointmentsStore';
+import { Appointment } from '../../store/models';
 import { getApiErrorMessages } from '../../utils/api';
 
 import MakeAppointmentPhase1 from './MakeAppointmentPhase1';

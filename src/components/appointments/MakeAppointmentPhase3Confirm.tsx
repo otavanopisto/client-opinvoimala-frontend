@@ -2,7 +2,7 @@ import { observer } from 'mobx-react-lite';
 import React, { ChangeEvent, Dispatch, SetStateAction } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { Appointment } from '../../store/AppointmentsStore';
+import { Appointment } from '../../store/models';
 import { COLORS } from '../../theme';
 import Annotation from '../Annotation';
 import { Input } from '../inputs';

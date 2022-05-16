@@ -1,4 +1,5 @@
 import { DateTime } from 'luxon';
+import finnishholidays from 'finnish-holidays-js';
 
 const LOCALE = 'fi-FI';
 const TIMEZONE = 'Europe/Helsinki';
@@ -9,7 +10,7 @@ interface DateOptions {
   locale?: string;
 }
 
-const localizedDate = (
+export const localizedDate = (
   isoDate: string,
   { timezone = TIMEZONE, locale = LOCALE }: DateOptions = {}
 ) => {
@@ -42,4 +43,17 @@ export const isSameDay = (
   const date1 = localizedDate(isoDate1, options);
   const date2 = localizedDate(isoDate2, options);
   return date1.startOf('day').toMillis() === date2.startOf('day').toMillis();
+};
+
+export const isHoliday = (date: DateTime) => {
+  const holidays = finnishholidays.month(date.month, date.year);
+  return !!holidays.find(({ day }) => day === date.day);
+};
+
+export const mergeDateAndTime = (date: DateTime, time: DateTime) => {
+  return time.set({
+    year: date.year,
+    month: date.month,
+    day: date.day,
+  });
 };

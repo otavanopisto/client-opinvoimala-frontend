@@ -1,3 +1,5 @@
+import { StorageKey } from '../storage';
+
 const URL = {
   local: 'http://localhost:1337',
   stage: 'https://opinvoimala-api.stage.geniem.io',
@@ -17,9 +19,17 @@ const getBaseUrl = () => {
 export interface ApiConfig {
   baseURL: string;
   timeout: number;
+  tokenStorageKey: StorageKey;
 }
 
 export const DEFAULT_API_CONFIG: ApiConfig = {
   baseURL: getBaseUrl(),
   timeout: 30000,
+  tokenStorageKey: 'AUTH_TOKEN',
+};
+
+export const ADMIN_API_CONFIG: ApiConfig = {
+  baseURL: getBaseUrl(),
+  timeout: 30000,
+  tokenStorageKey: 'ADMIN_AUTH_TOKEN',
 };

@@ -1,7 +1,13 @@
 type TargetStorage = 'local' | 'session';
 
+export type StorageKey =
+  | 'AUTH_TOKEN'
+  | 'TESTS_IN_PROGRESS'
+  | 'ADMIN_AUTH_TOKEN'
+  | 'ADMIN_USER';
+
 interface StorageProps {
-  key: 'AUTH_TOKEN' | 'TESTS_IN_PROGRESS';
+  key: StorageKey;
   target?: TargetStorage;
 }
 
