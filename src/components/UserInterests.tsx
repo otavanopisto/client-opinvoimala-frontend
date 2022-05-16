@@ -44,6 +44,9 @@ export const UserInterests: React.FC = observer(() => {
         title={t('view.user_interests.title')}
         elements={carouselElements}
       />
+      {userInterests.length === 0 && (
+        <div>{t('view.user_interests.no_tags_chosen')}</div>
+      )}
       <Divider hidden aria-hidden="true" />
       <Button
         id="user-interests__set-tags-button"

@@ -218,6 +218,7 @@
     "user_interests": {
       "title": "Sinua voi kiinnostaa",
       "choose_tags": "Valitse aihepiiri",
+      "no_tags_chosen": "Et ole valinnut yhtään aihepiiriä",
       "form": {
         "title": "Kiinnostuksen kohteet",
         "select_more_tags": "Valitse lisää aihepiirejä",
