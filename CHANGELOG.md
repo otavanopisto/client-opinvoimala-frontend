@@ -12,6 +12,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - OPI-92: Users can delete own accounts and related data
 - OPI-95: Card component can have image
 - OPI-97: Test outcomes are printable (=downloadable)
+- OPI-88: User goals (users can set and manage goals for themselves)
+- OPI-90: Events
+- OPI-93: Admin/Appointments (Manage appointments as a specialist)
 
 ### Changed
 
