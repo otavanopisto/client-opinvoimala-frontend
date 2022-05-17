@@ -215,14 +215,13 @@
       "confirm_changes": "Tallenna muutokset",
       "description_placeholder": "Kirjoita tavoite tähän"
     },
-    "user_interests": {
+    "user_tags": {
       "title": "Sinua voi kiinnostaa",
       "choose_tags": "Valitse aihepiiri",
-      "no_tags_chosen": "Et ole valinnut yhtään aihepiiriä",
       "form": {
         "title": "Kiinnostuksen kohteet",
-        "select_more_tags": "Valitse lisää aihepiirejä",
-        "remove_selected_tags": "Poista valittuja"
+        "add_tags": "Valitse lisää aihepiirejä",
+        "remove_tags": "Poista valittuja"
       }
     },
     "admin": {

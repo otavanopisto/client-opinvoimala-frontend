@@ -1,11 +1,4 @@
-import {
-  Instance,
-  types,
-  flow,
-  cast,
-  getSnapshot,
-  getParent,
-} from 'mobx-state-tree';
+import { Instance, types, flow, cast, getSnapshot } from 'mobx-state-tree';
 import api from '../services/api/Api';
 import { UserInterestsModel } from './models';
 
@@ -50,28 +43,8 @@ export const UserInterestsStore = types
       }
     });
 
-    const setUserTags = flow(function* (params: API.SetUserTags) {
-      self.userTagsState = 'PROCESSING';
-
-      const response: API.GeneralResponse<API.RES.CreateGoal> =
-        yield api.setUserTags(params);
-
-      if (response.kind === 'ok') {
-        const { auth } = getParent(self);
-        auth.setUser(cast(response.data));
-
-        fetchUserInterests();
-        self.userTagsState = 'IDLE';
-        return { success: true };
-      } else {
-        self.userTagsState = 'ERROR';
-        return { success: false };
-      }
-    });
-
     return {
       fetchUserInterests,
-      setUserTags,
     };
   });
 

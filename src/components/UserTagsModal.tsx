@@ -27,19 +27,17 @@ const TagList = styled.ul`
 
 interface Props extends ModalProps {}
 
-export const UserInterestsModal: React.FC<Props> = observer(
+export const UserTagsModal: React.FC<Props> = observer(
   ({ tagsModalOpen, setTagsModalOpen, ...props }) => {
     const {
-      userInterests: { userInterests, setUserTags },
+      userInterests: { fetchUserInterests },
+      settings: { tags },
+      auth: { user, setUserTags },
     } = useStore();
 
     const { t } = useTranslation();
 
-    const { settings } = useStore();
-
-    const { tags } = settings;
-
-    const initialUserInterestIds = userInterests.map(tag => tag.id);
+    const initialUserInterestIds = user ? user.tags.map(tag => tag.id) : [];
 
     const [selectedTags, setSelectedTags] = useState(initialUserInterestIds);
 
@@ -56,6 +54,7 @@ export const UserInterestsModal: React.FC<Props> = observer(
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault();
       await setUserTags({ tags: selectedTags });
+      await fetchUserInterests();
       closeModal();
     };
 
@@ -89,17 +88,17 @@ export const UserInterestsModal: React.FC<Props> = observer(
         {...props}
         open={tagsModalOpen}
         onClose={closeModal}
-        title={t('view.user_interests.form.title')}
+        title={t('view.user_tags.form.title')}
         size="small"
         closeButtonType="both"
         closeButtonText={t('action.cancel')}
       >
         <Container>
           <form onSubmit={handleSubmit}>
-            <h2>{t('view.user_interests.form.remove_selected_tags')}</h2>
+            <h2>{t('view.user_tags.form.remove_tags')}</h2>
             <TagList>{shownSelectedTags}</TagList>
 
-            <h2>{t('view.user_interests.form.select_more_tags')}</h2>
+            <h2>{t('view.user_tags.form.add_tags')}</h2>
             <TagList>{tagButtons}</TagList>
 
             <div className="user-interests-modal_submit-tags-button">
@@ -117,4 +116,4 @@ export const UserInterestsModal: React.FC<Props> = observer(
   }
 );
 
-export default UserInterestsModal;
+export default UserTagsModal;
