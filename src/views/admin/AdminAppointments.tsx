@@ -2,6 +2,7 @@ import { observer } from 'mobx-react-lite';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Icon, Loader } from 'semantic-ui-react';
+import EditAppointmentDrawer from '../../components/admin/appointments/EditAppointmentDrawer';
 import EditAppointmentModal from '../../components/admin/appointments/EditAppointmentModal';
 import { AppointmentsList } from '../../components/appointments';
 import DropdownMenu from '../../components/DropdownMenu';
@@ -14,11 +15,13 @@ import {
   AppointmentStatus,
 } from '../../store/models';
 import { formatDateTime, today } from '../../utils/date';
+import { useWindowDimensions } from '../../utils/hooks';
 
 type StatusFilter = AppointmentStatus | 'show_all';
 
 const AdminAppointments: React.FC = observer(() => {
   const { t } = useTranslation();
+  const { isTablet } = useWindowDimensions();
 
   const [appointment, setAppointment] = useState<AppointmentIn>();
   const [statusFilter, setStatusFilter] = useState<StatusFilter>('show_all');
@@ -163,10 +166,17 @@ const AdminAppointments: React.FC = observer(() => {
         showStatus
       />
 
-      <EditAppointmentModal
-        appointment={appointment}
-        setAppointment={setAppointment}
-      />
+      {isTablet ? (
+        <EditAppointmentDrawer
+          appointment={appointment}
+          setAppointment={setAppointment}
+        />
+      ) : (
+        <EditAppointmentModal
+          appointment={appointment}
+          setAppointment={setAppointment}
+        />
+      )}
     </Layout>
   );
 });

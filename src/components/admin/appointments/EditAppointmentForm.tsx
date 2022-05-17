@@ -19,6 +19,7 @@ import {
   RepeatScope,
 } from '../../../store/models';
 import { localizedDate, today } from '../../../utils/date';
+import { useWindowDimensions } from '../../../utils/hooks';
 import { Button, Input, Select } from '../../inputs';
 import DatePicker from '../../inputs/DatePicker';
 import TimePicker from '../../inputs/TimePicker';
@@ -70,6 +71,32 @@ const Form = styled.form`
       }
     }
   }
+
+  @media ${p => p.theme.breakpoint.tablet} {
+    .appointment-form {
+      &__content-container,
+      &__buttons-container {
+        flex-direction: column;
+        align-items: center;
+      }
+      &__buttons-container {
+        flex-direction: column-reverse;
+        > div {
+          width: 100%;
+        }
+        button {
+          width: 100%;
+          :not(:last-child) {
+            margin-right: 0;
+          }
+        }
+      }
+      &__inputs-container {
+        padding-left: 0;
+        width: 100%;
+      }
+    }
+  }
 `;
 
 const FlexRow = styled.div`
@@ -80,6 +107,18 @@ const FlexRow = styled.div`
     flex: 1;
     :not(:last-child) {
       margin-right: ${p => p.theme.spacing.lg};
+    }
+  }
+
+  @media ${p => p.theme.breakpoint.tablet} {
+    flex-direction: column;
+    align-items: center;
+    > * {
+      width: 100%;
+      margin: 0.25rem 0;
+      :not(:last-child) {
+        margin-right: 0;
+      }
     }
   }
 `;
@@ -96,6 +135,7 @@ const EditAppointmentForm: React.FC<Props> = ({
   isAddingNew,
 }) => {
   const { t } = useTranslation();
+  const { isMobile } = useWindowDimensions();
 
   const {
     appointments: {
@@ -144,6 +184,8 @@ const EditAppointmentForm: React.FC<Props> = ({
   const closeForm = () => setAppointment(undefined);
   const repeatRule = repeatOption.id;
   const repeatOnce = repeatRule === 'once';
+  const hasErrors =
+    !!errorMsgs.length || !!validationMsgs.length || !!overlapMsgs.length;
 
   /**
    * Initializes form data when editing appointment
@@ -400,12 +442,25 @@ const EditAppointmentForm: React.FC<Props> = ({
         </div>
       </div>
 
+      {hasErrors && <Divider hidden />}
+
       <Transition.Group>
+        {!!overlapMsgs.length && (
+          <div>
+            <Message
+              warning
+              icon={isMobile ? undefined : 'warning sign'}
+              header={t('view.admin.appointments.form.overlap.heading')}
+              content={t('view.admin.appointments.form.overlap.text')}
+              list={overlapMsgs}
+            />
+          </div>
+        )}
         {!!errorMsgs.length && (
           <div>
             <Message
               error
-              icon="warning sign"
+              icon={isMobile ? undefined : 'warning sign'}
               header={t('view.admin.appointments.form.error.heading')}
               list={errorMsgs}
             />
@@ -413,17 +468,10 @@ const EditAppointmentForm: React.FC<Props> = ({
         )}
         {!!validationMsgs.length && (
           <div>
-            <Message error icon="warning sign" list={validationMsgs} />
-          </div>
-        )}
-        {!!overlapMsgs.length && (
-          <div>
             <Message
-              warning
-              icon="warning sign"
-              header={t('view.admin.appointments.form.overlap.heading')}
-              content={t('view.admin.appointments.form.overlap.text')}
-              list={overlapMsgs}
+              error
+              icon={isMobile ? undefined : 'warning sign'}
+              list={validationMsgs}
             />
           </div>
         )}
