@@ -323,6 +323,7 @@ const EditAppointmentForm: React.FC<Props> = ({
               selectedOption={statusOption}
               onSelect={handleStatusChange}
               showDefaultOption={false}
+              autoFocus
             />
             <TimePicker
               selected={date}
