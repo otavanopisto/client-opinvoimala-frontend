@@ -1,4 +1,11 @@
-import { Instance, types, flow, cast, getParent } from 'mobx-state-tree';
+import {
+  Instance,
+  types,
+  flow,
+  cast,
+  getParent,
+  getSnapshot,
+} from 'mobx-state-tree';
 import api from '../services/api/Api';
 import Storage from '../services/storage';
 import { ANALYTICS_EVENT, sendAnalyticsEvent } from '../utils/analytics';
@@ -24,6 +31,9 @@ export const AuthStore = types
     },
     get showLoginModal() {
       return self.isLoginModalOpen && !this.isLoggedIn;
+    },
+    get userData() {
+      return self.user ? getSnapshot(self.user) : undefined;
     },
   }))
   .actions(self => {

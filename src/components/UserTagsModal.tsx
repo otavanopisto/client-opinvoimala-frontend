@@ -30,16 +30,15 @@ interface Props extends ModalProps {}
 export const UserTagsModal: React.FC<Props> = observer(
   ({ tagsModalOpen, setTagsModalOpen, ...props }) => {
     const {
-      userInterests: { fetchUserInterests },
       settings: { tags },
       auth: { user, setUserTags },
     } = useStore();
 
     const { t } = useTranslation();
 
-    const initialUserInterestIds = user ? user.tags.map(tag => tag.id) : [];
+    const initialUserTagIds = user ? user.tags.map(tag => tag.id) : [];
 
-    const [selectedTags, setSelectedTags] = useState(initialUserInterestIds);
+    const [selectedTags, setSelectedTags] = useState(initialUserTagIds);
 
     const handleSelectTag = (id: number) => {
       setSelectedTags(prev => [...prev, id]);
@@ -54,7 +53,7 @@ export const UserTagsModal: React.FC<Props> = observer(
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault();
       await setUserTags({ tags: selectedTags });
-      await fetchUserInterests();
+      // await fetchUserInterests();
       closeModal();
     };
 
@@ -69,7 +68,7 @@ export const UserTagsModal: React.FC<Props> = observer(
           key={tag.id}
           id={tag.id}
           name={tag.name}
-          handleRemove={handleRemoveTag}
+          handleRemove={() => handleRemoveTag(tag.id)}
         >
           {tag.name}
         </Tag>
@@ -78,7 +77,12 @@ export const UserTagsModal: React.FC<Props> = observer(
     const tagButtons = tags
       .filter(tag => !selectedTags.includes(tag.id))
       .map(({ id, name }) => (
-        <Tag key={id} id={id} name={name} handleClick={handleSelectTag}>
+        <Tag
+          key={id}
+          id={id}
+          name={name}
+          handleClick={() => handleSelectTag(id)}
+        >
           {name}
         </Tag>
       ));

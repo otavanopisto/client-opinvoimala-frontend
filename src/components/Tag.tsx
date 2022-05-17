@@ -4,25 +4,22 @@ import styled from 'styled-components';
 import Icon from './Icon';
 
 const Container = styled.li`
-  list-style-type: none;
-  padding: 0;
-  margin-right: ${p => p.theme.spacing.sm};
-
   display: flex;
   align-items: center;
-  justify-content: space-between;
 
-  padding: 0 ${p => p.theme.spacing.sm};
   background-color: ${p => p.theme.color.accentLight};
   border-radius: ${p => p.theme.borderRadius.sm};
-
+  margin-right: ${p => p.theme.spacing.sm};
+  padding: 0 ${p => p.theme.spacing.sm};
   color: ${p => p.theme.color.secondary};
   font-family: ${p => p.theme.font.secondary};
   ${p => p.theme.font.size.xs};
 
   button {
+    font-family: inherit;
     cursor: pointer;
     border: 1px solid transparent;
+
     :hover {
       border: 1px solid ${p => p.theme.color.secondary};
     }
@@ -32,8 +29,8 @@ const Container = styled.li`
 interface Props {
   id: number;
   name: string;
-  handleClick?: (id: number) => void;
-  handleRemove?: (id: number) => void;
+  handleClick?: () => void;
+  handleRemove?: () => void;
 }
 
 const Tag: React.FC<Props> = observer(
@@ -41,13 +38,13 @@ const Tag: React.FC<Props> = observer(
     return (
       <Container>
         {handleClick ? (
-          <button onClick={() => handleClick(id)}>{name}</button>
+          <button onClick={handleClick}>{name}</button>
         ) : (
           <>
             <div>{name}</div>
             {handleRemove && (
-              <button onClick={() => handleRemove(id)}>
-                <Icon type="Close" />
+              <button onClick={handleRemove}>
+                <Icon type="Close" color="secondary" width={22} />
               </button>
             )}
           </>
