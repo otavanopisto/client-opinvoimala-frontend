@@ -18,7 +18,7 @@ import {
   RepeatRule,
   RepeatScope,
 } from '../../../store/models';
-import { today } from '../../../utils/date';
+import { localizedDate, today } from '../../../utils/date';
 import { Button, Input, Select } from '../../inputs';
 import DatePicker from '../../inputs/DatePicker';
 import TimePicker from '../../inputs/TimePicker';
@@ -133,6 +133,7 @@ const EditAppointmentForm: React.FC<Props> = ({
 
   const [errorMsgs, setErrorMsgs] = useState<string[]>([]);
   const [overlapMsgs, setOverlapMsgs] = useState<string[]>([]);
+  const [validationMsgs, setValidationMsgs] = useState<string[]>([]);
 
   // Refs
   const appointmentRef = useRef<number>();
@@ -210,6 +211,21 @@ const EditAppointmentForm: React.FC<Props> = ({
     repeatOption,
     repeatUntil,
   ]);
+
+  /**
+   * Validate form data
+   */
+  useEffect(() => {
+    const startTime = localizedDate(date.toISOString());
+    const endTime = localizedDate(endDate.toISOString());
+    if (startTime > endTime) {
+      setValidationMsgs([
+        t('view.admin.appointments.form.validation_error.startAfterEnd'),
+      ]);
+    } else {
+      setValidationMsgs([]);
+    }
+  }, [date, endDate, t]);
 
   const handleSubmit = async (repeatScope = RepeatScope.none) => {
     const startTime = date.toISOString();
@@ -330,17 +346,13 @@ const EditAppointmentForm: React.FC<Props> = ({
               onChange={handleDateChange(setDate)}
               label={t('view.admin.appointments.form.start_time')}
               minTime={DateTime.fromJSDate(date).startOf('day').toJSDate()}
-              maxTime={DateTime.fromJSDate(endDate)
-                .minus({ minutes: 1 })
-                .toJSDate()}
+              maxTime={DateTime.fromJSDate(endDate).endOf('day').toJSDate()}
             />
             <TimePicker
               selected={endDate}
               onChange={handleDateChange(setEndDate)}
               label={t('view.admin.appointments.form.end_time')}
-              minTime={DateTime.fromJSDate(date)
-                .plus({ minutes: 1 })
-                .toJSDate()}
+              minTime={DateTime.fromJSDate(date).startOf('day').toJSDate()}
               maxTime={DateTime.fromJSDate(endDate).endOf('day').toJSDate()}
             />
           </FlexRow>
@@ -399,6 +411,11 @@ const EditAppointmentForm: React.FC<Props> = ({
             />
           </div>
         )}
+        {!!validationMsgs.length && (
+          <div>
+            <Message error icon="warning sign" list={validationMsgs} />
+          </div>
+        )}
         {!!overlapMsgs.length && (
           <div>
             <Message
@@ -438,7 +455,7 @@ const EditAppointmentForm: React.FC<Props> = ({
               id="appointment-form__submit-button"
               text={submitText}
               onClick={() => handleSubmit()}
-              disabled={isBusy}
+              disabled={isBusy || !!validationMsgs.length}
             />
           )}
           {!isAddingNew && repeatOnce && (
@@ -446,7 +463,7 @@ const EditAppointmentForm: React.FC<Props> = ({
               id="appointment-form__submit-button"
               text={submitText}
               onClick={() => handleSubmit()}
-              disabled={isBusy}
+              disabled={isBusy || !!validationMsgs.length}
             />
           )}
           {!isAddingNew && !repeatOnce && appointment && (
@@ -454,6 +471,7 @@ const EditAppointmentForm: React.FC<Props> = ({
               appointment={appointment}
               actionType="edit"
               onConfirm={handleSubmit}
+              disabled={isBusy || !!validationMsgs.length}
             />
           )}
         </FlexRow>

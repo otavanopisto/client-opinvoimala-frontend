@@ -238,6 +238,9 @@
           "overlap": {
             "heading": "Päällekkäisiä aikoja havaittu",
             "text": "Varoitus: Olet luomassa/muokkaamassa yllä listattujen vastaanottoaikojen kanssa päällekkäin osuvia aikoja."
+          },
+          "validation_error": {
+            "startAfterEnd": "Alkamisaika ei voi olla päättymisajan jälkeen"
           }
         },
         "repeat": {
