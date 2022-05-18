@@ -1,9 +1,9 @@
 import React from 'react';
 import { observer } from 'mobx-react-lite';
 import styled from 'styled-components';
-import { Popup } from 'semantic-ui-react';
 import { useTranslation } from 'react-i18next';
 import Icon from './Icon';
+import Tooltip from './Tooltip';
 
 const Container = styled.li`
   :not(:last-child) {
@@ -55,12 +55,6 @@ interface Props {
 const Tag: React.FC<Props> = observer(({ name, handleClick, handleRemove }) => {
   const { t } = useTranslation();
 
-  const popupStyle = {
-    padding: '0.375rem',
-    fontFamily: 'Urbanist',
-    color: '#0B1159',
-  };
-
   return (
     <Container>
       {handleClick ? (
@@ -71,11 +65,8 @@ const Tag: React.FC<Props> = observer(({ name, handleClick, handleRemove }) => {
         <div className="tag-inner-container">
           <span>{name}</span>
           {handleRemove && (
-            <Popup
+            <Tooltip
               content={t('action.delete')}
-              position="top center"
-              size="tiny"
-              style={popupStyle}
               trigger={
                 <button className="remove-button" onClick={handleRemove}>
                   <Icon type="Close" strokeColor="secondary" width={13} />

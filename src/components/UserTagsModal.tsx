@@ -93,10 +93,20 @@ export const UserTagsModal: React.FC<Props> = observer(
         <Container>
           <form onSubmit={handleSubmit}>
             <h2>{t('view.user_tags.form.remove_tags')}</h2>
-            <TagList>{shownSelectedTags}</TagList>
+
+            {shownSelectedTags.length > 0 ? (
+              <TagList>{shownSelectedTags}</TagList>
+            ) : (
+              <div>{t('view.user_tags.no_tags_chosen')}</div>
+            )}
 
             <h2>{t('view.user_tags.form.add_tags')}</h2>
-            <TagList>{tagButtons}</TagList>
+
+            {tagButtons.length > 0 ? (
+              <TagList>{tagButtons}</TagList>
+            ) : (
+              <div>{t('view.user_tags.all_tags_chosen')}</div>
+            )}
 
             <div className="user-interests-modal_submit-tags-button">
               <Button
