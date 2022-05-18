@@ -141,7 +141,7 @@ const Drawer: React.FC<Props> = ({
                   ariaLabel={t('aria.close')}
                   id="drawer__close-button"
                   variant="filled"
-                  icon={<Icon type="Close" color="background" />}
+                  icon={<Icon type="Close" strokeColor="background" />}
                   onClick={closeDrawer}
                   noMargin
                 />

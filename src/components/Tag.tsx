@@ -1,65 +1,48 @@
 import React from 'react';
 import { observer } from 'mobx-react-lite';
 import styled from 'styled-components';
+import { Popup } from 'semantic-ui-react';
+import { useTranslation } from 'react-i18next';
 import Icon from './Icon';
-// const Container = styled.li`
-//   display: flex;
-//   align-items: center;
-
-//   background-color: ${p => p.theme.color.accentLight};
-//   border-radius: ${p => p.theme.borderRadius.sm};
-
-//   padding: ${p => p.theme.spacing.sm};
-//   color: ${p => p.theme.color.secondary};
-//   font-family: ${p => p.theme.font.secondary};
-//   ${p => p.theme.font.size.xs};
-
-//   button {
-//     font-family: inherit;
-//     color: inherit;
-//     cursor: pointer;
-//     padding: 0;
-//     border: 1px solid transparent;
-//     border-radius: inherit;
-
-//     :hover {
-//       border: 1px solid ${p => p.theme.color.secondary};
-//     }
-//   }
 
 const Container = styled.li`
-  display: flex;
-  
-  align-items: center;
-  justify-content: space-between;
-
-  background-color: ${p => p.theme.color.accentLight};
-  border-radius: ${p => p.theme.borderRadius.sm};
-
-
-
   :not(:last-child) {
     margin-right: ${p => p.theme.spacing.sm};
   }
-  ${p => p.theme.font.size.xs};
 
-  .tag-text {
-    padding: 0 ${p => p.theme.spacing.sm};
-    color: ${p => p.theme.color.secondary};
-    font-family: ${p => p.theme.font.secondary};
-  
+  .tag-inner-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.1rem ${p => p.theme.spacing.sm};
+
+    background-color: ${p => p.theme.color.accentLight};
+    border-radius: ${p => p.theme.borderRadius.sm};
     border: 1px solid transparent;
+
+    font-family: ${p => p.theme.font.secondary};
+    color: ${p => p.theme.color.secondary};
+    ${p => p.theme.font.size.xs};
+
+    user-select: none;
+  }
+
+  button {
+    cursor: pointer;
   }
 
   .remove-button {
-    padding: 0 ${p => p.theme.spacing.md};
-    line-height: 100%;
+    display: flex;
+    align-items: center;
+    padding: 0;
+    margin-left: ${p => p.theme.spacing.md};
   }
 
-  .tag-text-button {
-    :hover { 
-      border-radius: inherit;
+  button.tag-inner-container {
+    :hover {
+      border-radius: ${p => p.theme.borderRadius.sm};
       border: 1px solid ${p => p.theme.color.secondary};
+    }
   }
 `;
 
@@ -70,21 +53,37 @@ interface Props {
 }
 
 const Tag: React.FC<Props> = observer(({ name, handleClick, handleRemove }) => {
+  const { t } = useTranslation();
+
+  const popupStyle = {
+    padding: '0.375rem',
+    fontFamily: 'Urbanist',
+    color: '#0B1159',
+  };
+
   return (
     <Container>
       {handleClick ? (
-        <button className="tag-text tag-text-button" onClick={handleClick}>
+        <button className="tag-inner-container" onClick={handleClick}>
           {name}
         </button>
       ) : (
-        <>
-          <div className="tag-text">{name}</div>
+        <div className="tag-inner-container">
+          <span>{name}</span>
           {handleRemove && (
-            <button className="remove-button" onClick={handleRemove}>
-              <Icon type="Close" color="secondary" width={13} />
-            </button>
+            <Popup
+              content={t('action.delete')}
+              position="top center"
+              size="tiny"
+              style={popupStyle}
+              trigger={
+                <button className="remove-button" onClick={handleRemove}>
+                  <Icon type="Close" strokeColor="secondary" width={13} />
+                </button>
+              }
+            />
           )}
-        </>
+        </div>
       )}
     </Container>
   );

@@ -6,6 +6,7 @@ import { useStore } from '../store/storeContext';
 import { linkIsPublic } from '../utils/links';
 import Heading, { HeadingLevel } from './Heading';
 import Link from './Link';
+import Tag from './Tag';
 
 const Container = styled.article<{ isLocked?: boolean }>`
   background-color: ${p => p.theme.color.background};
@@ -99,13 +100,6 @@ const TagList = styled.ul`
 
   li {
     display: inline-block;
-    padding: 0 ${p => p.theme.spacing.md};
-    background-color: ${p => p.theme.color.accentLight};
-    border-radius: ${p => p.theme.borderRadius.sm};
-
-    color: ${p => p.theme.color.secondary};
-    font-family: ${p => p.theme.font.secondary};
-    ${p => p.theme.font.size.xs};
 
     :not(:last-child) {
       margin-right: ${p => p.theme.spacing.sm};
@@ -157,7 +151,7 @@ const Card: React.FC<Props> = observer(
           {!!tags?.length && (
             <TagList>
               {tags.map((tag, i) => (
-                <li key={`${tag}-${i}`}>{tag}</li>
+                <Tag key={`${tag}-${i}`} name={tag} />
               ))}
             </TagList>
           )}
