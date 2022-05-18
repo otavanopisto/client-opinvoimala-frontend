@@ -53,7 +53,6 @@ export const UserTagsModal: React.FC<Props> = observer(
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault();
       await setUserTags({ tags: selectedTags });
-      // await fetchUserInterests();
       closeModal();
     };
 
@@ -66,7 +65,6 @@ export const UserTagsModal: React.FC<Props> = observer(
       .map(tag => (
         <Tag
           key={tag.id}
-          id={tag.id}
           name={tag.name}
           handleRemove={() => handleRemoveTag(tag.id)}
         >
@@ -77,12 +75,7 @@ export const UserTagsModal: React.FC<Props> = observer(
     const tagButtons = tags
       .filter(tag => !selectedTags.includes(tag.id))
       .map(({ id, name }) => (
-        <Tag
-          key={id}
-          id={id}
-          name={name}
-          handleClick={() => handleSelectTag(id)}
-        >
+        <Tag key={id} name={name} handleClick={() => handleSelectTag(id)}>
           {name}
         </Tag>
       ));
