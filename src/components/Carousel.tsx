@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react-lite';
 import React, { useEffect, useState } from 'react';
-import { Grid } from 'semantic-ui-react';
+import { Grid, SemanticWIDTHSNUMBER } from 'semantic-ui-react';
 import styled from 'styled-components';
 import Icon from './Icon';
 import { Button } from './inputs';
@@ -10,19 +10,49 @@ const Header = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  @media ${p => p.theme.breakpoint.mobile} {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 `;
 
 const Buttons = styled.div`
   display: flex;
+  align-items: center;
+
+  .page-indicator {
+    color: ${p => p.theme.color.grey2};
+    ${p => p.theme.font.size.xs};
+    margin-right: ${p => p.theme.spacing.md};
+  }
 
   button {
     border-radius: ${p => p.theme.borderRadius.sm};
     margin-left: ${p => p.theme.spacing.md};
   }
+
+  @media ${p => p.theme.breakpoint.mobile} {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+
+    .buttonPrev {
+      order: 1;
+    }
+
+    .page-indicator {
+      order: 2;
+    }
+
+    .buttonNext {
+      order: 3;
+    }
+  }
 `;
 
 interface Props {
-  columns?: number;
+  columns?: SemanticWIDTHSNUMBER;
   elements: JSX.Element[];
   title: string;
   headingLevel?: HeadingLevel;
@@ -59,6 +89,8 @@ export const Carousel: React.FC<Props> = observer(
       <Icon type={type} strokeColor="secondary" color="none" width={22} />
     );
 
+    const pageIndicator = `${currentPage + 1} / ${pages}`;
+
     return (
       <div>
         <Header>
@@ -69,28 +101,30 @@ export const Carousel: React.FC<Props> = observer(
           )}
 
           <Buttons>
-            <Button
-              id="carousel__show-previous-button"
-              color="grey3"
-              icon={getArrowIcon('ArrowLeft')}
-              onClick={handleShowPrevious}
-            />
-            <Button
-              id="carousel__show-next-button"
-              color="grey3"
-              icon={getArrowIcon('ArrowRight')}
-              onClick={handleShowNext}
-            />
+            {!!elements.length && (
+              <div className="page-indicator">{pageIndicator}</div>
+            )}
+            <div className="buttonPrev">
+              <Button
+                id="carousel__show-previous-button"
+                color="grey3"
+                icon={getArrowIcon('ArrowLeft')}
+                onClick={handleShowPrevious}
+              />
+            </div>
+            <div className="buttonNext">
+              <Button
+                id="carousel__show-next-button"
+                color="grey3"
+                icon={getArrowIcon('ArrowRight')}
+                onClick={handleShowNext}
+              />
+            </div>
           </Buttons>
         </Header>
-        <Grid padded="vertically" columns={3} stretched>
+        <Grid padded="vertically" columns={columns} stretched>
           {visibleElements}
         </Grid>
-        {!!elements.length && (
-          <div>
-            {currentPage + 1} / {pages}
-          </div>
-        )}
       </div>
     );
   }
