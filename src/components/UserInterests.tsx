@@ -14,7 +14,7 @@ export const UserInterests: React.FC = observer(() => {
     auth: { userData },
   } = useStore();
 
-  const [tagsModalOpen, setTagsModalOpen] = useState(false);
+  const [tagsFormOpen, setTagsFormOpen] = useState(false);
 
   const { t } = useTranslation();
 
@@ -40,7 +40,7 @@ export const UserInterests: React.FC = observer(() => {
   ));
 
   const openTagsModal = () => {
-    setTagsModalOpen(true);
+    setTagsFormOpen(true);
   };
 
   return (
@@ -58,8 +58,8 @@ export const UserInterests: React.FC = observer(() => {
         onClick={openTagsModal}
       />
       <UserTagsModal
-        tagsModalOpen={tagsModalOpen}
-        setTagsModalOpen={setTagsModalOpen}
+        tagsFormOpen={tagsFormOpen}
+        setTagsFormOpen={setTagsFormOpen}
       />
     </section>
   );
