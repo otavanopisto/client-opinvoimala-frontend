@@ -16,7 +16,7 @@ export const UserInterests: React.FC = observer(() => {
     auth: { userData },
   } = useStore();
 
-  const [tagsFormOpen, setTagsFormOpen] = useState<boolean>(false);
+  const [tagsFormOpen, setTagsFormOpen] = useState(false);
 
   const { t } = useTranslation();
 
