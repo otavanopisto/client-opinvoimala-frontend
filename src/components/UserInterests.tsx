@@ -47,7 +47,7 @@ export const UserInterests: React.FC = observer(() => {
 
   const { isMobile, isTablet } = useWindowDimensions();
 
-  const columns = isTablet && isMobile ? 1 : isTablet && !isMobile ? 2 : 3;
+  const columns = isMobile ? 1 : isTablet ? 2 : 3;
 
   return (
     <section>
