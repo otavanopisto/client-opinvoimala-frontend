@@ -45,14 +45,21 @@ export const UserInterests: React.FC = observer(() => {
     setTagsFormOpen(true);
   };
 
-  const { isTablet } = useWindowDimensions();
+  const { isMobile, isTablet } = useWindowDimensions();
+
+  const columns = isMobile ? 1 : isTablet ? 2 : 3;
 
   return (
     <section>
-      <Carousel title={t('view.user_tags.title')} elements={carouselElements} />
+      <Carousel
+        title={t('view.user_tags.title')}
+        elements={carouselElements}
+        columns={columns}
+      />
       {userInterests.length === 0 && (
         <div>{t('view.user_tags.no_tags_chosen')}</div>
       )}
+
       <Divider hidden aria-hidden="true" />
       <Button
         id="user-interests__set-tags-button"
