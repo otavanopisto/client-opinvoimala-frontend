@@ -37,6 +37,10 @@ const Buttons = styled.div`
     display: flex;
     justify-content: space-between;
 
+    button {
+      margin: 0;
+    }
+
     .buttonPrev {
       order: 1;
     }
