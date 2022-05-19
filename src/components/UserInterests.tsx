@@ -3,10 +3,12 @@ import React, { useEffect, useState } from 'react';
 import { Divider, Grid, Icon as SemanticIcon } from 'semantic-ui-react';
 import { useTranslation } from 'react-i18next';
 import { useStore } from '../store/storeContext';
+import { useWindowDimensions } from '../utils/hooks';
 import { Button } from './inputs';
 import UserTagsModal from './UserTagsModal';
 import { Carousel } from './Carousel';
 import Card from './Card';
+import UserTagsDrawer from './UserTagsDrawer';
 
 export const UserInterests: React.FC = observer(() => {
   const {
@@ -14,7 +16,7 @@ export const UserInterests: React.FC = observer(() => {
     auth: { userData },
   } = useStore();
 
-  const [tagsFormOpen, setTagsFormOpen] = useState(false);
+  const [tagsFormOpen, setTagsFormOpen] = useState<boolean>(false);
 
   const { t } = useTranslation();
 
@@ -43,6 +45,8 @@ export const UserInterests: React.FC = observer(() => {
     setTagsFormOpen(true);
   };
 
+  const { isTablet } = useWindowDimensions();
+
   return (
     <section>
       <Carousel title={t('view.user_tags.title')} elements={carouselElements} />
@@ -57,10 +61,17 @@ export const UserInterests: React.FC = observer(() => {
         icon={<SemanticIcon name="plus square outline" size="large" />}
         onClick={openTagsModal}
       />
-      <UserTagsModal
-        tagsFormOpen={tagsFormOpen}
-        setTagsFormOpen={setTagsFormOpen}
-      />
+      {isTablet ? (
+        <UserTagsDrawer
+          tagsFormOpen={tagsFormOpen}
+          setTagsFormOpen={setTagsFormOpen}
+        />
+      ) : (
+        <UserTagsModal
+          tagsFormOpen={tagsFormOpen}
+          setTagsFormOpen={setTagsFormOpen}
+        />
+      )}
     </section>
   );
 });
