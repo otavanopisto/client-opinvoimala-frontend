@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react-lite';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Grid } from 'semantic-ui-react';
 import styled from 'styled-components';
 import Icon from './Icon';
@@ -30,32 +30,29 @@ interface Props {
 
 export const Carousel: React.FC<Props> = observer(
   ({ title, columns = 3, elements, headingLevel = 'h2' }) => {
-    const [firstItem, setFirstItem] = useState(0);
-    const [lastItem, setLastItem] = useState(columns);
+    const [currentPage, setCurrentPage] = useState(0);
 
-    const visibleElements =
-      lastItem < firstItem
-        ? elements.slice(firstItem).concat(elements.slice(0, lastItem))
-        : elements.slice(firstItem, lastItem);
+    useEffect(() => {
+      setCurrentPage(0);
+    }, [elements]);
+
+    const pages = Math.ceil(elements.length / columns);
+
+    const visibleElements = elements.slice(
+      columns * currentPage,
+      columns * currentPage + columns
+    );
 
     const handleShowPrevious = () => {
-      firstItem - columns < 0
-        ? setFirstItem(elements.length + (firstItem - columns))
-        : setFirstItem(prev => prev - columns);
-
-      lastItem - columns < 0
-        ? setLastItem(elements.length + (lastItem - columns))
-        : setLastItem(prev => prev - columns);
+      currentPage === 0
+        ? setCurrentPage(pages - 1)
+        : setCurrentPage(prev => prev - 1);
     };
 
     const handleShowNext = () => {
-      firstItem + columns > elements.length
-        ? setFirstItem(firstItem + columns - elements.length)
-        : setFirstItem(prev => prev + columns);
-
-      lastItem + columns > elements.length
-        ? setLastItem(lastItem + columns - elements.length)
-        : setLastItem(prev => prev + columns);
+      currentPage === pages - 1
+        ? setCurrentPage(0)
+        : setCurrentPage(prev => prev + 1);
     };
 
     const getArrowIcon = (type: 'ArrowRight' | 'ArrowLeft') => (
@@ -70,6 +67,7 @@ export const Carousel: React.FC<Props> = observer(
               {title}
             </Heading>
           )}
+
           <Buttons>
             <Button
               id="carousel__show-previous-button"
@@ -85,10 +83,14 @@ export const Carousel: React.FC<Props> = observer(
             />
           </Buttons>
         </Header>
-
         <Grid padded="vertically" columns={3} stretched>
           {visibleElements}
         </Grid>
+        {!!elements.length && (
+          <div>
+            {currentPage + 1} / {pages}
+          </div>
+        )}
       </div>
     );
   }
