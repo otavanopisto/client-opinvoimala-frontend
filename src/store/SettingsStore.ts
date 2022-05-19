@@ -8,7 +8,7 @@ import {
   SnapshotIn,
 } from 'mobx-state-tree';
 import api from '../services/api/Api';
-import { ImageModel, LinkModel } from './models';
+import { ImageModel, LinkModel, TagModel } from './models';
 
 const States = [
   'NOT_FETCHED' as const,
@@ -48,6 +48,7 @@ const SettingsModel = types.model({
       reason: types.maybeNull(types.string),
     })
   ),
+  tags: types.array(TagModel),
 });
 
 export interface ISettingsModel extends Instance<typeof SettingsModel> {}
@@ -57,7 +58,6 @@ export interface SettingsIn extends SnapshotIn<typeof SettingsModel> {}
 export const SettingsStore = types
   .model({
     state: types.enumeration('State', States),
-
     data: types.maybe(SettingsModel),
   })
   .views(self => ({
@@ -84,6 +84,11 @@ export const SettingsStore = types
         return { domain, reason };
       }
       return undefined;
+    },
+
+    get tags() {
+      const settings = self.data ? getSnapshot(self.data) : undefined;
+      return settings?.tags ?? [];
     },
   }))
   .actions(self => {

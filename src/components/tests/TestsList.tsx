@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import { Divider, Grid, Popup } from 'semantic-ui-react';
+import { Divider, Grid } from 'semantic-ui-react';
 import styled from 'styled-components';
 import { path } from '../../routes/routes';
 import { SimpleTest } from '../../store/models';
@@ -10,6 +10,7 @@ import { makeLink } from '../../utils/links';
 import Card from '../Card';
 import Icon from '../Icon';
 import { Button } from '../inputs';
+import Tooltip from '../Tooltip';
 
 const StyledGrid = styled(Grid)`
   @media ${p => p.theme.breakpoint.mobile} {
@@ -117,7 +118,7 @@ const TestsList: React.FC<Props> = ({
       return;
 
     return (
-      <Popup
+      <Tooltip
         content={t('view.tests.affects_user_profile')}
         trigger={
           <span>
@@ -138,7 +139,7 @@ const TestsList: React.FC<Props> = ({
     if (!isLoggedIn) return icon;
 
     return (
-      <Popup
+      <Tooltip
         content={t('view.tests.show_outcome')}
         trigger={
           <Link aria-label={t('aria.show_outcome')} to={to}>

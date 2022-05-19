@@ -1,9 +1,16 @@
-import { Instance, types, flow, cast, getParent } from 'mobx-state-tree';
+import {
+  Instance,
+  types,
+  flow,
+  cast,
+  getParent,
+  getSnapshot,
+} from 'mobx-state-tree';
 import api from '../services/api/Api';
 import Storage from '../services/storage';
 import { ANALYTICS_EVENT, sendAnalyticsEvent } from '../utils/analytics';
 
-import { User, UserModel } from './models';
+import { UserModel } from './models';
 
 const States = ['IDLE' as const, 'PROCESSING' as const, 'ERROR' as const];
 
@@ -24,6 +31,9 @@ export const AuthStore = types
     },
     get showLoginModal() {
       return self.isLoginModalOpen && !this.isLoggedIn;
+    },
+    get userData() {
+      return self.user ? getSnapshot(self.user) : undefined;
     },
   }))
   .actions(self => {
@@ -174,9 +184,22 @@ export const AuthStore = types
       }
     });
 
-    const setUser = (user: User) => {
-      self.user = cast(user);
-    };
+    const setUserTags = flow(function* (params: API.SetUserTags) {
+      self.state = 'PROCESSING';
+
+      const response: API.GeneralResponse<API.RES.SetUserTags> =
+        yield api.setUserTags(params);
+
+      if (response.kind === 'ok') {
+        self.user = cast(response.data);
+
+        self.state = 'IDLE';
+        return { success: true };
+      } else {
+        self.state = 'ERROR';
+        return { success: false };
+      }
+    });
 
     return {
       register,
@@ -189,7 +212,7 @@ export const AuthStore = types
       logout,
       deleteAccount,
       getMe,
-      setUser,
+      setUserTags,
     };
   });
 
