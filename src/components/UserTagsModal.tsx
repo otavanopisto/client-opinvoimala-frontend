@@ -1,9 +1,6 @@
 import { observer } from 'mobx-react-lite';
-
 import { useTranslation } from 'react-i18next';
-
 import Modal, { Props as ModalProps } from './Modal';
-
 import UserTagsForm from './UserTagsForm';
 
 interface Props extends ModalProps {}
