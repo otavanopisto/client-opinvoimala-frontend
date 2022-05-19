@@ -45,9 +45,9 @@ export const UserInterests: React.FC = observer(() => {
     setTagsFormOpen(true);
   };
 
-  const { isTablet } = useWindowDimensions();
+  const { isMobile, isTablet } = useWindowDimensions();
 
-  const columns = isTablet ? 1 : 3;
+  const columns = isTablet && isMobile ? 1 : isTablet && !isMobile ? 2 : 3;
 
   return (
     <section>
