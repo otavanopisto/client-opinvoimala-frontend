@@ -50,8 +50,6 @@ export const UserInterests: React.FC = observer(() => {
 
   const columns = isMobile ? 1 : isTablet ? 2 : 3;
 
-  console.log(state);
-
   if (state === 'FETCHING') {
     return <LoadingPlaceholder.Content />;
   }
