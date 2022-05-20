@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { observer } from 'mobx-react-lite';
 import styled from 'styled-components';
+import { Loader, Transition } from 'semantic-ui-react';
 import { useTranslation } from 'react-i18next';
 import { useStore } from '../store/storeContext';
 import { Button } from './inputs';
 import Tag from './Tag';
+import Message from './Message';
 
 const Container = styled.div`
   h2 {
@@ -13,6 +15,10 @@ const Container = styled.div`
   }
 
   .user-interests-form_submit-tags-button {
+    margin-top: ${p => p.theme.spacing.md};
+  }
+
+  .error-message {
     margin-top: ${p => p.theme.spacing.lg};
   }
 `;
@@ -26,13 +32,14 @@ const TagList = styled.ul`
 
 interface Props {
   closeForm: () => void;
+  tagsFormOpen: boolean;
 }
 
 export const UserTagsForm: React.FC<Props> = observer(
-  ({ closeForm, ...props }) => {
+  ({ closeForm, tagsFormOpen, ...props }) => {
     const {
       settings: { tags },
-      auth: { user, setUserTags },
+      auth: { user, setUserTags, state },
     } = useStore();
 
     const { t } = useTranslation();
@@ -40,6 +47,11 @@ export const UserTagsForm: React.FC<Props> = observer(
     const initialUserTagIds = user ? user.tags.map(tag => tag.id) : [];
 
     const [selectedTags, setSelectedTags] = useState(initialUserTagIds);
+    const [error, setError] = useState(false);
+
+    const isBusy = ['PROCESSING'].includes(state);
+
+    useEffect(() => setError(false), [tagsFormOpen]);
 
     const handleSelectTag = (id: number) => {
       setSelectedTags(prev => [...prev, id]);
@@ -53,8 +65,12 @@ export const UserTagsForm: React.FC<Props> = observer(
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault();
-      await setUserTags({ tags: selectedTags });
-      closeForm();
+      handleActionResponse(await setUserTags({ tags: selectedTags }));
+    };
+
+    const handleActionResponse = ({ success }: { success: boolean }) => {
+      if (success) closeForm();
+      else setError(true);
     };
 
     const shownSelectedTags = tags
@@ -79,6 +95,7 @@ export const UserTagsForm: React.FC<Props> = observer(
 
     return (
       <Container>
+        <Loader disabled={!isBusy} size="massive" />
         <form onSubmit={handleSubmit}>
           <h2>{t('view.user_tags.form.remove_tags')}</h2>
 
@@ -96,11 +113,24 @@ export const UserTagsForm: React.FC<Props> = observer(
             <div>{t('view.user_tags.all_tags_chosen')}</div>
           )}
 
+          <Transition.Group>
+            {error && (
+              <div className="error-message">
+                <Message
+                  error
+                  icon="warning sign"
+                  header={t('error.unknown_error')}
+                />
+              </div>
+            )}
+          </Transition.Group>
+
           <div className="user-interests-form_submit-tags-button">
             <Button
               id="user-interests-form_submit-tags-button"
               text={t('action.save')}
               type="submit"
+              disabled={isBusy}
               noMargin
             />
           </div>
