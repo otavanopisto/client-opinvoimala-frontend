@@ -9,6 +9,7 @@ import UserTagsModal from './UserTagsModal';
 import { Carousel } from './Carousel';
 import Card from './Card';
 import UserTagsDrawer from './UserTagsDrawer';
+import LoadingPlaceholder from './LoadingPlaceholder';
 
 export const UserInterests: React.FC = observer(() => {
   const {
@@ -48,6 +49,12 @@ export const UserInterests: React.FC = observer(() => {
   const { isMobile, isTablet } = useWindowDimensions();
 
   const columns = isMobile ? 1 : isTablet ? 2 : 3;
+
+  console.log(state);
+
+  if (state === 'FETCHING') {
+    return <LoadingPlaceholder.Content />;
+  }
 
   return (
     <section>

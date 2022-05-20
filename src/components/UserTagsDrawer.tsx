@@ -27,7 +27,7 @@ export const UserTagsDrawer: React.FC<Props> = observer(
     return (
       <Drawer fullWidth open={tagsFormOpen} onClose={closeForm}>
         <Header>{t('view.user_tags.form.title')}</Header>
-        <UserTagsForm closeForm={closeForm} />
+        <UserTagsForm closeForm={closeForm} tagsFormOpen={tagsFormOpen} />
       </Drawer>
     );
   }
