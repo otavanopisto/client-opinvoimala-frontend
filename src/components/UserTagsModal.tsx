@@ -23,7 +23,7 @@ export const UserTagsModal: React.FC<Props> = observer(
         closeButtonType="both"
         closeButtonText={t('action.cancel')}
       >
-        <UserTagsForm closeForm={closeForm} />
+        <UserTagsForm closeForm={closeForm} tagsFormOpen={tagsFormOpen} />
       </Modal>
     );
   }
