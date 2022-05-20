@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - OPI-88: User goals (users can set and manage goals for themselves)
 - OPI-90: Events
 - OPI-93: Admin/Appointments (Manage appointments as a specialist)
+- OPI-94: User interests (users can get recommendations according to chosen tags)
 
 ### Changed
 
