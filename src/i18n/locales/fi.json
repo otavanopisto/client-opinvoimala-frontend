@@ -30,7 +30,9 @@
     "confirm": "Vahvista",
     "confirm_delete": "Vahvista poisto",
     "confirm_edit": "Vahvista muokkaus",
-    "show_more": "Lataa lisää"
+    "show_more": "Lataa lisää",
+    "yes": "Kyllä",
+    "no": "Ei"
   },
   "label": {
     "name": "Nimi",
