@@ -12,3 +12,4 @@ export * from './TagModel';
 export * from './SpecialistModel';
 export * from './SpecialistRoleModel';
 export * from './AppointmentModel';
+export * from './FeedbackModel';

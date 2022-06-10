@@ -30,6 +30,7 @@ const make404page = (params: API.GetContentPages, title: string) => ({
     title: null,
     links: [],
   },
+  feedback: null,
 });
 
 const ContentPageModel = types.model({
