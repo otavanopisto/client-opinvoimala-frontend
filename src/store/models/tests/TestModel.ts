@@ -1,6 +1,7 @@
 import { SnapshotOut, types } from 'mobx-state-tree';
 import { TestCategoryModel } from './TestCategoryModel';
 import { QuestionModel } from './QuestionModel';
+import { FeedbackModel } from '../FeedbackModel';
 
 const OutcomeTypes = [
   'total_points' as const,
@@ -16,6 +17,7 @@ export const TestModel = types.model({
   type: types.enumeration(['test', 'exercise']),
   categories: types.array(TestCategoryModel),
   questions: types.maybeNull(types.array(QuestionModel)),
+  feedback: types.maybeNull(FeedbackModel),
 });
 
 export interface Test extends SnapshotOut<typeof TestModel> {}

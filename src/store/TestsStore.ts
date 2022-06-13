@@ -27,6 +27,7 @@ const make404Test = (params: API.GetContentPages, name: string): Test => ({
   type: 'test',
   categories: [],
   questions: null,
+  feedback: null,
 });
 
 const isNil = (item: any) => item === undefined || item === null;
