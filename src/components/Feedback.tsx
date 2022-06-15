@@ -3,10 +3,21 @@ import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Label, Segment } from 'semantic-ui-react';
 import styled from 'styled-components';
+import { useStore } from '../store/storeContext';
 import Storage from '../services/storage';
 import Icon from './Icon';
 import { Button } from './inputs';
-import { Feedback as FeedbackType } from '../store/models';
+import { Feedback as FeedbackModel } from '../store/models';
+
+export type feedbackType =
+  | 'like'
+  | 'dislike'
+  | 'unlike'
+  | 'undislike'
+  | 'dislike-to-like'
+  | 'like-to-dislike';
+
+export type answerType = 'YES' | 'NO' | null;
 
 const Header = styled.div`
   display: flex;
@@ -39,6 +50,7 @@ const Buttons = styled.div`
   }
 
   .button-segment {
+    z-index: 0 !important;
     padding: 0;
     margin: 0;
     :not(:last-child) {
@@ -52,28 +64,39 @@ const Buttons = styled.div`
 `;
 
 interface Props {
-  feedback: FeedbackType | null | undefined;
+  pageId: number;
+  feedback: FeedbackModel | null | undefined;
   slug: string;
   contentType: 'page' | 'test';
 }
 
-export const UserFeedback: React.FC<Props> = observer(
-  ({ feedback, slug, contentType }) => {
+export const Feedback: React.FC<Props> = observer(
+  ({ pageId, feedback, slug, contentType }) => {
     const { t } = useTranslation();
+
+    const { contentPages, tests } = useStore();
+
+    const sendPageFeedback = contentPages.sendFeedback;
+    const sendTestFeedback = tests.sendFeedback;
 
     const [likeButtonActive, setLikeButtonActive] = useState(false);
     const [dislikeButtonActive, setDislikeButtonActive] = useState(false);
 
-    useEffect(() => {
-      const locallyStoredFeedback = Storage.read({ key: 'FEEDBACK' })[
-        contentType
-      ][slug];
-      setInitialButtonStates(locallyStoredFeedback);
-    }, [contentType, slug]);
+    const locallyStoredFeedback = Storage.read({ key: 'FEEDBACK' });
 
-    const setInitialButtonStates = (
-      locallyStoredFeedback: 'YES' | 'NO' | null
-    ) => {
+    const noLocallyStoredFeedback =
+      !locallyStoredFeedback ||
+      !locallyStoredFeedback.hasOwnProperty(contentType) ||
+      !locallyStoredFeedback[contentType].hasOwnProperty(slug);
+
+    useEffect(() => {
+      if (noLocallyStoredFeedback) setInitialButtonStates(null);
+      else {
+        setInitialButtonStates(locallyStoredFeedback[contentType][slug]);
+      }
+    }, [locallyStoredFeedback, contentType, slug, noLocallyStoredFeedback]);
+
+    const setInitialButtonStates = (locallyStoredFeedback: answerType) => {
       switch (locallyStoredFeedback) {
         case 'YES':
           setLikeButtonActive(true);
@@ -108,50 +131,73 @@ export const UserFeedback: React.FC<Props> = observer(
     const handleLike = () => {
       // if user has already pressed like
       if (likeButtonActive) {
-        storeFeedbackLocally(null);
-        console.log('vähennetään yksi like');
+        submitFeedback(null, 'unlike');
       }
 
-      // if user hasn't pressed like, but has pressed dislike
+      // if user has already pressed dislike
       if (!likeButtonActive && dislikeButtonActive) {
-        storeFeedbackLocally('YES');
-        console.log('lisätään yksi like, vähennetään yksi dislike');
+        submitFeedback('YES', 'dislike-to-like');
       }
 
       // if user hasn't pressed like nor dislike
       if (!likeButtonActive && !dislikeButtonActive) {
-        storeFeedbackLocally('YES');
-        console.log('Lisätään yksi like');
-        // Storage.write({ key: 'FEEDBACK', value: {'page':answer});
+        submitFeedback('YES', 'like');
       }
-
       setLikeButtonActive(prev => !prev);
       if (dislikeButtonActive) setDislikeButtonActive(false);
     };
 
     const handleDislike = () => {
       // if user has already pressed dislike
-      storeFeedbackLocally(null);
-      if (dislikeButtonActive) console.log('vähennetään yksi dislike');
+      if (dislikeButtonActive) {
+        submitFeedback(null, 'undislike');
+      }
 
-      // if user hasn't pressed dislike, but has pressed like
-      if (!dislikeButtonActive && likeButtonActive) storeFeedbackLocally('NO');
-      console.log('lisätään yksi dislike, vähennetään yksi like');
+      // if user has already pressed like
+      if (!dislikeButtonActive && likeButtonActive) {
+        submitFeedback('NO', 'like-to-dislike');
+      }
 
       // if user hasn't pressed dislike nor like
       if (!dislikeButtonActive && !likeButtonActive) {
+        submitFeedback('NO', 'dislike');
         storeFeedbackLocally('NO');
-        console.log('Lisätään yksi dislike');
       }
 
       setDislikeButtonActive(prev => !prev);
       if (likeButtonActive) setLikeButtonActive(false);
     };
 
-    const storeFeedbackLocally = (answer: 'YES' | 'NO' | null) => {
+    const submitFeedback = (answer: answerType, feedbackType: feedbackType) => {
+      switch (contentType) {
+        case 'page':
+          sendPageFeedback({
+            id: pageId,
+            contentType: contentType,
+            feedbackType: feedbackType,
+          });
+          storeFeedbackLocally(answer);
+          return;
+        case 'test':
+          sendTestFeedback({
+            id: pageId,
+            contentType: contentType,
+            feedbackType: feedbackType,
+          });
+          storeFeedbackLocally(answer);
+          return;
+      }
+    };
+
+    const storeFeedbackLocally = (answer: answerType) => {
+      const feedbackValue = {
+        ...locallyStoredFeedback,
+        [contentType]: { [slug]: answer },
+      };
+
       Storage.write({
         key: 'FEEDBACK',
-        value: { [contentType]: { [slug]: answer } },
+        value: feedbackValue,
       });
     };
 
@@ -160,7 +206,7 @@ export const UserFeedback: React.FC<Props> = observer(
         <Header>{title}</Header>
         <Buttons>
           <Segment className="button-segment" basic>
-            {likes && (
+            {!!likes && (
               <Label
                 color="grey"
                 size="small"
@@ -180,7 +226,7 @@ export const UserFeedback: React.FC<Props> = observer(
           </Segment>
 
           <Segment className="button-segment" basic>
-            {dislikes && (
+            {!!dislikes && (
               <Label
                 color="grey"
                 size="small"
@@ -206,4 +252,4 @@ export const UserFeedback: React.FC<Props> = observer(
   }
 );
 
-export default UserFeedback;
+export default Feedback;

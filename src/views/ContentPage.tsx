@@ -11,7 +11,7 @@ import InnerHtmlDiv from '../components/InnerHtmlDiv';
 import { Divider } from 'semantic-ui-react';
 import Cards from '../components/Cards';
 import { usePageTitle } from '../utils/hooks/usePageTitle';
-import UserFeedback from '../components/UserFeedback';
+import Feedback from '../components/Feedback';
 
 const InnerHtmlContainer = styled.div`
   h1 {
@@ -49,8 +49,6 @@ export const ContentPage = observer(() => {
   } = useStore();
 
   const page = getPage(slug);
-
-  const feedback = page?.feedback;
 
   const isLoading = state === 'FETCHING';
 
@@ -119,7 +117,12 @@ export const ContentPage = observer(() => {
       {page?.linkList && <LinkList list={page.linkList} initialItemCount={5} />}
 
       {page?.feedback && page.feedback.showFeedback && (
-        <UserFeedback feedback={feedback} slug={slug} contentType="page" />
+        <Feedback
+          pageId={page.id}
+          feedback={page.feedback}
+          slug={slug}
+          contentType="page"
+        />
       )}
     </Layout>
   );

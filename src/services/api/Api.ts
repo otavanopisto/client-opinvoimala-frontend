@@ -347,6 +347,23 @@ export class Api extends BaseApi {
     const response = await this.api.get(url, params, this.auth());
     return this.handleResponse(response);
   }
+
+  /**
+   * Give feedback
+   */
+  async sendFeedback({
+    id,
+    contentType,
+    feedbackType,
+  }: API.SendFeedback): Promise<Response<API.RES.SendFeedback>> {
+    const url = `${contentType}s/${id}/feedback`;
+    const response = await this.api.post(
+      url,
+      { type: feedbackType },
+      this.auth()
+    );
+    return this.handleResponse(response);
+  }
 }
 
 export const api = new Api();

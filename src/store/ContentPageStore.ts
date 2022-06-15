@@ -89,6 +89,28 @@ export const ContentPageStore = types
       }
     });
 
+    const sendFeedback = flow(function* (params: API.SendFeedback) {
+      const response: API.GeneralResponse<API.RES.SendFeedback> =
+        yield api.sendFeedback(params);
+
+      if (response.kind === 'ok') {
+        self.data = cast({
+          ...self.data,
+          pages: self.data?.pages.map(page => {
+            if (page.id !== params.id) return page;
+            return {
+              ...page,
+              feedback: response.data,
+            };
+          }),
+        });
+        return { success: true };
+      } else {
+        self.state = 'ERROR';
+        return { success: false };
+      }
+    });
+
     return {
       afterCreate: () => {
         initialState = getSnapshot(self);
@@ -97,6 +119,7 @@ export const ContentPageStore = types
         applySnapshot(self, initialState);
       },
       fetchPage,
+      sendFeedback,
     };
   });
 

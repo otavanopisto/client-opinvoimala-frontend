@@ -19,6 +19,7 @@ import {
 } from '../utils/storage';
 import { ANALYTICS_EVENT, sendAnalyticsEvent } from '../utils/analytics';
 import { usePageTitle } from '../utils/hooks/usePageTitle';
+import Feedback from '../components/Feedback';
 
 const SAVE_PROGRESS_TO_STORAGE = true;
 
@@ -289,6 +290,15 @@ export const Test: React.FC = observer(() => {
       </TestControls>
 
       {!isExercise && <Annotation text={t('annotation.test')} />}
+
+      {test?.feedback && test.feedback.showFeedback && (
+        <Feedback
+          pageId={test.id}
+          feedback={test.feedback}
+          slug={slug}
+          contentType="test"
+        />
+      )}
     </Layout>
   );
 });

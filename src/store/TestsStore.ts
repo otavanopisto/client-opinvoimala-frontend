@@ -256,7 +256,6 @@ export const TestsStore = types
         self.testOutcomeState = 'UNAUTHORIZED';
         throw response.data;
       } else {
-        console.log(response.data);
         self.testOutcomeState = 'ERROR';
       }
     });
@@ -277,7 +276,6 @@ export const TestsStore = types
         self.testOutcomeState = 'UNAUTHORIZED';
         throw response.data;
       } else {
-        console.log(response.data);
         self.testOutcomeState = 'ERROR';
       }
     });
@@ -297,8 +295,26 @@ export const TestsStore = types
         self.testsSummaryState = 'UNAUTHORIZED';
         throw response.data;
       } else {
-        console.log(response.data);
         self.testsSummaryState = 'ERROR';
+      }
+    });
+
+    const sendFeedback = flow(function* (params: API.SendFeedback) {
+      const response: API.GeneralResponse<API.RES.SendFeedback> =
+        yield api.sendFeedback(params);
+
+      if (response.kind === 'ok') {
+        self.testData = cast(
+          self.testData?.map(test => {
+            if (test.id !== params.id) return test;
+            return { ...test, feedback: response.data };
+          })
+        );
+
+        return { success: true };
+      } else {
+        self.testState = 'ERROR';
+        return { success: false };
       }
     });
 
@@ -315,6 +331,7 @@ export const TestsStore = types
       createTestOutcome,
       fetchTestOutcome,
       fetchTestsSummary,
+      sendFeedback,
     };
   });
 
