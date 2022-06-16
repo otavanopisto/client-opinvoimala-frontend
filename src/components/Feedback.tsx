@@ -89,15 +89,13 @@ export const Feedback: React.FC<Props> = observer(
 
     const locallyStoredFeedback = Storage.read({ key: 'FEEDBACK_LIKES' });
 
-    const noLocallyStoredFeedback =
-      !locallyStoredFeedback || !locallyStoredFeedback.hasOwnProperty(slug);
-
     useEffect(() => {
-      if (noLocallyStoredFeedback) setInitialButtonStates(null);
+      if (locallyStoredFeedback?.[contentType]?.[slug] === undefined)
+        setInitialButtonStates(null);
       else {
-        setInitialButtonStates(locallyStoredFeedback[slug]);
+        setInitialButtonStates(locallyStoredFeedback[contentType][slug]);
       }
-    }, [locallyStoredFeedback, contentType, slug, noLocallyStoredFeedback]);
+    }, [locallyStoredFeedback, contentType, slug]);
 
     const setInitialButtonStates = (locallyStoredFeedback: answerType) => {
       switch (locallyStoredFeedback) {
@@ -192,11 +190,33 @@ export const Feedback: React.FC<Props> = observer(
     };
 
     const storeFeedbackLocally = (answer: answerType) => {
-      const feedback = { ...locallyStoredFeedback, [slug]: answer };
-      Storage.write({
-        key: 'FEEDBACK_LIKES',
-        value: feedback,
-      });
+      if (contentType === 'page') {
+        const feedback = {
+          ...locallyStoredFeedback,
+          page: {
+            ...locallyStoredFeedback?.page,
+            [slug]: answer,
+          },
+        };
+        Storage.write({
+          key: 'FEEDBACK_LIKES',
+          value: feedback,
+        });
+      }
+
+      if (contentType === 'test') {
+        const feedback = {
+          ...locallyStoredFeedback,
+          test: {
+            ...locallyStoredFeedback?.test,
+            [slug]: answer,
+          },
+        };
+        Storage.write({
+          key: 'FEEDBACK_LIKES',
+          value: feedback,
+        });
+      }
     };
 
     return (
