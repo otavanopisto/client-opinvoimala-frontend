@@ -117,12 +117,15 @@ export const ContentPage = observer(() => {
       {page?.linkList && <LinkList list={page.linkList} initialItemCount={5} />}
 
       {page?.feedback && page.feedback.showFeedback && (
-        <Feedback
-          pageId={page.id}
-          feedback={page.feedback}
-          slug={slug}
-          contentType="page"
-        />
+        <>
+          <Divider section hidden aria-hidden="true" />
+          <Feedback
+            pageId={page.id}
+            feedback={page.feedback}
+            slug={slug}
+            contentType="page"
+          />
+        </>
       )}
     </Layout>
   );

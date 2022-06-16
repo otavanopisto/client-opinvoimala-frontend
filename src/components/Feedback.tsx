@@ -17,11 +17,16 @@ export type feedbackType =
   | 'dislike-to-like'
   | 'like-to-dislike';
 
-export type answerType = 'YES' | 'NO' | null;
+export type answerType = 'LIKE' | 'DISLIKE' | null;
+
+const FeedbackContainer = styled.div`
+  margin: ${p => p.theme.spacing.lg} ${p => p.theme.spacing.lg};
+`;
 
 const Header = styled.div`
   display: flex;
   justify-content: center;
+  text-align: center;
   color: ${p => p.theme.color.secondary};
   ${p => p.theme.font.h3};
   font-weight: bold;
@@ -82,27 +87,25 @@ export const Feedback: React.FC<Props> = observer(
     const [likeButtonActive, setLikeButtonActive] = useState(false);
     const [dislikeButtonActive, setDislikeButtonActive] = useState(false);
 
-    const locallyStoredFeedback = Storage.read({ key: 'FEEDBACK' });
+    const locallyStoredFeedback = Storage.read({ key: 'FEEDBACK_LIKES' });
 
     const noLocallyStoredFeedback =
-      !locallyStoredFeedback ||
-      !locallyStoredFeedback.hasOwnProperty(contentType) ||
-      !locallyStoredFeedback[contentType].hasOwnProperty(slug);
+      !locallyStoredFeedback || !locallyStoredFeedback.hasOwnProperty(slug);
 
     useEffect(() => {
       if (noLocallyStoredFeedback) setInitialButtonStates(null);
       else {
-        setInitialButtonStates(locallyStoredFeedback[contentType][slug]);
+        setInitialButtonStates(locallyStoredFeedback[slug]);
       }
     }, [locallyStoredFeedback, contentType, slug, noLocallyStoredFeedback]);
 
     const setInitialButtonStates = (locallyStoredFeedback: answerType) => {
       switch (locallyStoredFeedback) {
-        case 'YES':
+        case 'LIKE':
           setLikeButtonActive(true);
           setDislikeButtonActive(false);
           break;
-        case 'NO':
+        case 'DISLIKE':
           setLikeButtonActive(false);
           setDislikeButtonActive(true);
           break;
@@ -121,7 +124,7 @@ export const Feedback: React.FC<Props> = observer(
     const dislikes = feedback?.dislikes;
 
     const getButtonColor = (buttonState: boolean) => {
-      return buttonState ? 'grey3' : 'primary';
+      return buttonState ? 'primary' : 'grey3';
     };
 
     const likeButtonColor = getButtonColor(likeButtonActive);
@@ -136,12 +139,12 @@ export const Feedback: React.FC<Props> = observer(
 
       // if user has already pressed dislike
       if (!likeButtonActive && dislikeButtonActive) {
-        submitFeedback('YES', 'dislike-to-like');
+        submitFeedback('LIKE', 'dislike-to-like');
       }
 
       // if user hasn't pressed like nor dislike
       if (!likeButtonActive && !dislikeButtonActive) {
-        submitFeedback('YES', 'like');
+        submitFeedback('LIKE', 'like');
       }
       setLikeButtonActive(prev => !prev);
       if (dislikeButtonActive) setDislikeButtonActive(false);
@@ -155,13 +158,12 @@ export const Feedback: React.FC<Props> = observer(
 
       // if user has already pressed like
       if (!dislikeButtonActive && likeButtonActive) {
-        submitFeedback('NO', 'like-to-dislike');
+        submitFeedback('DISLIKE', 'like-to-dislike');
       }
 
       // if user hasn't pressed dislike nor like
       if (!dislikeButtonActive && !likeButtonActive) {
-        submitFeedback('NO', 'dislike');
-        storeFeedbackLocally('NO');
+        submitFeedback('DISLIKE', 'dislike');
       }
 
       setDislikeButtonActive(prev => !prev);
@@ -190,19 +192,15 @@ export const Feedback: React.FC<Props> = observer(
     };
 
     const storeFeedbackLocally = (answer: answerType) => {
-      const feedbackValue = {
-        ...locallyStoredFeedback,
-        [contentType]: { [slug]: answer },
-      };
-
+      const feedback = { ...locallyStoredFeedback, [slug]: answer };
       Storage.write({
-        key: 'FEEDBACK',
-        value: feedbackValue,
+        key: 'FEEDBACK_LIKES',
+        value: feedback,
       });
     };
 
     return (
-      <>
+      <FeedbackContainer>
         <Header>{title}</Header>
         <Buttons>
           <Segment className="button-segment" basic>
@@ -222,6 +220,7 @@ export const Feedback: React.FC<Props> = observer(
               text={t('action.yes')}
               icon={<Icon type={'Thumbs'} />}
               onClick={() => handleLike()}
+              negativeText={!likeButtonActive}
             />
           </Segment>
 
@@ -244,10 +243,11 @@ export const Feedback: React.FC<Props> = observer(
               color={dislikeButtonColor}
               icon={<Icon className="dislike-icon" type={'Thumbs'} />}
               onClick={() => handleDislike()}
+              negativeText={!dislikeButtonActive}
             />
           </Segment>
         </Buttons>
-      </>
+      </FeedbackContainer>
     );
   }
 );

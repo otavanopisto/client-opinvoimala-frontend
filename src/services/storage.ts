@@ -5,7 +5,7 @@ export type StorageKey =
   | 'TESTS_IN_PROGRESS'
   | 'ADMIN_AUTH_TOKEN'
   | 'ADMIN_USER'
-  | 'FEEDBACK';
+  | 'FEEDBACK_LIKES';
 
 interface StorageProps {
   key: StorageKey;
