@@ -356,7 +356,17 @@ export class Api extends BaseApi {
     contentType,
     feedbackType,
   }: API.SendFeedback): Promise<Response<API.RES.SendFeedback>> {
-    const url = `${contentType}s/${id}/feedback`;
+    const getUrl = (contentType: 'page' | 'test') => {
+      switch (contentType) {
+        case 'page':
+          return `pages/${id}/feedback`;
+        case 'test':
+          return `tests/${id}/feedback`;
+      }
+    };
+
+    const url = getUrl(contentType);
+
     const response = await this.api.post(
       url,
       { type: feedbackType },

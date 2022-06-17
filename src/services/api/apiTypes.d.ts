@@ -127,7 +127,7 @@ declare namespace API {
 
   type SendFeedback = {
     id: number;
-    contentType: string;
+    contentType: 'page' | 'test';
     feedbackType:
       | 'like'
       | 'dislike'

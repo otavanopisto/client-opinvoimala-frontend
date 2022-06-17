@@ -122,6 +122,7 @@ export interface Props {
     variables?: any;
   };
   tooltip?: string;
+  iconPosition?: 'left' | 'right';
 }
 
 export const Button: FC<Props> = ({
@@ -141,6 +142,7 @@ export const Button: FC<Props> = ({
   ariaLabel,
   gaEvent,
   tooltip,
+  iconPosition = 'right',
 }) => {
   const isIconButton = !!icon && !text;
 
@@ -172,8 +174,18 @@ export const Button: FC<Props> = ({
       noMargin={noMargin}
       autoFocus={autoFocus}
     >
-      {text}
-      {icon}
+      {iconPosition === 'left' && (
+        <>
+          {icon}
+          {text}
+        </>
+      )}
+      {iconPosition === 'right' && (
+        <>
+          {text}
+          {icon}
+        </>
+      )}
     </StyledButton>
   );
 

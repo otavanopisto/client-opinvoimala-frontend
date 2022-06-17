@@ -91,25 +91,30 @@ export const TestOutcomes = observer(() => {
   return (
     <Layout wrapperSize="sm" hero={hero} isLoading={isLoading}>
       <Watermark right={-80} top={-40} showOnlyOnScreensAbove={1400} />
+
       <TestScore points={points} maxPoints={maximumPoints} stars={stars} />
+
       {visibleOutcomes.map(outcome => (
         <TestOutcome key={outcome.id} {...outcome} />
       ))}
+
       {!visibleOutcomes.length && (
         <Message content={t('view.test_outcome.no_matching_outcomes')} />
       )}
+
       {isTest && <Annotation text={t('annotation.test')} />}
+
       {linkList && (
         <NoPrint>
           <LinkList list={linkList} initialItemCount={5} />
         </NoPrint>
       )}
 
-      {test?.feedback && test.feedback.showFeedback && (
+      {test?.feedback?.showFeedback && (
         <>
           <Divider section hidden aria-hidden="true" />
           <Feedback
-            pageId={test.id}
+            id={test.id}
             feedback={test.feedback}
             slug={slug}
             contentType="test"
