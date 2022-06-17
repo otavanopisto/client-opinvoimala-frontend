@@ -40,15 +40,6 @@ const Buttons = styled.div`
   justify-content: center;
   align-items: center;
 
-  button {
-    margin: 0;
-
-    svg {
-      margin-left: 0;
-      margin-right: ${p => p.theme.spacing.sm};
-    }
-  }
-
   .dislike-icon {
     transform: rotate(180deg);
   }

@@ -9,6 +9,7 @@ const StyledButton = styled.button<{
   negativeText: boolean;
   isSmall: boolean;
   noMargin: boolean;
+  iconPosition: 'left' | 'right';
 }>`
   display: flex;
   justify-content: center;
@@ -25,8 +26,8 @@ const StyledButton = styled.button<{
 
   > svg,
   > i {
-    margin-left: 8px;
-    margin-right: 0px;
+    margin-left: ${p => (p.iconPosition === 'right' ? '8px' : 0)};
+    margin-right: ${p => (p.iconPosition === 'left' ? '8px' : 0)};
   }
 
   &.icon-button {
@@ -173,19 +174,11 @@ export const Button: FC<Props> = ({
       isSmall={isSmall || isIconButton}
       noMargin={noMargin}
       autoFocus={autoFocus}
+      iconPosition={iconPosition}
     >
-      {iconPosition === 'left' && (
-        <>
-          {icon}
-          {text}
-        </>
-      )}
-      {iconPosition === 'right' && (
-        <>
-          {text}
-          {icon}
-        </>
-      )}
+      {iconPosition === 'left' && icon}
+      {text}
+      {iconPosition === 'right' && icon}
     </StyledButton>
   );
 
