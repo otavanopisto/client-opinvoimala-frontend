@@ -221,7 +221,7 @@ export const AppointmentsListItem: React.FC<Props> = ({
           {showEditButton && (
             <Button
               id={`appointment-${id}__edit-button`}
-              text="Muokkaa"
+              text={t('action.edit')}
               onClick={() => onEdit(id)}
               variant="filled"
               color="grey3"

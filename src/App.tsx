@@ -9,6 +9,7 @@ import Cookiebot from './components/Cookiebot';
 import Analytics from './components/Analytics';
 import Chat from './components/Chat';
 import MaintenancePage from './views/auth/MaintenancePage';
+import { useAdminStore } from './store/admin/adminStoreContext';
 
 const App: React.FC = observer(() => {
   const {
@@ -17,6 +18,8 @@ const App: React.FC = observer(() => {
     navigation: { state: navigationState },
     appointments: { appointmentState },
   } = useStore();
+
+  const adminStore = useAdminStore();
 
   const isFetching = (...states: string[]) => {
     const fetchingStates = states.filter(state =>
@@ -42,11 +45,20 @@ const App: React.FC = observer(() => {
     }
   }, [fetchSettings, settingsState]);
 
+  // Get user's data (for regular user)
   useEffect(() => {
     if (!user && isLoggedIn) {
       getMe();
     }
-  });
+  }, [getMe, isLoggedIn, user]);
+
+  // Get user's data (for admin user)
+  useEffect(() => {
+    const { user, isLoggedIn, getMe } = adminStore.auth;
+    if (!user && isLoggedIn) {
+      getMe();
+    }
+  }, [adminStore.auth]);
 
   const {
     cookiebotDomainGroupId,

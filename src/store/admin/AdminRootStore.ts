@@ -2,6 +2,7 @@ import { Instance, onSnapshot, SnapshotOut, types } from 'mobx-state-tree';
 import { AdminAppointmentSpecialistsStore } from './AdminAppointmentSpecialistsStore';
 import { AdminAppointmentsStore } from './AdminAppointmentsStore';
 import { AdminAuthStore } from './AdminAuthStore';
+import { AdminSpecialistRolesStore } from './AdminSpecialistRolesStore';
 
 const AdminRootStoreModel = types.model({
   auth: types.optional(AdminAuthStore, { state: 'IDLE' }),
@@ -10,6 +11,10 @@ const AdminRootStoreModel = types.model({
     appointmentState: 'IDLE',
   }),
   specialists: types.optional(AdminAppointmentSpecialistsStore, {
+    state: 'NOT_FETCHED',
+    processState: 'IDLE',
+  }),
+  specialistRoles: types.optional(AdminSpecialistRolesStore, {
     state: 'NOT_FETCHED',
   }),
 });

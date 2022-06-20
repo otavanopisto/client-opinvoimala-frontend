@@ -32,7 +32,8 @@
     "confirm_edit": "Vahvista muokkaus",
     "show_more": "Lataa lisää",
     "yes": "Kyllä",
-    "no": "Ei"
+    "no": "Ei",
+    "edit": "Muokkaa"
   },
   "label": {
     "name": "Nimi",
@@ -63,7 +64,8 @@
     "login": "Kirjaudu",
     "admin": {
       "root": "Admin",
-      "appointments": "Vastaanotto"
+      "appointments": "Vastaanotto",
+      "appointment_specialists": "Asiantuntijan roolit"
     }
   },
   "view": {
@@ -276,6 +278,30 @@
           "delete_confirm_text": "Tämä on toistuva vastaanottoaika. Valitse poistetaanko vain yksittäinen valittu aika, tämä ja seuraavat ajat vai kaikki sarjaan kuuluvat vastaanottoajat.",
           "scope_includes_booked_appointments": "Valitsemasi ajanjakso sisältää varattuja vastaanottoaikoja:",
           "notify_student": "Muistathan ilmoittaa varauksen tehneelle opiskelijalle muutoksista. Opiskelijan yhteystiedot löytyvät sähköpostiin saamastasi vahvistusviestistä."
+        }
+      },
+      "appointment_specialists": {
+        "title": "Asiantuntijan roolit",
+        "list_title": "Asiantuntijaroolit",
+        "create_new": "Lisää uusi asiantuntijarooli",
+        "role_missing": "Rooli puuttuu",
+        "meet_link_missing": "Kokouslinkki puuttuu",
+        "form": {
+          "title": "Syötä vastaanottoaika ja linkki",
+          "add_title": "Uusi asiantuntijarooli",
+          "edit_title": "Muokkaa asiantuntijaroolia",
+          "delete_title": "Poista asiantuntijarooli",
+          "name": "Nimi",
+          "meet_link": "Kokouslinkki",
+          "email": "Sähköpostiosoite",
+          "role": "Rooli",
+          "submit": "Lisää asiantuntijarooli",
+          "error": {
+            "heading": "Asiantuntijaroolin tallennus ei onnistunut"
+          }
+        },
+        "confirm": {
+          "delete": "Haluatko varmasti poistaa tämän asiantuntijaroolin"
         }
       }
     }

@@ -13,7 +13,7 @@ export class AdminApi extends BaseApi {
    * Admin login
    */
   async login(params: API.Admin.Login): Promise<Response<API.Admin.RES.Login>> {
-    const response = await this.api.post(`admin/login`, params, {});
+    const response = await this.api.post(`/admin/login`, params, {});
 
     if (!response.ok) return this.handleError(response);
 
@@ -24,6 +24,15 @@ export class AdminApi extends BaseApi {
       this.setToken(data?.token);
     }
     return { ...successResponse, data };
+  }
+
+  /**
+   * Get me
+   */
+  async getMe(params: API.Admin.GetMe): Promise<Response<API.Admin.RES.GetMe>> {
+    const url = `/admin/users/me`;
+    const response = await this.api.get(url, params, this.auth());
+    return this.handleResponse(response);
   }
 
   /**
@@ -108,6 +117,71 @@ export class AdminApi extends BaseApi {
   > {
     const url = `/admin-api/appointments/${id}`;
     const response = await this.api.delete(url, params, this.auth());
+    return this.handleResponse(response);
+  }
+
+  /**
+   * Fetch specialist roles
+   */
+  async getSpecialistsRoles(
+    params: API.Admin.GetSpecialistsRoles = {}
+  ): Promise<Response<API.Admin.RES.GetSpecialistRoles>> {
+    const url = '/specialist-roles';
+    const response = await this.api.get(url, params, this.auth());
+    return this.handleResponse(response);
+  }
+
+  /**
+   * Create appointment specialist
+   */
+  async createAppointmentSpecialist({
+    id,
+    ...params
+  }: API.Admin.CreateAppointmentSpecialist): Promise<
+    Response<API.Admin.RES.CreateAppointmentSpecialist>
+  > {
+    const url = `/admin-api/appointment-specialists`;
+    const response = await this.api.post(
+      url,
+      transformKeys(params, toSnakeCase),
+      this.auth()
+    );
+    return this.handleResponse(response);
+  }
+
+  /**
+   * Edit appointment specialist
+   */
+  async editAppointmentSpecialist({
+    id,
+    ...params
+  }: API.Admin.EditAppointmentSpecialist): Promise<
+    Response<API.Admin.RES.EditAppointmentSpecialist>
+  > {
+    const url = `/admin-api/appointment-specialists/${id}`;
+    const response = await this.api.put(
+      url,
+      transformKeys(params, toSnakeCase),
+      this.auth()
+    );
+    return this.handleResponse(response);
+  }
+
+  /**
+   * Delete appointment specialist
+   */
+  async deleteAppointmentSpecialist({
+    id,
+    ...params
+  }: API.Admin.DeleteAppointmentSpecialist): Promise<
+    Response<API.Admin.RES.DeleteAppointmentSpecialist>
+  > {
+    const url = `/admin-api/appointment-specialists/${id}`;
+    const response = await this.api.delete(
+      url,
+      transformKeys(params, toSnakeCase),
+      this.auth()
+    );
     return this.handleResponse(response);
   }
 }

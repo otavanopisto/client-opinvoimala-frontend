@@ -7,6 +7,9 @@ const AdminFrontPage = lazy(() => import('../views/admin/AdminFrontPage'));
 const AdminAppointments = lazy(
   () => import('../views/admin/AdminAppointments')
 );
+const AdminAppointmentSpecialists = lazy(
+  () => import('../views/admin/AdminAppointmentSpecialists')
+);
 
 export const adminPath = (route?: string) => {
   const basePath = `/${path('admin.root')}`;
@@ -34,6 +37,14 @@ const adminRoutes: (Route | NavLinkRoute)[] = [
     path: adminPath('admin.appointments'),
     title: adminTitle('admin.appointments'),
     component: props => checkAuth(<AdminAppointments />, props?.unauthorized),
+    exact: true,
+    isPublic: false,
+  },
+  {
+    path: adminPath('admin.appointment_specialists'),
+    title: adminTitle('admin.appointment_specialists'),
+    component: props =>
+      checkAuth(<AdminAppointmentSpecialists />, props?.unauthorized),
     exact: true,
     isPublic: false,
   },

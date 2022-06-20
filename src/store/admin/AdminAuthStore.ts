@@ -16,6 +16,7 @@ const AdminUserModel = types.model({
   id: types.number,
   firstname: types.string,
   lastname: types.string,
+  email: types.string,
 });
 
 export interface IAdminUserModel extends Instance<typeof AdminUserModel> {}
@@ -30,10 +31,7 @@ export const AdminAuthStore = types
       types.maybeNull(types.string),
       Storage.read({ key: 'ADMIN_AUTH_TOKEN' })
     ),
-    user: types.optional(
-      types.maybeNull(AdminUserModel),
-      Storage.read({ key: 'ADMIN_USER' })
-    ),
+    user: types.maybeNull(AdminUserModel),
   })
   .views(self => ({
     get isLoggedIn() {
@@ -51,7 +49,15 @@ export const AdminAuthStore = types
       return `${this.adminFirstName} ${shortLastName}`;
     },
     get adminFullName() {
-      return `${this.adminFirstName} ${this.adminLastName}`;
+      const firstname = this.adminFirstName;
+      const lastname = this.adminLastName;
+      if (firstname.length && lastname.length) {
+        return `${firstname} ${lastname}`;
+      }
+      return firstname.length ? firstname : lastname || '';
+    },
+    get adminEmail() {
+      return self.user?.email;
     },
   }))
   .actions(self => {
@@ -64,10 +70,6 @@ export const AdminAuthStore = types
       if (response.kind === 'ok') {
         self.user = cast(response.data.user);
         self.jwt = cast(response.data.token);
-        Storage.write({
-          key: 'ADMIN_USER',
-          value: self.user,
-        });
         self.state = 'IDLE';
         return { success: true };
       } else {
@@ -81,18 +83,35 @@ export const AdminAuthStore = types
       self.jwt = null;
       self.user = null;
       Storage.write({ key: 'ADMIN_AUTH_TOKEN', value: null });
-      Storage.write({ key: 'ADMIN_USER', value: null });
 
-      const { appointments, specialists } = getParent(self);
+      const { appointments, specialists, specialistRoles } = getParent(self);
       appointments.reset();
       specialists.reset();
+      specialistRoles.reset();
 
       self.state = 'IDLE';
     };
 
+    const getMe = flow(function* (params: API.Admin.GetMe = {}) {
+      self.state = 'PROCESSING';
+
+      const response: API.GeneralResponse<API.Admin.RES.GetMe> =
+        yield adminApi.getMe(params);
+
+      if (response.kind === 'ok') {
+        self.user = cast(response.data.data);
+        self.state = 'IDLE';
+        return { success: true };
+      } else {
+        self.state = 'ERROR';
+        return { success: false, error: response.data };
+      }
+    });
+
     return {
       login,
       logout,
+      getMe,
     };
   });
 

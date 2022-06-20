@@ -123,6 +123,12 @@ const UserMenu: React.FC<Props> = observer(({ admin }) => {
         internal: adminPath('admin.appointments'),
       },
       {
+        id: 'admin_appointment_specialists',
+        label: rt('admin.appointment_specialists'),
+        type: 'internal',
+        internal: adminPath('admin.appointment_specialists'),
+      },
+      {
         id: 'logout',
         label: rt('logout'),
         type: 'button',

@@ -187,7 +187,9 @@ declare namespace API {
       email: string;
       password: string;
     };
+    type GetMe = {};
     type GetAppointmentSpecialists = {};
+    type GetSpecialistsRoles = {};
     type CreateAppointment = import('../../store/models').AppointmentIn;
     type EditAppointment = {
       appointment: import('../../store/models').AppointmentIn;
@@ -198,16 +200,31 @@ declare namespace API {
       repeatScope: import('../../store/models').RepeatScope;
     };
 
+    type CreateAppointmentSpecialist =
+      import('../../store/models').SpecialistIn;
+    type EditAppointmentSpecialist = import('../../store/models').SpecialistIn;
+    type DeleteAppointmentSpecialist = { id: number };
+
     declare namespace RES {
       type Login = {
         token: string;
         user: import('../../store/admin/AdminAuthStore').AdminUser;
       };
+      type GetMe = {
+        data: import('../../store/models').AdminUser;
+      };
+
       type GetAppointmentSpecialists =
         import('../../store/models').AdminSpecialist[];
+      type GetSpecialistRoles = import('../../store/models').SpecialistRole[];
       type CreateAppointment = import('../../store/models').Appointment[];
       type EditAppointment = import('../../store/models').Appointment[];
       type DeleteAppointment = { deletedIds: number[] };
+
+      type CreateAppointmentSpecialist =
+        import('../../store/models').Specialist;
+      type EditAppointmentSpecialist = import('../../store/models').Specialist;
+      type DeleteAppointmentSpecialist = {};
     }
   }
 }

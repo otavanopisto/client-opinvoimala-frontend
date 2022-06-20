@@ -25,6 +25,13 @@ const AdminFrontPage: React.FC = () => {
       type: 'internal',
       internal: adminPath('admin.appointments'),
     },
+    {
+      ...baseLink,
+      id: 'admin_appointment_specialists',
+      label: rt('admin.appointment_specialists'),
+      type: 'internal',
+      internal: adminPath('admin.appointment_specialists'),
+    },
   ];
 
   return (
