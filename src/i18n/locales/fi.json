@@ -31,6 +31,8 @@
     "confirm_delete": "Vahvista poisto",
     "confirm_edit": "Vahvista muokkaus",
     "show_more": "Lataa lisää",
+    "yes": "Kyllä",
+    "no": "Ei",
     "edit": "Muokkaa"
   },
   "label": {
@@ -229,6 +231,9 @@
         "add_tags": "Valitse lisää aihepiirejä",
         "remove_tags": "Poista valittuja"
       }
+    },
+    "user_feedback": {
+      "title": "Oliko tämä sisältö sinulle hyödyllinen?"
     },
     "admin": {
       "appointments": {

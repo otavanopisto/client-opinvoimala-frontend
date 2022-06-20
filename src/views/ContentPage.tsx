@@ -11,6 +11,7 @@ import InnerHtmlDiv from '../components/InnerHtmlDiv';
 import { Divider } from 'semantic-ui-react';
 import Cards from '../components/Cards';
 import { usePageTitle } from '../utils/hooks/usePageTitle';
+import Feedback from '../components/Feedback';
 
 const InnerHtmlContainer = styled.div`
   h1 {
@@ -114,6 +115,18 @@ export const ContentPage = observer(() => {
       )}
 
       {page?.linkList && <LinkList list={page.linkList} initialItemCount={5} />}
+
+      {page?.feedback?.showFeedback && (
+        <>
+          <Divider section hidden aria-hidden="true" />
+          <Feedback
+            id={page.id}
+            feedback={page.feedback}
+            slug={slug}
+            contentType="page"
+          />
+        </>
+      )}
     </Layout>
   );
 });

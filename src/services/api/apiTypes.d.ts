@@ -125,6 +125,18 @@ declare namespace API {
 
   type GetMe = {};
 
+  type SendFeedback = {
+    id: number;
+    contentType: 'page' | 'test';
+    feedbackType:
+      | 'like'
+      | 'dislike'
+      | 'unlike'
+      | 'undislike'
+      | 'dislike-to-like'
+      | 'like-to-dislike';
+  };
+
   /**
    * API RESPONSES
    */
@@ -167,6 +179,7 @@ declare namespace API {
     type SetUserTags = import('../../store/models').User;
 
     type GetMe = import('../../store/models').User;
+    type SendFeedback = import('../../store/models').Feedback;
   }
 
   declare namespace Admin {

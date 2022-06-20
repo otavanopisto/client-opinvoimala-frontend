@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { observer } from 'mobx-react-lite';
 import { useHistory } from 'react-router';
+import { Divider } from 'semantic-ui-react';
 import Layout from '../components/Layout';
 import { useParams } from '../routes/hooks';
 import { useStore } from '../store/storeContext';
@@ -15,6 +16,7 @@ import { TestOutcomes as TestOutcomesType } from '../store/models';
 import LinkList from '../components/LinkList';
 import { usePageTitle } from '../utils/hooks/usePageTitle';
 import NoPrint from '../components/NoPrint';
+import Feedback from '../components/Feedback';
 
 export const TestOutcomes = observer(() => {
   const history = useHistory();
@@ -106,6 +108,18 @@ export const TestOutcomes = observer(() => {
         <NoPrint>
           <LinkList list={linkList} initialItemCount={5} />
         </NoPrint>
+      )}
+
+      {test?.feedback?.showFeedback && (
+        <>
+          <Divider section hidden aria-hidden="true" />
+          <Feedback
+            id={test.id}
+            feedback={test.feedback}
+            slug={slug}
+            contentType="test"
+          />
+        </>
       )}
     </Layout>
   );
