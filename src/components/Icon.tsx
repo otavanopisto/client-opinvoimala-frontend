@@ -21,7 +21,6 @@ import { ReactComponent as Plus } from '../assets/icons/plus.svg';
 import { ReactComponent as SignIn } from '../assets/icons/sign-in.svg';
 import { ReactComponent as User } from '../assets/icons/md-person.svg';
 import { ReactComponent as Video } from '../assets/icons/video.svg';
-import { ReactComponent as Thumbs } from '../assets/icons/thumbs.svg';
 
 const Icons = {
   Annotation,
@@ -43,7 +42,6 @@ const Icons = {
   SignIn,
   User,
   Video,
-  Thumbs,
 };
 
 export type IconType = keyof typeof Icons;
