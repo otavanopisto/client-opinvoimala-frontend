@@ -58,6 +58,7 @@ const Buttons = styled.div`
 
   .button-badge {
     border-radius: ${p => p.theme.borderRadius.lg};
+    top: -5px !important;
   }
 `;
 
