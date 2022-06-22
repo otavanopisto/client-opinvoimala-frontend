@@ -15,7 +15,7 @@ import GoalDrawer from './GoalDrawer';
 
 const MAX_ACTIVE_GOALS = 4;
 
-const Header = styled.header`
+const Header = styled.header<{ hasImage: boolean }>`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -30,7 +30,7 @@ const Header = styled.header`
     font-weight: 600;
 
     > div {
-      margin-right: ${p => p.theme.spacing.lg};
+      margin-right: ${p => (p.hasImage ? p.theme.spacing.lg : 0)};
     }
   }
 
@@ -151,6 +151,8 @@ export const Goals: React.FC = observer(() => {
   const activeGoals = goals.filter(({ done }) => !done);
   const canAddGoals = activeGoals.length < MAX_ACTIVE_GOALS;
 
+  const hasImage = !!goalsInfo?.image;
+
   const tooltipText = canAddGoals
     ? undefined
     : `${t('view.user_goals.max_goals_added')}`;
@@ -158,7 +160,7 @@ export const Goals: React.FC = observer(() => {
   return (
     <section>
       {goalsInfo && (
-        <Header>
+        <Header hasImage={hasImage}>
           <div>
             <h2>{goalsInfo.title}</h2>
             <GoalInfoText>{goalsInfo.infoText}</GoalInfoText>
@@ -171,10 +173,12 @@ export const Goals: React.FC = observer(() => {
               })}
             </div>
 
-            <img
-              src={goalsInfo.image.url}
-              alt={goalsInfo.image.alternativeText ?? ''}
-            />
+            {hasImage && (
+              <img
+                src={goalsInfo.image.url}
+                alt={goalsInfo.image.alternativeText ?? ''}
+              />
+            )}
           </div>
         </Header>
       )}
