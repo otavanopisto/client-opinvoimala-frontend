@@ -167,13 +167,11 @@ export const Goals: React.FC = observer(() => {
           </div>
 
           <div className="goals-accomplished-container">
-            {!!goalsInfo.doneTotal && (
-              <div>
-                {t('view.user_goals.accomplished', {
-                  count: goalsInfo.doneTotal,
-                })}
-              </div>
-            )}
+            <div>
+              {t('view.user_goals.accomplished', {
+                count: goalsInfo.doneTotal,
+              })}
+            </div>
 
             {hasImage && (
               <img

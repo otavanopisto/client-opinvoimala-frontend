@@ -110,10 +110,7 @@ export const GoalsStore = types
         if (self.data) {
           self.data = {
             ...self.data,
-            doneTotal:
-              self.data?.doneTotal !== null
-                ? cast(self.data?.doneTotal + 1)
-                : null,
+            doneTotal: cast(self.data.doneTotal + 1),
           };
         }
 
