@@ -121,7 +121,7 @@ const AddGoalButton = styled.div`
 
 export const Goals: React.FC = observer(() => {
   const {
-    goals: { goals, goalsInfo, fetchGoals, state, goalState },
+    goals: { goals, goalsInfo, fetchGoals, state },
   } = useStore();
 
   const [goalObject, setGoalObject] = useState<GoalType>();
