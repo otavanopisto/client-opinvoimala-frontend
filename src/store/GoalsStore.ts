@@ -1,4 +1,4 @@
-import { Instance, types, flow, cast, getSnapshot } from 'mobx-state-tree';
+import { cast, flow, getSnapshot, Instance, types } from 'mobx-state-tree';
 import api from '../services/api/Api';
 import { Goal, GoalsModel } from './models';
 
@@ -106,6 +106,17 @@ export const GoalsStore = types
         self.goalState = 'IDLE';
         const updatedGoal = response.data;
         updateGoal(updatedGoal);
+
+        if (self.data) {
+          self.data = {
+            ...self.data,
+            doneTotal:
+              self.data?.doneTotal !== null
+                ? cast(self.data?.doneTotal + 1)
+                : null,
+          };
+        }
+
         return { success: true };
       } else {
         self.goalState = 'ERROR';

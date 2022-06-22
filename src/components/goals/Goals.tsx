@@ -144,12 +144,6 @@ export const Goals: React.FC = observer(() => {
     }
   }, [fetchGoals, state]);
 
-  useEffect(() => {
-    if (!['CREATING', 'DELETING', 'EDITING', 'ERROR'].includes(goalState)) {
-      fetchGoals();
-    }
-  }, [fetchGoals, goalState]);
-
   if (state === 'FETCHING') {
     return <LoadingPlaceholder.Content />;
   }
@@ -173,11 +167,13 @@ export const Goals: React.FC = observer(() => {
           </div>
 
           <div className="goals-accomplished-container">
-            <div>
-              {t('view.user_goals.accomplished', {
-                count: goalsInfo.doneTotal,
-              })}
-            </div>
+            {!!goalsInfo.doneTotal && (
+              <div>
+                {t('view.user_goals.accomplished', {
+                  count: goalsInfo.doneTotal,
+                })}
+              </div>
+            )}
 
             {hasImage && (
               <img

@@ -12,7 +12,7 @@ export interface Goal extends SnapshotOut<typeof GoalModel> {}
 export const GoalsModel = types.model({
   title: types.string,
   infoText: types.string,
-  doneTotal: types.number,
+  doneTotal: types.maybeNull(types.number),
   image: ImageModel,
   goals: types.array(GoalModel),
 });
