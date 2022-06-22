@@ -121,7 +121,7 @@ const AddGoalButton = styled.div`
 
 export const Goals: React.FC = observer(() => {
   const {
-    goals: { goals, goalsInfo, fetchGoals, state },
+    goals: { goals, goalsInfo, fetchGoals, state, goalState },
   } = useStore();
 
   const [goalObject, setGoalObject] = useState<GoalType>();
@@ -143,6 +143,12 @@ export const Goals: React.FC = observer(() => {
       fetchGoals();
     }
   }, [fetchGoals, state]);
+
+  useEffect(() => {
+    if (!['CREATING', 'DELETING', 'EDITING', 'ERROR'].includes(goalState)) {
+      fetchGoals();
+    }
+  }, [fetchGoals, goalState]);
 
   if (state === 'FETCHING') {
     return <LoadingPlaceholder.Content />;
