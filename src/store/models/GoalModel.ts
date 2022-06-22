@@ -13,7 +13,7 @@ export const GoalsModel = types.model({
   title: types.string,
   infoText: types.string,
   doneTotal: types.number,
-  image: ImageModel,
+  image: types.maybeNull(ImageModel),
   goals: types.array(GoalModel),
 });
 

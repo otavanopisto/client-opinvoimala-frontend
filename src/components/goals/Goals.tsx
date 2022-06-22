@@ -173,12 +173,10 @@ export const Goals: React.FC = observer(() => {
               })}
             </div>
 
-            {hasImage && (
-              <img
-                src={goalsInfo.image.url}
-                alt={goalsInfo.image.alternativeText ?? ''}
-              />
-            )}
+            <img
+              src={goalsInfo.image?.url}
+              alt={goalsInfo.image?.alternativeText ?? ''}
+            />
           </div>
         </Header>
       )}
