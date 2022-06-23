@@ -9,13 +9,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-- OPI-88: Added image null check to prevent crash
+- OPI-88: Corrected the fix to prevent crash with image null check
 
 ## [0.3.1] - 2022-06-22
 
 ### Fixed
 
 - OPI-88: Fixed goals done count not updating when marking goal done
+- OPI-88: Added image null check to prevent crash
 
 ## [0.3.0] - 2022-06-22
 
