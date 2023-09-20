@@ -16,7 +16,7 @@ jobs:
       - name: Set API url
         run: ./setApiUrl.sh
         env:
-          PROD_API_URL: ${{ secrets.STAGE_API_URL }}
+          STAGE_API_URL: ${{ secrets.STAGE_API_URL }}
       - name: Login to Dockerhub
         uses: docker/login-action@v3
         with:
