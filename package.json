@@ -3,7 +3,7 @@
   "version": "0.4.3",
   "config": {
     "apiUrl": {
-      "local": "http://localhost:1337",
+      "local": "http://localhost:1337 ",
       "stage": "https://opinvoimala-api.stage.geniem.io",
       "production": "https://opinvoimala-api.production.geniem.io"
     }
