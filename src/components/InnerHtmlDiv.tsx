@@ -96,7 +96,7 @@ const InnerHtmlDiv: React.FC<Props> = observer(({ html }) => {
     const height = heightMatch ? parseInt(heightMatch[1], 10) : null;
 
     // we calculate the aspect ratio of the iframe and apply it to the container
-    const aspectRatio = width && height ? (height / width) * 100 : 56.25; // 16:9
+    const aspectRatio = width && height ? (height / width) * 100 : 56.25; // assume 16:9 if nothing else is given
 
     __html = __html.replace(embedContentRegex, match => {
       return `
