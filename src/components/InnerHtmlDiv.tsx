@@ -11,7 +11,7 @@ const Container = styled.div`
     height: 0;
     iframe {
       position: absolute;
-      top: -40px; // without this, the iframe is not positioned correctly beacuse iframe style has margin-bottom 40px
+      top: -40px; // without this, the iframe is not positioned correctly beacuse iframe style has margin-top: 40px
       left: 0;
       width: 100%;
       height: 100%;
