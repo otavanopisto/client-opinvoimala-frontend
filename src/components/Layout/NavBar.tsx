@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import styled from 'styled-components';
 import { observer } from 'mobx-react-lite';
 import { useTranslation } from 'react-i18next';
 import { useStore } from '../../store/storeContext';
@@ -9,10 +10,19 @@ import Drawer from '../Drawer';
 import Button from '../inputs/Button';
 import Icon from '../Icon';
 import AccordionMenu from '../AccordionMenu';
+import Search from '../Search';
 
 interface Props {
   admin?: boolean;
 }
+
+const Container = styled.div`
+  display: flex;
+  align-items: center;
+  .search-container {
+    margin-right: 20px;
+  }
+`;
 
 const NavBar: React.FC<Props> = observer(({ admin }) => {
   const { t } = useTranslation();
@@ -71,17 +81,22 @@ const NavBar: React.FC<Props> = observer(({ admin }) => {
   }
 
   return (
-    <nav>
-      {navItems.map(navItem => (
-        <DropdownMenu
-          key={navItem.id}
-          triggerButton={{
-            label: navItem.label,
-          }}
-          items={getVisibleLinks(navItem.links)}
-        />
-      ))}
-    </nav>
+    <Container>
+      <nav>
+        {navItems.map(navItem => (
+          <DropdownMenu
+            key={navItem.id}
+            triggerButton={{
+              label: navItem.label,
+            }}
+            items={getVisibleLinks(navItem.links)}
+          />
+        ))}
+      </nav>
+      <div className="search-container">
+        <Search />
+      </div>
+    </Container>
   );
 });
 

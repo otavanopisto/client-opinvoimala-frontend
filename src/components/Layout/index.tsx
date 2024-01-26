@@ -9,6 +9,14 @@ import { LoginModal } from '../../views';
 
 const Container = styled.div`
   .header {
+    &__header {
+      nav,
+      button {
+        position: relative;
+        z-index: 6;
+      }
+    }
+
     &__header,
     &__hero {
       background-color: ${p => p.theme.color.primaryLight};
@@ -17,6 +25,15 @@ const Container = styled.div`
       padding-top: 50px;
     }
   }
+  .header__curtain {
+    background-color: ${p => p.theme.color.primaryLight};
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 120px;
+    z-index: 5;
+  }
+
   > main {
     background-color: ${p => p.theme.color.background};
     position: relative;
@@ -77,9 +94,9 @@ const Layout: React.FC<Props> = ({
   return (
     <Container>
       {!admin && <LoginModal />}
-
       <div className="header__header">
         <Header admin={admin} />
+        <div className="header__curtain"></div>
       </div>
 
       <main>
