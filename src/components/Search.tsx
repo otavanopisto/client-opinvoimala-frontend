@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 // import { useDebounce } from '../hooks/useDebounce';
 import { InstantSearch, SearchBox, useHits, Index } from 'react-instantsearch';
 import { instantMeiliSearch } from '@meilisearch/instant-meilisearch';
-import { Button } from './inputs';
 import Icon from './Icon';
 import Link, { LinkItem } from './Link';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
+import { useOutsideClickAction } from '../utils/hooks';
 
 interface SearchStrapiHit {
   id: string;
@@ -136,7 +136,17 @@ interface Props {
 
 const Search: React.FC<Props> = ({ indexName = 'page' }) => {
   const { t } = useTranslation();
+  const searchContentRef = useRef(null);
   const [searchVisible, setSearchVisible] = useState(false);
+
+  useOutsideClickAction({
+    ref: searchContentRef,
+    condition: searchVisible,
+    action: () => {
+      setSearchVisible(false);
+    },
+  });
+
   const { searchClient } = instantMeiliSearch(
     'localhost:7700',
     'b39d118407a96b23a9311912ba2d27c860f4f902d91209d0c3057f25d5fd34a5',
@@ -149,7 +159,7 @@ const Search: React.FC<Props> = ({ indexName = 'page' }) => {
   };
 
   return (
-    <Container>
+    <Container ref={searchContentRef}>
       <button
         aria-expanded={searchVisible}
         aria-controls="searchContent"
