@@ -70,7 +70,7 @@ const InnerHtmlDiv: React.FC<Props> = observer(({ html }) => {
 
   const embedContentRegex = /<iframe[^>]*src="([^"]*)"[^<]*<\/iframe>/gi;
   const hasYoutubeContent =
-    embedContentRegex.test(__html) && __html.includes('youtube.com');
+    embedContentRegex.test(__html) && __html.includes('youtube');
 
   if (!cookieConsent?.marketing) {
     // Matches an <iframe ... src="xyz"></iframe> element and captures its src-value as a group $1.
