@@ -69,8 +69,8 @@ const InnerHtmlDiv: React.FC<Props> = observer(({ html }) => {
    */
 
   const embedContentRegex = /<iframe[^>]*src="([^"]*)"[^<]*<\/iframe>/gi;
-  const hasEmbedContentIframe = embedContentRegex.test(__html);
-  const hasYoutubeContent = __html.includes('youtube.com');
+  const hasYoutubeContent =
+    embedContentRegex.test(__html) && __html.includes('youtube.com');
 
   if (!cookieConsent?.marketing) {
     // Matches an <iframe ... src="xyz"></iframe> element and captures its src-value as a group $1.
@@ -84,7 +84,7 @@ const InnerHtmlDiv: React.FC<Props> = observer(({ html }) => {
     // Marketing cookies are not accepted. Show placeholder div instead of iframe elements (youtube embeds etc)
     __html = __html.replaceAll(embedContentRegex, placeholderElement);
   }
-  if (hasEmbedContentIframe && isMobile && hasYoutubeContent) {
+  if (isMobile && hasYoutubeContent) {
     const widthRegex = /width="(\d+)"/i;
     const heightRegex = /height="(\d+)"/i;
 
