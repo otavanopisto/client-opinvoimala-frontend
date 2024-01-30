@@ -7,6 +7,7 @@ import Link, { LinkItem } from './Link';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { useOutsideClickAction } from '../utils/hooks';
+import { useWindowDimensions } from '../utils/hooks';
 
 interface SearchStrapiHit {
   id: string;
@@ -114,6 +115,11 @@ const Container = styled.div`
     background-color: ${p => p.theme.color.background};
     padding: ${p => p.theme.spacing.lg};
     z-index: 4;
+
+    &--mobile {
+      border: 1px solid ${p => p.theme.color.grey};
+      margin-top: 0;
+    }
   }
   input {
     padding: ${p => p.theme.spacing.md};
@@ -136,6 +142,7 @@ interface Props {
 
 const Search: React.FC<Props> = ({ indexName = 'page' }) => {
   const { t } = useTranslation();
+  const { isTablet, isMobile } = useWindowDimensions();
   const searchContentRef = useRef(null);
   const [searchVisible, setSearchVisible] = useState(false);
 
@@ -175,7 +182,12 @@ const Search: React.FC<Props> = ({ indexName = 'page' }) => {
         />
       </button>
       {searchVisible && (
-        <div id="searchContent" className="search-content">
+        <div
+          id="searchContent"
+          className={`search-content ${
+            isMobile || isTablet ? 'search-content--mobile' : ''
+          }`}
+        >
           <InstantSearch searchClient={searchClient}>
             <SearchBox
               searchAsYouType={false}
@@ -200,6 +212,15 @@ const Search: React.FC<Props> = ({ indexName = 'page' }) => {
                   <SearchHits
                     type="test"
                     title={t('label.tests')}
+                    onSelect={toggleSearch}
+                  />
+                </Index>
+              </div>
+              <div>
+                <Index indexName="events">
+                  <SearchHits
+                    type="page"
+                    title={t('label.event')}
                     onSelect={toggleSearch}
                   />
                 </Index>

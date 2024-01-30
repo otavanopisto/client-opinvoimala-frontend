@@ -16,6 +16,14 @@ export const HEADER_HEIGHT = 120; // px
 export const HEADER_HEIGHT_MOBILE = 70; // px
 
 const StyledHeader = styled.header`
+  nav {
+    display: flex;
+    align-items: center;
+    flex-flow: row wrap;
+    .nav-bar {
+      flex-grow: 1;
+    }
+  }
   .header__wrapper {
     height: ${HEADER_HEIGHT}px;
     display: flex;
@@ -36,7 +44,7 @@ const StyledHeader = styled.header`
     }
   }
 
-  .header__logo-container {
+  .header__-container {
     display: flex;
     align-items: center;
     a.admin-title {
@@ -49,6 +57,10 @@ const StyledHeader = styled.header`
       font-weight: bold;
       text-transform: uppercase;
     }
+  }
+
+  .header__logo-container {
+    z-index 6;
   }
 
   .mobile-header__menus {
@@ -90,30 +102,28 @@ const Header: React.FC<Props> = observer(({ admin }) => {
 
         {isTablet ? (
           <div className="mobile-header__menus">
-            <div>
-              <NoPrint>
-                <UserMenu admin={admin} />
-              </NoPrint>
-            </div>
-            <div>
-              <NoPrint>
-                <NavBar admin={admin} />
-              </NoPrint>
-            </div>
+            <NoPrint>
+              <nav>
+                <div className="user-menu user-menu--mobile">
+                  <UserMenu admin={admin} />
+                </div>
+                <div className="nav-bar nav-bar--mobile">
+                  <NavBar admin={admin} />
+                </div>
+              </nav>
+            </NoPrint>
           </div>
         ) : (
-          <>
-            <div>
-              <NoPrint>
+          <NoPrint>
+            <nav>
+              <div className="nav-bar">
                 <NavBar admin={admin} />
-              </NoPrint>
-            </div>
-            <div>
-              <NoPrint>
+              </div>
+              <div className="user-menu">
                 <UserMenu admin={admin} />
-              </NoPrint>
-            </div>
-          </>
+              </div>
+            </nav>
+          </NoPrint>
         )}
       </Wrapper>
     </StyledHeader>

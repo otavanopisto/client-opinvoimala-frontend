@@ -19,9 +19,9 @@ interface Props {
 const Container = styled.div`
   display: flex;
   align-items: center;
-  .search-container {
-    margin-right: 20px;
-  }
+  // .search-container {
+  //   margin-right: 10px;
+  // }
 `;
 
 const NavBar: React.FC<Props> = observer(({ admin }) => {
@@ -52,31 +52,36 @@ const NavBar: React.FC<Props> = observer(({ admin }) => {
 
   if (isTablet || isMobile) {
     return (
-      <Drawer
-        triggerEl={(isOpen, onClick) => (
-          <Button
-            ariaLabel={t('aria.main_navigation')}
-            aria-expanded={isOpen}
-            id="navigation-menu__button"
-            variant="outlined"
-            color="secondary"
-            icon={<Icon type="Menu" strokeColor="secondary" />}
-            onClick={onClick}
-          />
-        )}
-      >
-        <ul className="drawer__link-list">
-          {navItems.map(({ id, label, links }) => (
-            <li key={id}>
-              <AccordionMenu
-                id={id}
-                label={label}
-                items={getVisibleLinks(links)}
-              />
-            </li>
-          ))}
-        </ul>
-      </Drawer>
+      <Container>
+        <div className="search-container">
+          <Search />
+        </div>
+        <Drawer
+          triggerEl={(isOpen, onClick) => (
+            <Button
+              ariaLabel={t('aria.main_navigation')}
+              aria-expanded={isOpen}
+              id="navigation-menu__button"
+              variant="outlined"
+              color="secondary"
+              icon={<Icon type="Menu" strokeColor="secondary" />}
+              onClick={onClick}
+            />
+          )}
+        >
+          <ul className="drawer__link-list">
+            {navItems.map(({ id, label, links }) => (
+              <li key={id}>
+                <AccordionMenu
+                  id={id}
+                  label={label}
+                  items={getVisibleLinks(links)}
+                />
+              </li>
+            ))}
+          </ul>
+        </Drawer>
+      </Container>
     );
   }
 

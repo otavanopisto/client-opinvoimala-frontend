@@ -6,8 +6,9 @@ function getWindowDimensions() {
 
   const isMobile = width < BREAKPOINTS.mobile;
   const isTablet = width < BREAKPOINTS.tablet;
+  const isLaptop = width < BREAKPOINTS.laptop;
 
-  return { width, height, isMobile, isTablet };
+  return { width, height, isMobile, isTablet, isLaptop };
 }
 
 /**

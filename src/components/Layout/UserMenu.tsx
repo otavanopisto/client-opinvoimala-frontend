@@ -33,6 +33,9 @@ const DesktopMenu: React.FC<{ items: LinkItem[]; text?: string }> = ({
   text,
 }) => {
   const { t } = useTranslation();
+  const { isLaptop } = useWindowDimensions();
+  const label = text ? text : t('student');
+
   return (
     <DropdownMenu
       items={items}
@@ -45,7 +48,7 @@ const DesktopMenu: React.FC<{ items: LinkItem[]; text?: string }> = ({
           aria-expanded={isOpen}
           aria-haspopup={true}
           id="user-menu__button"
-          text={text ?? t('student')}
+          text={isLaptop ? undefined : label}
           icon={
             <UserIconContainer>
               <Icon type="User" color="primary" />
