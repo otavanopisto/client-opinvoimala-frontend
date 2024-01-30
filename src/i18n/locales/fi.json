@@ -9,13 +9,11 @@
     "well_being_profile": "Tämän profiilin tulokset ovat suuntaa-antavia.",
     "asterisk_is_required": "Tähdellä merkityt kentät ovat pakollisia."
   },
-
   "empty": {
     "search": "Ei hakutuloksia",
     "search_page": "Ei hakua vastaavia sivuja",
     "search_test": "Ei hakua vastaavia harjoituksia"
   },
-
   "action": {
     "cancel": "Peruuta",
     "change_password": "Vaihda salasana",

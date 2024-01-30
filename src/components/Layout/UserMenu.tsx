@@ -20,10 +20,12 @@ const UserIconContainer = styled.div`
   margin-left: 12px;
   border: 2px solid ${p => p.theme.color.primary};
   border-radius: 50px;
-
   display: flex;
   align-items: center;
   justify-content: center;
+  @media ${p => p.theme.breakpoint.laptop} {
+    margin-left: 0;
+  }
 
   ${p => p.theme.shadows[1]};
 `;
