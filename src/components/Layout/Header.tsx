@@ -74,26 +74,32 @@ const StyledHeader = styled.header`
       }
     }
     .user-menu button { 
-
       position: relative;
       z-index: 6;
     }
+    @media ${p => p.theme.breakpoint.tablet} {
+      > div:not(:last-child) {
+        margin-right: ${p => p.theme.spacing.sm};
+      }
+    }
   }
   
-  .search-container--mobile { 
-    height: 55px;
-    width: 100%;
-    .search-toggle-button {
-      position: fixed;
-      z-index: 5;
-      right: 7rem;
+  .search-container { 
+    @media ${p => p.theme.breakpoint.tablet} {
+      height: 55px;
+      .search-toggle-button {
+        position: fixed;
+        z-index: 5;
+        right: ${p => p.theme.spacing.lg};
+      }
     }
   }
 
   .mobile-header__menus {
     position: fixed;
     z-index: 6;
-    right: ${p => p.theme.spacing.lg};
+    right: calc( ${p => p.theme.spacing.lg} + 42px + ${p =>
+  p.theme.spacing.sm});
   }
 `;
 
@@ -141,7 +147,7 @@ const Header: React.FC<Props> = observer(({ admin }) => {
                 </div>
               </NoPrint>
             </div>
-            <div className="search-container--mobile">
+            <div className="search-container">
               <Search />
             </div>
           </>

@@ -1,65 +1,17 @@
 import React, { useState, useRef } from 'react';
-// import { useDebounce } from '../hooks/useDebounce';
-import { InstantSearch, SearchBox, useHits, Index } from 'react-instantsearch';
+import { InstantSearch, SearchBox, Index } from 'react-instantsearch';
 import { instantMeiliSearch } from '@meilisearch/instant-meilisearch';
-import Icon from './Icon';
-import Link, { LinkItem } from './Link';
+import Icon from '../Icon';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
-import { useOutsideClickAction } from '../utils/hooks';
-import { useWindowDimensions } from '../utils/hooks';
-import { Button } from './inputs';
-
-interface SearchStrapiHit {
-  id: string;
-  slug: string;
-  title?: string;
-  name?: string;
-}
-
-interface HitsProps {
-  title: string;
-  type: 'page' | 'test' | 'exercise';
-  onSelect: () => void;
-}
-
-const SearchHits: React.FC<HitsProps> = props => {
-  const { onSelect, title, type } = props;
-  const { hits } = useHits();
-  const pageHits = hits as unknown as SearchStrapiHit[];
-  const { t } = useTranslation();
-
-  return (
-    <div>
-      <h3>{title}</h3>
-      {pageHits.length === 0 ? (
-        <p> {t('empty.search', { context: type })}</p>
-      ) : (
-        <div>
-          {pageHits.map(hit => {
-            const link: LinkItem = {
-              id: hit.id,
-              type: type,
-              [type]: {
-                slug: hit.slug,
-                title: hit.title || hit.name,
-                isPublic: true,
-              },
-            };
-            return (
-              <div key={hit.id} onClick={onSelect}>
-                <Link link={link} label={hit.title} />
-              </div>
-            );
-          })}
-        </div>
-      )}
-    </div>
-  );
-};
+import { useOutsideClickAction } from '../../utils/hooks';
+import { useWindowDimensions } from '../../utils/hooks';
+import { Button } from '../inputs';
+import SearchHits from './components/hits';
 
 const Container = styled.div`
   display: flex;
+
   @keyframes slideInFromTop {
     0% {
       transform: translateY(-500px);
@@ -68,7 +20,7 @@ const Container = styled.div`
       transform: translateY(0);
     }
   }
-  .search-box {
+  .search-box-container {
     form {
       display: flex;
       align-items: center;
@@ -76,10 +28,10 @@ const Container = styled.div`
   }
   .search-toggle-button {
     cursor: pointer;
+    padding: ${p => p.theme.spacing.md};
     border: 2px solid ${p => p.theme.color.secondary};
     border-radius: ${p => p.theme.borderRadius.md};
     display: flex;
-    padding: 10px;
     position: relative;
     z-index: 6;
     &:hover {
@@ -89,8 +41,22 @@ const Container = styled.div`
     :active {
       background-color: ${p => p.theme.color.secondary};
     }
-    &--icon .active {
-      color: #fff;
+    &--desktop {
+      cursor: pointer;
+      height: 40px;
+      width: 40px;
+      border: 1px solid ${p => p.theme.color.secondary};
+      border-radius: 50px;
+      display: flex;
+      position: relative;
+      z-index: 6;
+      &:hover {
+        opacity: 0.8;
+      }
+      &.active,
+      :active {
+        background-color: ${p => p.theme.color.secondary};
+      }
     }
   }
   .search-button {
@@ -123,14 +89,28 @@ const Container = styled.div`
       position: absolute;
       top: 0;
       right: 0;
-      margin: ${p => p.theme.spacing.lg};
+      margin: ${p => p.theme.spacing.sm};
     }
-    &--mobile {
+
+    @media ${p => p.theme.breakpoint.tablet} {
       min-height: 100vh;
       border: 1px solid ${p => p.theme.color.grey};
       top: 0;
       margin-top: 0;
       z-index: 7;
+      input {
+        width: 400px;
+      }
+    }
+
+    @media ${p => p.theme.breakpoint.mobile} {
+      form {
+        margin-right: 30px;
+      }
+      input {
+        max-width: 400px;
+        min-width: 100px;
+      }
     }
   }
 
@@ -144,8 +124,15 @@ const Container = styled.div`
   .hits-container {
     display: flex;
     padding: ${p => p.theme.spacing.md} 0 0 0;
-    div {
-      flex-grow: 1;
+  }
+
+  .hits {
+    flex-grow: 1;
+    padding: ${p => p.theme.spacing.md};
+
+    margin-right: ${p => p.theme.spacing.md};
+    &:last-child {
+      margin-right: 0;
     }
   }
 `;
@@ -179,6 +166,9 @@ const Search: React.FC<Props> = ({ indexName = 'page' }) => {
     setSearchVisible(!searchVisible);
   };
 
+  const buttonModifier = isTablet
+    ? 'search-toggle-button'
+    : 'search-toggle-button--desktop';
   return (
     <Container ref={searchContentRef}>
       <Button
@@ -186,31 +176,40 @@ const Search: React.FC<Props> = ({ indexName = 'page' }) => {
         aria-expanded={searchVisible}
         id="search-toggle-button"
         variant="outlined"
-        modifier="search-toggle-button"
+        modifier={buttonModifier}
         color="secondary"
         icon={<Icon type="Search" strokeColor="secondary" />}
         onClick={toggleSearch}
       />
       {searchVisible && (
-        <div
-          id="searchContent"
-          className={`search-content ${
-            isMobile || isTablet ? 'search-content--mobile' : ''
-          }`}
-        >
+        <div id="searchContent" className="search-content">
           <InstantSearch searchClient={searchClient}>
-            <SearchBox
-              searchAsYouType={false}
-              autoFocus
-              resetIconComponent={() => (
-                <div className="search-button">{t('action.empty')}</div>
-              )}
-              submitIconComponent={() => (
-                <div className="search-button">{t('action.search')}</div>
-              )}
-            />
-            <div className="hits-container">
-              <div>
+            <div className="search-box-container">
+              <SearchBox
+                searchAsYouType={false}
+                autoFocus
+                resetIconComponent={() => (
+                  <div className="search-button">
+                    {isMobile ? (
+                      <Icon type="Minus" color="background" />
+                    ) : (
+                      t('action.empty')
+                    )}
+                  </div>
+                )}
+                submitIconComponent={() => (
+                  <div className="search-button">
+                    {isMobile ? (
+                      <Icon type="Search" color="background" />
+                    ) : (
+                      t('action.search')
+                    )}
+                  </div>
+                )}
+              />
+            </div>
+            <div className={`hits-container${isMobile ? '--mobile' : ''}`}>
+              <div className="hits">
                 <Index indexName="page">
                   <SearchHits
                     type="page"
@@ -219,7 +218,7 @@ const Search: React.FC<Props> = ({ indexName = 'page' }) => {
                   />
                 </Index>
               </div>
-              <div>
+              <div className="hits">
                 <Index indexName="test">
                   <SearchHits
                     type="test"
