@@ -11,19 +11,13 @@ import NavBar from './NavBar';
 import UserMenu from './UserMenu';
 import Wrapper from './Wrapper';
 import Image from '../Image';
+import Search from '../Search';
 
 export const HEADER_HEIGHT = 120; // px
 export const HEADER_HEIGHT_MOBILE = 70; // px
 
 const StyledHeader = styled.header`
-  nav {
-    display: flex;
-    align-items: center;
-    flex-flow: row wrap;
-    .nav-bar {
-      flex-grow: 1;
-    }
-  }
+
   .header__wrapper {
     height: ${HEADER_HEIGHT}px;
     display: flex;
@@ -61,6 +55,39 @@ const StyledHeader = styled.header`
 
   .header__logo-container {
     z-index 6;
+  }
+  .navigation-container {
+    flex-grow: 1;
+  }
+
+  .navigation {
+    align-items: center;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: start;
+
+    .nav-bar {
+      flex-grow: 1;
+      button {
+        position: relative;
+        z-index: 6;
+      }
+    }
+    .user-menu button { 
+
+      position: relative;
+      z-index: 6;
+    }
+  }
+  
+  .search-container--mobile { 
+    height: 55px;
+    width: 100%;
+    .search-toggle-button {
+      position: fixed;
+      z-index: 5;
+      right: 7rem;
+    }
   }
 
   .mobile-header__menus {
@@ -101,29 +128,39 @@ const Header: React.FC<Props> = observer(({ admin }) => {
         </div>
 
         {isTablet ? (
-          <div className="mobile-header__menus">
-            <NoPrint>
-              <nav>
-                <div className="user-menu user-menu--mobile">
-                  <UserMenu admin={admin} />
+          <>
+            <div className="mobile-header__menus">
+              <NoPrint>
+                <div className="navigation">
+                  <div className="user-menu user-menu--mobile">
+                    <UserMenu admin={admin} />
+                  </div>
+                  <div className="nav-bar nav-bar--mobile">
+                    <NavBar admin={admin} />
+                  </div>
                 </div>
-                <div className="nav-bar nav-bar--mobile">
+              </NoPrint>
+            </div>
+            <div className="search-container--mobile">
+              <Search />
+            </div>
+          </>
+        ) : (
+          <div className="navigation-container">
+            <NoPrint>
+              <div className="navigation">
+                <div className="nav-bar">
                   <NavBar admin={admin} />
                 </div>
-              </nav>
+                <div className="search-container">
+                  <Search />
+                </div>
+                <div className="user-menu">
+                  <UserMenu admin={admin} />
+                </div>
+              </div>
             </NoPrint>
           </div>
-        ) : (
-          <NoPrint>
-            <nav>
-              <div className="nav-bar">
-                <NavBar admin={admin} />
-              </div>
-              <div className="user-menu">
-                <UserMenu admin={admin} />
-              </div>
-            </nav>
-          </NoPrint>
         )}
       </Wrapper>
     </StyledHeader>

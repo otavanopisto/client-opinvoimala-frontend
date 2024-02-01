@@ -8,6 +8,7 @@ import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { useOutsideClickAction } from '../utils/hooks';
 import { useWindowDimensions } from '../utils/hooks';
+import { Button } from './inputs';
 
 interface SearchStrapiHit {
   id: string;
@@ -79,7 +80,8 @@ const Container = styled.div`
     border-radius: ${p => p.theme.borderRadius.md};
     display: flex;
     padding: 10px;
-
+    position: relative;
+    z-index: 6;
     &:hover {
       opacity: 0.8;
     }
@@ -103,6 +105,7 @@ const Container = styled.div`
       opacity: 0.8;
     }
   }
+
   .search-content {
     animation: 0.2s ease-out 0s 1 slideInFromTop;
     position: absolute;
@@ -110,23 +113,34 @@ const Container = styled.div`
     width: 100%;
     min-height: 500px;
     opacity: 0.98;
-    margin-top: 76px;
+    margin-top: 88px;
+    padding: ${p => p.theme.spacing.lg};
     ${p => p.theme.shadows[0]};
     background-color: ${p => p.theme.color.background};
-    padding: ${p => p.theme.spacing.lg};
     z-index: 4;
 
+    #closeSearch {
+      position: absolute;
+      top: 0;
+      right: 0;
+      margin: ${p => p.theme.spacing.lg};
+    }
     &--mobile {
+      min-height: 100vh;
       border: 1px solid ${p => p.theme.color.grey};
+      top: 0;
       margin-top: 0;
+      z-index: 7;
     }
   }
+
   input {
     padding: ${p => p.theme.spacing.md};
     border: 1px solid ${p => p.theme.color.grey};
     border-radius: ${p => p.theme.borderRadius.md};
     background-color: ${p => p.theme.color.background};
   }
+
   .hits-container {
     display: flex;
     padding: ${p => p.theme.spacing.md} 0 0 0;
@@ -167,20 +181,16 @@ const Search: React.FC<Props> = ({ indexName = 'page' }) => {
 
   return (
     <Container ref={searchContentRef}>
-      <button
+      <Button
+        ariaLabel={t('aria.main_navigation')}
         aria-expanded={searchVisible}
-        aria-controls="searchContent"
-        aria-label={t('aria.search')}
-        className={`search-toggle-button ${searchVisible ? 'active' : ''}`}
+        id="search-toggle-button"
+        variant="outlined"
+        modifier="search-toggle-button"
+        color="secondary"
+        icon={<Icon type="Search" strokeColor="secondary" />}
         onClick={toggleSearch}
-      >
-        <Icon
-          type="Search"
-          color={`${searchVisible ? 'accentLight' : 'accentDark'}`}
-          className="search-button--icon active"
-          width={22}
-        />
-      </button>
+      />
       {searchVisible && (
         <div
           id="searchContent"
@@ -192,7 +202,9 @@ const Search: React.FC<Props> = ({ indexName = 'page' }) => {
             <SearchBox
               searchAsYouType={false}
               autoFocus
-              className="search-box"
+              resetIconComponent={() => (
+                <div className="search-button">{t('action.empty')}</div>
+              )}
               submitIconComponent={() => (
                 <div className="search-button">{t('action.search')}</div>
               )}
@@ -216,17 +228,16 @@ const Search: React.FC<Props> = ({ indexName = 'page' }) => {
                   />
                 </Index>
               </div>
-              <div>
-                <Index indexName="events">
-                  <SearchHits
-                    type="page"
-                    title={t('label.event')}
-                    onSelect={toggleSearch}
-                  />
-                </Index>
-              </div>
             </div>
           </InstantSearch>
+          <Button
+            ariaLabel={t('aria.close')}
+            id="closeSearch"
+            variant="filled"
+            icon={<Icon type="Close" strokeColor="background" />}
+            onClick={toggleSearch}
+            noMargin
+          />
         </div>
       )}
     </Container>

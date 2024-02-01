@@ -6,17 +6,10 @@ import Hero, { HeroProps } from './Hero';
 import Wrapper, { WrapperSize } from './Wrapper';
 import LoadingPlaceholder from '../LoadingPlaceholder';
 import { LoginModal } from '../../views';
+import { useWindowDimensions } from '../../utils/hooks';
 
 const Container = styled.div`
   .header {
-    &__header {
-      nav,
-      button {
-        position: relative;
-        z-index: 6;
-      }
-    }
-
     &__header,
     &__hero {
       background-color: ${p => p.theme.color.primaryLight};
@@ -91,12 +84,14 @@ const Layout: React.FC<Props> = ({
   admin = false,
   children,
 }) => {
+  const { isTablet } = useWindowDimensions();
   return (
     <Container>
       {!admin && <LoginModal />}
       <div className="header__header">
+        {/* This is only for non-mobile views */}
+        {isTablet ? null : <div className="header__curtain"></div>}
         <Header admin={admin} />
-        <div className="header__curtain"></div>
       </div>
 
       <main>

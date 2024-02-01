@@ -10,7 +10,6 @@ import Drawer from '../Drawer';
 import Button from '../inputs/Button';
 import Icon from '../Icon';
 import AccordionMenu from '../AccordionMenu';
-import Search from '../Search';
 
 interface Props {
   admin?: boolean;
@@ -19,9 +18,6 @@ interface Props {
 const Container = styled.div`
   display: flex;
   align-items: center;
-  // .search-container {
-  //   margin-right: 10px;
-  // }
 `;
 
 const NavBar: React.FC<Props> = observer(({ admin }) => {
@@ -53,9 +49,6 @@ const NavBar: React.FC<Props> = observer(({ admin }) => {
   if (isTablet || isMobile) {
     return (
       <Container>
-        <div className="search-container">
-          <Search />
-        </div>
         <Drawer
           triggerEl={(isOpen, onClick) => (
             <Button
@@ -98,9 +91,6 @@ const NavBar: React.FC<Props> = observer(({ admin }) => {
           />
         ))}
       </nav>
-      <div className="search-container">
-        <Search />
-      </div>
     </Container>
   );
 });
