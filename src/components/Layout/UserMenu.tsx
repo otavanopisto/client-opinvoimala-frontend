@@ -91,6 +91,10 @@ const MobileMenu: React.FC<{ items: LinkItem[] }> = ({ items }) => {
   );
 };
 
+const LoginContainer = styled.div`
+  margin-left: 12px;
+`;
+
 interface Props {
   admin?: boolean;
 }
@@ -191,17 +195,19 @@ const UserMenu: React.FC<Props> = observer(({ admin }) => {
   } else if (!admin) {
     // User is not logged in, show login button.
     return (
-      <Button
-        ariaLabel={t('aria.login')}
-        id="user-menu__login__button"
-        text={isTablet ? undefined : t('action.login')}
-        variant={isTablet ? 'outlined' : 'filled'}
-        color="secondary"
-        icon={
-          <Icon type="SignIn" color={isTablet ? 'secondary' : 'background'} />
-        }
-        onClick={handleLoginClick}
-      />
+      <LoginContainer>
+        <Button
+          ariaLabel={t('aria.login')}
+          id="user-menu__login__button"
+          text={isTablet ? undefined : t('action.login')}
+          variant={isTablet ? 'outlined' : 'filled'}
+          color="secondary"
+          icon={
+            <Icon type="SignIn" color={isTablet ? 'secondary' : 'background'} />
+          }
+          onClick={handleLoginClick}
+        />
+      </LoginContainer>
     );
   }
   return null;
