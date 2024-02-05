@@ -46,13 +46,14 @@
     "date": "Ajankohta",
     "email": "Sähköpostiosoite",
     "name": "Nimi",
+    "pages": "Sivut",
     "password": "Salasana",
     "password_confirm": "Salasana uudelleen",
     "repeat": "Toistuvuus",
     "specialist": "Asiantuntija",
     "time_abbrv": "klo",
-    "pages": "Sivut",
-    "tests": "Harjoitukset"
+    "tests": "Harjoitukset",
+    "unknown_type": "Tuntematon tyyppi"
   },
   "route": {
     "register": "Rekisteröidy",

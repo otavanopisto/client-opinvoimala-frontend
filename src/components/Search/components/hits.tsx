@@ -58,7 +58,7 @@ const Hits: React.FC<HitsProps> = ({ onSelect, title, type }) => {
       case 'test':
         return (hit as Test).name;
       default:
-        return 'Tuntematon sivutyyppi';
+        return t('label.unknown');
     }
   };
 
