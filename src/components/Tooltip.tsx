@@ -7,6 +7,7 @@ const StyledPopup = styled(Popup)`
     padding: ${p => p.theme.spacing.md};
     font-family: ${p => p.theme.font.secondary};
     color: ${p => p.theme.color.secondary};
+    z-index: 11000;
   }
 `;
 

@@ -17,7 +17,6 @@ const StyledButton = styled.button<{
   min-width: ${p => (p.isSmall ? undefined : '120px')};
   border-radius: ${p => (p.isSmall ? p.theme.borderRadius.md : '40px')};
   margin: ${p => (p.noMargin ? 0 : p.theme.spacing.sm)} 0;
-
   padding-top: ${p => (p.isSmall ? p.theme.spacing.sm : p.theme.spacing.md)};
   padding-bottom: ${p => (p.isSmall ? p.theme.spacing.sm : p.theme.spacing.md)};
   padding-left: ${p => p.theme.spacing.lg};
@@ -32,6 +31,9 @@ const StyledButton = styled.button<{
 
   &.icon-button {
     padding: ${p => p.theme.spacing.md};
+    &--small {
+      ${p => p.theme.spacing.sm}
+    }
     svg,
     i {
       margin-left: 0;
@@ -88,11 +90,7 @@ const StyledButton = styled.button<{
     :hover:not(.disabled) {
       text-decoration: underline;
     }
-  }
-
-  &.disabled {
-    color: ${p => p.theme.color.grey};
-    cursor: not-allowed;
+  } ${p => p.theme.spacing.md}
     opacity: 0.8;
   }
 

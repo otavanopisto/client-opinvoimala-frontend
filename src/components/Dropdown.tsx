@@ -19,8 +19,6 @@ const StyledDropdownMenu = styled.div<{
         font-family: ${p => p.theme.font.secondary};
         ${p => p.theme.font.size.sm};
         font-weight: bold;
-        margin-left: ${p => p.theme.spacing.lg};
-        margin-right: ${p => p.theme.spacing.lg};
         cursor: pointer;
         user-select: none;
         text-decoration: none;

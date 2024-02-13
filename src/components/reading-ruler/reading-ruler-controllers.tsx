@@ -14,7 +14,7 @@ const ControllerContainer = styled.div`
   justify-content: flex-end;
   min-width: 0;
   position: fixed;
-  right: 10px;
+  right: 40px;
   width: auto;
   z-index: 10010;
 
@@ -43,6 +43,10 @@ const ControllerContainer = styled.div`
     opacity: 100%;
     visibility: visible;
     width: auto;
+    > div {
+      margin-right: 2px;
+      margin-left: 2px;
+    }
   }
 `;
 
