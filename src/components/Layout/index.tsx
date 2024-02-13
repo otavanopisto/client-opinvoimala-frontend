@@ -5,7 +5,10 @@ import Header from './Header';
 import Hero, { HeroProps } from './Hero';
 import Wrapper, { WrapperSize } from './Wrapper';
 import LoadingPlaceholder from '../LoadingPlaceholder';
+import ReadingRuler from '../reading-ruler/reading-ruler';
 import { LoginModal } from '../../views';
+import { useStore } from '../../store/storeContext';
+import { observer } from 'mobx-react-lite';
 
 const Container = styled.div`
   .header {
@@ -22,7 +25,12 @@ const Container = styled.div`
     position: relative;
     padding-bottom: 60px;
   }
-
+  .color-picker {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 10200;
+  }
   @media print {
     .header {
       &__header,
@@ -67,44 +75,58 @@ interface Props {
   admin?: boolean;
 }
 
-const Layout: React.FC<Props> = ({
-  hero,
-  wrapperSize = 'normal',
-  isLoading = false,
-  admin = false,
-  children,
-}) => {
-  return (
-    <Container>
-      {!admin && <LoginModal />}
+const Layout: React.FC<Props> = observer(
+  ({
+    hero,
+    wrapperSize = 'normal',
+    isLoading = false,
+    admin = false,
+    children,
+  }) => {
+    const {
+      ruler: { open, setRulerOpen },
+    } = useStore();
 
-      <div className="header__header">
-        <Header admin={admin} />
-      </div>
+    const test = open;
 
-      <main>
-        {hero && (
-          <div className="header__hero">
-            <Wrapper size={wrapperSize}>
-              {isLoading ? (
-                <LoadingPlaceholder.Hero />
-              ) : (
-                <Hero {...hero} wrapperSize={wrapperSize} />
-              )}
-            </Wrapper>
-          </div>
-        )}
+    return (
+      <Container>
+        {!admin && <LoginModal />}
 
-        <DiagonalSeparator />
+        <div className="header__header">
+          <Header admin={admin} />
+        </div>
 
-        <Wrapper size={wrapperSize}>
-          {isLoading ? <LoadingPlaceholder.Content /> : children}
-        </Wrapper>
-      </main>
+        <main>
+          {hero && (
+            <div className="header__hero">
+              <Wrapper size={wrapperSize}>
+                {isLoading ? (
+                  <LoadingPlaceholder.Hero />
+                ) : (
+                  <>
+                    <Hero {...hero} wrapperSize={wrapperSize} />
+                    <ReadingRuler
+                      active={test}
+                      onClose={() => setRulerOpen(false)}
+                    />
+                  </>
+                )}
+              </Wrapper>
+            </div>
+          )}
 
-      <Footer />
-    </Container>
-  );
-};
+          <DiagonalSeparator />
+
+          <Wrapper size={wrapperSize}>
+            {isLoading ? <LoadingPlaceholder.Content /> : children}
+          </Wrapper>
+        </main>
+
+        <Footer />
+      </Container>
+    );
+  }
+);
 
 export default Layout;

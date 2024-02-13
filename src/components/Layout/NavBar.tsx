@@ -20,6 +20,7 @@ const NavBar: React.FC<Props> = observer(({ admin }) => {
 
   const {
     navigation: { state, navigation, fetchNavigation },
+    ruler: { open, setRulerOpen },
   } = useStore();
 
   useEffect(() => {

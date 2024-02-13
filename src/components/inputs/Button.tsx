@@ -91,8 +91,14 @@ const StyledButton = styled.button<{
   }
 
   &.disabled {
+    color: ${p => p.theme.color.grey};
     cursor: not-allowed;
     opacity: 0.8;
+  }
+
+  &.active {
+    color: ${p => p.theme.color.secondaryInverse};
+    background-color: ${p => p.theme.color.secondary};
   }
 
   &.is-hidden {
@@ -106,12 +112,13 @@ type VariantType = 'filled' | 'outlined' | 'link';
 export interface Props {
   id: string;
   text?: string | JSX.Element;
-  icon?: JSX.Element;
+  icon?: JSX.Element | string;
   onClick?: (event: React.MouseEvent<HTMLElement, MouseEvent>) => void;
   type?: 'button' | 'submit' | 'reset';
   color?: ColorType;
   negativeText?: boolean;
   variant?: VariantType;
+  active?: boolean;
   disabled?: boolean;
   hidden?: boolean;
   isSmall?: boolean;
@@ -136,6 +143,7 @@ export const Button: FC<Props> = ({
   negativeText = false,
   variant = 'filled',
   disabled,
+  active,
   hidden = false,
   isSmall = false,
   noMargin = false,
@@ -155,10 +163,14 @@ export const Button: FC<Props> = ({
   const getClassName = () => {
     let className = `button-${variant}`;
     className += disabled ? ' disabled' : '';
+    className += active ? ' active' : '';
     className += hidden ? ' is-hidden' : '';
     className += isIconButton ? ' icon-button' : '';
     return className;
   };
+
+  const buttonIcon =
+    icon && typeof icon === 'string' ? <i className={`icon-${icon}`} /> : icon;
 
   const button = (
     <StyledButton
@@ -176,9 +188,9 @@ export const Button: FC<Props> = ({
       autoFocus={autoFocus}
       iconPosition={iconPosition}
     >
-      {iconPosition === 'left' && icon}
+      {iconPosition === 'left' && buttonIcon}
       {text}
-      {iconPosition === 'right' && icon}
+      {iconPosition === 'right' && buttonIcon}
     </StyledButton>
   );
 

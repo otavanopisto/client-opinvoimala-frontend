@@ -8,6 +8,7 @@ export const COLORS = Object.freeze({
   primaryLight: '#CEE5D8',
   primaryLightest: '#CEE5D833',
   secondary: secondaryColor,
+  secondaryInverse: '#F4F5F7',
   accent: '#DC0058',
   accentLight: '#EDE2E7',
   accentDark: '#2A143F',
@@ -16,10 +17,8 @@ export const COLORS = Object.freeze({
   grey2: '#4F4F4F',
   grey3: '#F4F5F7',
   grey4: '#e0e0e0',
-
   foreground: '#000000',
   background: '#ffffff',
-
   heading: secondaryColor,
   text: '#555555',
 });
