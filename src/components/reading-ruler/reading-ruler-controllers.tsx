@@ -73,6 +73,7 @@ export const ReadingRulerControllers = React.forwardRef<
   /**
    * handleShowToolsClick
    * @param e e
+   *
    */
   const handleShowToolsClick = (
     e: React.MouseEvent<HTMLElement, MouseEvent>

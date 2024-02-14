@@ -57,9 +57,9 @@ export const theme: DefaultTheme = {
   },
 
   breakpoint: {
-    mobile: `(max-width: ${BREAKPOINTS.mobile}px)`,
-    tablet: `(max-width: ${BREAKPOINTS.tablet}px)`,
-    laptop: `(max-width: ${BREAKPOINTS.laptop}px)`,
+    mobile: `(min-width: ${BREAKPOINTS.mobile}px)`,
+    tablet: `(min-width: ${BREAKPOINTS.tablet}px)`,
+    laptop: `(min-width: ${BREAKPOINTS.laptop}px)`,
   },
 
   shadows: [

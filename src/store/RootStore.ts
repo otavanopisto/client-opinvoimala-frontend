@@ -9,12 +9,12 @@ import { AppointmentsStore } from './AppointmentsStore';
 import { EventsStore } from './EventsStore';
 import { TestsStore } from './TestsStore';
 import { GoalsStore } from './GoalsStore';
-import { RulerStore } from './Ruler';
+import { RulerStore } from './RulerStore';
 import { UserInterestsStore } from './UserInterestsStore';
 
 const RootStoreModel = types.model({
   auth: types.optional(AuthStore, { state: 'IDLE' }),
-  ruler: types.optional(RulerStore, { open: false }),
+  ruler: types.optional(RulerStore, { open: false, paletteOpen: false }),
   settings: types.optional(SettingsStore, {
     state: 'NOT_FETCHED',
   }),

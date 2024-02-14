@@ -84,10 +84,13 @@ const Layout: React.FC<Props> = observer(
     children,
   }) => {
     const {
-      ruler: { open, setRulerOpen },
+      ruler: { open, setRulerOpen, setPaletteOpen },
     } = useStore();
 
-    const test = open;
+    const handleClose = () => {
+      setRulerOpen(false);
+      setPaletteOpen(false);
+    };
 
     return (
       <Container>
@@ -106,10 +109,7 @@ const Layout: React.FC<Props> = observer(
                 ) : (
                   <>
                     <Hero {...hero} wrapperSize={wrapperSize} />
-                    <ReadingRuler
-                      active={test}
-                      onClose={() => setRulerOpen(false)}
-                    />
+                    <ReadingRuler active={open} onClose={handleClose} />
                   </>
                 )}
               </Wrapper>

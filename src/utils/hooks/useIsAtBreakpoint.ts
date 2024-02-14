@@ -39,7 +39,7 @@ const useIsAtBreakpoint = (breakPoint: number): boolean => {
 
     window.addEventListener('resize', handleResize());
     return () => window.removeEventListener('resize', handleResize());
-  }, []);
+  }, [breakPoint]);
 
   return currentWidth <= breakPoint;
 };

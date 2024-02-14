@@ -11,11 +11,12 @@ import Button from '../inputs/Button';
 import { ReadingRulerControllers } from './reading-ruler-controllers';
 
 import useIsAtBreakpoint from '../../utils/hooks/useIsAtBreakpoint';
-
+import { observer } from 'mobx-react-lite';
 import styled from 'styled-components';
 
 import { throttle } from 'lodash';
 import { useTranslation } from 'react-i18next';
+import { useStore } from '../../store/storeContext';
 
 const ReadingRulerContainer = styled.div<{ active: boolean }>`
   display: ${p => (p.active ? 'block' : 'none')};
@@ -38,8 +39,7 @@ const ReadingRulerContainer = styled.div<{ active: boolean }>`
     z-index: 10000;
 
     &--inverted {
-      background: unset;
-    }
+      background: unset;from '../../utils/observer'
   }
 
   .reading-ruler-middle {
@@ -66,7 +66,7 @@ const ReadingRulerContainer = styled.div<{ active: boolean }>`
   }
 
   .reading-ruler-middle-mobile-handle {
-    background-color: $color-default-contrast;
+    background-color: ${p => p.theme.color.grey3};
     border-radius: 25px;
     height: inherit;
     opacity: 70%;
@@ -174,7 +174,7 @@ const readingRulerPresetDefault1: Partial<ReadingRulerPresetSettings> = {
  * @param props props
  * @returns JSX.Element
  */
-export const ReadingRulerBase: React.FC<ReadingRulerProps> = props => {
+export const ReadingRulerBase: React.FC<ReadingRulerProps> = observer(props => {
   props = { ...defaultProps, ...props };
   const { onClose, active } = props;
 
@@ -184,6 +184,9 @@ export const ReadingRulerBase: React.FC<ReadingRulerProps> = props => {
   const [pinned, setPinned] = React.useState(false);
   const [stopped, setStopped] = React.useState(false);
   const { t } = useTranslation();
+  const {
+    ruler: { paletteOpen, setPaletteOpen },
+  } = useStore();
 
   // Localstorage stuff
   const [readingRulerState, setReadingRulerState] =
@@ -471,6 +474,7 @@ export const ReadingRulerBase: React.FC<ReadingRulerProps> = props => {
    */
   const handlePaletteToggle = (state: boolean) => {
     setStopped(state);
+    setPaletteOpen(state);
   };
 
   /**
@@ -607,6 +611,7 @@ export const ReadingRulerBase: React.FC<ReadingRulerProps> = props => {
             <Dropdown
               executeOnToggle={handlePaletteToggle}
               disableOutsideClick={true}
+              controlledIsOpen={paletteOpen}
               closeOnMenuClick={false}
               triggerEl={(isOpen, onClick) => (
                 <Button
@@ -681,7 +686,7 @@ export const ReadingRulerBase: React.FC<ReadingRulerProps> = props => {
                 <div>
                   {t("wcag.preset2")}
                 </div>
-              }
+              }handlePaletteToggle
             >
               <Button
                 onClick={handleChangePresetClick(
@@ -725,4 +730,4 @@ export const ReadingRulerBase: React.FC<ReadingRulerProps> = props => {
       />
     </ReadingRulerContainer>
   );
-};
+});

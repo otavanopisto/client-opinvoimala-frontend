@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Colors } from '../theme/styled';
 import { useOutsideClickAction } from '../utils/hooks/useOutsideClickAction';
@@ -96,6 +96,7 @@ interface Props {
   executeOnToggle?: (state: boolean) => void;
   disableOutsideClick?: boolean;
   closeOnMenuClick?: boolean;
+  controlledIsOpen?: boolean;
   children: React.ReactNode;
   align?: 'left' | 'right';
   verticalPosition?: number;
@@ -109,6 +110,7 @@ const Dropdown: React.FC<Props> = ({
   triggerEl,
   executeOnToggle,
   closeOnMenuClick = true,
+  controlledIsOpen,
   disableOutsideClick = false,
   children,
   align = 'left',
@@ -123,10 +125,13 @@ const Dropdown: React.FC<Props> = ({
 
   useOutsideClickAction({
     ref,
-    condition: isOpen,
+    condition: controlledIsOpen !== undefined ? controlledIsOpen : isOpen,
     disabled: disableOutsideClick,
     action: () => setIsOpen(false),
   });
+
+  const menusIsOpen =
+    controlledIsOpen !== undefined ? controlledIsOpen : isOpen;
 
   const toggleMenu = () => {
     if (triggerRef.current) {
@@ -136,19 +141,19 @@ const Dropdown: React.FC<Props> = ({
         left: rect.left,
       });
     }
-    executeOnToggle && executeOnToggle(!isOpen);
-    setIsOpen(!isOpen);
+    executeOnToggle && executeOnToggle(!menusIsOpen);
+    if (controlledIsOpen === undefined) setIsOpen(!isOpen);
   };
 
   const renderTrigger = () => {
-    if (triggerEl) return triggerEl(isOpen, toggleMenu);
+    if (triggerEl) return triggerEl(menusIsOpen, toggleMenu);
     if (triggerButton) {
       const { label } = triggerButton;
       if (label)
         return (
           <TriggerButton
             type="button"
-            aria-expanded={isOpen}
+            aria-expanded={menusIsOpen}
             aria-haspopup={true}
           >
             {label}
@@ -164,7 +169,7 @@ const Dropdown: React.FC<Props> = ({
   const getClassName = () => {
     let className = 'menu';
     className += ` align-${align}`;
-    if (isOpen) className += ' is-open';
+    if (menusIsOpen) className += ' is-open';
     else className += ' is-hidden';
     return className;
   };
