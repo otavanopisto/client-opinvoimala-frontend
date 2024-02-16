@@ -31,10 +31,10 @@ export const BREAKPOINTS = Object.freeze({
 
 export const fontSize = (sm: number, md: number, lineHeight?: number) => {
   return `
-    font-size: ${md}rem;
+  font-size: ${sm}rem;
     line-height: ${lineHeight ?? 160}%;
-    @media (max-width: ${BREAKPOINTS.mobile}px) {
-      font-size: ${sm}rem;
+    @media (min-width: ${BREAKPOINTS.tablet}px) {
+      font-size: ${md}rem;
     }
   `;
 };

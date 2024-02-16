@@ -10,6 +10,9 @@ import Image from './Image';
 
 const EventContainer = styled.li<{ isSimple: boolean }>`
   display: flex;
+
+  flex-direction: column-reverse;
+
   justify-content: space-between;
   ${p => p.theme.shadows[0]};
   background-color: ${p =>
@@ -42,6 +45,7 @@ const EventContainer = styled.li<{ isSimple: boolean }>`
   img {
     width: 360px;
     border-radius: 0;
+    margin-bottom: ${p => p.theme.spacing.lg};
   }
 
   button {
@@ -52,11 +56,13 @@ const EventContainer = styled.li<{ isSimple: boolean }>`
     color: ${p => (p.isSimple ? p.theme.color.grey : undefined)};
   }
 
-  @media ${p => p.theme.breakpoint.mobile} {
-    flex-direction: column-reverse;
+  @media ${p => p.theme.breakpoint.tablet} {
+    flex-direction: initial;
 
     img {
-      margin-bottom: ${p => p.theme.spacing.lg};
+      width: 360px;
+      border-radius: 0;
+      margin-bottom: 0;
     }
   }
 `;

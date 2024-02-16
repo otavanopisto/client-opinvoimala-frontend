@@ -29,7 +29,7 @@ const ReadingRulerContainer = styled.div<{ active: boolean }>`
   .reading-ruler-middle,
   .reading-ruler-bottom,
   .reading-ruler-dragger-handle-container {
-    background: $color-cagtegory-11;
+    // background: $color-category-11;
     height: 100px;
     left: 0;
     opacity: 50%;
@@ -39,7 +39,8 @@ const ReadingRulerContainer = styled.div<{ active: boolean }>`
     z-index: 10000;
 
     &--inverted {
-      background: unset;from '../../utils/observer'
+      background: none;
+    }
   }
 
   .reading-ruler-middle {
@@ -76,7 +77,6 @@ const ReadingRulerContainer = styled.div<{ active: boolean }>`
       display: none;
     }
   }
-
   .reading-ruler-bottom {
     bottom: 0;
     top: auto;
@@ -110,7 +110,7 @@ const defaultProps: ReadingRulerDefaultProps = {
   defaultInverted: false,
 };
 
-/**
+/**rulerHeight
  * ReadingRulerPresetSettings
  */
 interface ReadingRulerPresetSettings {
@@ -699,7 +699,6 @@ export const ReadingRulerBase: React.FC<ReadingRulerProps> = observer(props => {
                     : undefined
                 }
               >
-                2
               </Button>
             </Dropdown>
 

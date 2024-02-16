@@ -7,12 +7,11 @@ const Container = styled.section`
   margin-bottom: ${p => p.theme.spacing.xl};
 
   > header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    h1 {
-      ${p => p.theme.font.h2};
+    flex-direction: column;
+    align-items: flex-start;
+    button {
+      margin-left: 0 !important;
+      margin-right: 0 !important;
     }
   }
 
@@ -23,11 +22,12 @@ const Container = styled.section`
 
   @media ${p => p.theme.breakpoint.mobile} {
     > header {
-      flex-direction: column;
-      align-items: flex-start;
-      button {
-        margin-left: 0 !important;
-        margin-right: 0 !important;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      h1 {
+        ${p => p.theme.font.h2};
       }
     }
   }

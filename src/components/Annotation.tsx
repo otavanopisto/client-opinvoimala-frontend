@@ -13,13 +13,14 @@ const Container = styled.div`
   ${p => p.theme.font.size.sm};
 
   svg {
-    margin-right: ${p => p.theme.spacing.lg};
+    width: 50px;
+    margin-right: ${p => p.theme.spacing.md};
   }
 
   @media ${p => p.theme.breakpoint.mobile} {
     svg {
-      width: 50px;
-      margin-right: ${p => p.theme.spacing.md};
+      width: auto;
+      margin-right: ${p => p.theme.spacing.lg};
     }
   }
 `;

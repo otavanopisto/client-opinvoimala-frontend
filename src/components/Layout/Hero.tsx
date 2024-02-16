@@ -16,23 +16,12 @@ const Container = styled.div`
   position: relative;
   display: flex;
   justify-content: space-between;
+  flex-direction: column;
 
   .hero {
     &__main-column {
-      flex: 1;
-
-      .heading-container {
-        position: relative;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-top: ${p => p.theme.spacing.lg};
-        margin-bottom: ${p => p.theme.spacing.lg};
-
-        h1 {
-          display: inline-block;
-          line-height: 77px;
-        }
+      &.align-center {
+        text-align: center;
       }
 
       .action-buttons {
@@ -44,23 +33,18 @@ const Container = styled.div`
           }
         }
       }
-
+      
+      .heading-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        margin-top: ${p => p.theme.spacing.lg};
+        margin-bottom: ${p => p.theme.spacing.lg};
+      }
       .lead-text {
         margin-bottom: ${p => p.theme.spacing.lg};
       }
     }
-
-    &__side-column {
-      position: absolute;
-      right: 0;
-      top: 0;
-      width: 30%;
-    }
-
-    &__side-column-placeholder {
-      width: 35%;
-    }
-
     &__back-button-label,
     &__download-button-label {
       display: flex;
@@ -72,49 +56,42 @@ const Container = styled.div`
       }
     }
   }
+  @media ${p => p.theme.breakpoint.mobile} {
+    flex-direction: row;
+
+    .hero {
+      &__main-column {
+        flex-basis: 50%;
+        .heading-container {
+          margin-top: ${p => p.theme.spacing.lg};
+          margin-bottom: ${p => p.theme.spacing.lg};
+          h1 {
+              line-height: 43px;
+          }
+        }
+        &.align-center {
+          text-align: left;
+        }
+      }
+      
+      &__side-column {
+        flex-basis: 50%;
+      }
+  }
 
   @media ${p => p.theme.breakpoint.tablet} {
     .hero {
       &__main-column {
+        flex-basis: 65%;
+        flex-grow: 1;
         .heading-container {
-          flex-direction: column;
-          align-items: flex-start;
-        }
-        .action-buttons {
+          flex-direction: row;
           margin-top: ${p => p.theme.spacing.lg};
-        }
-      }
-    }
-  }
+          margin-bottom: ${p => p.theme.spacing.lg};
 
-  @media ${p => p.theme.breakpoint.mobile} {
-    flex-direction: column;
-    align-items: center;
-    .hero {
-      &__side-column,
-      &__main-column {
-        position: initial;
-        width: 100%;
-      }
-      &__side-column {
-        > div > img {
-          margin-top: ${p => p.theme.spacing.xl};
-          margin-bottom: -${p => p.theme.spacing.xl};
-        }
-      }
-      &__main-column {
-        .heading-container {
           h1 {
-            line-height: 43px;
+            line-height: 77px;
           }
-        }
-        &.align-center {
-          text-align: center;
-        }
-        > div > img {
-          width: 80px;
-          float: left;
-          margin-right: ${p => p.theme.spacing.lg};
         }
       }
     }
@@ -247,7 +224,7 @@ const Hero: React.FC<HeroProps> = ({
           <div className="hero__side-column">
             <NoPrint>{imageEl}</NoPrint>
           </div>
-          <div className="hero__side-column-placeholder"></div>
+          {/* <div className="hero__side-column-placeholder"></div> */}
         </>
       )}
     </Container>

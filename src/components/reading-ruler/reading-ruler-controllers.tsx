@@ -14,7 +14,7 @@ const ControllerContainer = styled.div`
   justify-content: flex-end;
   min-width: 0;
   position: fixed;
-  right: 40px;
+  right: 10px;
   width: auto;
   z-index: 10010;
 

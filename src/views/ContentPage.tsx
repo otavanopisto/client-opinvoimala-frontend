@@ -27,11 +27,15 @@ const InnerHtmlContainer = styled.div`
   h4 {
     ${p => p.theme.font.h5};
   }
+  figure,
+  img {
+    width: 100% !important;
+  }
 
   @media ${p => p.theme.breakpoint.mobile} {
     figure,
     img {
-      width: 100% !important;
+      width: auto;
     }
   }
 `;
