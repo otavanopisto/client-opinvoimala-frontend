@@ -86,6 +86,7 @@ const Container = styled.div`
         flex-grow: 1;
         .heading-container {
           flex-direction: row;
+          align-items: center;
           margin-top: ${p => p.theme.spacing.lg};
           margin-bottom: ${p => p.theme.spacing.lg};
 
@@ -224,7 +225,6 @@ const Hero: React.FC<HeroProps> = ({
           <div className="hero__side-column">
             <NoPrint>{imageEl}</NoPrint>
           </div>
-          {/* <div className="hero__side-column-placeholder"></div> */}
         </>
       )}
     </Container>

@@ -42,24 +42,25 @@ const Container = styled.div`
 `;
 
 const DiagonalSeparator = styled.div`
-  height: 200px;
+  height: 120px;
+
   background: linear-gradient(
-    -182deg,
+    -183deg,
     ${p => p.theme.color.primaryLight} 50%,
     transparent 0%
   );
 
   @media ${p => p.theme.breakpoint.tablet} {
-    height: 150px;
-  }
-
-  @media ${p => p.theme.breakpoint.mobile} {
-    height: 120px;
+    height: 200px;
     background: linear-gradient(
-      -183deg,
+      -182deg,
       ${p => p.theme.color.primaryLight} 50%,
       transparent 0%
     );
+  }
+
+  @media ${p => p.theme.breakpoint.mobile} {
+    height: 150px;
   }
 
   @media print {
