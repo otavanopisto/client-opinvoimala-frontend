@@ -4,18 +4,12 @@ import Dropdown from '../Dropdown';
 // eslint-disable-next-line camelcase
 import { unstable_batchedUpdates } from 'react-dom';
 import { useLocalStorage } from 'usehooks-ts';
-// import '~/sass/elements/reading-ruler.scss';
 import Button from '../inputs/Button';
-// import Dropdown from '../../general/dropdown';
-
 import { ReadingRulerControllers } from './reading-ruler-controllers';
-
 import useIsAtBreakpoint from '../../utils/hooks/useIsAtBreakpoint';
 import { BREAKPOINTS } from '../../theme';
-
 import { observer } from 'mobx-react-lite';
 import styled from 'styled-components';
-
 import { throttle } from 'lodash';
 import { useTranslation } from 'react-i18next';
 import { useStore } from '../../store/storeContext';
@@ -217,7 +211,6 @@ export const ReadingRulerBase: React.FC<ReadingRulerProps> = observer(props => {
 
   const mobileBreakpoint = useIsAtBreakpoint(BREAKPOINTS.mobile / 16);
   const tabletBreakpoint = useIsAtBreakpoint(BREAKPOINTS.tablet / 16);
-
   const top = React.useRef<HTMLDivElement>(null);
   const middle = React.useRef<HTMLDivElement>(null);
   const bottom = React.useRef<HTMLDivElement>(null);
@@ -409,10 +402,10 @@ export const ReadingRulerBase: React.FC<ReadingRulerProps> = observer(props => {
         }
       }
     };
-
     updateRulerDimensions();
   }, [
     mobileBreakpoint,
+    tabletBreakpoint,
     isDragging,
     activePreset,
     rulerHeight,
@@ -427,6 +420,9 @@ export const ReadingRulerBase: React.FC<ReadingRulerProps> = observer(props => {
 
   const handleSettingsOpen = (open: boolean) => {
     setSettingsOpen(open);
+    if (!open && paletteOpen) {
+      handlePaletteToggle(false);
+    }
   };
 
   /**
@@ -584,14 +580,16 @@ export const ReadingRulerBase: React.FC<ReadingRulerProps> = observer(props => {
         }`}
         ref={bottom}
       />
-      {tabletBreakpoint && (
-        <div className="reading-ruler-dragger-handle-container" ref={dragger}>
+
+      <div className="reading-ruler-dragger-handle-container" ref={dragger}>
+        {tabletBreakpoint && (
           <div
             onTouchStart={handleTouchStart}
             className="reading-ruler-middle-mobile-handle"
           />
-        </div>
-      )}
+        )}
+      </div>
+
       <ReadingRulerControllers
         ref={controllers}
         onClose={onClose}
@@ -682,6 +680,7 @@ export const ReadingRulerBase: React.FC<ReadingRulerProps> = observer(props => {
                       ariaLabel={t('aria.choose_color')}
                       aria-expanded={isOpen}
                       id="rulerPalette"
+                      active={paletteOpen}
                       variant="outlined"
                       color="secondary"
                       onClick={onClick}

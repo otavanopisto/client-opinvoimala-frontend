@@ -22,7 +22,10 @@ const StyledDropdownMenu = styled.div<{
         cursor: pointer;
         user-select: none;
         text-decoration: none;
-      }
+        &.active {
+          color: ${p => p.theme.color.secondaryInverse};
+          background-color: ${p => p.theme.color.secondary};
+        }
 
       a:hover,
       button:hover {
@@ -39,8 +42,6 @@ const DropdownMenu = styled.div<{
 }>`
   padding: 0;
   margin: 0;
-  // position: absolute;
-  // top: ${p => 35 + p.verticalPosition}px;
   &.align-right {
     right: 0;
   }
