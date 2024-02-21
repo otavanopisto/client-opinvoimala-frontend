@@ -204,7 +204,6 @@ export const ReadingRulerBase: React.FC<ReadingRulerProps> = observer(props => {
     } as ReadingRulerState);
 
   const mobileBreakpoint = useIsAtBreakpoint(48);
-
   const top = React.useRef<HTMLDivElement>(null);
   const middle = React.useRef<HTMLDivElement>(null);
   const bottom = React.useRef<HTMLDivElement>(null);
@@ -484,7 +483,6 @@ export const ReadingRulerBase: React.FC<ReadingRulerProps> = observer(props => {
 
   /**
    * handleRulerPinClick
-   * @param e e
    */
   const handleRulerPinClick = () => {
     setPinned(!pinned);
@@ -492,7 +490,7 @@ export const ReadingRulerBase: React.FC<ReadingRulerProps> = observer(props => {
 
   /**
    * handleRulerPinClick
-   * @param e e
+   * @param state state
    */
   const handlePaletteToggle = (state: boolean) => {
     setStopped(state);
@@ -501,7 +499,7 @@ export const ReadingRulerBase: React.FC<ReadingRulerProps> = observer(props => {
 
   /**
    * handleTouch
-   * @param e e
+   * @param e event
    */
   const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
     if (!pinned) {
@@ -611,7 +609,7 @@ export const ReadingRulerBase: React.FC<ReadingRulerProps> = observer(props => {
                 )
               }
             />
-            {/* Removed from mobile view since it doesn't scale well  */}
+            {/* Removed from mobile view since it doesn't scale well and some features do not work correctly on mobile  */}
             {!mobileBreakpoint && (
               <>
                 <Button
@@ -668,6 +666,7 @@ export const ReadingRulerBase: React.FC<ReadingRulerProps> = observer(props => {
                     />
                   )}
                 >
+                  {/* The id here shouldn't be changed, it's used in the click handling */}
                   <div id="colorPicker" className="color-picker">
                     <ChromePicker
                       color={backgroundColor}

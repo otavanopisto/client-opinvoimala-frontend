@@ -97,6 +97,7 @@ export const ReadingRulerControllers = React.forwardRef<
   return (
     <ControllerContainer
       ref={ref}
+      // The id here shouldn't be changed, it's used in the click handling
       id="rulerController"
       className={`${isOpen ? 'open' : ''}`}
     >
