@@ -2,6 +2,8 @@ import * as React from 'react';
 import Button from '../inputs/Button';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
+import { BREAKPOINTS } from '../../theme';
+import useIsAtBreakpoint from '../../utils/hooks/useIsAtBreakpoint';
 
 const ControllerContainer = styled.div`
   align-items: center;
@@ -56,7 +58,7 @@ const ControllerContainer = styled.div`
 
   @media ${p => p.theme.breakpoint.mobile} {
     justify-content: flex-end;
-    right: 10px;
+    right: 50px;
     padding: 0;
     width: auto;
   }
@@ -94,6 +96,8 @@ export const ReadingRulerControllers = React.forwardRef<
     setOpen(!isOpen);
   };
 
+  const tabletBreakpoint = useIsAtBreakpoint(BREAKPOINTS.tablet / 16);
+
   return (
     <ControllerContainer
       ref={ref}
@@ -105,7 +109,13 @@ export const ReadingRulerControllers = React.forwardRef<
         ariaLabel={t('aria.main_navigation')}
         id="openSettings"
         variant="outlined"
-        tooltip={isOpen ? t('aria.close_toolbar') : t('aria.open_toolbar')}
+        tooltip={
+          !tabletBreakpoint
+            ? isOpen
+              ? t('aria.close_toolbar')
+              : t('aria.open_toolbar')
+            : ''
+        }
         color="secondary"
         icon={isOpen ? 'arrow-right' : 'arrow-left'}
         onClick={handleShowToolsClick}
@@ -122,9 +132,9 @@ export const ReadingRulerControllers = React.forwardRef<
       {onClose && (
         <Button
           ariaLabel={t('aria.close_ruler')}
-          id="closeSettings"
+          id="closeRuler"
           variant="outlined"
-          tooltip={t('aria.close_ruler')}
+          tooltip={!tabletBreakpoint ? t('aria.close_ruler') : ''}
           color="secondary"
           icon="cross"
           onClick={onClose}

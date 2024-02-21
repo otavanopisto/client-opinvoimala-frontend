@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ChromePicker } from 'react-color';
+import { ChromePicker, RGBColor } from 'react-color';
 import Dropdown from '../Dropdown';
 // eslint-disable-next-line camelcase
 import { unstable_batchedUpdates } from 'react-dom';
@@ -11,6 +11,8 @@ import Button from '../inputs/Button';
 import { ReadingRulerControllers } from './reading-ruler-controllers';
 
 import useIsAtBreakpoint from '../../utils/hooks/useIsAtBreakpoint';
+import { BREAKPOINTS } from '../../theme';
+
 import { observer } from 'mobx-react-lite';
 import styled from 'styled-components';
 
@@ -110,14 +112,14 @@ const defaultProps: ReadingRulerDefaultProps = {
   defaultInverted: false,
 };
 
-/**rulerHeight
+/**
  * ReadingRulerPresetSettings
  */
 interface ReadingRulerPresetSettings {
   rulerHeight: number;
   invert: boolean;
   overlayClickActive: boolean;
-  backgroundColor: string;
+  backgroundColorRGBA: RGBColor | undefined;
 }
 
 /**
@@ -136,7 +138,12 @@ const readingRulerPresetCustom: Partial<ReadingRulerPresetSettings> = {
   rulerHeight: defaultProps.defaultRulerHeight,
   invert: defaultProps.defaultInverted,
   overlayClickActive: false,
-  backgroundColor: '#000000',
+  backgroundColorRGBA: {
+    r: 0,
+    g: 0,
+    b: 0,
+    a: 0.5,
+  },
 };
 
 /**
@@ -146,7 +153,12 @@ const readingRulerPresetDefault1: Partial<ReadingRulerPresetSettings> = {
   rulerHeight: 10,
   invert: defaultProps.defaultInverted,
   overlayClickActive: false,
-  backgroundColor: '#000000',
+  backgroundColorRGBA: {
+    r: 0,
+    g: 0,
+    b: 0,
+    a: 0.5,
+  },
 };
 
 /**
@@ -203,7 +215,9 @@ export const ReadingRulerBase: React.FC<ReadingRulerProps> = observer(props => {
       },
     } as ReadingRulerState);
 
-  const mobileBreakpoint = useIsAtBreakpoint(48);
+  const mobileBreakpoint = useIsAtBreakpoint(BREAKPOINTS.mobile / 16);
+  const tabletBreakpoint = useIsAtBreakpoint(BREAKPOINTS.tablet / 16);
+
   const top = React.useRef<HTMLDivElement>(null);
   const middle = React.useRef<HTMLDivElement>(null);
   const bottom = React.useRef<HTMLDivElement>(null);
@@ -213,7 +227,7 @@ export const ReadingRulerBase: React.FC<ReadingRulerProps> = observer(props => {
   const { activePreset, activePresetSettings, customPresetSettings } =
     readingRulerState;
 
-  const { rulerHeight, invert, overlayClickActive, backgroundColor } =
+  const { rulerHeight, invert, overlayClickActive, backgroundColorRGBA } =
     activePresetSettings;
 
   React.useEffect(() => {
@@ -294,6 +308,7 @@ export const ReadingRulerBase: React.FC<ReadingRulerProps> = observer(props => {
     /**
      * updateRulerDimensions
      */
+
     const updateRulerDimensions = () => {
       if (
         top &&
@@ -321,7 +336,7 @@ export const ReadingRulerBase: React.FC<ReadingRulerProps> = observer(props => {
           !!target.closest('#colorPicker');
 
         // If it is, we don't want the ruler to run away.
-        if (mobileBreakpoint && !controllerClick && !paletteClick) {
+        if (tabletBreakpoint && !controllerClick && !paletteClick) {
           cursorOffset =
             cursorLocation -
             dragger.current.offsetHeight / 2 -
@@ -366,16 +381,31 @@ export const ReadingRulerBase: React.FC<ReadingRulerProps> = observer(props => {
           middle.current.style.width = '100%';
         }
 
-        // Background color changes and invert settings
+        // Because previous version did have possibility to value to be string (hex)
+        // and after latest update it is always RGBColor type.
+        // These are default values if backgroundColorRGBA is string. In this case its coming as undefined
+        // from localstorage
+        let redValue = 0;
+        let greenValue = 0;
+        let blueValue = 0;
+        let alphaValue: number | undefined = 0.5;
 
+        if (backgroundColorRGBA) {
+          redValue = backgroundColorRGBA.r;
+          greenValue = backgroundColorRGBA.g;
+          blueValue = backgroundColorRGBA.b;
+          alphaValue = backgroundColorRGBA.a;
+        }
+
+        // Background color changes and invert settings
         if (!overlayClickActive && invert) {
           top.current.style.background = 'unset';
-          middle.current.style.background = backgroundColor;
+          middle.current.style.background = `rgba(${redValue}, ${greenValue}, ${blueValue} , ${alphaValue})`;
           bottom.current.style.background = 'unset';
         } else {
-          top.current.style.background = backgroundColor;
+          top.current.style.background = `rgba(${redValue}, ${greenValue}, ${blueValue} , ${alphaValue})`;
           middle.current.style.background = 'unset';
-          bottom.current.style.background = backgroundColor;
+          bottom.current.style.background = `rgba(${redValue}, ${greenValue}, ${blueValue} , ${alphaValue})`;
         }
       }
     };
@@ -387,7 +417,7 @@ export const ReadingRulerBase: React.FC<ReadingRulerProps> = observer(props => {
     activePreset,
     rulerHeight,
     cursorLocation,
-    backgroundColor,
+    backgroundColorRGBA,
     invert,
     stopped,
     lastEventTarget,
@@ -425,6 +455,7 @@ export const ReadingRulerBase: React.FC<ReadingRulerProps> = observer(props => {
         },
       }));
     } else {
+      console.log(key, value);
       // Here otherway
       setReadingRulerState(oldState => ({
         ...oldState,
@@ -553,14 +584,14 @@ export const ReadingRulerBase: React.FC<ReadingRulerProps> = observer(props => {
         }`}
         ref={bottom}
       />
-
-      <div className="reading-ruler-dragger-handle-container" ref={dragger}>
-        <div
-          onTouchStart={handleTouchStart}
-          className="reading-ruler-middle-mobile-handle"
-        />
-      </div>
-
+      {tabletBreakpoint && (
+        <div className="reading-ruler-dragger-handle-container" ref={dragger}>
+          <div
+            onTouchStart={handleTouchStart}
+            className="reading-ruler-middle-mobile-handle"
+          />
+        </div>
+      )}
       <ReadingRulerControllers
         ref={controllers}
         onClose={onClose}
@@ -574,7 +605,7 @@ export const ReadingRulerBase: React.FC<ReadingRulerProps> = observer(props => {
               variant="outlined"
               color="secondary"
               icon="minus"
-              tooltip={t('aria.decrease_ruler')}
+              tooltip={tabletBreakpoint ? '' : t('aria.decrease_ruler')}
               onClick={e =>
                 handleSettingsChange(
                   'rulerHeight',
@@ -600,7 +631,7 @@ export const ReadingRulerBase: React.FC<ReadingRulerProps> = observer(props => {
               id="increaseRulerSize"
               variant="outlined"
               color="secondary"
-              tooltip={t('aria.increase_ruler')}
+              tooltip={tabletBreakpoint ? '' : t('aria.increase_ruler')}
               icon="plus"
               onClick={e =>
                 handleSettingsChange(
@@ -613,15 +644,6 @@ export const ReadingRulerBase: React.FC<ReadingRulerProps> = observer(props => {
             {!mobileBreakpoint && (
               <>
                 <Button
-                  ariaLabel={t('aria.settings')}
-                  id="openSettings"
-                  variant="outlined"
-                  color="secondary"
-                  tooltip={t('aria.settings')}
-                  icon="settings"
-                  onClick={e => handleSettingsOpen(true)}
-                />
-                <Button
                   ariaLabel={t('aria.invert_colors')}
                   id="invertRulerColors"
                   variant="outlined"
@@ -632,26 +654,28 @@ export const ReadingRulerBase: React.FC<ReadingRulerProps> = observer(props => {
                   icon="invert-colors"
                   onClick={e => handleSettingsChange('invert', !invert)}
                 />
-
-                <Button
-                  ariaLabel={t('aria.click_through')}
-                  id="clickThroughRuler"
-                  variant="outlined"
-                  color="secondary"
-                  active={overlayClickActive}
-                  tooltip={t('aria.click_through')}
-                  icon={!overlayClickActive ? 'no-touch' : 'touch'}
-                  onClick={e =>
-                    handleSettingsChange(
-                      'overlayClickActive',
-                      !overlayClickActive
-                    )
-                  }
-                />
+                {/* Removed from tablet view since it doesn't work correctly  */}
+                {!tabletBreakpoint && (
+                  <Button
+                    ariaLabel={t('aria.click_through')}
+                    id="clickThroughRuler"
+                    variant="outlined"
+                    color="secondary"
+                    active={overlayClickActive}
+                    tooltip={t('aria.click_through')}
+                    icon={!overlayClickActive ? 'no-touch' : 'touch'}
+                    onClick={e =>
+                      handleSettingsChange(
+                        'overlayClickActive',
+                        !overlayClickActive
+                      )
+                    }
+                  />
+                )}
                 <Dropdown
-                  executeOnToggle={handlePaletteToggle}
                   disableOutsideClick={true}
                   controlledIsOpen={paletteOpen}
+                  controlledSetOpen={handlePaletteToggle}
                   closeOnMenuClick={false}
                   triggerEl={(isOpen, onClick) => (
                     <Button
@@ -669,10 +693,10 @@ export const ReadingRulerBase: React.FC<ReadingRulerProps> = observer(props => {
                   {/* The id here shouldn't be changed, it's used in the click handling */}
                   <div id="colorPicker" className="color-picker">
                     <ChromePicker
-                      color={backgroundColor}
-                      onChangeComplete={color => {
-                        handleSettingsChange('backgroundColor', color.hex);
-                      }}
+                      color={backgroundColorRGBA}
+                      onChange={e =>
+                        handleSettingsChange('backgroundColorRGBA', e.rgb)
+                      }
                     />
                   </div>
                 </Dropdown>

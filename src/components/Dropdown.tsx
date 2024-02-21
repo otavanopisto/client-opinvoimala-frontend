@@ -93,10 +93,10 @@ interface Props {
   // Optional trigger element (e.g. Button) to toggle menu open
   // (Will override possible label & url props above)
   triggerEl?: (isOpen: boolean, onClick: OnClick) => JSX.Element;
-  executeOnToggle?: (state: boolean) => void;
   disableOutsideClick?: boolean;
   closeOnMenuClick?: boolean;
   controlledIsOpen?: boolean;
+  controlledSetOpen?: (state: boolean) => void;
   children: React.ReactNode;
   align?: 'left' | 'right';
   verticalPosition?: number;
@@ -108,9 +108,9 @@ const Dropdown: React.FC<Props> = ({
   color = 'secondary',
   triggerButton,
   triggerEl,
-  executeOnToggle,
   closeOnMenuClick = true,
   controlledIsOpen,
+  controlledSetOpen,
   disableOutsideClick = false,
   children,
   align = 'left',
@@ -127,7 +127,10 @@ const Dropdown: React.FC<Props> = ({
     ref,
     condition: controlledIsOpen !== undefined ? controlledIsOpen : isOpen,
     disabled: disableOutsideClick,
-    action: () => setIsOpen(false),
+    action:
+      controlledIsOpen !== undefined
+        ? () => setIsOpen(false)
+        : () => controlledSetOpen && controlledSetOpen(false),
   });
 
   const menusIsOpen =
@@ -141,8 +144,11 @@ const Dropdown: React.FC<Props> = ({
         left: rect.left,
       });
     }
-    executeOnToggle && executeOnToggle(!menusIsOpen);
-    if (controlledIsOpen === undefined) setIsOpen(!isOpen);
+    if (controlledIsOpen === undefined) {
+      setIsOpen(!isOpen);
+    } else {
+      controlledSetOpen && controlledSetOpen(!controlledIsOpen);
+    }
   };
 
   const renderTrigger = () => {
