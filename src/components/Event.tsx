@@ -58,10 +58,7 @@ const EventContainer = styled.li<{ isSimple: boolean }>`
 
   @media ${p => p.theme.breakpoint.tablet} {
     flex-direction: initial;
-
     img {
-      width: 360px;
-      border-radius: 0;
       margin-bottom: 0;
     }
   }
