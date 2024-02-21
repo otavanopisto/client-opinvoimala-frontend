@@ -14,14 +14,14 @@ import Tooltip from '../Tooltip';
 
 const StyledGrid = styled(Grid)`
   &.ui.grid > .column:not(.row) {
-    padding-left: 0 !important;
-    padding-right: 0 !important;
+    padding-left: 0;
+    padding-right: 0;
   }
 
   @media ${p => p.theme.breakpoint.mobile} {
     &.ui.grid > .column:not(.row) {
-      padding-left: initial;
-      padding-right: initial;
+      padding-left: ${p => p.theme.spacing.md};
+      padding-right: ${p => p.theme.spacing.md};
     }
   }
 `;
