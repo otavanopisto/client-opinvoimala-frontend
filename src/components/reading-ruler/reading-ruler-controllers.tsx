@@ -1,7 +1,5 @@
 import * as React from 'react';
 import Button from '../inputs/Button';
-// import { IconButton } from '~/components/general/button';
-// import Dropdown from '../../general/dropdown';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
@@ -10,14 +8,21 @@ const ControllerContainer = styled.div`
   background: $color-default;
   border: 1px solid $color-default-separator-border;
   border-radius: 20px;
-  display: inline-flex;
-  justify-content: flex-end;
+  display: flex;
+  justify-content: space-between;
   min-width: 0;
+  right: 0;
+  padding: 0 10px;
   position: fixed;
-  right: 10px;
-  width: auto;
   z-index: 10010;
 
+  &.open {
+    width: 100%;
+  }
+  > button {
+    margin-right: 2px;
+    margin-left: 2px;
+  }
   .reading-ruler-controllers-tool-button {
     transform: rotate(0deg);
     transition: rotate 0.2s ease;
@@ -43,10 +48,17 @@ const ControllerContainer = styled.div`
     opacity: 100%;
     visibility: visible;
     width: auto;
-    > div {
+    > * {
       margin-right: 2px;
       margin-left: 2px;
     }
+  }
+
+  @media ${p => p.theme.breakpoint.mobile} {
+    justify-content: flex-end;
+    right: 10px;
+    padding: 0;
+    width: auto;
   }
 `;
 
@@ -55,6 +67,8 @@ const ControllerContainer = styled.div`
  */
 interface ReadingRulerControllersProps {
   tools: React.ReactNode;
+  isOpen: boolean;
+  setOpen: (open: boolean) => void;
   /* presets: React.ReactNode; */
   onClose?: () => void;
 }
@@ -66,8 +80,7 @@ export const ReadingRulerControllers = React.forwardRef<
   HTMLDivElement,
   ReadingRulerControllersProps
 >((props, ref) => {
-  const { tools, onClose } = props;
-  const [toolsDrawerOpen, setToolsDrawerOpen] = React.useState(false);
+  const { tools, onClose, isOpen, setOpen } = props;
   const { t } = useTranslation();
 
   /**
@@ -78,25 +91,27 @@ export const ReadingRulerControllers = React.forwardRef<
   const handleShowToolsClick = (
     e: React.MouseEvent<HTMLElement, MouseEvent>
   ) => {
-    setToolsDrawerOpen(!toolsDrawerOpen);
+    setOpen(!isOpen);
   };
 
   return (
-    <ControllerContainer ref={ref} className="reading-ruler-controllers">
+    <ControllerContainer
+      ref={ref}
+      id="rulerController"
+      className={`${isOpen ? 'open' : ''}`}
+    >
       <Button
         ariaLabel={t('aria.main_navigation')}
-        id="navigation-menu__button"
+        id="openSettings"
         variant="outlined"
-        tooltip={
-          toolsDrawerOpen ? t('aria.close_toolbar') : t('aria.open_toolbar')
-        }
+        tooltip={isOpen ? t('aria.close_toolbar') : t('aria.open_toolbar')}
         color="secondary"
-        icon={toolsDrawerOpen ? 'arrow-right' : 'arrow-left'}
+        icon={isOpen ? 'arrow-right' : 'arrow-left'}
         onClick={handleShowToolsClick}
       />
       <div
         className={`${
-          toolsDrawerOpen
+          isOpen
             ? 'reading-ruler-controllers-settings-container reading-ruler-controllers-settings-container--open'
             : 'reading-ruler-controllers-settings-container'
         }`}
@@ -106,7 +121,7 @@ export const ReadingRulerControllers = React.forwardRef<
       {onClose && (
         <Button
           ariaLabel={t('aria.close_ruler')}
-          id="navigation-menu__button"
+          id="closeSettings"
           variant="outlined"
           tooltip={t('aria.close_ruler')}
           color="secondary"

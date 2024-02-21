@@ -21,7 +21,7 @@ const Tooltip: React.FC<Props> = ({ content, trigger }) => {
       content={content}
       position="top center"
       size="tiny"
-      trigger={<div>{trigger}</div>}
+      trigger={trigger}
     />
   );
 };

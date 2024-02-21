@@ -182,6 +182,9 @@ export const ReadingRulerBase: React.FC<ReadingRulerProps> = observer(props => {
   const [cursorLocation, setCursorLocation] = React.useState(0);
   const [isDragging, setIsDragging] = React.useState(false);
   const [pinned, setPinned] = React.useState(false);
+  const [settingsOpen, setSettingsOpen] = React.useState(false);
+  const [lastEventTarget, setLastEventTarget] =
+    React.useState<EventTarget | null>(null);
   const [stopped, setStopped] = React.useState(false);
   const { t } = useTranslation();
   const {
@@ -221,7 +224,8 @@ export const ReadingRulerBase: React.FC<ReadingRulerProps> = observer(props => {
      */
     const handleTouchMove = (event: TouchEvent) => {
       event.stopPropagation();
-      if (isDragging === true && event.touches[0].clientY) {
+
+      if (isDragging === true && !stopped && event.touches[0].clientY) {
         const location =
           event.touches[0].clientY < 0 ? 0 : event.touches[0].clientY;
 
@@ -245,13 +249,14 @@ export const ReadingRulerBase: React.FC<ReadingRulerProps> = observer(props => {
       window.removeEventListener('touchmove', handleTouchMove);
       window.removeEventListener('touchend', handleTouchEnd);
     };
-  }, [isDragging]);
+  }, [isDragging, stopped, lastEventTarget]);
 
   React.useEffect(() => {
     // Event is throttled to work max 16ms intervals
     // It is so setState is not called too many times
     const throttleEvent = throttle((e: MouseEvent) => {
       if (!pinned && !stopped) {
+        setLastEventTarget(e.target);
         if (isDragging) {
           unstable_batchedUpdates(() => {
             setIsDragging(false);
@@ -304,8 +309,20 @@ export const ReadingRulerBase: React.FC<ReadingRulerProps> = observer(props => {
         controllers.current
       ) {
         let cursorOffset = cursorLocation;
+        let target = lastEventTarget as HTMLElement;
 
-        if (mobileBreakpoint) {
+        // Check if the touch is inside the settings controller.
+
+        let controllerClick =
+          target?.parentNode instanceof HTMLElement &&
+          !!target.closest('#rulerController');
+
+        let paletteClick =
+          target?.parentNode instanceof HTMLElement &&
+          !!target.closest('#colorPicker');
+
+        // If it is, we don't want the ruler to run away.
+        if (mobileBreakpoint && !controllerClick && !paletteClick) {
           cursorOffset =
             cursorLocation -
             dragger.current.offsetHeight / 2 -
@@ -374,9 +391,14 @@ export const ReadingRulerBase: React.FC<ReadingRulerProps> = observer(props => {
     backgroundColor,
     invert,
     stopped,
+    lastEventTarget,
     pinned,
     overlayClickActive,
   ]);
+
+  const handleSettingsOpen = (open: boolean) => {
+    setSettingsOpen(open);
+  };
 
   /**
    * handleSettingsChange
@@ -484,6 +506,8 @@ export const ReadingRulerBase: React.FC<ReadingRulerProps> = observer(props => {
   const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
     if (!pinned) {
       if (dragger && dragger.current) {
+        setLastEventTarget(e.target);
+
         const handlePosition =
           dragger.current.getBoundingClientRect().top +
           dragger.current.getBoundingClientRect().height / 2;
@@ -542,11 +566,13 @@ export const ReadingRulerBase: React.FC<ReadingRulerProps> = observer(props => {
       <ReadingRulerControllers
         ref={controllers}
         onClose={onClose}
+        isOpen={settingsOpen}
+        setOpen={handleSettingsOpen}
         tools={
           <>
             <Button
               ariaLabel={t('aria.decrease_ruler')}
-              id="navigation-menu__button"
+              id="decreaseRulerSize"
               variant="outlined"
               color="secondary"
               icon="minus"
@@ -573,7 +599,7 @@ export const ReadingRulerBase: React.FC<ReadingRulerProps> = observer(props => {
             />
             <Button
               ariaLabel={t('aria.increase_ruler')}
-              id="navigation-menu__button"
+              id="increaseRulerSize"
               variant="outlined"
               color="secondary"
               tooltip={t('aria.increase_ruler')}
@@ -585,67 +611,84 @@ export const ReadingRulerBase: React.FC<ReadingRulerProps> = observer(props => {
                 )
               }
             />
-            <Button
-              ariaLabel={t('aria.invert_colors')}
-              id="navigation-menu__button"
-              variant="outlined"
-              color="secondary"
-              disabled={overlayClickActive}
-              active={invert}
-              tooltip={t('aria.invert_colors')}
-              icon="invert-colors"
-              onClick={e => handleSettingsChange('invert', !invert)}
-            />
-            <Button
-              ariaLabel={t('aria.click_through')}
-              id="navigation-menu__button"
-              variant="outlined"
-              color="secondary"
-              active={overlayClickActive}
-              tooltip={t('aria.click_through')}
-              icon={!overlayClickActive ? 'no-touch' : 'touch'}
-              onClick={e =>
-                handleSettingsChange('overlayClickActive', !overlayClickActive)
-              }
-            />
-            <Dropdown
-              executeOnToggle={handlePaletteToggle}
-              disableOutsideClick={true}
-              controlledIsOpen={paletteOpen}
-              closeOnMenuClick={false}
-              triggerEl={(isOpen, onClick) => (
+            {/* Removed from mobile view since it doesn't scale well  */}
+            {!mobileBreakpoint && (
+              <>
                 <Button
-                  ariaLabel={t('aria.choose_color')}
-                  aria-expanded={isOpen}
-                  id="navigation-menu__button"
+                  ariaLabel={t('aria.settings')}
+                  id="openSettings"
                   variant="outlined"
                   color="secondary"
-                  onClick={onClick}
-                  tooltip={t('aria.choose_color')}
-                  icon="palette"
+                  tooltip={t('aria.settings')}
+                  icon="settings"
+                  onClick={e => handleSettingsOpen(true)}
                 />
-              )}
-            >
-              <div className="color-picker">
-                <ChromePicker
-                  color={backgroundColor}
-                  onChangeComplete={color => {
-                    handleSettingsChange('backgroundColor', color.hex);
-                  }}
+                <Button
+                  ariaLabel={t('aria.invert_colors')}
+                  id="invertRulerColors"
+                  variant="outlined"
+                  color="secondary"
+                  disabled={overlayClickActive}
+                  active={invert}
+                  tooltip={t('aria.invert_colors')}
+                  icon="invert-colors"
+                  onClick={e => handleSettingsChange('invert', !invert)}
                 />
-              </div>
-            </Dropdown>
 
-            <Button
-              ariaLabel={t('aria.pin_ruler')}
-              id="navigation-menu__button"
-              variant="outlined"
-              active={pinned}
-              color="secondary"
-              tooltip={t('aria.pin_ruler')}
-              icon="pin"
-              onClick={handleRulerPinClick}
-            />
+                <Button
+                  ariaLabel={t('aria.click_through')}
+                  id="clickThroughRuler"
+                  variant="outlined"
+                  color="secondary"
+                  active={overlayClickActive}
+                  tooltip={t('aria.click_through')}
+                  icon={!overlayClickActive ? 'no-touch' : 'touch'}
+                  onClick={e =>
+                    handleSettingsChange(
+                      'overlayClickActive',
+                      !overlayClickActive
+                    )
+                  }
+                />
+                <Dropdown
+                  executeOnToggle={handlePaletteToggle}
+                  disableOutsideClick={true}
+                  controlledIsOpen={paletteOpen}
+                  closeOnMenuClick={false}
+                  triggerEl={(isOpen, onClick) => (
+                    <Button
+                      ariaLabel={t('aria.choose_color')}
+                      aria-expanded={isOpen}
+                      id="rulerPalette"
+                      variant="outlined"
+                      color="secondary"
+                      onClick={onClick}
+                      tooltip={t('aria.choose_color')}
+                      icon="palette"
+                    />
+                  )}
+                >
+                  <div id="colorPicker" className="color-picker">
+                    <ChromePicker
+                      color={backgroundColor}
+                      onChangeComplete={color => {
+                        handleSettingsChange('backgroundColor', color.hex);
+                      }}
+                    />
+                  </div>
+                </Dropdown>
+                <Button
+                  ariaLabel={t('aria.pin_ruler')}
+                  id="pinRuler"
+                  variant="outlined"
+                  active={pinned}
+                  color="secondary"
+                  tooltip={t('aria.pin_ruler')}
+                  icon="pin"
+                  onClick={handleRulerPinClick}
+                />
+              </>
+            )}
             {/* These are commented out as we test whether we gonna use these or not.
             <Button
               onClick={handleChangePresetClick("custom", customPresetSettings)}
