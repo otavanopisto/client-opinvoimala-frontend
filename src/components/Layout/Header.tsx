@@ -73,26 +73,28 @@ const StyledHeader = styled.header`
         z-index: 6;
       }
     }
+
     .user-menu button { 
       position: relative;
       z-index: 6;
     }
+    > div:not(:last-child) {
+      margin-right: ${p => p.theme.spacing.sm};
+    }
     @media ${p => p.theme.breakpoint.tablet} {
       > div:not(:last-child) {
-        margin-right: ${p => p.theme.spacing.sm};
+        margin-right: ;
       }
     }
   }
   
   .search-container { 
-    @media ${p => p.theme.breakpoint.tablet} {
       height: 55px;
       .search-toggle-button {
         position: fixed;
         z-index: 5;
         right: ${p => p.theme.spacing.lg};
       }
-    }
   }
 
   .mobile-header__menus {

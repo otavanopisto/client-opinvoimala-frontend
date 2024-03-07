@@ -74,16 +74,26 @@ const Container = styled.div`
 
   .search-content {
     animation: 0.2s ease-out 0s 1 slideInFromTop;
+    border: 1px solid ${p => p.theme.color.grey};
     position: absolute;
     left: 0;
     width: 100%;
-    min-height: 500px;
+    min-height: 100vh;
     opacity: 0.98;
-    margin-top: 88px;
+    top: 0;
+    margin-top: 0;
     padding: ${p => p.theme.spacing.lg};
     ${p => p.theme.shadows[0]};
     background-color: ${p => p.theme.color.background};
-    z-index: 4;
+    z-index: 7;
+
+    form {
+      margin-right: 30px;
+    }
+    input {
+      max-width: 400px;
+      min-width: 100px;
+    }
 
     #closeSearch {
       position: absolute;
@@ -93,24 +103,23 @@ const Container = styled.div`
     }
 
     @media ${p => p.theme.breakpoint.tablet} {
-      min-height: 100vh;
-      border: 1px solid ${p => p.theme.color.grey};
-      top: 0;
-      margin-top: 0;
-      z-index: 7;
+      min-height: 500px;
+      border: none;
+      top: auto;
+      margin-top: 88px;
+      z-index: 4;
+
+      form {
+        margin-right: auto;
+      }
+
       input {
         width: 400px;
+        max-width: none;
       }
     }
 
     @media ${p => p.theme.breakpoint.mobile} {
-      form {
-        margin-right: 30px;
-      }
-      input {
-        max-width: 400px;
-        min-width: 100px;
-      }
     }
   }
 

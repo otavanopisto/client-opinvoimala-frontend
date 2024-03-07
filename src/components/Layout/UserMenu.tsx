@@ -17,14 +17,15 @@ import { useHistory } from 'react-router-dom';
 const UserIconContainer = styled.div`
   width: 40px;
   height: 40px;
-  margin-left: 12px;
+  margin-left: 0;
+
   border: 2px solid ${p => p.theme.color.primary};
   border-radius: 50px;
   display: flex;
   align-items: center;
   justify-content: center;
   @media ${p => p.theme.breakpoint.laptop} {
-    margin-left: 0;
+    margin-left: 12px;
   }
 
   ${p => p.theme.shadows[1]};
