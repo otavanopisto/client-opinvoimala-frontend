@@ -26,7 +26,7 @@ export const COLORS = Object.freeze({
 export const BREAKPOINTS = Object.freeze({
   mobile: 768,
   tablet: 992,
-  laptop: 1200,
+  laptop: 1100,
 });
 
 export const fontSize = (sm: number, md: number, lineHeight?: number) => {

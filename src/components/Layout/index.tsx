@@ -7,6 +7,7 @@ import Wrapper, { WrapperSize } from './Wrapper';
 import LoadingPlaceholder from '../LoadingPlaceholder';
 import ReadingRuler from '../reading-ruler/reading-ruler';
 import { LoginModal } from '../../views';
+import { useWindowDimensions } from '../../utils/hooks';
 import { useStore } from '../../store/storeContext';
 import { observer } from 'mobx-react-lite';
 
@@ -20,6 +21,15 @@ const Container = styled.div`
       padding-top: 50px;
     }
   }
+  .header__curtain {
+    background-color: ${p => p.theme.color.primaryLight};
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 120px;
+    z-index: 5;
+  }
+
   > main {
     background-color: ${p => p.theme.color.background};
     position: relative;
@@ -84,6 +94,7 @@ const Layout: React.FC<Props> = observer(
     admin = false,
     children,
   }) => {
+    const { isTablet } = useWindowDimensions();
     const {
       ruler: { open, setRulerOpen, setPaletteOpen },
     } = useStore();
@@ -98,6 +109,8 @@ const Layout: React.FC<Props> = observer(
         {!admin && <LoginModal />}
 
         <div className="header__header">
+          {/* This is only for non-mobile views */}
+          {isTablet ? null : <div className="header__curtain"></div>}
           <Header admin={admin} />
         </div>
 

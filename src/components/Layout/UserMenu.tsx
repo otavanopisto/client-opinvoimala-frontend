@@ -20,10 +20,12 @@ const UserIconContainer = styled.div`
   margin-left: 12px;
   border: 2px solid ${p => p.theme.color.primary};
   border-radius: 50px;
-
   display: flex;
   align-items: center;
   justify-content: center;
+  @media ${p => p.theme.breakpoint.laptop} {
+    margin-left: 0;
+  }
 
   ${p => p.theme.shadows[1]};
 `;
@@ -33,6 +35,9 @@ const DesktopMenu: React.FC<{ items: LinkItem[]; text?: string }> = ({
   text,
 }) => {
   const { t } = useTranslation();
+  const { isLaptop } = useWindowDimensions();
+  const label = text ? text : t('student');
+
   return (
     <DropdownMenu
       items={items}
@@ -45,7 +50,7 @@ const DesktopMenu: React.FC<{ items: LinkItem[]; text?: string }> = ({
           aria-expanded={isOpen}
           aria-haspopup={true}
           id="user-menu__button"
-          text={text ?? t('student')}
+          text={isLaptop ? undefined : label}
           icon={
             <UserIconContainer>
               <Icon type="User" color="primary" />
@@ -85,6 +90,10 @@ const MobileMenu: React.FC<{ items: LinkItem[] }> = ({ items }) => {
     </Drawer>
   );
 };
+
+const LoginContainer = styled.div`
+  margin-left: 12px;
+`;
 
 interface Props {
   admin?: boolean;
@@ -195,17 +204,19 @@ const UserMenu: React.FC<Props> = observer(({ admin }) => {
   } else if (!admin) {
     // User is not logged in, show login button.
     return (
-      <Button
-        ariaLabel={t('aria.login')}
-        id="user-menu__login__button"
-        text={isTablet ? undefined : t('action.login')}
-        variant={isTablet ? 'outlined' : 'filled'}
-        color="secondary"
-        icon={
-          <Icon type="SignIn" color={isTablet ? 'secondary' : 'background'} />
-        }
-        onClick={handleLoginClick}
-      />
+      <LoginContainer>
+        <Button
+          ariaLabel={t('aria.login')}
+          id="user-menu__login__button"
+          text={isTablet ? undefined : t('action.login')}
+          variant={isTablet ? 'outlined' : 'filled'}
+          color="secondary"
+          icon={
+            <Icon type="SignIn" color={isTablet ? 'secondary' : 'background'} />
+          }
+          onClick={handleLoginClick}
+        />
+      </LoginContainer>
     );
   }
   return null;

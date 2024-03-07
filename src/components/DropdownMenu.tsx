@@ -22,11 +22,15 @@ const StyledDropdownMenu = styled.div<{
         font-family: ${p => p.theme.font.secondary};
         ${p => p.theme.font.size.sm};
         font-weight: bold;
-        margin-left: ${p => p.theme.spacing.lg};
-        margin-right: ${p => p.theme.spacing.lg};
+        margin-left: ${p => p.theme.spacing.md};
+        margin-right: ${p => p.theme.spacing.md};
         cursor: pointer;
         user-select: none;
         text-decoration: none;
+        @media ${p => p.theme.breakpoint.laptop} {
+          margin-left: ${p => p.theme.spacing.sm};
+          margin-right: ${p => p.theme.spacing.sm};
+        }
       }
 
       a:hover,

@@ -107,7 +107,7 @@ const StyledButton = styled.button<{
 type ColorType = keyof Colors;
 type VariantType = 'filled' | 'outlined' | 'link';
 
-export interface Props {
+export interface Props extends React.HTMLProps<HTMLButtonElement> {
   id: string;
   text?: string | JSX.Element;
   icon?: JSX.Element | string;
@@ -116,6 +116,7 @@ export interface Props {
   color?: ColorType;
   negativeText?: boolean;
   variant?: VariantType;
+  modifier?: string;
   active?: boolean;
   disabled?: boolean;
   hidden?: boolean;
@@ -140,6 +141,8 @@ export const Button: FC<Props> = ({
   color = 'secondary',
   negativeText = false,
   variant = 'filled',
+  modifier,
+  tabIndex,
   disabled,
   active,
   hidden = false,
@@ -164,6 +167,7 @@ export const Button: FC<Props> = ({
     className += active ? ' active' : '';
     className += hidden ? ' is-hidden' : '';
     className += isIconButton ? ' icon-button' : '';
+    className += modifier ? ` ${modifier}` : '';
     return className;
   };
 
@@ -176,6 +180,7 @@ export const Button: FC<Props> = ({
       id={id}
       data-testid={id}
       type={type}
+      tabIndex={tabIndex}
       onClick={handleClick}
       className={getClassName()}
       disabled={disabled}

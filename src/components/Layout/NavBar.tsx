@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import styled from 'styled-components';
 import { observer } from 'mobx-react-lite';
 import { useTranslation } from 'react-i18next';
 import { useStore } from '../../store/storeContext';
@@ -13,6 +14,11 @@ import AccordionMenu from '../AccordionMenu';
 interface Props {
   admin?: boolean;
 }
+
+const Container = styled.div`
+  display: flex;
+  align-items: center;
+`;
 
 const NavBar: React.FC<Props> = observer(({ admin }) => {
   const { t } = useTranslation();
@@ -42,46 +48,50 @@ const NavBar: React.FC<Props> = observer(({ admin }) => {
 
   if (isTablet || isMobile) {
     return (
-      <Drawer
-        triggerEl={(isOpen, onClick) => (
-          <Button
-            ariaLabel={t('aria.main_navigation')}
-            aria-expanded={isOpen}
-            id="navigation-menu__button"
-            variant="outlined"
-            color="secondary"
-            icon={<Icon type="Menu" strokeColor="secondary" />}
-            onClick={onClick}
-          />
-        )}
-      >
-        <ul className="drawer__link-list">
-          {navItems.map(({ id, label, links }) => (
-            <li key={id}>
-              <AccordionMenu
-                id={id}
-                label={label}
-                items={getVisibleLinks(links)}
-              />
-            </li>
-          ))}
-        </ul>
-      </Drawer>
+      <Container>
+        <Drawer
+          triggerEl={(isOpen, onClick) => (
+            <Button
+              ariaLabel={t('aria.main_navigation')}
+              aria-expanded={isOpen}
+              id="navigation-menu__button"
+              variant="outlined"
+              color="secondary"
+              icon={<Icon type="Menu" strokeColor="secondary" />}
+              onClick={onClick}
+            />
+          )}
+        >
+          <ul className="drawer__link-list">
+            {navItems.map(({ id, label, links }) => (
+              <li key={id}>
+                <AccordionMenu
+                  id={id}
+                  label={label}
+                  items={getVisibleLinks(links)}
+                />
+              </li>
+            ))}
+          </ul>
+        </Drawer>
+      </Container>
     );
   }
 
   return (
-    <nav>
-      {navItems.map(navItem => (
-        <DropdownMenu
-          key={navItem.id}
-          triggerButton={{
-            label: navItem.label,
-          }}
-          items={getVisibleLinks(navItem.links)}
-        />
-      ))}
-    </nav>
+    <Container>
+      <nav>
+        {navItems.map(navItem => (
+          <DropdownMenu
+            key={navItem.id}
+            triggerButton={{
+              label: navItem.label,
+            }}
+            items={getVisibleLinks(navItem.links)}
+          />
+        ))}
+      </nav>
+    </Container>
   );
 });
 
