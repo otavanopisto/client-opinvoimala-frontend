@@ -27,18 +27,18 @@ const Container = styled.div`
   }
 
   .make-appointment__control-buttons {
-    margin-top: ${p => p.theme.spacing.lg};
+    align-items: stretch;
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
-    align-items: center;
+    margin-top: ${p => p.theme.spacing.lg};
 
     &--right,
     &--left {
       display: flex;
+      flex-direction: column-reverse;
       > button {
-        :not(:last-child) {
-          margin-right: ${p => p.theme.spacing.lg};
-        }
+        margin-right: 0;
       }
     }
 
@@ -47,13 +47,16 @@ const Container = styled.div`
     }
 
     @media ${p => p.theme.breakpoint.mobile} {
+      align-items: center;
       flex-direction: column;
-      align-items: stretch;
+
       &--right,
       &--left {
-        flex-direction: column-reverse;
+        flex-direction: row;
         > button {
-          margin-right: 0 !important;
+          :not(:last-child) {
+            margin-right: ${p => p.theme.spacing.lg};
+          }
         }
       }
     }

@@ -60,7 +60,10 @@ export const FrontPage: React.FC = observer(() => {
         stackable
         centered
         reversed="computer tablet mobile"
-        style={{ position: 'relative', marginTop: '80px' }}
+        style={{
+          position: 'relative',
+          marginTop: '80px',
+        }}
       >
         <Grid.Row columns={2}>
           {details && (

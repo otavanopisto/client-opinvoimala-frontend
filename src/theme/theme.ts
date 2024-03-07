@@ -8,6 +8,7 @@ export const COLORS = Object.freeze({
   primaryLight: '#CEE5D8',
   primaryLightest: '#CEE5D833',
   secondary: secondaryColor,
+  secondaryInverse: '#F4F5F7',
   accent: '#DC0058',
   accentLight: '#EDE2E7',
   accentDark: '#2A143F',
@@ -30,10 +31,10 @@ export const BREAKPOINTS = Object.freeze({
 
 export const fontSize = (sm: number, md: number, lineHeight?: number) => {
   return `
-    font-size: ${md}rem;
+  font-size: ${sm}rem;
     line-height: ${lineHeight ?? 160}%;
-    @media (max-width: ${BREAKPOINTS.mobile}px) {
-      font-size: ${sm}rem;
+    @media (min-width: ${BREAKPOINTS.tablet}px) {
+      font-size: ${md}rem;
     }
   `;
 };
@@ -56,9 +57,9 @@ export const theme: DefaultTheme = {
   },
 
   breakpoint: {
-    mobile: `(max-width: ${BREAKPOINTS.mobile}px)`,
-    tablet: `(max-width: ${BREAKPOINTS.tablet}px)`,
-    laptop: `(max-width: ${BREAKPOINTS.laptop}px)`,
+    mobile: `(min-width: ${BREAKPOINTS.mobile}px)`,
+    tablet: `(min-width: ${BREAKPOINTS.tablet}px)`,
+    laptop: `(min-width: ${BREAKPOINTS.laptop}px)`,
   },
 
   shadows: [

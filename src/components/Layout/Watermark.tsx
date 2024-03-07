@@ -6,15 +6,16 @@ import { useWindowDimensions } from '../../utils/hooks';
 
 const Container = styled.div<{ position: string }>`
   position: absolute;
-  ${p => p.position};
+  svg {
+    width: 80px;
+  }
 
   @media ${p => p.theme.breakpoint.tablet} {
-    top: -50px;
-    right: 30px;
-    left: auto;
-    bottom: auto;
+    top: auto;
+    right: auto;
+    ${p => p.position};
     svg {
-      width: 80px;
+      width: auto;
     }
   }
 

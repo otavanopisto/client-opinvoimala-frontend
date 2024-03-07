@@ -64,10 +64,13 @@ const Container = styled.div`
 
       .test-summary-categories {
         &__image {
-          width: 140px;
-          padding-right: ${p => p.theme.spacing.xl};
+          width: 52px;
           img {
-            width: 100%;
+            position: absolute;
+            top: 10px;
+            left: 0;
+            width: 48px;
+            min-width: 48px;
           }
         }
         &__main {
@@ -87,13 +90,14 @@ const Container = styled.div`
       li {
         .test-summary-categories {
           &__image {
-            width: 52px;
+            width: 140px;
+            padding-right: ${p => p.theme.spacing.xl};
             img {
-              position: absolute;
-              top: 10px;
-              left: 0;
-              width: 48px;
-              min-width: 48px;
+              position: static;
+              top: auto;
+              left: auto;
+              min-width: auto;
+              width: 100%;
             }
           }
         }

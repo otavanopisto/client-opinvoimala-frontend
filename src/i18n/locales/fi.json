@@ -50,6 +50,7 @@
     "password": "Salasana",
     "password_confirm": "Salasana uudelleen",
     "repeat": "Toistuvuus",
+    "ruler": "Lukiviivain",
     "specialist": "Asiantuntija",
     "time_abbrv": "klo",
     "tests": "Harjoitukset",
@@ -392,13 +393,24 @@
   },
   "aria": {
     "appointment_option": "Vapaa aika",
+    "choose_color": "Valitse väri",
+    "click_through": "Läpiklikkaus",
     "close": "Sulje",
+    "close_toolbar": "Sulje lukiviivaimen työkalupalkki",
+    "close_ruler": "Sulje lukiviivain",
+    "decrease_ruler": "Pienennä lukiviivainta",
+    "increase_ruler": "Suurenna lukiviivainta",
+    "invert_colors": "Käännä värit",
     "login": "Kirjaudu sisään",
     "main_navigation": "Päävalikko",
     "menu": "Valikko",
+    "open": "Avaa",
+    "open_ruler": "Avaa lukiviivain",
+    "open_toolbar": "Avaa lukiviivaimen työkalupalkki",
+    "pin_ruler": "Kiinnitä lukiviivain",
     "search": "Sisältöhaku",
-    "show_outcome": "Avaa lopputulema",
     "stars": "Tähdet {{stars}}/5",
+    "show_outcome": "Avaa lopputulema",
     "user_menu": "Opiskelijan käyttäjävalikko"
   }
 }

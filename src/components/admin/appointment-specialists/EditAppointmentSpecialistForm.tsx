@@ -25,65 +25,69 @@ const Form = styled.form`
 
   .appointment-specialist-form {
     &__role-and-name-container {
-      display: flex;
+      flex-direction: column;
       > div {
-        width: 100%;
         :first-child {
-          width: 320px;
-          margin-right: ${p => p.theme.spacing.lg};
+          width: 100%;
+          margin-right: 0;
         }
+      }
+      > *:not(:last-child) {
+        margin-bottom: ${p => p.theme.spacing.md};
       }
     }
     &__buttons-container {
-      display: flex;
-      justify-content: space-between;
+      flex-direction: column-reverse;
       align-items: center;
-
-      > div.left-column {
-        display: flex;
-        align-items: center;
+      > div {
+        width: 100%;
+        &.left-column {
+          flex-direction: column-reverse;
+        }
       }
-
       button {
+        width: 100%;
         :not(:last-child) {
-          margin-right: ${p => p.theme.spacing.lg};
+          margin-right: 0;
         }
       }
     }
   }
+}
 
   @media ${p => p.theme.breakpoint.tablet} {
+
     .appointment-specialist-form {
       &__role-and-name-container {
-        flex-direction: column;
+        display: flex;
         > div {
+          width: 100%;
           :first-child {
-            width: 100%;
-            margin-right: 0;
+            width: 320px;
+            margin-right: ${p => p.theme.spacing.lg};
           }
-        }
-        > *:not(:last-child) {
-          margin-bottom: ${p => p.theme.spacing.md};
         }
       }
       &__buttons-container {
-        flex-direction: column-reverse;
+        display: flex;
+        justify-content: space-between;
         align-items: center;
-        > div {
-          width: 100%;
-          &.left-column {
-            flex-direction: column-reverse;
-          }
+  
+        > div.left-column {
+          display: flex;
+          align-items: center;
         }
+  
         button {
-          width: 100%;
           :not(:last-child) {
-            margin-right: 0;
+            margin-right: ${p => p.theme.spacing.lg};
           }
         }
       }
     }
-  }
+
+
+
 `;
 
 interface Props {

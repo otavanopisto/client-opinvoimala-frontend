@@ -26,19 +26,23 @@ const StyledFooter = styled.footer`
   }
 
   ul.footer__social-media-list {
+    display: flex;
+    flex-wrap: wrap;
     list-style-type: none;
     padding: 0;
     li {
-      margin: ${p => p.theme.spacing.md} 0;
+      margin: 0;
+      margin-bottom: ${p => p.theme.spacing.lg};
+
       div {
         display: inline-block;
         a {
-          display: flex;
           align-items: center;
-          justify-content: flex-end;
-          font-family: ${p => p.theme.font.secondary};
           color: ${p => p.theme.color.foreground};
-
+          display: flex;
+          flex-direction: row-reverse;
+          font-family: ${p => p.theme.font.secondary};
+          justify-content: flex-end;
           text-decoration: none;
           :hover {
             text-decoration: underline;
@@ -46,7 +50,10 @@ const StyledFooter = styled.footer`
 
           i.inverted.circular.icon {
             text-decoration: none;
-            margin-left: ${p => p.theme.spacing.md};
+
+            margin-right: ${p => p.theme.spacing.md};
+            margin-left: 0;
+
             background-color: ${p => p.theme.color.secondary} !important;
           }
         }
@@ -54,20 +61,18 @@ const StyledFooter = styled.footer`
     }
 
     @media ${p => p.theme.breakpoint.tablet} {
-      display: flex;
+      display: block;
       flex-wrap: wrap;
 
       li {
-        margin: 0;
-        margin-bottom: ${p => p.theme.spacing.lg};
+        margin: ${p => p.theme.spacing.md} 0;
         &:not(:last-child) {
           margin-right: ${p => p.theme.spacing.lg};
         }
         a {
-          flex-direction: row-reverse;
+          flex-direction: row;
           i.inverted.circular.icon {
-            margin-right: ${p => p.theme.spacing.md};
-            margin-left: 0 !important;
+            margin-left: ${p => p.theme.spacing.md};
           }
         }
       }

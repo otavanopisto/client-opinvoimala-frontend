@@ -4,6 +4,7 @@ interface UseOutsideClickActionProps {
   ref: React.RefObject<HTMLDivElement>;
   action: Function;
   condition?: boolean;
+  disabled?: boolean;
 }
 
 /**
@@ -13,8 +14,10 @@ export const useOutsideClickAction = ({
   ref,
   action,
   condition = true,
+  disabled = false,
 }: UseOutsideClickActionProps) => {
   useEffect(() => {
+    if (disabled) return;
     const handleClickOutside = (event: MouseEvent) => {
       if (condition && !ref.current?.contains(event.target as Node)) {
         action();
@@ -26,5 +29,5 @@ export const useOutsideClickAction = ({
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [action, condition, ref]);
+  }, [action, condition, ref, disabled]);
 };

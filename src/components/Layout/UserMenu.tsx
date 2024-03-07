@@ -104,7 +104,9 @@ const UserMenu: React.FC<Props> = observer(({ admin }) => {
   const history = useHistory();
 
   const { isTablet } = useWindowDimensions();
-
+  const {
+    ruler: { open, setRulerOpen },
+  } = useStore();
   const {
     auth: { isLoggedIn, openLoginModal },
   } = useStore();
@@ -113,7 +115,6 @@ const UserMenu: React.FC<Props> = observer(({ admin }) => {
     auth: { isLoggedIn: isAdminLoggedIn, adminName, logout: adminLogout },
   } = useAdminStore();
   const isAdminPath = history?.location.pathname.includes(adminPath());
-
   const handleLoginClick = () => {
     openLoginModal();
   };
@@ -174,6 +175,14 @@ const UserMenu: React.FC<Props> = observer(({ admin }) => {
         label: rt('user_profile'),
         type: 'internal',
         internal: `/${path('user_profile')}`,
+      },
+      {
+        id: 'ruler',
+        label: t('label.ruler'),
+        type: 'button',
+        onClick: () => {
+          setRulerOpen(!open);
+        },
       },
       {
         id: 'logout',

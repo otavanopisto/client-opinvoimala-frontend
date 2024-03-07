@@ -19,13 +19,13 @@ export const HEADER_HEIGHT_MOBILE = 70; // px
 const StyledHeader = styled.header`
 
   .header__wrapper {
-    height: ${HEADER_HEIGHT}px;
+    height: ${HEADER_HEIGHT_MOBILE}px;
     display: flex;
     align-items: center;
     justify-content: space-between;
 
-    @media ${p => p.theme.breakpoint.mobile} and not print {
-      height: ${HEADER_HEIGHT_MOBILE}px;
+    @media ${p => p.theme.breakpoint.mobile} {
+      height: ${HEADER_HEIGHT}px;
     }
 
     & > div {

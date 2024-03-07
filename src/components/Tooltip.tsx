@@ -7,6 +7,7 @@ const StyledPopup = styled(Popup)`
     padding: ${p => p.theme.spacing.md};
     font-family: ${p => p.theme.font.secondary};
     color: ${p => p.theme.color.secondary};
+    z-index: 11000;
   }
 `;
 
@@ -20,7 +21,7 @@ const Tooltip: React.FC<Props> = ({ content, trigger }) => {
       content={content}
       position="top center"
       size="tiny"
-      trigger={<div>{trigger}</div>}
+      trigger={trigger}
     />
   );
 };
