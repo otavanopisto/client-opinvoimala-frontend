@@ -11,14 +11,14 @@ const Container = styled.div`
 
   > div {
     :not(:last-child) {
-      margin-right: ${p => p.theme.spacing.lg};
+      margin-right: ${p => p.theme.spacing.md};
     }
   }
 
   @media ${p => p.theme.breakpoint.mobile} {
     > div {
       :not(:last-child) {
-        margin-right: ${p => p.theme.spacing.md};
+        margin-right: ${p => p.theme.spacing.lg};
       }
     }
   }

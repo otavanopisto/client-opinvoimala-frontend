@@ -46,78 +46,78 @@ const Form = styled.form`
   .appointment-form {
     &__content-container,
     &__buttons-container {
-      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
     &__buttons-container {
-      justify-content: space-between;
-      align-items: center;
+      flex-direction: column-reverse;
+      > div {
+        width: 100%;
+      }
       button {
+        width: 100%;
         :not(:last-child) {
-          margin-right: ${p => p.theme.spacing.lg};
+          margin-right: 0;
         }
       }
-    }
-    &__date-picker-container {
-      padding-right: ${p => p.theme.spacing.lg};
-      border-right: 1px solid ${p => p.theme.color.grey3};
     }
     &__inputs-container {
-      padding-left: ${p => p.theme.spacing.lg};
-      flex: 1;
-      > * {
-        :not(:first-child) {
-          margin-top: ${p => p.theme.spacing.lg};
-        }
-      }
+      padding-left: 0;
+      width: 100%;
     }
   }
+}
 
   @media ${p => p.theme.breakpoint.tablet} {
     .appointment-form {
       &__content-container,
       &__buttons-container {
-        flex-direction: column;
-        align-items: center;
+        display: flex;
       }
       &__buttons-container {
-        flex-direction: column-reverse;
-        > div {
-          width: 100%;
-        }
+        justify-content: space-between;
+        align-items: center;
         button {
-          width: 100%;
           :not(:last-child) {
-            margin-right: 0;
+            margin-right: ${p => p.theme.spacing.lg};
           }
         }
       }
+      &__date-picker-container {
+        padding-right: ${p => p.theme.spacing.lg};
+        border-right: 1px solid ${p => p.theme.color.grey3};
+      }
       &__inputs-container {
-        padding-left: 0;
-        width: 100%;
+        padding-left: ${p => p.theme.spacing.lg};
+        flex: 1;
+        > * {
+          :not(:first-child) {
+            margin-top: ${p => p.theme.spacing.lg};
+          }
+        }
       }
     }
-  }
 `;
 
 const FlexRow = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
   align-items: center;
   > * {
-    flex: 1;
+    width: 100%;
+    margin: 0.25rem 0;
     :not(:last-child) {
-      margin-right: ${p => p.theme.spacing.lg};
+      margin-right: 0;
     }
   }
 
   @media ${p => p.theme.breakpoint.tablet} {
-    flex-direction: column;
-    align-items: center;
+    flex-direction: row;
     > * {
-      width: 100%;
-      margin: 0.25rem 0;
+      flex: 1;
       :not(:last-child) {
-        margin-right: 0;
+        margin-right: ${p => p.theme.spacing.lg};
       }
     }
   }

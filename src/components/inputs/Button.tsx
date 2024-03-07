@@ -17,7 +17,6 @@ const StyledButton = styled.button<{
   min-width: ${p => (p.isSmall ? undefined : '120px')};
   border-radius: ${p => (p.isSmall ? p.theme.borderRadius.md : '40px')};
   margin: ${p => (p.noMargin ? 0 : p.theme.spacing.sm)} 0;
-
   padding-top: ${p => (p.isSmall ? p.theme.spacing.sm : p.theme.spacing.md)};
   padding-bottom: ${p => (p.isSmall ? p.theme.spacing.sm : p.theme.spacing.md)};
   padding-left: ${p => p.theme.spacing.lg};
@@ -32,6 +31,9 @@ const StyledButton = styled.button<{
 
   &.icon-button {
     padding: ${p => p.theme.spacing.md};
+    &--small {
+      ${p => p.theme.spacing.sm}
+    }
     svg,
     i {
       margin-left: 0;
@@ -88,11 +90,13 @@ const StyledButton = styled.button<{
     :hover:not(.disabled) {
       text-decoration: underline;
     }
+  } ${p => p.theme.spacing.md}
+    opacity: 0.8;
   }
 
-  &.disabled {
-    cursor: not-allowed;
-    opacity: 0.8;
+  &.active {
+    color: ${p => p.theme.color.secondaryInverse};
+    background-color: ${p => p.theme.color.secondary};
   }
 
   &.is-hidden {
@@ -106,12 +110,13 @@ type VariantType = 'filled' | 'outlined' | 'link';
 export interface Props {
   id: string;
   text?: string | JSX.Element;
-  icon?: JSX.Element;
+  icon?: JSX.Element | string;
   onClick?: (event: React.MouseEvent<HTMLElement, MouseEvent>) => void;
   type?: 'button' | 'submit' | 'reset';
   color?: ColorType;
   negativeText?: boolean;
   variant?: VariantType;
+  active?: boolean;
   disabled?: boolean;
   hidden?: boolean;
   isSmall?: boolean;
@@ -136,6 +141,7 @@ export const Button: FC<Props> = ({
   negativeText = false,
   variant = 'filled',
   disabled,
+  active,
   hidden = false,
   isSmall = false,
   noMargin = false,
@@ -155,10 +161,14 @@ export const Button: FC<Props> = ({
   const getClassName = () => {
     let className = `button-${variant}`;
     className += disabled ? ' disabled' : '';
+    className += active ? ' active' : '';
     className += hidden ? ' is-hidden' : '';
     className += isIconButton ? ' icon-button' : '';
     return className;
   };
+
+  const buttonIcon =
+    icon && typeof icon === 'string' ? <i className={`icon-${icon}`} /> : icon;
 
   const button = (
     <StyledButton
@@ -176,9 +186,9 @@ export const Button: FC<Props> = ({
       autoFocus={autoFocus}
       iconPosition={iconPosition}
     >
-      {iconPosition === 'left' && icon}
+      {iconPosition === 'left' && buttonIcon}
       {text}
-      {iconPosition === 'right' && icon}
+      {iconPosition === 'right' && buttonIcon}
     </StyledButton>
   );
 

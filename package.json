@@ -10,14 +10,18 @@
   },
   "private": true,
   "dependencies": {
+    "@types/lodash": "4.14.202",
+    "@types/react-color": "3.0.11",
     "apisauce": "2.1.6",
     "finnish-holidays-js": "1.1.2",
     "i18next": "22.4.9",
+    "lodash": "4.17.21",
     "luxon": "3.2.1",
     "mobx": "6.7.0",
     "mobx-react-lite": "3.4.0",
     "mobx-state-tree": "5.1.7",
     "react": "17.0.2",
+    "react-color": "2.19.3",
     "react-datepicker": "4.8.0",
     "react-dom": "17.0.2",
     "react-helmet": "6.1.0",
@@ -30,6 +34,7 @@
     "semantic-ui-react": "2.1.4",
     "styled-components": "5.3.6",
     "typescript": "4.9.4",
+    "usehooks-ts": "2.12.1",
     "web-vitals": "3.1.1"
   },
   "devDependencies": {

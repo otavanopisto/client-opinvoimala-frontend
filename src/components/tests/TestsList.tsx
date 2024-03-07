@@ -13,10 +13,15 @@ import { Button } from '../inputs';
 import Tooltip from '../Tooltip';
 
 const StyledGrid = styled(Grid)`
+  &.ui.grid > .column:not(.row) {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
   @media ${p => p.theme.breakpoint.mobile} {
     &.ui.grid > .column:not(.row) {
-      padding-left: 0 !important;
-      padding-right: 0 !important;
+      padding-left: ${p => p.theme.spacing.md};
+      padding-right: ${p => p.theme.spacing.md};
     }
   }
 `;
@@ -191,17 +196,19 @@ const TestsList: React.FC<Props> = ({
         </Grid>
       )}
 
-      {!disableExpand && isAllItemsVisible && items.length > initialItemCount && (
-        <Grid centered>
-          <Button
-            id={`test-list-${title}-minimize-button`}
-            text={t('action.minimize')}
-            variant="link"
-            icon={<Icon type="ChevronUp" color="none" width={24} />}
-            onClick={handleMinimizeItems}
-          />
-        </Grid>
-      )}
+      {!disableExpand &&
+        isAllItemsVisible &&
+        items.length > initialItemCount && (
+          <Grid centered>
+            <Button
+              id={`test-list-${title}-minimize-button`}
+              text={t('action.minimize')}
+              variant="link"
+              icon={<Icon type="ChevronUp" color="none" width={24} />}
+              onClick={handleMinimizeItems}
+            />
+          </Grid>
+        )}
 
       {customExpandAction && (
         <Grid centered>

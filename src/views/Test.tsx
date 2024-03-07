@@ -28,10 +28,14 @@ const TestControls = styled.div`
   align-items: center;
   margin: ${p => p.theme.spacing.lg} 0;
 
+  flex-direction: column-reverse;
+  button {
+    width: 100%;
+  }
   @media ${p => p.theme.breakpoint.mobile} {
-    flex-direction: column-reverse;
+    flex-direction: row;
     button {
-      width: 100%;
+      width: auto;
     }
   }
 `;

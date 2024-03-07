@@ -10,7 +10,6 @@ import Analytics from './components/Analytics';
 import Chat from './components/Chat';
 import MaintenancePage from './views/auth/MaintenancePage';
 import { useAdminStore } from './store/admin/adminStoreContext';
-
 const App: React.FC = observer(() => {
   const {
     auth: { state: authState, user, isLoggedIn, getMe },
@@ -18,7 +17,6 @@ const App: React.FC = observer(() => {
     navigation: { state: navigationState },
     appointments: { appointmentState },
   } = useStore();
-
   const adminStore = useAdminStore();
 
   const isFetching = (...states: string[]) => {
@@ -73,7 +71,6 @@ const App: React.FC = observer(() => {
       </ThemeProvider>
     );
   }
-
   return (
     <ThemeProvider theme={theme}>
       <Cookiebot cbid={cookiebotDomainGroupId} />

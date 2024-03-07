@@ -16,32 +16,37 @@ const Container = styled.div`
 
 const Buttons = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+
   align-items: center;
   justify-content: space-between;
 
   > div {
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
+    width: 100%;
   }
 
   button {
-    :not(:last-child) {
-      margin-right: ${p => p.theme.spacing.md};
-    }
+    width: 100%;
+    margin-right: 0;
+    margin: ${p => p.theme.spacing.sm} 0;
   }
 
   @media ${p => p.theme.breakpoint.mobile} {
-    flex-direction: column;
-    div {
-      width: 100%;
-      flex-direction: column;
+    flex-direction: row;
+    > div {
+      width: auto;
+      flex-direction: row;
     }
 
     button {
-      width: 100%;
-      margin-right: 0;
-      margin: ${p => p.theme.spacing.sm} 0;
+      width: auto;
+      margin: 0;
+      :not(:last-child) {
+        margin-right: ${p => p.theme.spacing.md};
+      }
     }
   }
 `;

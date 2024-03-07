@@ -8,7 +8,7 @@ type Direction = 'row' | 'column';
 
 const Container = styled.div<{ direction: Direction }>`
   display: flex;
-  flex-direction: ${p => p.direction};
+  flex-direction: column;
   margin-top: ${p => p.theme.spacing.lg};
   margin-bottom: ${p => p.theme.spacing.lg};
 
@@ -20,16 +20,16 @@ const Container = styled.div<{ direction: Direction }>`
 
   > div {
     :not(:last-child) {
-      margin-right: ${p => (p.direction === 'row' ? p.theme.spacing.xl : 0)};
-      margin-bottom: ${p => (p.direction === 'row' ? 0 : p.theme.spacing.lg)};
+      margin-bottom: ${p => p.theme.spacing.md};
     }
   }
 
   @media ${p => p.theme.breakpoint.mobile} {
-    flex-direction: column;
+    flex-direction: ${p => p.direction};
     > div {
       :not(:last-child) {
-        margin-bottom: ${p => p.theme.spacing.md};
+        margin-right: ${p => (p.direction === 'row' ? p.theme.spacing.xl : 0)};
+        margin-bottom: ${p => (p.direction === 'row' ? 0 : p.theme.spacing.lg)};
       }
     }
   }
