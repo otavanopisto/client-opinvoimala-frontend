@@ -7,6 +7,7 @@ import TestsSummaryTotal from './TestsSummaryTotal';
 
 const Container = styled.div`
   display: flex;
+  flex-direction: column;
 
   > div {
     flex: 1;
@@ -14,27 +15,25 @@ const Container = styled.div`
     flex-direction: column;
 
     :not(:last-child) {
-      margin-right: ${p => p.theme.spacing.lg};
+      margin-right: 0;
+      margin-bottom: ${p => p.theme.spacing.xl};
     }
-
     > div {
       :not(:last-child) {
-        margin-bottom: ${p => p.theme.spacing.lg};
+        margin-bottom: ${p => p.theme.spacing.xl};
       }
     }
   }
 
   @media ${p => p.theme.breakpoint.tablet} {
-    flex-direction: column;
+    flex-direction: row;
     > div {
       :not(:last-child) {
-        margin-right: 0;
-        margin-bottom: ${p => p.theme.spacing.xl};
+        margin-right: ${p => p.theme.spacing.lg};
       }
-
       > div {
         :not(:last-child) {
-          margin-bottom: ${p => p.theme.spacing.xl};
+          margin-bottom: ${p => p.theme.spacing.lg};
         }
       }
     }
