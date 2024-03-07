@@ -4,8 +4,8 @@
   "config": {
     "apiUrl": {
       "local": "http://localhost:1337",
-      "stage": "https://opinvoimala-api.stage.geniem.io",
-      "production": "https://opinvoimala-api.production.geniem.io"
+      "stage": "{STAGE_API_URL}",
+      "production": "{PROD_API_URL}"
     }
   },
   "private": true,
