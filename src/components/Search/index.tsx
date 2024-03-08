@@ -164,13 +164,17 @@ const Search: React.FC<Props> = ({ indexName = 'page' }) => {
     },
   });
 
-  const { searchClient } = instantMeiliSearch(
-    'localhost:7700',
-    'b39d118407a96b23a9311912ba2d27c860f4f902d91209d0c3057f25d5fd34a5',
-    {
-      placeholderSearch: false,
-    }
-  );
+  const host = process.env.REACT_APP_MEILI_HOST;
+  const key = process.env.REACT_APP_MEILI_PUBLIC_KEY;
+
+  if (!host || !key) {
+    return null;
+  }
+
+  const { searchClient } = instantMeiliSearch(host, key, {
+    placeholderSearch: false,
+  });
+
   const toggleSearch = () => {
     setSearchVisible(!searchVisible);
   };
