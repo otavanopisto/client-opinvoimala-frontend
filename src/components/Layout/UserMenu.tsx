@@ -25,7 +25,7 @@ const UserIconContainer = styled.div`
   align-items: center;
   justify-content: center;
   @media ${p => p.theme.breakpoint.laptop} {
-    margin-left: 12px;
+    margin-left: ${p => p.theme.spacing.md};
   }
 
   ${p => p.theme.shadows[1]};
@@ -93,7 +93,7 @@ const MobileMenu: React.FC<{ items: LinkItem[] }> = ({ items }) => {
 };
 
 const LoginContainer = styled.div`
-  margin-left: 12px;
+  margin-left: ${p => p.theme.spacing.md};
 `;
 
 interface Props {
@@ -104,7 +104,7 @@ const UserMenu: React.FC<Props> = observer(({ admin }) => {
   const { t } = useTranslation();
   const history = useHistory();
 
-  const { isTablet } = useWindowDimensions();
+  const { isTablet, isLaptop } = useWindowDimensions();
   const {
     ruler: { open, setRulerOpen },
   } = useStore();
@@ -204,17 +204,23 @@ const UserMenu: React.FC<Props> = observer(({ admin }) => {
     );
   } else if (!admin) {
     // User is not logged in, show login button.
+
+    const icon =
+      isLaptop && !isTablet ? undefined : (
+        <Icon type="SignIn" color={isTablet ? 'secondary' : 'background'} />
+      );
+
     return (
       <LoginContainer>
         <Button
           ariaLabel={t('aria.login')}
           id="user-menu__login__button"
           text={isTablet ? undefined : t('action.login')}
+          isSmall={isLaptop}
           variant={isTablet ? 'outlined' : 'filled'}
+          modifier="login"
           color="secondary"
-          icon={
-            <Icon type="SignIn" color={isTablet ? 'secondary' : 'background'} />
-          }
+          icon={icon}
           onClick={handleLoginClick}
         />
       </LoginContainer>
