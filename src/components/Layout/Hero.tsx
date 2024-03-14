@@ -11,7 +11,7 @@ import Watermark from './Watermark';
 import { WrapperSize } from './Wrapper';
 import Image from '../Image';
 
-const Container = styled.div`
+const Container = styled.div<{ marginSize?: string }>`
   margin-bottom: -40px;
   position: relative;
   display: flex;
@@ -23,7 +23,6 @@ const Container = styled.div`
       &.align-center {
         text-align: center;
       }
-
       .action-buttons {
         display: flex;
         flex-wrap: wrap;
@@ -33,17 +32,16 @@ const Container = styled.div`
           }
         }
       }
-      
       .heading-container {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
         margin-top: ${p => p.theme.spacing.lg};
         margin-bottom: ${p => p.theme.spacing.lg};
-      }
-      .lead-text {
-        margin-bottom: ${p => p.theme.spacing.lg};
-      }
+        h1 {
+          word-break: keep-all;
+        }
+      } 
     }
     &__back-button-label,
     &__download-button-label {
@@ -61,7 +59,10 @@ const Container = styled.div`
 
     .hero {
       &__main-column {
-        flex-basis: 50%;
+        .decription-container { 
+          display: flex;
+        
+        }
         .heading-container {
           margin-top: ${p => p.theme.spacing.lg};
           margin-bottom: ${p => p.theme.spacing.lg};
@@ -69,22 +70,28 @@ const Container = styled.div`
               line-height: 43px;
           }
         }
+        
         &.align-center {
           text-align: left;
         }
-      }
-      
-      &__side-column {
-        flex-basis: 50%;
+        .lead-text { 
+          margin-left: 20px;
+        }
+        .description-container {
+          display: flex;
+          flex-basis: 100%;
+        }
       }
   }
 
   @media ${p => p.theme.breakpoint.tablet} {
     .hero {
       &__main-column {
-        flex-basis: 65%;
+        display: flex;
+        flex-direction: column;
         flex-grow: 1;
         .heading-container {
+
           flex-direction: row;
           align-items: center;
           margin-top: ${p => p.theme.spacing.lg};
@@ -92,6 +99,25 @@ const Container = styled.div`
 
           h1 {
             line-height: 77px;
+            margin-right: ${p => (p.marginSize ? p.marginSize : undefined)};
+          }
+
+        }
+        
+        .heading-container {
+          img {
+            position: absolute;
+            right: 0;
+            top: 0;
+          }
+
+        }
+
+        .description-container  {
+          position: relative;
+
+          .lead-text { 
+            margin-right: ${p => (p.marginSize ? p.marginSize : undefined)};
           }
         }
       }
@@ -133,7 +159,7 @@ const Hero: React.FC<HeroProps> = ({
 }) => {
   const { t } = useTranslation();
   const history = useHistory();
-  const { isMobile } = useWindowDimensions();
+  const { isTablet, isMobile } = useWindowDimensions();
 
   const handleGoBack = () => {
     if (onGoBackClick) {
@@ -175,8 +201,9 @@ const Hero: React.FC<HeroProps> = ({
     />
   );
 
+  const imageSize = smallImage ? 150 : 300;
   const imageEl = !image?.url ? undefined : (
-    <Image apiSrc={image?.url} alt="" width={smallImage ? '150px' : '300px'} />
+    <Image apiSrc={image?.url} alt="" width={imageSize} />
   );
 
   const actionButtons = actions?.map(({ id, text, icon, onClick }) => (
@@ -191,14 +218,13 @@ const Hero: React.FC<HeroProps> = ({
   ));
 
   return (
-    <Container>
+    <Container marginSize={imageEl && (20 + imageSize).toString() + 'px'}>
       <Watermark
         isNegative
         left={-220}
         top={-20}
         showOnlyOnScreensAbove={wrapperSize === 'sm' ? 1400 : 1600}
       />
-
       <div className={`hero__main-column align-${align}`}>
         <NoPrint>
           <div className="action-buttons">
@@ -206,27 +232,21 @@ const Hero: React.FC<HeroProps> = ({
             {showDownload && downloadButton}
           </div>
         </NoPrint>
-
         <div className="heading-container">
+          {isMobile && imageEl && <NoPrint>{imageEl}</NoPrint>}
           <h1>{title}</h1>
           {!!actionButtons?.length && (
             <NoPrint>
               <div className="action-buttons">{actionButtons}</div>
             </NoPrint>
           )}
+          {!isTablet && imageEl && <NoPrint>{imageEl}</NoPrint>}
         </div>
-
-        {isMobile && smallImage && <NoPrint>{imageEl}</NoPrint>}
-        <div className="lead-text">{lead}</div>
+        <div className="description-container">
+          {isTablet && !isMobile && imageEl && <NoPrint>{imageEl}</NoPrint>}
+          <div className="lead-text">{lead}</div>
+        </div>
       </div>
-
-      {imageEl && (!isMobile || !smallImage) && (
-        <>
-          <div className="hero__side-column">
-            <NoPrint>{imageEl}</NoPrint>
-          </div>
-        </>
-      )}
     </Container>
   );
 };

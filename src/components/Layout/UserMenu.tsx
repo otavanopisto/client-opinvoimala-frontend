@@ -18,7 +18,6 @@ const UserIconContainer = styled.div`
   width: 40px;
   height: 40px;
   margin-left: 0;
-
   border: 2px solid ${p => p.theme.color.primary};
   border-radius: 50px;
   display: flex;
