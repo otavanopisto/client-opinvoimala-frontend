@@ -112,11 +112,11 @@ const LogoArea = styled.div`
     flex-wrap: wrap;
     align-items: center;
     img {
-      width: 70px;
+      width: 50px;
       margin: ${p => p.theme.spacing.lg} 0;
       border-radius: 0;
       @media ${p => p.theme.breakpoint.tablet} {
-        width: 50px;
+        width: 70px;
       }
     }
   }

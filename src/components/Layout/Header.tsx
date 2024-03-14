@@ -58,6 +58,9 @@ const StyledHeader = styled.header`
   }
   .navigation-container {
     flex-grow: 1;
+    > div { 
+      width: 100%;
+    }
   }
 
   .navigation {

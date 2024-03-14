@@ -67,7 +67,7 @@ const Container = styled.div<{ marginSize?: string }>`
           margin-top: ${p => p.theme.spacing.lg};
           margin-bottom: ${p => p.theme.spacing.lg};
           h1 {
-              line-height: 43px;
+            line-height: 43px;
           }
         }
         

@@ -10,9 +10,7 @@ import Image from './Image';
 
 const EventContainer = styled.li<{ isSimple: boolean }>`
   display: flex;
-
   flex-direction: column-reverse;
-
   justify-content: space-between;
   ${p => p.theme.shadows[0]};
   background-color: ${p =>
@@ -56,7 +54,7 @@ const EventContainer = styled.li<{ isSimple: boolean }>`
     color: ${p => (p.isSimple ? p.theme.color.grey : undefined)};
   }
 
-  @media ${p => p.theme.breakpoint.tablet} {
+  @media ${p => p.theme.breakpoint.mobile} {
     flex-direction: initial;
     img {
       margin-bottom: 0;
