@@ -97,7 +97,7 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   h1 {
-    ${fontSize(2.25, 4, 120)}
+    ${fontSize(1.93, 4, 120)}
     word-wrap: break-word;
   }
 

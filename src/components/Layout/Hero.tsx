@@ -38,8 +38,10 @@ const Container = styled.div<{ marginSize?: string }>`
         justify-content: space-between;
         margin-top: ${p => p.theme.spacing.lg};
         margin-bottom: ${p => p.theme.spacing.lg};
+
+  
         h1 {
-          word-break: keep-all;
+          word-wrap: normal;
         }
       } 
     }
@@ -66,9 +68,6 @@ const Container = styled.div<{ marginSize?: string }>`
         .heading-container {
           margin-top: ${p => p.theme.spacing.lg};
           margin-bottom: ${p => p.theme.spacing.lg};
-          h1 {
-            line-height: 43px;
-          }
         }
         
         &.align-center {
