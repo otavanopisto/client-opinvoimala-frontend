@@ -1,7 +1,8 @@
 import React from 'react';
-import { useHits } from 'react-instantsearch';
+import { useHits, useInstantSearch } from 'react-instantsearch';
 import Link, { LinkItem } from '../../Link';
 import { useTranslation } from 'react-i18next';
+import LoadingPlaceholder from '../../LoadingPlaceholder';
 
 interface GenericHit {
   id: string;
@@ -37,9 +38,9 @@ interface HitsProps {
 
 const Hits: React.FC<HitsProps> = ({ onSelect, title, type }) => {
   const { hits } = useHits();
+  const { status } = useInstantSearch();
   const pageHits = hits as unknown as SearchStrapiHit[];
   const { t } = useTranslation();
-
   const getRoles = (hit: SearchStrapiHit) => {
     switch (type) {
       case 'page':
@@ -66,7 +67,13 @@ const Hits: React.FC<HitsProps> = ({ onSelect, title, type }) => {
     <div>
       <h3>{title}</h3>
       {pageHits.length === 0 ? (
-        <p> {t('empty.search', { context: type })}</p>
+        <p>
+          {status === 'loading' ? (
+            <LoadingPlaceholder.Search />
+          ) : (
+            t('empty.search', { context: type })
+          )}
+        </p>
       ) : (
         <div>
           {pageHits.map(hit => {
