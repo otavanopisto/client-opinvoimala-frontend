@@ -61,6 +61,9 @@ const Container = styled.div`
   }
   .search-button {
     cursor: pointer;
+    font-family: ${p => p.theme.font.secondary};
+    font-weight: bold;
+    ${p => p.theme.font.size.sm};
     background-color: ${p => p.theme.color.secondary};
     border: 2px solid ${p => p.theme.color.secondary};
     border-radius: ${p => p.theme.borderRadius.md};
