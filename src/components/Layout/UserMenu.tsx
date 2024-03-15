@@ -158,12 +158,13 @@ const UserMenu: React.FC<Props> = observer(({ admin }) => {
         type: 'internal',
         internal: `/${path('tests')}`,
       },
-      {
-        id: 'appointments',
-        label: rt('appointments'),
-        type: 'internal',
-        internal: `/${path('appointments')}`,
-      },
+      // Not in use as of now
+      // {
+      //   id: 'appointments',
+      //   label: rt('appointments'),
+      //   type: 'internal',
+      //   internal: `/${path('appointments')}`,
+      // },
       {
         id: 'events',
         label: rt('events'),
