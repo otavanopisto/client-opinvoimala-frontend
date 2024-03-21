@@ -84,6 +84,16 @@ const InnerHtmlDiv: React.FC<Props> = observer(({ html }) => {
     // Marketing cookies are not accepted. Show placeholder div instead of iframe elements (youtube embeds etc)
     __html = __html.replaceAll(embedContentRegex, placeholderElement);
   }
+  // Remove style attribute from img and figure elements in mobile.
+  // The images have width inline style from backend and in mobile it should be overrided.
+  if (isMobile) {
+    const figureImgStyleRegex = /<(figure|img)\s[^>]*style="[^"]*"[^>]*>/gi;
+
+    __html = __html.replace(figureImgStyleRegex, match => {
+      return match.replace(/style="[^"]*"/i, '');
+    });
+  }
+
   if (isMobile && hasYoutubeContent) {
     const widthRegex = /width="(\d+)"/i;
     const heightRegex = /height="(\d+)"/i;
