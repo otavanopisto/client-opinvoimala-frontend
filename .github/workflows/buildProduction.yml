@@ -36,3 +36,5 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           build-args: |
             ENVIRONMENT=production
+            REACT_APP_MEILI_HOST=${{ secrets.PROD_MEILI_HOST }}
+            REACT_APP_MEILI_PUBLIC_KEY=${{ secrets.PROD_MEILI_KEY }}
