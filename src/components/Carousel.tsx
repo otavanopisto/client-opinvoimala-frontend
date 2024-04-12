@@ -8,18 +8,22 @@ import Heading, { HeadingLevel } from './Heading';
 
 const Header = styled.div`
   display: flex;
+  flex-direction: column;
+  align-items: flex-start;
   justify-content: space-between;
-  align-items: center;
 
   @media ${p => p.theme.breakpoint.mobile} {
-    flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-between;
   }
 `;
 
 const Buttons = styled.div`
   display: flex;
-  align-items: center;
+  justify-content: space-between;
+  border-radius: ${p => p.theme.borderRadius.sm};
+  width: 100%;
 
   .page-indicator {
     color: ${p => p.theme.color.grey2};
@@ -27,30 +31,41 @@ const Buttons = styled.div`
     margin-right: ${p => p.theme.spacing.md};
   }
 
+  .buttonPrev {
+    order: 1;
+  }
+
+  .page-indicator {
+    order: 2;
+  }
+
+  .buttonNext {
+    order: 3;
+  }
+
   button {
+    margin: 0;
     border-radius: ${p => p.theme.borderRadius.sm};
-    margin-left: ${p => p.theme.spacing.md};
   }
 
   @media ${p => p.theme.breakpoint.mobile} {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-
+    justify-content: right;
+    align-items: center;
+    width: auto;
     button {
-      margin: 0;
+      margin-left: ${p => p.theme.spacing.md};
     }
 
     .buttonPrev {
-      order: 1;
+      order: unset;
     }
 
     .page-indicator {
-      order: 2;
+      order: unset;
     }
 
     .buttonNext {
-      order: 3;
+      order: unset;
     }
   }
 `;

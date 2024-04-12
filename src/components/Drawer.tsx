@@ -14,19 +14,14 @@ const DrawerContainer = styled.aside<{ isOpen: boolean; fullWidth?: boolean }>`
   background-color: ${p => p.theme.color.background};
   ${p => p.theme.shadows[0]};
   overflow-y: auto;
-
   opacity: ${p => (p.isOpen ? 1 : 0)};
-
   height: 100vh;
-  width: 40vw;
-  right: ${p => (p.isOpen ? 0 : -60)}vw;
-  @media ${p => p.theme.breakpoint.tablet} {
+  width: ${p => (p.fullWidth ? 100 : 80)}vw;
+  right: ${p => (p.isOpen ? 0 : -100)}vw;
+
+  @media ${p => p.theme.breakpoint.mobile} {
     width: 60vw;
     right: ${p => (p.isOpen ? 0 : -80)}vw;
-  }
-  @media ${p => p.theme.breakpoint.mobile} {
-    width: ${p => (p.fullWidth ? 100 : 80)}vw;
-    right: ${p => (p.isOpen ? 0 : -100)}vw;
   }
 
   transition: all 0.3s cubic-bezier(0.82, 0.085, 0.395, 0.895);

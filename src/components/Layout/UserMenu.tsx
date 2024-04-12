@@ -17,13 +17,15 @@ import { useHistory } from 'react-router-dom';
 const UserIconContainer = styled.div`
   width: 40px;
   height: 40px;
-  margin-left: 12px;
+  margin-left: 0;
   border: 2px solid ${p => p.theme.color.primary};
   border-radius: 50px;
-
   display: flex;
   align-items: center;
   justify-content: center;
+  @media ${p => p.theme.breakpoint.laptop} {
+    margin-left: ${p => p.theme.spacing.md};
+  }
 
   ${p => p.theme.shadows[1]};
 `;
@@ -33,6 +35,9 @@ const DesktopMenu: React.FC<{ items: LinkItem[]; text?: string }> = ({
   text,
 }) => {
   const { t } = useTranslation();
+  const { isLaptop } = useWindowDimensions();
+  const label = text ? text : t('student');
+
   return (
     <DropdownMenu
       items={items}
@@ -45,7 +50,7 @@ const DesktopMenu: React.FC<{ items: LinkItem[]; text?: string }> = ({
           aria-expanded={isOpen}
           aria-haspopup={true}
           id="user-menu__button"
-          text={text ?? t('student')}
+          text={isLaptop ? undefined : label}
           icon={
             <UserIconContainer>
               <Icon type="User" color="primary" />
@@ -86,6 +91,10 @@ const MobileMenu: React.FC<{ items: LinkItem[] }> = ({ items }) => {
   );
 };
 
+const LoginContainer = styled.div`
+  margin-left: ${p => p.theme.spacing.md};
+`;
+
 interface Props {
   admin?: boolean;
 }
@@ -94,8 +103,10 @@ const UserMenu: React.FC<Props> = observer(({ admin }) => {
   const { t } = useTranslation();
   const history = useHistory();
 
-  const { isTablet } = useWindowDimensions();
-
+  const { isTablet, isLaptop } = useWindowDimensions();
+  const {
+    ruler: { open, setRulerOpen },
+  } = useStore();
   const {
     auth: { isLoggedIn, openLoginModal },
   } = useStore();
@@ -104,7 +115,6 @@ const UserMenu: React.FC<Props> = observer(({ admin }) => {
     auth: { isLoggedIn: isAdminLoggedIn, adminName, logout: adminLogout },
   } = useAdminStore();
   const isAdminPath = history?.location.pathname.includes(adminPath());
-
   const handleLoginClick = () => {
     openLoginModal();
   };
@@ -148,12 +158,13 @@ const UserMenu: React.FC<Props> = observer(({ admin }) => {
         type: 'internal',
         internal: `/${path('tests')}`,
       },
-      {
-        id: 'appointments',
-        label: rt('appointments'),
-        type: 'internal',
-        internal: `/${path('appointments')}`,
-      },
+      // Not in use as of now
+      // {
+      //   id: 'appointments',
+      //   label: rt('appointments'),
+      //   type: 'internal',
+      //   internal: `/${path('appointments')}`,
+      // },
       {
         id: 'events',
         label: rt('events'),
@@ -165,6 +176,14 @@ const UserMenu: React.FC<Props> = observer(({ admin }) => {
         label: rt('user_profile'),
         type: 'internal',
         internal: `/${path('user_profile')}`,
+      },
+      {
+        id: 'ruler',
+        label: t('label.ruler'),
+        type: 'button',
+        onClick: () => {
+          setRulerOpen(!open);
+        },
       },
       {
         id: 'logout',
@@ -185,18 +204,26 @@ const UserMenu: React.FC<Props> = observer(({ admin }) => {
     );
   } else if (!admin) {
     // User is not logged in, show login button.
+
+    const icon =
+      isLaptop && !isTablet ? undefined : (
+        <Icon type="SignIn" color={isTablet ? 'secondary' : 'background'} />
+      );
+
     return (
-      <Button
-        ariaLabel={t('aria.login')}
-        id="user-menu__login__button"
-        text={isTablet ? undefined : t('action.login')}
-        variant={isTablet ? 'outlined' : 'filled'}
-        color="secondary"
-        icon={
-          <Icon type="SignIn" color={isTablet ? 'secondary' : 'background'} />
-        }
-        onClick={handleLoginClick}
-      />
+      <LoginContainer>
+        <Button
+          ariaLabel={t('aria.login')}
+          id="user-menu__login__button"
+          text={isTablet ? undefined : t('action.login')}
+          isSmall={isLaptop}
+          variant={isTablet ? 'outlined' : 'filled'}
+          modifier="login"
+          color="secondary"
+          icon={icon}
+          onClick={handleLoginClick}
+        />
+      </LoginContainer>
     );
   }
   return null;

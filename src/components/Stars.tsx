@@ -17,8 +17,7 @@ const Container = styled.section`
 
 const Star = styled.div<{ fullStarWidth: number; width: number }>`
   height: ${p => p.fullStarWidth}px;
-  width: ${p => p.width}px;
-  background-size: ${p => p.fullStarWidth}px;
+  background-size: ${p => p.fullStarWidth * MOBILE_STAR_SIZE}px;
   background-image: url(${StarSvg});
   background-position: left;
   background-repeat: no-repeat;
@@ -26,11 +25,11 @@ const Star = styled.div<{ fullStarWidth: number; width: number }>`
   /* Show stars for prints as well: */
   -webkit-print-color-adjust: exact !important; /* Chrome, Safari, Edge */
   color-adjust: exact !important; /*Firefox*/
+  width: ${p => p.width * MOBILE_STAR_SIZE}px;
 
   @media ${p => p.theme.breakpoint.mobile} {
-    height: ${p => p.fullStarWidth}px;
-    width: ${p => p.width * MOBILE_STAR_SIZE}px;
-    background-size: ${p => p.fullStarWidth * MOBILE_STAR_SIZE}px;
+    width: ${p => p.width}px;
+    background-size: ${p => p.fullStarWidth}px;
   }
 `;
 

@@ -8,6 +8,7 @@ import Link from '../Link';
 import { Divider, Grid, Icon } from 'semantic-ui-react';
 import { useWindowDimensions } from '../../utils/hooks';
 import NoPrint from '../NoPrint';
+import Image from '../Image';
 
 const StyledFooter = styled.footer`
   background-color: ${p => p.theme.color.grey3};
@@ -25,19 +26,23 @@ const StyledFooter = styled.footer`
   }
 
   ul.footer__social-media-list {
+    display: flex;
+    flex-wrap: wrap;
     list-style-type: none;
     padding: 0;
     li {
-      margin: ${p => p.theme.spacing.md} 0;
+      margin: 0;
+      margin-bottom: ${p => p.theme.spacing.lg};
+
       div {
         display: inline-block;
         a {
-          display: flex;
           align-items: center;
-          justify-content: flex-end;
-          font-family: ${p => p.theme.font.secondary};
           color: ${p => p.theme.color.foreground};
-
+          display: flex;
+          flex-direction: row-reverse;
+          font-family: ${p => p.theme.font.secondary};
+          justify-content: flex-end;
           text-decoration: none;
           :hover {
             text-decoration: underline;
@@ -45,7 +50,10 @@ const StyledFooter = styled.footer`
 
           i.inverted.circular.icon {
             text-decoration: none;
-            margin-left: ${p => p.theme.spacing.md};
+
+            margin-right: ${p => p.theme.spacing.md};
+            margin-left: 0;
+
             background-color: ${p => p.theme.color.secondary} !important;
           }
         }
@@ -53,20 +61,18 @@ const StyledFooter = styled.footer`
     }
 
     @media ${p => p.theme.breakpoint.tablet} {
-      display: flex;
+      display: block;
       flex-wrap: wrap;
 
       li {
-        margin: 0;
-        margin-bottom: ${p => p.theme.spacing.lg};
+        margin: ${p => p.theme.spacing.md} 0;
         &:not(:last-child) {
           margin-right: ${p => p.theme.spacing.lg};
         }
         a {
-          flex-direction: row-reverse;
+          flex-direction: row;
           i.inverted.circular.icon {
-            margin-right: ${p => p.theme.spacing.md};
-            margin-left: 0 !important;
+            margin-left: ${p => p.theme.spacing.md};
           }
         }
       }
@@ -106,11 +112,11 @@ const LogoArea = styled.div`
     flex-wrap: wrap;
     align-items: center;
     img {
-      width: 70px;
+      width: 50px;
       margin: ${p => p.theme.spacing.lg} 0;
       border-radius: 0;
       @media ${p => p.theme.breakpoint.tablet} {
-        width: 50px;
+        width: 70px;
       }
     }
   }
@@ -177,7 +183,7 @@ const Footer: React.FC = observer(() => {
           <Grid verticalAlign="middle">
             {logos.map(({ id, url, alternativeText }) => (
               <div key={id} className="logo-area__image-container">
-                <img src={url} alt={alternativeText ?? ''} />
+                <Image apiSrc={url} alt={alternativeText} />
               </div>
             ))}
           </Grid>

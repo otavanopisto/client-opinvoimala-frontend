@@ -34,7 +34,6 @@ export interface FrontPageIn extends SnapshotIn<typeof FrontPageModel> {}
 export const FrontPageStore = types
   .model({
     state: types.enumeration('State', States),
-
     data: types.maybe(FrontPageModel),
   })
   .views(self => ({

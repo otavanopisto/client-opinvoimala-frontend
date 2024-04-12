@@ -2,7 +2,7 @@
 
 React project bootstrapped with [Create React App](https://github.com/facebook/create-react-app) & [Typescript](https://www.typescriptlang.org/docs/home.html).
 
-**Relevant links**:
+**Relevant links/documentation**:
 
 - [MobX state tree](https://mobx-state-tree.js.org/)
 - [Styled components](https://styled-components.com/docs/basics)
@@ -10,17 +10,31 @@ React project bootstrapped with [Create React App](https://github.com/facebook/c
 - [React-i18next](https://github.com/i18next/react-i18next)
 - [Prettier](https://prettier.io/docs/en/index.html)
 
+## Setup
+
+- **Manage API URLs** in `package.json`'s config/apiUrl section (these are used as a ENV-variables when starting/building the app)
+
+
 ## Commands
 
 ```sh
 # Install dependencies
 yarn
 
-# Run dev version
+# Run dev version (against local API)
 yarn start
 
+# Run against staging version of the API
+yarn start:stage
+
+# Run against production version of the API
+yarn start:production
+
+# Build staging version
+yarn build:stage
+
 # Build production version
-yarn build
+yarn build:production
 ```
 
 ## Branches

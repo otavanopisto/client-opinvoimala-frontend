@@ -28,11 +28,9 @@ const InnerHtmlContainer = styled.div`
     ${p => p.theme.font.h5};
   }
 
-  @media ${p => p.theme.breakpoint.mobile} {
-    figure,
-    img {
-      width: 100% !important;
-    }
+  figure,
+  img {
+    width: 100%;
   }
 `;
 

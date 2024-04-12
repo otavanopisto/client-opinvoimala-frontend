@@ -10,19 +10,22 @@ import NoPrint from '../NoPrint';
 import NavBar from './NavBar';
 import UserMenu from './UserMenu';
 import Wrapper from './Wrapper';
+import Image from '../Image';
+import Search from '../Search';
 
 export const HEADER_HEIGHT = 120; // px
 export const HEADER_HEIGHT_MOBILE = 70; // px
 
 const StyledHeader = styled.header`
+
   .header__wrapper {
-    height: ${HEADER_HEIGHT}px;
+    height: ${HEADER_HEIGHT_MOBILE}px;
     display: flex;
     align-items: center;
     justify-content: space-between;
 
-    @media ${p => p.theme.breakpoint.mobile} and not print {
-      height: ${HEADER_HEIGHT_MOBILE}px;
+    @media ${p => p.theme.breakpoint.mobile} {
+      height: ${HEADER_HEIGHT}px;
     }
 
     & > div {
@@ -35,7 +38,7 @@ const StyledHeader = styled.header`
     }
   }
 
-  .header__logo-container {
+  .header__-container {
     display: flex;
     align-items: center;
     a.admin-title {
@@ -50,10 +53,58 @@ const StyledHeader = styled.header`
     }
   }
 
+  .header__logo-container {
+    z-index 6;
+  }
+  .navigation-container {
+    flex-grow: 1;
+    > div { 
+      width: 100%;
+    }
+  }
+
+  .navigation {
+    align-items: center;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: start;
+
+    .nav-bar {
+      flex-grow: 1;
+      button {
+        position: relative;
+        z-index: 6;
+      }
+    }
+
+    .user-menu button { 
+      position: relative;
+      z-index: 6;
+    }
+    > div:not(:last-child) {
+      margin-right: ${p => p.theme.spacing.sm};
+    }
+    @media ${p => p.theme.breakpoint.tablet} {
+      > div:not(:last-child) {
+        margin-right: ;
+      }
+    }
+  }
+  
+  .search-container { 
+      height: 55px;
+      .search-toggle-button {
+        position: fixed;
+        z-index: 5;
+        right: ${p => p.theme.spacing.lg};
+      }
+  }
+
   .mobile-header__menus {
     position: fixed;
-    z-index: 1;
-    right: ${p => p.theme.spacing.lg};
+    z-index: 6;
+    right: calc( ${p => p.theme.spacing.lg} + 42px + ${p =>
+  p.theme.spacing.sm});
   }
 `;
 
@@ -77,7 +128,7 @@ const Header: React.FC<Props> = observer(({ admin }) => {
         <div className="header__logo-container">
           {logo && (
             <Link to="/">
-              <img src={logo.url} height={`${logoHeight}px`} alt="logo" />
+              <Image apiSrc={logo.url} height={`${logoHeight}px`} alt="logo" />
             </Link>
           )}
           {admin && (
@@ -88,31 +139,39 @@ const Header: React.FC<Props> = observer(({ admin }) => {
         </div>
 
         {isTablet ? (
-          <div className="mobile-header__menus">
-            <div>
-              <NoPrint>
-                <UserMenu admin={admin} />
-              </NoPrint>
-            </div>
-            <div>
-              <NoPrint>
-                <NavBar admin={admin} />
-              </NoPrint>
-            </div>
-          </div>
-        ) : (
           <>
-            <div>
+            <div className="mobile-header__menus">
               <NoPrint>
-                <NavBar admin={admin} />
+                <div className="navigation">
+                  <div className="user-menu user-menu--mobile">
+                    <UserMenu admin={admin} />
+                  </div>
+                  <div className="nav-bar nav-bar--mobile">
+                    <NavBar admin={admin} />
+                  </div>
+                </div>
               </NoPrint>
             </div>
-            <div>
-              <NoPrint>
-                <UserMenu admin={admin} />
-              </NoPrint>
+            <div className="search-container">
+              <Search />
             </div>
           </>
+        ) : (
+          <div className="navigation-container">
+            <NoPrint>
+              <div className="navigation">
+                <div className="nav-bar">
+                  <NavBar admin={admin} />
+                </div>
+                <div className="search-container">
+                  <Search />
+                </div>
+                <div className="user-menu">
+                  <UserMenu admin={admin} />
+                </div>
+              </div>
+            </NoPrint>
+          </div>
         )}
       </Wrapper>
     </StyledHeader>

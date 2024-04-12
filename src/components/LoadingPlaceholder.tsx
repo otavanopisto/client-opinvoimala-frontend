@@ -15,6 +15,17 @@ const Hero = () => {
   );
 };
 
+const Search = () => {
+  const customStyle = { backgroundColor: COLORS.background };
+  return (
+    <Placeholder fluid style={customStyle}>
+      {[...Array(5)].map((_, i) => (
+        <Placeholder.Line key={i} style={customStyle} />
+      ))}
+    </Placeholder>
+  );
+};
+
 const Content = () => (
   <Placeholder fluid>
     <Placeholder.Header>
@@ -39,6 +50,7 @@ const Content = () => (
 
 const LoadingPlaceholder = {
   Hero,
+  Search,
   Content,
 };
 

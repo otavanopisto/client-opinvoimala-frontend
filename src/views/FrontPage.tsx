@@ -6,6 +6,7 @@ import Layout from '../components/Layout';
 import { Divider, Grid } from 'semantic-ui-react';
 import InnerHtmlDiv from '../components/InnerHtmlDiv';
 import Cards from '../components/Cards';
+import Image from '../components/Image';
 
 const Details = styled(InnerHtmlDiv)`
   p {
@@ -59,7 +60,10 @@ export const FrontPage: React.FC = observer(() => {
         stackable
         centered
         reversed="computer tablet mobile"
-        style={{ position: 'relative', marginTop: '80px' }}
+        style={{
+          position: 'relative',
+          marginTop: '80px',
+        }}
       >
         <Grid.Row columns={2}>
           {details && (
@@ -70,7 +74,7 @@ export const FrontPage: React.FC = observer(() => {
           )}
           {detailsImage && (
             <Grid.Column mobile={16} tablet={16} computer={8}>
-              <img src={detailsImage.url} alt="" />
+              <Image apiSrc={detailsImage.url} alt="" />
             </Grid.Column>
           )}
         </Grid.Row>

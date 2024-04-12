@@ -31,13 +31,13 @@ const Header = styled.div`
   justify-content: center;
   text-align: center;
   color: ${p => p.theme.color.secondary};
-  ${p => p.theme.font.h3};
+  ${p => p.theme.font.h4};
   font-weight: bold;
   font-family: ${p => p.theme.font.secondary};
   margin-bottom: ${p => p.theme.spacing.lg};
 
   @media ${p => p.theme.breakpoint.mobile} {
-    ${p => p.theme.font.h4};
+    ${p => p.theme.font.h3};
   }
 `;
 

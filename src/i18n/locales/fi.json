@@ -9,41 +9,52 @@
     "well_being_profile": "Tämän profiilin tulokset ovat suuntaa-antavia.",
     "asterisk_is_required": "Tähdellä merkityt kentät ovat pakollisia."
   },
+  "empty": {
+    "search": "Ei hakutuloksia",
+    "search_page": "Ei hakua vastaavia sivuja",
+    "search_test": "Ei hakua vastaavia harjoituksia"
+  },
   "action": {
-    "register": "Rekisteröidy",
-    "login": "Kirjaudu",
-    "change_password": "Vaihda salasana",
-    "send_link": "Lähetä linkki",
     "cancel": "Peruuta",
-    "delete": "Poista",
+    "change_password": "Vaihda salasana",
     "close": "Sulje",
-    "minimize": "Pienennä",
-    "go_back": "Takaisin",
-    "previous": "Edellinen",
-    "continue": "Jatka",
-    "show_all": "Näytä kaikki",
-    "show_result": "Näytä tulos",
-    "done": "Valmis",
-    "select": "Valitse",
-    "download": "Lataa",
-    "save": "Tallenna",
     "confirm": "Vahvista",
     "confirm_delete": "Vahvista poisto",
     "confirm_edit": "Vahvista muokkaus",
-    "show_more": "Lataa lisää",
-    "yes": "Kyllä",
+    "continue": "Jatka",
+    "delete": "Poista",
+    "done": "Valmis",
+    "download": "Lataa",
+    "edit": "Muokkaa",
+    "empty": "Tyhjennä",
+    "go_back": "Takaisin",
+    "login": "Kirjaudu",
+    "minimize": "Pienennä",
     "no": "Ei",
-    "edit": "Muokkaa"
+    "previous": "Edellinen",
+    "register": "Rekisteröidy",
+    "save": "Tallenna",
+    "search": "Hae",
+    "select": "Valitse",
+    "send_link": "Lähetä linkki",
+    "show_all": "Näytä kaikki",
+    "show_more": "Lataa lisää",
+    "show_result": "Näytä tulos",
+    "yes": "Kyllä"
   },
   "label": {
-    "name": "Nimi",
+    "date": "Ajankohta",
     "email": "Sähköpostiosoite",
+    "name": "Nimi",
+    "pages": "Sivut",
     "password": "Salasana",
     "password_confirm": "Salasana uudelleen",
+    "repeat": "Toistuvuus",
+    "ruler": "Lukiviivain",
     "specialist": "Asiantuntija",
     "time_abbrv": "klo",
-    "date": "Ajankohta",
-    "repeat": "Toistuvuus"
+    "tests": "Harjoitukset",
+    "unknown_type": "Tuntematon tyyppi"
   },
   "route": {
     "register": "Rekisteröidy",
@@ -114,6 +125,7 @@
       "points": "Pisteet",
       "no_matching_outcomes": "Yhtään vastauksiisi sopivaa lopputulemaa ei löytynyt."
     },
+
     "appointments": {
       "no_appointments": "Ei vielä varauksia.",
       "cancel_confirmation_text": "Haluatko varmasti perua varauksen?",
@@ -380,13 +392,25 @@
     }
   },
   "aria": {
+    "appointment_option": "Vapaa aika",
+    "choose_color": "Valitse väri",
+    "click_through": "Läpiklikkaus",
+    "close": "Sulje",
+    "close_toolbar": "Sulje lukiviivaimen työkalupalkki",
+    "close_ruler": "Sulje lukiviivain",
+    "decrease_ruler": "Pienennä lukiviivainta",
+    "increase_ruler": "Suurenna lukiviivainta",
+    "invert_colors": "Käännä värit",
+    "login": "Kirjaudu sisään",
     "main_navigation": "Päävalikko",
     "menu": "Valikko",
-    "appointment_option": "Vapaa aika",
-    "user_menu": "Opiskelijan käyttäjävalikko",
-    "login": "Kirjaudu sisään",
-    "close": "Sulje",
+    "open": "Avaa",
+    "open_ruler": "Avaa lukiviivain",
+    "open_toolbar": "Avaa lukiviivaimen työkalupalkki",
+    "pin_ruler": "Kiinnitä lukiviivain",
+    "search": "Sisältöhaku",
     "stars": "Tähdet {{stars}}/5",
-    "show_outcome": "Avaa lopputulema"
+    "show_outcome": "Avaa lopputulema",
+    "user_menu": "Opiskelijan käyttäjävalikko"
   }
 }

@@ -9,23 +9,24 @@ import OptionToggleButton from '../inputs/OptionToggleButton';
 
 const Container = styled.div`
   display: flex;
+  flex-direction: column;
   & > div {
     border: 1px solid ${p => p.theme.color.grey3};
     padding: ${p => p.theme.spacing.md};
     text-align: center;
-
     :not(:last-child) {
-      margin-right: ${p => p.theme.spacing.lg};
+      margin-right: 0;
+      margin-bottom: ${p => p.theme.spacing.lg};
     }
   }
 
   @media ${p => p.theme.breakpoint.mobile} {
-    flex-direction: column;
+    flex-direction: row;
 
     & > div {
       :not(:last-child) {
-        margin-right: 0 !important;
-        margin-bottom: ${p => p.theme.spacing.lg};
+        margin-right: ${p => p.theme.spacing.lg};
+        margin-bottom: 0;
       }
     }
   }
@@ -34,7 +35,7 @@ const Container = styled.div`
 const TimePickerContainer = styled.div`
   flex: 1;
   overflow-y: auto;
-  max-height: 290px;
+
   ul {
     list-style-type: none;
     padding: 0;
@@ -44,6 +45,7 @@ const TimePickerContainer = styled.div`
       margin: ${p => p.theme.spacing.md} 0;
       .appointment-time {
         display: flex;
+        flex-direction: column;
         &__time {
           min-width: 90px;
         }
@@ -57,11 +59,11 @@ const TimePickerContainer = styled.div`
   }
 
   @media ${p => p.theme.breakpoint.mobile} {
-    max-height: initial;
+    max-height: 290px;
     ul {
       li {
         .appointment-time {
-          flex-direction: column;
+          flex-direction: row;
         }
       }
     }

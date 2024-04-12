@@ -11,8 +11,9 @@ const ListItem = styled.li<{ isHidden?: boolean }>`
   opacity: ${p => p.isHidden && 0.6};
   font-family: ${p => p.theme.font.secondary};
   font-size: 1rem;
+  flex-direction: column;
+  align-items: flex-start;
   display: flex;
-  align-items: center;
   justify-content: space-between;
   margin-bottom: ${p => p.theme.spacing.lg};
   padding: ${p => p.theme.spacing.lg};
@@ -30,14 +31,12 @@ const ListItem = styled.li<{ isHidden?: boolean }>`
     &__specialist--role {
       color: ${p => p.theme.color.foreground};
     }
-
     &__time {
       min-width: 140px;
       &.is-cancelled {
         text-decoration: line-through;
       }
     }
-
     &__status {
       min-width: 120px;
       display: flex;
@@ -61,50 +60,69 @@ const ListItem = styled.li<{ isHidden?: boolean }>`
         }
       }
     }
-
-    &__time,
+    about:blank &__time,
     &__specialist {
       line-height: 140%;
     }
 
     &__specialist {
-      flex: 1;
-      margin-left: ${p => p.theme.spacing.lg};
-      &--role {
-        margin-right: ${p => p.theme.spacing.lg};
-        font-weight: bold;
+      margin: 0;
+      margin-top: ${p => p.theme.spacing.lg};
+      span {
+        display: block;
       }
     }
-
     &__action-buttons {
-      display: flex;
+      margin-top: ${p => p.theme.spacing.lg};
+      flex-direction: column-reverse;
+
       > button {
-        :not(:last-child) {
-          margin-right: ${p => p.theme.spacing.lg};
-        }
+        margin: 0;
+        margin-top: ${p => p.theme.spacing.md};
+      }
+    }
+  }
+
+  .appointment {
+    &__specialist {
+      margin: 0;
+      margin-top: ${p => p.theme.spacing.lg};
+      span {
+        display: block;
+      }
+    }
+    &__action-buttons {
+      margin-top: ${p => p.theme.spacing.lg};
+      flex-direction: column-reverse;
+
+      > button {
+        margin: 0;
+        margin-top: ${p => p.theme.spacing.md};
       }
     }
   }
 
   @media ${p => p.theme.breakpoint.tablet} {
-    flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
+    flex-direction: row;
 
     .appointment {
       &__specialist {
-        margin: 0;
-        margin-top: ${p => p.theme.spacing.lg};
-        span {
-          display: block;
+        flex: 1;
+        margin-left: ${p => p.theme.spacing.lg};
+        &--role {
+          margin-right: ${p => p.theme.spacing.lg};
+          font-weight: bold;
         }
       }
-      &__action-buttons {
-        margin-top: ${p => p.theme.spacing.lg};
-        flex-direction: column-reverse;
 
+      &__action-buttons {
+        display: flex;
+        flex-direction: row;
         > button {
-          margin: 0;
-          margin-top: ${p => p.theme.spacing.md};
+          :not(:last-child) {
+            margin-right: ${p => p.theme.spacing.lg};
+          }
         }
       }
     }

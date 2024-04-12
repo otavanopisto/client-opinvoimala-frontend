@@ -11,6 +11,8 @@ const List = styled.ul`
 `;
 
 const ListItem = styled.li`
+  flex-direction: column;
+
   font-family: ${p => p.theme.font.secondary};
   font-size: 1rem;
   display: flex;
@@ -20,6 +22,11 @@ const ListItem = styled.li`
   padding: ${p => p.theme.spacing.lg};
   ${p => p.theme.shadows[0]};
   background-color: p.theme.color.grey3;
+
+  > button {
+    margin-top: ${p => p.theme.spacing.lg};
+    width: 100%;
+  }
 
   @media print {
     break-inside: avoid;
@@ -37,10 +44,10 @@ const ListItem = styled.li`
   }
 
   @media ${p => p.theme.breakpoint.tablet} {
-    flex-direction: column;
+    flex-direction: initial;
     > button {
-      margin-top: ${p => p.theme.spacing.lg};
-      width: 100%;
+      margin-top: initial;
+      width: auto;
     }
   }
 `;

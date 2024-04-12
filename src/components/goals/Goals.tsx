@@ -12,38 +12,43 @@ import LoadingPlaceholder from '../LoadingPlaceholder';
 import { Goal as GoalType } from '../../store/models';
 import { GoalModal } from './GoalModal';
 import GoalDrawer from './GoalDrawer';
+import Image from '../Image';
 
 const MAX_ACTIVE_GOALS = 4;
 
 const Header = styled.header<{ hasImage: boolean }>`
+  align-items: flex-start;
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
-  align-items: center;
 
   .goals-accomplished-container {
-    display: flex;
-    justify: flex-end;
     align-items: center;
-    font-family: ${p => p.theme.font.secondary};
     color: ${p => p.theme.color.secondary};
-    ${p => p.theme.font.size.md};
+    display: flex;
+    flex-direction: row-reverse;
+    font-family: ${p => p.theme.font.secondary};
     font-weight: 600;
+    justify-content: flex-end;
+    margin-top: ${p => p.theme.spacing.md};
+    ${p => p.theme.font.size.md};
 
     > div {
       margin-right: ${p => (p.hasImage ? p.theme.spacing.lg : 0)};
+      margin-left: ${p => p.theme.spacing.md};
     }
   }
 
   @media ${p => p.theme.breakpoint.mobile} {
-    flex-direction: column;
-    align-items: flex-start;
+    flex-direction: row;
+    align-items: center;
 
     .goals-accomplished-container {
       margin-top: ${p => p.theme.spacing.md};
-      flex-direction: row-reverse;
+      flex-direction: row;
 
       > div {
-        margin-left: ${p => p.theme.spacing.md};
+        margin-left: 0;
       }
     }
   }
@@ -69,6 +74,7 @@ const Goal = styled.li<{ done?: boolean }>`
   font-family: ${p => p.theme.font.secondary};
   font-weight: 700;
   line-height: 28px;
+  padding: ${p => p.theme.spacing.sm};
 
   .user-goals__done-goal-container,
   .user-goals__goal-item-button {
@@ -111,7 +117,7 @@ const Goal = styled.li<{ done?: boolean }>`
   }
 
   @media ${p => p.theme.breakpoint.mobile} {
-    padding: ${p => p.theme.spacing.sm};
+    padding: 0;
   }
 `;
 
@@ -173,9 +179,9 @@ export const Goals: React.FC = observer(() => {
               })}
             </div>
 
-            <img
-              src={goalsInfo.image?.url}
-              alt={goalsInfo.image?.alternativeText ?? ''}
+            <Image
+              apiSrc={goalsInfo.image?.url}
+              alt={goalsInfo.image?.alternativeText}
             />
           </div>
         </Header>

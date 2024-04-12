@@ -6,9 +6,11 @@ import { Event as EventType } from '../store/models';
 import { Button } from './inputs';
 import Icon from './Icon';
 import Link from './Link';
+import Image from './Image';
 
 const EventContainer = styled.li<{ isSimple: boolean }>`
   display: flex;
+  flex-direction: column-reverse;
   justify-content: space-between;
   ${p => p.theme.shadows[0]};
   background-color: ${p =>
@@ -41,6 +43,7 @@ const EventContainer = styled.li<{ isSimple: boolean }>`
   img {
     width: 360px;
     border-radius: 0;
+    margin-bottom: ${p => p.theme.spacing.lg};
   }
 
   button {
@@ -52,10 +55,9 @@ const EventContainer = styled.li<{ isSimple: boolean }>`
   }
 
   @media ${p => p.theme.breakpoint.mobile} {
-    flex-direction: column-reverse;
-
+    flex-direction: initial;
     img {
-      margin-bottom: ${p => p.theme.spacing.lg};
+      margin-bottom: 0;
     }
   }
 `;
@@ -127,7 +129,7 @@ const Event: React.FC<Props> = ({ event, isSimple = false }) => {
       </div>
       <div>
         {!isSimple && (
-          <img src={image?.url} alt={image?.alternativeText ?? ''} />
+          <Image apiSrc={image?.url} alt={image?.alternativeText} />
         )}
       </div>
     </EventContainer>

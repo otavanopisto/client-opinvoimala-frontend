@@ -6,6 +6,7 @@ interface Colors {
   primaryLight: string;
   primaryLightest: string;
   secondary: string;
+  secondaryInverse: string;
   accent: string;
   accentLight: string;
   accentDark: string;

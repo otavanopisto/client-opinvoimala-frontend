@@ -21,6 +21,7 @@ import { ReactComponent as Plus } from '../assets/icons/plus.svg';
 import { ReactComponent as SignIn } from '../assets/icons/sign-in.svg';
 import { ReactComponent as User } from '../assets/icons/md-person.svg';
 import { ReactComponent as Video } from '../assets/icons/video.svg';
+import { ReactComponent as Search } from '../assets/icons/search.svg';
 
 const Icons = {
   Annotation,
@@ -39,6 +40,7 @@ const Icons = {
   Menu,
   Minus,
   Plus,
+  Search,
   SignIn,
   User,
   Video,
